@@ -1,27 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="ProfileImageView">
-        <attr name="circle_fill" format="color"/>
-    </declare-styleable>
-
-    <declare-styleable name="ViewPager">
-        <attr name="swipeDisabled" format="boolean"/>
-    </declare-styleable>
-
-    <declare-styleable name="Emojicon">
-        <attr name="emojiconSize" format="dimension"/>
-    </declare-styleable>
-
-    <declare-styleable name="ExpandableLayout">
-        <attr name="el_headerLayout" format="reference"/>
-        <attr name="el_contentLayout" format="reference"/>
-        <attr name="el_duration" format="integer"/>
-    </declare-styleable>
-
-    <declare-styleable name="RTCGlView">
-        <attr name="mainMirror" format="boolean"/>
-        <attr name="secondMirror" format="boolean"/>
-        <attr name="mainCoords" format="reference"/>
-        <attr name="secondCoords" format="reference"/>
+    <declare-styleable name="SocialTextView">
+        <attr name="color_hashtag" format="color"/>
+        <attr name="color_at" format="color"/>
+        <attr name="additional_hashtag" format="string"/>
+        <attr name="additional_at" format="string"/>
     </declare-styleable>
 </resources>

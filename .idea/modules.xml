@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/socialview.iml" filepath="$PROJECT_DIR$/socialview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/socialview-example/socialview-example.iml" filepath="$PROJECT_DIR$/socialview-example/socialview-example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/socialview/socialview-socialview.iml" filepath="$PROJECT_DIR$/socialview/socialview-socialview.iml" />
     </modules>
   </component>
 </project>
