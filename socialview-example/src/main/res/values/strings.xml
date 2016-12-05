@@ -1,6 +1,3 @@
 <resources>
-    <string name="app_name">Extra Example</string>
-
-    <string name="extra_string">extra_string</string>
-    <string name="extra_int">extra_int</string>
+    <string name="app_name">SocialView Example</string>
 </resources>

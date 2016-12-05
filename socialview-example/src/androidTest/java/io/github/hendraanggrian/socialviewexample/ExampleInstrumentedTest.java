@@ -1,4 +1,4 @@
-package io.github.hendraanggrian.extraexample;
+package io.github.hendraanggrian.socialviewexample;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

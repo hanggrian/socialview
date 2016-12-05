@@ -1,11 +1,10 @@
 package io.github.hendraanggrian.socialview;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.support.annotation.ColorInt;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.text.Spannable;
-import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
@@ -23,37 +22,74 @@ import rx.Observable;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-final class SocialView {
+public final class SocialView {
 
     private int colorHashtag;
     private int colorAt;
     private Set<Character> additionalHashtag = new HashSet<>();
     private Set<Character> additionalAt = new HashSet<>();
 
-    public SocialView(@ColorInt int colorHashtag, @ColorInt int colorAt) {
-        this.colorHashtag = colorHashtag;
-        this.colorAt = colorAt;
+    private OnSocialClickListener listener;
+
+    SocialView(@NonNull TextView view, @NonNull Context context) {
+        getDefaultColor(context)
+                .subscribe(colorAccent -> {
+                    colorHashtag = colorAccent;
+                    colorAt = colorAccent;
+                }, throwable -> {
+                }, () -> refresh(view));
     }
 
-    public SocialView(@NonNull Context context, @NonNull AttributeSet attrs) {
+    SocialView(@NonNull TextView view, @NonNull Context context, @NonNull AttributeSet attrs) {
+        Observable.just(context.getTheme().obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0))
+                .subscribe(array -> {
+                    getDefaultColor(context)
+                            .subscribe(colorAccent -> {
+                                colorHashtag = array.getColor(R.styleable.SocialTextView_color_hashtag, colorAccent);
+                                colorAt = array.getColor(R.styleable.SocialTextView_color_at, colorAccent);
+                            });
+
+                    Observable.just(array.getString(R.styleable.SocialTextView_color_hashtag))
+                            .filter(s -> s != null)
+                            .map(String::toCharArray)
+                            .subscribe(chars ->
+                                    Observable.range(0, chars.length).map(i ->
+                                            chars[i]).forEach(character -> additionalHashtag.add(character)));
+
+                    Observable.just(array.getString(R.styleable.SocialTextView_color_at))
+                            .filter(s -> s != null)
+                            .map(String::toCharArray)
+                            .subscribe(chars ->
+                                    Observable.range(0, chars.length).map(i ->
+                                            chars[i]).forEach(character -> additionalAt.add(character)));
+
+                    array.recycle();
+                }, throwable -> {
+                }, () -> refresh(view));
+    }
+
+    public static SocialView attach(@NonNull TextView textView) {
+        return new SocialView(textView, textView.getContext());
+    }
+
+    void setOnClickListener(TextView view, OnSocialClickListener listener) {
+        this.listener = listener;
+        refresh(view);
+    }
+
+    private void refresh(TextView textView) {
+        textView.setText(textView.getText(), TextView.BufferType.SPANNABLE);
+        if (listener != null) {
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
+            textView.setHighlightColor(Color.TRANSPARENT);
+        }
+        setColorsToAllHashTags(textView.getText());
+    }
+
+    private Observable<Integer> getDefaultColor(@NonNull Context context) {
         final TypedValue value = new TypedValue();
         context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
-
-        final TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0);
-        colorHashtag = array.getColor(R.styleable.SocialTextView_color_hashtag, value.data);
-        colorAt = array.getColor(R.styleable.SocialTextView_color_at, value.data);
-
-        final String hashtags = array.getString(R.styleable.SocialTextView_color_hashtag);
-        if (!TextUtils.isEmpty(hashtags))
-            for (char hashtag : hashtags.toCharArray())
-                additionalHashtag.add(hashtag);
-
-        final String ats = array.getString(R.styleable.SocialTextView_color_at);
-        if (!TextUtils.isEmpty(ats))
-            for (char at : ats.toCharArray())
-                additionalAt.add(at);
-
-        array.recycle();
+        return Observable.just(value.data);
     }
 
     void eraseAndColorizeAllText(TextView textView, CharSequence text) {
@@ -66,7 +102,7 @@ final class SocialView {
                         }, () -> setColorsToAllHashTags(text));
     }
 
-    void setColorsToAllHashTags(CharSequence text) {
+    private void setColorsToAllHashTags(CharSequence text) {
         int startIndexOfNextHashSign;
 
         int index = 0;
@@ -75,9 +111,7 @@ final class SocialView {
             int nextNotLetterDigitCharIndex = index + 1; // we assume it is next. if if was not changed by findNextValidHashTagChar then index will be incremented by 1
             if (sign == '#') {
                 startIndexOfNextHashSign = index;
-
                 nextNotLetterDigitCharIndex = findNextValidHashTagChar(text, startIndexOfNextHashSign);
-
                 setColorForHashTagToTheEnd(text, startIndexOfNextHashSign, nextNotLetterDigitCharIndex);
             }
 
@@ -85,7 +119,7 @@ final class SocialView {
         }
     }
 
-    int findNextValidHashTagChar(CharSequence text, int start) {
+    private int findNextValidHashTagChar(CharSequence text, int start) {
         int nonLetterDigitCharIndex = -1; // skip first sign '#"
         for (int index = start + 1; index < text.length(); index++) {
 
@@ -105,16 +139,16 @@ final class SocialView {
         return nonLetterDigitCharIndex;
     }
 
-    void setColorForHashTagToTheEnd(@NonNull CharSequence text, int startIndex, int nextNotLetterDigitCharIndex) {
+    private void setColorForHashTagToTheEnd(@NonNull CharSequence text, int startIndex, int nextNotLetterDigitCharIndex) {
         Spannable s = (Spannable) text;
 
         CharacterStyle span;
 
-        if (mOnHashTagClickListener != null) {
-            span = new ClickableForegroundColorSpan(mHashTagWordColor, this);
+        if (listener != null) {
+            span = new ClickableForegroundColorSpan(colorHashtag, listener);
         } else {
             // no need for clickable span because it is messing with selection when click
-            span = new ForegroundColorSpan(mHashTagWordColor);
+            span = new ForegroundColorSpan(colorHashtag);
         }
 
         s.setSpan(span, startIndex, nextNotLetterDigitCharIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -139,5 +173,9 @@ final class SocialView {
 
     public List<String> getAllHashTags(@NonNull CharSequence text) {
         return getAllHashTags(text, false);
+    }
+
+    public interface OnSocialClickListener {
+        void onClick(String hashTag);
     }
 }

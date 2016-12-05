@@ -13,9 +13,9 @@ import rx.Observable;
 public final class ClickableForegroundColorSpan extends ClickableSpan {
 
     private final int color;
-    private final OnClickListener listener;
+    private final SocialView.OnSocialClickListener listener;
 
-    public ClickableForegroundColorSpan(@ColorInt int color, @NonNull OnClickListener listener) {
+    public ClickableForegroundColorSpan(@ColorInt int color, @NonNull SocialView.OnSocialClickListener listener) {
         this.color = color;
         this.listener = listener;
     }
@@ -36,9 +36,5 @@ public final class ClickableForegroundColorSpan extends ClickableSpan {
                     int end = spanned.getSpanEnd(ClickableForegroundColorSpan.this);
                     listener.onClick(spanned.subSequence(start + 1/*skip "#" sign*/, end).toString());
                 });
-    }
-
-    public interface OnClickListener {
-        void onClick(String hashTag);
     }
 }

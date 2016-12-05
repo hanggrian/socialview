@@ -1,4 +1,4 @@
-package io.github.hendraanggrian.extraexample;
+package io.github.hendraanggrian.socialviewexample;
 
 import org.junit.Test;
 

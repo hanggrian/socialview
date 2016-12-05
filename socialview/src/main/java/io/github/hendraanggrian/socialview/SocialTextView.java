@@ -2,7 +2,7 @@ package io.github.hendraanggrian.socialview;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,25 +16,25 @@ public class SocialTextView extends TextView implements TextWatcher {
 
     private SocialView socialView;
 
-    public SocialTextView(Context context, @ColorInt int colorHashtag, @ColorInt int colorAt) {
+    public SocialTextView(Context context) {
         super(context);
-        this.socialView = new SocialView(colorHashtag, colorAt);
+        this.socialView = new SocialView(this, context);
     }
 
     public SocialTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.socialView = new SocialView(context, attrs);
+        this.socialView = new SocialView(this, context, attrs);
     }
 
     public SocialTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.socialView = new SocialView(context, attrs);
+        this.socialView = new SocialView(this, context, attrs);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public SocialTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        this.socialView = new SocialView(context, attrs);
+        this.socialView = new SocialView(this, context, attrs);
     }
 
     @Override
@@ -42,11 +42,17 @@ public class SocialTextView extends TextView implements TextWatcher {
     }
 
     @Override
-    public void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
-
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s.length() > 0)
+            socialView.eraseAndColorizeAllText(this, s);
     }
 
     @Override
     public void afterTextChanged(Editable s) {
+    }
+
+
+    public void setOnSocialClickListener(@NonNull SocialView.OnSocialClickListener listener) {
+        socialView.setOnClickListener(this, listener);
     }
 }

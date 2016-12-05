@@ -4,7 +4,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion "25"
     defaultConfig {
-        applicationId "io.github.hendraanggrian.extraexample"
+        applicationId "io.github.hendraanggrian.socialviewexample"
         minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
@@ -25,6 +25,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
 
     compile project(':socialview')
