@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SocialTextView">
-        <attr name="color_hashtag" format="color"/>
-        <attr name="color_at" format="color"/>
-        <attr name="additional_hashtag" format="string"/>
-        <attr name="additional_at" format="string"/>
+        <attr name="hashtagColor" format="color"/>
+        <attr name="atColor" format="color"/>
+        <attr name="hashtagEnabled" format="boolean"/>
+        <attr name="atEnabled" format="boolean"/>
     </declare-styleable>
 </resources>

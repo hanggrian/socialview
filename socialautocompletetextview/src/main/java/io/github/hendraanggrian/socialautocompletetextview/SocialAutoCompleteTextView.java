@@ -1,6 +1,7 @@
 package io.github.hendraanggrian.socialautocompletetextview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -34,6 +35,8 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
 
     private int hashtagColor;
     private int atColor;
+    private boolean hashtagEnabled;
+    private boolean atEnabled;
 
     private ArrayAdapter<String> hashtagAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line);
     private ArrayAdapter<String> atAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line);
@@ -64,26 +67,28 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
         getDefaultColor(context).subscribe(colorAccent -> {
             hashtagColor = colorAccent;
             atColor = colorAccent;
+            hashtagEnabled = true;
+            atEnabled = true;
         }, throwable -> {
         }, () -> {
-            setTokenizer(new SocialTokenizer());
+            setTokenizer(new SocialTokenizer(hashtagEnabled, atEnabled));
             refresh();
         });
     }
 
     private void init(@NonNull Context context, @NonNull AttributeSet attrs) {
-        getDefaultColor(context).subscribe(colorAccent ->
-                        Observable.just(context.getTheme().obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0))
-                                .subscribe(array -> {
-                                    hashtagColor = array.getColor(R.styleable.SocialTextView_color_hashtag, colorAccent);
-                                    atColor = array.getColor(R.styleable.SocialTextView_color_at, colorAccent);
-                                    array.recycle();
-                                })
-                , throwable -> {
-                }, () -> {
-                    setTokenizer(new SocialTokenizer());
-                    refresh();
-                });
+        getDefaultColor(context).subscribe(colorAccent -> {
+            TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0);
+            hashtagColor = array.getColor(R.styleable.SocialTextView_hashtagColor, colorAccent);
+            atColor = array.getColor(R.styleable.SocialTextView_atColor, colorAccent);
+            hashtagEnabled = array.getBoolean(R.styleable.SocialTextView_hashtagColor, true);
+            atEnabled = array.getBoolean(R.styleable.SocialTextView_atEnabled, true);
+            array.recycle();
+        }, throwable -> {
+        }, () -> {
+            setTokenizer(new SocialTokenizer(hashtagEnabled, atEnabled));
+            refresh();
+        });
     }
 
     @Override
@@ -91,31 +96,35 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
     }
 
     @Override
-    public void onTextChanged(CharSequence text, int start, int before, int count) {
-        if (text.length() > 0) {
-            Observable.just(text.charAt(text.length() - 1))
-                    .subscribe(character -> {
-                        switch (character) {
-                            case '#':
-                                setAdapter(hashtagAdapter);
-                                break;
-                            case '@':
-                                setAdapter(atAdapter);
-                                break;
-                        }
-                    });
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s.length() > 0) {
+            if (count == 1 && s.charAt(start) == '#')
+                setAdapter(hashtagAdapter);
+            else if (count == 1 && s.charAt(start) == '@')
+                setAdapter(atAdapter);
+
             Observable.just(this)
                     .map(TextView::getText)
-                    .map(charSequence -> (Spannable) charSequence)
+                    .map(text -> (Spannable) text)
                     .subscribe(
-                            spannable -> Observable.from(spannable.getSpans(0, text.length(), CharacterStyle.class)).forEach(spannable::removeSpan),
+                            spannable -> Observable.from(spannable.getSpans(0, s.length(), CharacterStyle.class)).forEach(spannable::removeSpan),
                             throwable -> {
-                            }, () -> setColorsToAllHashTags(text));
+                            }, () -> setColorsToAllHashTags(s));
         }
     }
 
     @Override
     public void afterTextChanged(Editable s) {
+    }
+
+    public void setHashtagEnabled(boolean hashtagEnabled) {
+        this.hashtagEnabled = hashtagEnabled;
+        setTokenizer(new SocialTokenizer(hashtagEnabled, atEnabled));
+    }
+
+    public void setAtEnabled(boolean atEnabled) {
+        this.atEnabled = atEnabled;
+        setTokenizer(new SocialTokenizer(hashtagEnabled, atEnabled));
     }
 
     public void addHashtagSuggestions(@NonNull String... hashtags) {
@@ -158,8 +167,9 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
 
     private Observable<Integer> getDefaultColor(@NonNull Context context) {
         final TypedValue value = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
-        return Observable.just(value.data);
+        return context.getTheme().resolveAttribute(R.attr.colorAccent, value, true)
+                ? Observable.just(value.data)
+                : Observable.just(getCurrentTextColor());
     }
 
     private void setColorsToAllHashTags(CharSequence text) {
@@ -233,10 +243,21 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
     }
 
     public static class SocialTokenizer implements Tokenizer {
+        private final boolean hashtagEnabled;
+        private final boolean atEnabled;
+
+        public SocialTokenizer(boolean hashtagEnabled, boolean atEnabled) {
+            this.hashtagEnabled = hashtagEnabled;
+            this.atEnabled = atEnabled;
+        }
+
         public int findTokenStart(CharSequence text, int cursor) {
             int i = cursor;
-            while (i > 0 && text.charAt(i - 1) != '#' && text.charAt(i - 1) != '@')
-                i--;
+            while (i > 0)
+                if (hashtagEnabled && text.charAt(i - 1) != '#')
+                    i--;
+                else if (atEnabled && text.charAt(i - 1) != '@')
+                    i--;
             while (i < cursor && text.charAt(i) == ' ')
                 i++;
             return i;
@@ -246,7 +267,9 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
             int i = cursor;
             int len = text.length();
             while (i < len)
-                if (text.charAt(i) == '#' || text.charAt(i) == '@')
+                if (hashtagEnabled && text.charAt(i) == '#')
+                    return i;
+                else if (atEnabled && text.charAt(i) == '@')
                     return i;
                 else
                     i++;
@@ -258,7 +281,9 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
             while (i > 0 && text.charAt(i - 1) == ' ')
                 i--;
 
-            if (i > 0 && text.charAt(i - 1) == '#' && text.charAt(i - 1) == '@') {
+            if (hashtagEnabled && i > 0 && text.charAt(i - 1) == '#') {
+                return text;
+            } else if (atEnabled && i > 0 && text.charAt(i - 1) == '@') {
                 return text;
             } else if (text instanceof Spanned) {
                 SpannableString sp = new SpannableString(text + " ");
