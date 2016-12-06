@@ -8,8 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/socialview" />
-            <option value="$PROJECT_DIR$/socialview-example" />
+            <option value="$PROJECT_DIR$/socialautocompletetextview" />
+            <option value="$PROJECT_DIR$/socialautocompletetextview-example" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
