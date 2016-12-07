@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
         classpath 'com.novoda:bintray-release:0.3.4'
     }
@@ -18,4 +18,25 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    ANDROID_BUILD_TOOLS = '25'
+    ANDROID_SDK_MIN = 11
+    ANDROID_SDK_TARGET = 24
+
+    JAVA_VERSION = JavaVersion.VERSION_1_8
+
+    CORE_SUPPORT_LIBRARY = '25.0.1'
+    CORE_RXJAVA = '1.1.6'
+
+    COMMONS_CIRCLE_IMAGE_VIEW = '2.1.0'
+    COMMONS_PICASSO = '2.5.2'
+
+    BINTRAY_USER_ORG = 'hendraanggrian'
+    BINTRAY_GROUP_ID = 'io.github.hendraanggrian'
+    BINTRAY_ARTIFACT_ID = 'extra'
+    BINTRAY_PUBLISH_VERSION = '0.7.0'
+    BINTRAY_DESC = 'Bind Android Intent extras using annotation.'
+    BINTRAY_WEBSITE = 'https://github.com/hendraanggrian/extra'
 }

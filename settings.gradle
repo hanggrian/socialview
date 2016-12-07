@@ -1,1 +1,1 @@
-include ':socialautocompletetextview', ':socialautocompletetextview-example'
+include ':socialview', ':socialview-commons', ':socialview-example'

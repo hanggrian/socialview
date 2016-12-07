@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion ANDROID_SDK_TARGET
+    buildToolsVersion ANDROID_BUILD_TOOLS
+    defaultConfig {
+        minSdkVersion ANDROID_SDK_MIN
+        targetSdkVersion ANDROID_SDK_TARGET
+    }
+    compileOptions {
+        sourceCompatibility JAVA_VERSION
+        targetCompatibility JAVA_VERSION
+    }
+}
+
+dependencies {
+    compile "de.hdodenhof:circleimageview:$rootProject.ext.COMMONS_CIRCLE_IMAGE_VIEW"
+    compile "com.squareup.picasso:picasso:$rootProject.ext.COMMONS_PICASSO"
+    compile project(':socialview')
+}
+
+publish {
+    userOrg = rootProject.ext.BINTRAY_USER_ORG
+    groupId = rootProject.ext.BINTRAY_GROUP_ID
+    artifactId = rootProject.ext.BINTRAY_ARTIFACT_ID
+    publishVersion = rootProject.ext.BINTRAY_PUBLISH_VERSION
+    desc = rootProject.ext.BINTRAY_DESC
+    website = rootProject.ext.BINTRAY_WEBSITE
+}
+
+//$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false
