@@ -174,7 +174,6 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
 
     private void setColorsToAllHashTags(CharSequence text) {
         int startIndexOfNextHashSign;
-
         int index = 0;
         while (index < text.length() - 1) {
             char sign = text.charAt(index);
@@ -184,7 +183,6 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
                 nextNotLetterDigitCharIndex = findNextValidHashTagChar(text, startIndexOfNextHashSign);
                 setColorForHashTagToTheEnd(text, startIndexOfNextHashSign, nextNotLetterDigitCharIndex);
             }
-
             index = nextNotLetterDigitCharIndex;
         }
     }
@@ -192,7 +190,6 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
     private int findNextValidHashTagChar(CharSequence text, int start) {
         int nonLetterDigitCharIndex = -1; // skip first sign '#"
         for (int index = start + 1; index < text.length(); index++) {
-
             char sign = text.charAt(index);
 
             boolean isValidSign = Character.isLetterOrDigit(sign);
@@ -201,11 +198,9 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
                 break;
             }
         }
-        if (nonLetterDigitCharIndex == -1) {
+        if (nonLetterDigitCharIndex == -1)
             // we didn't find non-letter. We are at the end of text
             nonLetterDigitCharIndex = text.length();
-        }
-
         return nonLetterDigitCharIndex;
     }
 
@@ -219,17 +214,13 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
     public List<String> getAllHashTags(@NonNull CharSequence text, boolean withHashes) {
         String original = text.toString();
         Spannable spannable = (Spannable) text;
-
         // use set to exclude duplicates
         Set<String> hashTags = new LinkedHashSet<>();
-
-        for (CharacterStyle span : spannable.getSpans(0, original.length(), CharacterStyle.class)) {
-            hashTags.add(
-                    original.substring(!withHashes ? spannable.getSpanStart(span) + 1/*skip "#" sign*/
-                                    : spannable.getSpanStart(span),
-                            spannable.getSpanEnd(span)));
-        }
-
+        for (CharacterStyle span : spannable.getSpans(0, original.length(), CharacterStyle.class))
+            hashTags.add(original.substring(!withHashes
+                            ? spannable.getSpanStart(span) + 1/*skip "#" sign*/
+                            : spannable.getSpanStart(span),
+                    spannable.getSpanEnd(span)));
         return new ArrayList<>(hashTags);
     }
 
@@ -243,8 +234,7 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
     }
 
     public static class SocialTokenizer implements Tokenizer {
-        private final boolean hashtagEnabled;
-        private final boolean atEnabled;
+        private final boolean hashtagEnabled, atEnabled;
 
         public SocialTokenizer(boolean hashtagEnabled, boolean atEnabled) {
             this.hashtagEnabled = hashtagEnabled;
