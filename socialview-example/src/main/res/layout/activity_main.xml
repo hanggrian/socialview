@@ -8,7 +8,7 @@
     android:padding="16dp"
     tools:context="io.github.hendraanggrian.socialviewexample.MainActivity">
 
-    <io.github.hendraanggrian.socialview.commons.SocialAutoCompleteTextView
+    <io.github.hendraanggrian.socialview.commons.SocialSuggestionEditText
         android:id="@+id/socialautocompletetextview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

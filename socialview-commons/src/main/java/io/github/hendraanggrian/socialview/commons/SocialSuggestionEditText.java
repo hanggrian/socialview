@@ -21,18 +21,16 @@ import java.util.List;
 
 import io.github.hendraanggrian.socialview.SocialView;
 import io.github.hendraanggrian.socialview.SocialViewBase;
-import io.github.hendraanggrian.socialview.commons.adapter.UsernameAdapter;
-import io.github.hendraanggrian.socialview.commons.model.Username;
 import rx.Observable;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implements SocialViewBase {
+public class SocialSuggestionEditText extends MultiAutoCompleteTextView implements SocialViewBase {
 
     private SocialView socialView;
     private ArrayAdapter<String> hashtagAdapter;
-    private UsernameAdapter usernameAdapter;
+    private ArrayAdapter usernameAdapter;
     private TextWatcher watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -63,23 +61,23 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
         }
     };
 
-    public SocialAutoCompleteTextView(Context context) {
+    public SocialSuggestionEditText(Context context) {
         super(context);
         init(context, null);
     }
 
-    public SocialAutoCompleteTextView(Context context, AttributeSet attrs) {
+    public SocialSuggestionEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public SocialAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SocialSuggestionEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public SocialAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public SocialSuggestionEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
     }
@@ -90,7 +88,7 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
         else
             socialView = new SocialView(this, context, attrs);
         hashtagAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line);
-        usernameAdapter = new UsernameAdapter(context, R.layout.item_username, R.id.textview_username);
+        usernameAdapter = new LabelAvatarAdapter(context);
 
         setTokenizer(new SocialTokenizer(isHashtagEnabled(), isUsernameEnabled()));
         setThreshold(1);
@@ -176,6 +174,10 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
         return socialView.getUsernames();
     }
 
+    public void setUsernameAdapter(@NonNull ArrayAdapter adapter){
+        usernameAdapter = adapter;
+    }
+
     public void addHashtagSuggestions(@NonNull String... suggestions) {
         hashtagAdapter.addAll(suggestions);
     }
@@ -186,10 +188,6 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
 
     public void clearHashtagSuggestions() {
         hashtagAdapter.clear();
-    }
-
-    public void addUsernameSuggestions(@NonNull Username... suggestions) {
-        usernameAdapter.add(suggestions);
     }
 
     private static class SocialTokenizer implements Tokenizer {
