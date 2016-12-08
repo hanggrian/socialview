@@ -27,5 +27,11 @@ coming soon
 Core
 ----
 
+<img src="/art/core1" width="256">
+<img src="/art/core2" width="256">
+
 Commons
 -------
+
+<img src="/art/commons1" width="256">
+<img src="/art/commons2" width="256">
