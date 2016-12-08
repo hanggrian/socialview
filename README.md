@@ -1,5 +1,5 @@
-SocialView: Coming Soon
-=======================
+![snippet](/art/snippet.png) SocialView
+=======================================
 
 ![demo](/art/demo.gif)
 
@@ -17,7 +17,7 @@ compile 'io.github.hendraanggrian:socialview-core:0.1.0'
 
 #### Commons
 
-The `commons` module contains `SocialSuggestionEditText` that displays hashtag and mention suggestions as you type.
+The `commons` module has all `core` module components plus `SocialSuggestionEditText` that displays hashtag and mention suggestions as you type.
 You can use custom model extending `Hashtagable` and `Mentionable`, or even use your adapter extending `SuggestionAdapter<Hashtagable>` and `SuggestionAdapter<Mentionable>`.
 
 ```gradle
