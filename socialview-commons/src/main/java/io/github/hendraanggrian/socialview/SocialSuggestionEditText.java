@@ -1,4 +1,4 @@
-package io.github.hendraanggrian.socialview.commons;
+package io.github.hendraanggrian.socialview;
 
 import android.content.Context;
 import android.os.Build;
@@ -13,14 +13,11 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.widget.ArrayAdapter;
 import android.widget.MultiAutoCompleteTextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.hendraanggrian.socialview.SocialView;
-import io.github.hendraanggrian.socialview.SocialViewBase;
 import rx.Observable;
 
 /**
@@ -29,8 +26,8 @@ import rx.Observable;
 public class SocialSuggestionEditText extends MultiAutoCompleteTextView implements SocialViewBase {
 
     private SocialView socialView;
-    private ArrayAdapter<String> hashtagAdapter;
-    private ArrayAdapter usernameAdapter;
+    private SuggestionAdapter<Hashtagable> hashtagAdapter;
+    private SuggestionAdapter<Mentionable> mentionAdapter;
     private TextWatcher watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -49,8 +46,8 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
                                     setAdapter(hashtagAdapter);
                                 break;
                             case '@':
-                                if (getAdapter() == null || getAdapter() != usernameAdapter)
-                                    setAdapter(usernameAdapter);
+                                if (getAdapter() == null || getAdapter() != mentionAdapter)
+                                    setAdapter(mentionAdapter);
                                 break;
                         }
                     });
@@ -87,10 +84,7 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
             socialView = new SocialView(this, context);
         else
             socialView = new SocialView(this, context, attrs);
-        hashtagAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line);
-        usernameAdapter = new LabelAvatarAdapter(context);
-
-        setTokenizer(new SocialTokenizer(isHashtagEnabled(), isUsernameEnabled()));
+        setTokenizer(new SocialTokenizer(isHashtagEnabled(), isMentionEnabled()));
         setThreshold(1);
         addTextChangedListener(watcher);
     }
@@ -106,13 +100,13 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
     }
 
     @Override
-    public void setUsernameColor(@ColorInt int color) {
-        socialView.setUsernameColor(color);
+    public void setMentionColor(@ColorInt int color) {
+        socialView.setMentionColor(color);
     }
 
     @Override
-    public void setUsernameColorRes(@ColorRes int colorRes) {
-        socialView.setUsernameColorRes(colorRes);
+    public void setMentionColorRes(@ColorRes int colorRes) {
+        socialView.setMentionColorRes(colorRes);
     }
 
     @Override
@@ -121,13 +115,18 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
     }
 
     @Override
-    public void setUsernameEnabled(boolean enabled) {
-        socialView.setUsernameEnabled(enabled);
+    public void setMentionEnabled(boolean enabled) {
+        socialView.setMentionEnabled(enabled);
     }
 
     @Override
-    public void setOnSocialClickListener(@Nullable SocialView.OnSocialClickListener listener) {
-        socialView.setOnSocialClickListener(listener);
+    public void setOnHashtagClickListener(@Nullable SocialView.OnSocialClickListener listener) {
+        socialView.setOnHashtagClickListener(listener);
+    }
+
+    @Override
+    public void setOnMentionClickListener(@Nullable SocialView.OnSocialClickListener listener) {
+        socialView.setOnMentionClickListener(listener);
     }
 
     @Override
@@ -136,8 +135,8 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
     }
 
     @Override
-    public int getUsernameColor() {
-        return socialView.getUsernameColor();
+    public int getMentionColor() {
+        return socialView.getMentionColor();
     }
 
     @Override
@@ -146,8 +145,8 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
     }
 
     @Override
-    public boolean isUsernameEnabled() {
-        return socialView.isUsernameEnabled();
+    public boolean isMentionEnabled() {
+        return socialView.isMentionEnabled();
     }
 
     @NonNull
@@ -158,36 +157,24 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
 
     @NonNull
     @Override
-    public List<String> getHashtags(boolean withSymbol) {
-        return socialView.getHashtags(withSymbol);
+    public List<String> getMentions() {
+        return socialView.getMentions();
     }
 
-    @NonNull
-    @Override
-    public List<String> getUsernames() {
-        return socialView.getHashtags();
+    public void setHashtagAdapter(@NonNull SuggestionAdapter<Hashtagable> adapter) {
+        hashtagAdapter = adapter;
     }
 
-    @NonNull
-    @Override
-    public List<String> getUsernames(boolean withSymbol) {
-        return socialView.getUsernames();
+    public SuggestionAdapter<Hashtagable> getHashtagAdapter() {
+        return hashtagAdapter;
     }
 
-    public void setUsernameAdapter(@NonNull ArrayAdapter adapter){
-        usernameAdapter = adapter;
+    public void setMentionAdapter(@NonNull SuggestionAdapter<Mentionable> adapter) {
+        mentionAdapter = adapter;
     }
 
-    public void addHashtagSuggestions(@NonNull String... suggestions) {
-        hashtagAdapter.addAll(suggestions);
-    }
-
-    public void removeHashtagSuggestions(@NonNull String... suggestions) {
-        Observable.from(suggestions).forEach(hashtagAdapter::remove);
-    }
-
-    public void clearHashtagSuggestions() {
-        hashtagAdapter.clear();
+    public SuggestionAdapter<Mentionable> getMentionAdapter() {
+        return mentionAdapter;
     }
 
     private static class SocialTokenizer implements Tokenizer {

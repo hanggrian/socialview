@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import rx.Observable;
 
-public final class ClickableForegroundColorSpan extends ClickableSpan {
+final class ClickableForegroundColorSpan extends ClickableSpan {
 
-    private final int color;
-    private final SocialView.OnSocialClickListener listener;
+    @ColorInt private final int color;
+    @NonNull private final SocialView.OnSocialClickListener listener;
 
-    public ClickableForegroundColorSpan(@ColorInt int color, @NonNull SocialView.OnSocialClickListener listener) {
+    ClickableForegroundColorSpan(@ColorInt int color, @NonNull SocialView.OnSocialClickListener listener) {
         this.color = color;
         this.listener = listener;
     }
@@ -32,9 +32,9 @@ public final class ClickableForegroundColorSpan extends ClickableSpan {
                 .map(TextView::getText)
                 .map(charSequence -> (Spanned) charSequence)
                 .subscribe(spanned -> {
-                    int start = spanned.getSpanStart(ClickableForegroundColorSpan.this);
+                    int start = spanned.getSpanStart(ClickableForegroundColorSpan.this) + 1;
                     int end = spanned.getSpanEnd(ClickableForegroundColorSpan.this);
-                    listener.onClick(spanned.subSequence(start + 1/*skip "#" sign*/, end).toString());
+                    listener.onClick(widget, spanned.subSequence(start, end).toString());
                 });
     }
 }

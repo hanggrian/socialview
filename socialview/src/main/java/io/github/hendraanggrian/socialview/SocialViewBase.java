@@ -16,35 +16,31 @@ public interface SocialViewBase {
 
     void setHashtagColorRes(@ColorRes int colorRes);
 
-    void setUsernameColor(@ColorInt int color);
+    void setMentionColor(@ColorInt int color);
 
-    void setUsernameColorRes(@ColorRes int colorRes);
+    void setMentionColorRes(@ColorRes int colorRes);
 
     void setHashtagEnabled(boolean enabled);
 
-    void setUsernameEnabled(boolean enabled);
+    void setMentionEnabled(boolean enabled);
 
-    void setOnSocialClickListener(@Nullable SocialView.OnSocialClickListener listener);
+    void setOnHashtagClickListener(@Nullable SocialView.OnSocialClickListener listener);
+
+    void setOnMentionClickListener(@Nullable SocialView.OnSocialClickListener listener);
 
     @ColorInt
     int getHashtagColor();
 
     @ColorInt
-    int getUsernameColor();
+    int getMentionColor();
 
     boolean isHashtagEnabled();
 
-    boolean isUsernameEnabled();
+    boolean isMentionEnabled();
 
     @NonNull
     List<String> getHashtags();
 
     @NonNull
-    List<String> getHashtags(boolean withSymbol);
-
-    @NonNull
-    List<String> getUsernames();
-
-    @NonNull
-    List<String> getUsernames(boolean withSymbol);
+    List<String> getMentions();
 }

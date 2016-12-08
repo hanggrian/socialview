@@ -2,8 +2,8 @@
 <resources>
     <declare-styleable name="SocialTextView">
         <attr name="hashtagColor" format="color"/>
-        <attr name="atColor" format="color"/>
+        <attr name="mentionColor" format="color"/>
         <attr name="hashtagEnabled" format="boolean"/>
-        <attr name="atEnabled" format="boolean"/>
+        <attr name="mentionEnabled" format="boolean"/>
     </declare-styleable>
 </resources>

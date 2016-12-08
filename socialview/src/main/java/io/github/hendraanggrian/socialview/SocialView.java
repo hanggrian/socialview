@@ -16,10 +16,13 @@ import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import rx.Observable;
 
@@ -28,31 +31,32 @@ import rx.Observable;
  */
 public final class SocialView implements SocialViewBase, TextWatcher {
 
+    @Nullable private static Pattern PATTERN_HASHTAG, PATTERN_MENTION;
+
     @NonNull private final TextView view;
 
-    private int hashtagColor;
-    private int atColor;
-    private boolean hashtagEnabled;
-    private boolean atEnabled;
-    @Nullable private OnSocialClickListener listener;
+    private int hashtagColor, mentionColor;
+    private boolean hashtagEnabled, mentionEnabled;
 
-    public SocialView(@NonNull TextView view, @NonNull Context context) {
+    @Nullable private OnSocialClickListener hashtagListener, mentionListener;
+
+    SocialView(@NonNull TextView view, @NonNull Context context) {
         this.view = view;
         this.hashtagColor = getDefaultColor(context);
-        this.atColor = getDefaultColor(context);
+        this.mentionColor = getDefaultColor(context);
         this.hashtagEnabled = true;
-        this.atEnabled = true;
+        this.mentionEnabled = true;
         view.addTextChangedListener(this);
         refresh();
     }
 
-    public SocialView(@NonNull TextView view, @NonNull Context context, @NonNull AttributeSet attrs) {
+    SocialView(@NonNull TextView view, @NonNull Context context, @NonNull AttributeSet attrs) {
         this.view = view;
         final TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0);
         this.hashtagColor = array.getColor(R.styleable.SocialTextView_hashtagColor, getDefaultColor(context));
-        this.atColor = array.getColor(R.styleable.SocialTextView_atColor, getDefaultColor(context));
+        this.mentionColor = array.getColor(R.styleable.SocialTextView_mentionColor, getDefaultColor(context));
         this.hashtagEnabled = array.getBoolean(R.styleable.SocialTextView_hashtagEnabled, true);
-        this.atEnabled = array.getBoolean(R.styleable.SocialTextView_atEnabled, true);
+        this.mentionEnabled = array.getBoolean(R.styleable.SocialTextView_mentionEnabled, true);
         array.recycle();
         view.addTextChangedListener(this);
         refresh();
@@ -69,13 +73,13 @@ public final class SocialView implements SocialViewBase, TextWatcher {
     }
 
     @Override
-    public void setUsernameColor(@ColorInt int color) {
-        this.atColor = color;
+    public void setMentionColor(@ColorInt int color) {
+        this.mentionColor = color;
     }
 
     @Override
-    public void setUsernameColorRes(@ColorRes int colorRes) {
-        this.atColor = ContextCompat.getColor(view.getContext(), colorRes);
+    public void setMentionColorRes(@ColorRes int colorRes) {
+        this.mentionColor = ContextCompat.getColor(view.getContext(), colorRes);
     }
 
     @Override
@@ -84,13 +88,19 @@ public final class SocialView implements SocialViewBase, TextWatcher {
     }
 
     @Override
-    public void setUsernameEnabled(boolean enabled) {
-        this.atEnabled = enabled;
+    public void setMentionEnabled(boolean enabled) {
+        this.mentionEnabled = enabled;
     }
 
     @Override
-    public void setOnSocialClickListener(@Nullable OnSocialClickListener listener) {
-        this.listener = listener;
+    public void setOnHashtagClickListener(@Nullable OnSocialClickListener listener) {
+        this.hashtagListener = listener;
+        refresh();
+    }
+
+    @Override
+    public void setOnMentionClickListener(@Nullable OnSocialClickListener listener) {
+        this.mentionListener = listener;
         refresh();
     }
 
@@ -100,8 +110,8 @@ public final class SocialView implements SocialViewBase, TextWatcher {
     }
 
     @Override
-    public int getUsernameColor() {
-        return atColor;
+    public int getMentionColor() {
+        return mentionColor;
     }
 
     @Override
@@ -110,48 +120,24 @@ public final class SocialView implements SocialViewBase, TextWatcher {
     }
 
     @Override
-    public boolean isUsernameEnabled() {
-        return atEnabled;
+    public boolean isMentionEnabled() {
+        return mentionEnabled;
     }
 
     @NonNull
     @Override
     public List<String> getHashtags() {
-        return getHashtags(false);
+        if (PATTERN_HASHTAG == null)
+            PATTERN_HASHTAG = Pattern.compile("#(\\w+)");
+        return extract(PATTERN_HASHTAG);
     }
 
     @NonNull
     @Override
-    public List<String> getHashtags(boolean withSymbol) {
-        String original = view.getText().toString();
-        Spannable spannable = (Spannable) view.getText();
-
-        List<String> hashTags = new ArrayList<>();
-        Observable.from(spannable.getSpans(0, original.length(), CharacterStyle.class))
-                .forEach(charStyle -> hashTags.add(original.substring(!withSymbol
-                        ? spannable.getSpanStart(charStyle) + 1/*skip "#" sign*/
-                        : spannable.getSpanStart(charStyle), spannable.getSpanEnd(charStyle))));
-        return hashTags;
-    }
-
-    @NonNull
-    @Override
-    public List<String> getUsernames() {
-        return getUsernames(false);
-    }
-
-    @NonNull
-    @Override
-    public List<String> getUsernames(boolean withSymbol) {
-        String original = view.getText().toString();
-        Spannable spannable = (Spannable) view.getText();
-
-        List<String> hashTags = new ArrayList<>();
-        Observable.from(spannable.getSpans(0, original.length(), CharacterStyle.class))
-                .forEach(charStyle -> hashTags.add(original.substring(!withSymbol
-                        ? spannable.getSpanStart(charStyle) + 1/*skip "#" sign*/
-                        : spannable.getSpanStart(charStyle), spannable.getSpanEnd(charStyle))));
-        return hashTags;
+    public List<String> getMentions() {
+        if (PATTERN_MENTION == null)
+            PATTERN_MENTION = Pattern.compile("@(\\w+)");
+        return extract(PATTERN_MENTION);
     }
 
     @Override
@@ -184,7 +170,7 @@ public final class SocialView implements SocialViewBase, TextWatcher {
 
     private void refresh() {
         view.setText(view.getText(), TextView.BufferType.SPANNABLE);
-        if (listener != null) {
+        if (hashtagListener != null || mentionListener != null) {
             view.setMovementMethod(LinkMovementMethod.getInstance());
             view.setHighlightColor(Color.TRANSPARENT);
         }
@@ -197,12 +183,19 @@ public final class SocialView implements SocialViewBase, TextWatcher {
         while (index < text.length() - 1) {
             char sign = text.charAt(index);
             int nextNotLetterDigitCharIndex = index + 1; // we assume it is next. if if was not changed by findNextValidHashTagChar then index will be incremented by 1
-            if (sign == '#' || sign == '@') {
+            if (sign == '#' && hashtagEnabled) {
                 startIndexOfNextHashSign = index;
                 nextNotLetterDigitCharIndex = findNextValidHashTagChar(text, startIndexOfNextHashSign);
-                ((Spannable) text).setSpan(listener != null
-                                ? new ClickableForegroundColorSpan(hashtagColor, listener)
+                ((Spannable) text).setSpan(hashtagListener != null
+                                ? new ClickableForegroundColorSpan(hashtagColor, hashtagListener)
                                 : new ForegroundColorSpan(hashtagColor)
+                        , startIndexOfNextHashSign, nextNotLetterDigitCharIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            } else if (sign == '@' && mentionEnabled) {
+                startIndexOfNextHashSign = index;
+                nextNotLetterDigitCharIndex = findNextValidHashTagChar(text, startIndexOfNextHashSign);
+                ((Spannable) text).setSpan(mentionListener != null
+                                ? new ClickableForegroundColorSpan(mentionColor, mentionListener)
+                                : new ForegroundColorSpan(mentionColor)
                         , startIndexOfNextHashSign, nextNotLetterDigitCharIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             index = nextNotLetterDigitCharIndex;
@@ -223,8 +216,21 @@ public final class SocialView implements SocialViewBase, TextWatcher {
         return nonLetterDigitCharIndex;
     }
 
+    @NonNull
+    private List<String> extract(Pattern pattern) {
+        final List<String> list = new ArrayList<>();
+        final Matcher matcher = pattern.matcher(view.getText().toString());
+        while (matcher.find())
+            list.add(matcher.group(1));
+        return list;
+    }
+
     public interface OnSocialClickListener {
 
-        void onClick(String hashTag);
+        void onClick(View view, String clicked);
+    }
+
+    public static SocialView attach(@NonNull TextView view) {
+        return new SocialView(view, view.getContext());
     }
 }
