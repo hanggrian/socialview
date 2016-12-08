@@ -2,3 +2,30 @@ SocialView: Coming Soon
 =======================
 
 ![demo](/art/demo.gif)
+
+Download
+--------
+
+### Core
+
+The `core` module comes with basic `SocialTextView`, `SocialEditText`.
+It also contains `SocialView` to implement hashtag and mention support to any view extending `TextView`.
+
+```gradle
+coming soon
+```
+
+### Commons
+
+The `commons` module contains `SocialSuggestionEditText` that displays hashtag and mention suggestions as you type.
+You can use custom model extending `Hashtagable` and `Mentionable`, or even use your adapter extending `SuggestionAdapter<Hashtagable>` and `SuggestionAdapter<Mentionable>`.
+
+```gradle
+coming soon
+```
+
+Core
+----
+
+Commons
+-------
