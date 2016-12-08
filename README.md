@@ -6,7 +6,7 @@ SocialView: Coming Soon
 Download
 --------
 
-### Core
+#### Core
 
 The `core` module comes with basic `SocialTextView` and `SocialEditText`.
 It also contains `SocialView` to implement hashtag and mention support to any view extending `TextView`.
@@ -15,7 +15,7 @@ It also contains `SocialView` to implement hashtag and mention support to any vi
 coming soon
 ```
 
-### Commons
+#### Commons
 
 The `commons` module contains `SocialSuggestionEditText` that displays hashtag and mention suggestions as you type.
 You can use custom model extending `Hashtagable` and `Mentionable`, or even use your adapter extending `SuggestionAdapter<Hashtagable>` and `SuggestionAdapter<Mentionable>`.
@@ -78,3 +78,40 @@ Commons
 
 <img src="/art/commons1.png" width="256">
 <img src="/art/commons2.png" width="256">
+
+Comes with `SocialSuggestionEditText` and all the interfaces, models, and adapters necessary to use it.
+
+```xml
+<io.github.hendraanggrian.socialview.SocialSuggestionEditText
+    android:id="@+id/socialsuggestionedittext"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="What's on your mind?"
+    app:hashtagColor="@color/blue" // if not set, color accent of current app theme is used
+    app:mentionColor="@color/red"  // if not set, color accent of current app theme is used
+    app:hashtagEnabled="true"      // true by default
+    app:mentionEnabled="false"     // true by default
+/>
+```
+
+To display suggestions, it is required to `setHashtagAdapter()` and `setMentionAdapter()`.
+
+```java
+SocialSuggestionEditText editText = (SocialSuggestionEditText) view.findViewById(R.id.socialsuggestionedittext);
+editText.setHashtagAdapter(new HashtagAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Hashtagable>
+editText.setMentionAdapter(new MentionAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Mentionable>
+
+// use default item Hashtag
+editText.getHashtagAdapter().add(new Hashtag("follow"));
+// a hashtag can have count
+editText.getHashtagAdapter().add(new Hashtag("followme", 1000));
+// or use custom model implementing Hashtagable
+editText.getHashtagAdapter().add(new Interest("followmeorillkillyou", 500));
+
+// use default item Mention
+editText.getMentionAdapter().add(new Mention("dirtyhobo"));
+// a mention can have display name and avatar (can be drawable or string url)
+editText.getMentionAdapter().add(new Mention("hobo", "Regular Hobo", R.mipmap.ic_launcher));
+// or use custom model implementing Mentionable
+editText.getMentionAdapter().add(new User("hendraanggrian", "Hendra Anggrian", "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"));
+```
