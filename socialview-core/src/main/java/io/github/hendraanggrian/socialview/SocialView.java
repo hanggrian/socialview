@@ -40,7 +40,7 @@ public final class SocialView implements SocialViewBase, TextWatcher {
 
     @Nullable private OnSocialClickListener hashtagListener, mentionListener;
 
-    SocialView(@NonNull TextView view, @NonNull Context context) {
+    protected SocialView(@NonNull TextView view, @NonNull Context context) {
         this.view = view;
         this.hashtagColor = getDefaultColor(context);
         this.mentionColor = getDefaultColor(context);
@@ -50,7 +50,7 @@ public final class SocialView implements SocialViewBase, TextWatcher {
         refresh();
     }
 
-    SocialView(@NonNull TextView view, @NonNull Context context, @NonNull AttributeSet attrs) {
+    protected SocialView(@NonNull TextView view, @NonNull Context context, @NonNull AttributeSet attrs) {
         this.view = view;
         final TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0);
         this.hashtagColor = array.getColor(R.styleable.SocialTextView_hashtagColor, getDefaultColor(context));

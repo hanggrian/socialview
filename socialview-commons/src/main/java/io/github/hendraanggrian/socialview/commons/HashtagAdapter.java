@@ -1,4 +1,4 @@
-package io.github.hendraanggrian.socialview;
+package io.github.hendraanggrian.socialview.commons;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import io.github.hendraanggrian.socialview.commons.R;
 import rx.Observable;
 
 /**

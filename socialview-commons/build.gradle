@@ -18,16 +18,15 @@ android {
 dependencies {
     compile "de.hdodenhof:circleimageview:$rootProject.ext.COMMONS_CIRCLE_IMAGE_VIEW"
     compile "com.squareup.picasso:picasso:$rootProject.ext.COMMONS_PICASSO"
-    compile project(':socialview')
+
+    compile project(':socialview-core')
 }
 
 publish {
     userOrg = rootProject.ext.BINTRAY_USER_ORG
     groupId = rootProject.ext.BINTRAY_GROUP_ID
-    artifactId = rootProject.ext.BINTRAY_ARTIFACT_ID
+    artifactId = rootProject.ext.BINTRAY_ARTIFACT_ID_COMMONS
     publishVersion = rootProject.ext.BINTRAY_PUBLISH_VERSION
     desc = rootProject.ext.BINTRAY_DESC
     website = rootProject.ext.BINTRAY_WEBSITE
 }
-
-//$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false

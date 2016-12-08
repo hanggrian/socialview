@@ -1,4 +1,4 @@
-package io.github.hendraanggrian.socialview;
+package io.github.hendraanggrian.socialview.commons;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -95,7 +96,7 @@ public abstract class SuggestionAdapter<T> extends ArrayAdapter<T> {
             if (constraint != null) {
                 suggestions.clear();
                 for (T item : tempItems)
-                    if (convertResultToString(item).toString().toLowerCase().contains(constraint.toString().toLowerCase()))
+                    if (convertResultToString(item).toString().toLowerCase(Locale.US).contains(constraint.toString().toLowerCase(Locale.US)))
                         suggestions.add(item);
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = suggestions;

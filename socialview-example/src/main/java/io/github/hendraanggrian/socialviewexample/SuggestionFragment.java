@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import io.github.hendraanggrian.socialview.Hashtag;
-import io.github.hendraanggrian.socialview.HashtagAdapter;
-import io.github.hendraanggrian.socialview.Mention;
-import io.github.hendraanggrian.socialview.MentionAdapter;
+import io.github.hendraanggrian.socialview.commons.Hashtag;
+import io.github.hendraanggrian.socialview.commons.HashtagAdapter;
+import io.github.hendraanggrian.socialview.commons.Mention;
+import io.github.hendraanggrian.socialview.commons.MentionAdapter;
 import io.github.hendraanggrian.socialview.SocialSuggestionEditText;
 import io.github.hendraanggrian.socialviewexample.model.Interest;
 import io.github.hendraanggrian.socialviewexample.model.User;

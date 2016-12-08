@@ -23,10 +23,8 @@ dependencies {
 publish {
     userOrg = rootProject.ext.BINTRAY_USER_ORG
     groupId = rootProject.ext.BINTRAY_GROUP_ID
-    artifactId = rootProject.ext.BINTRAY_ARTIFACT_ID
+    artifactId = rootProject.ext.BINTRAY_ARTIFACT_ID_CORE
     publishVersion = rootProject.ext.BINTRAY_PUBLISH_VERSION
     desc = rootProject.ext.BINTRAY_DESC
     website = rootProject.ext.BINTRAY_WEBSITE
 }
-
-//$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false

@@ -1,4 +1,4 @@
-package io.github.hendraanggrian.socialview;
+package io.github.hendraanggrian.socialview.commons;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import io.github.hendraanggrian.socialview.commons.R;
 import rx.Observable;
 
 /**

@@ -3,7 +3,7 @@ package io.github.hendraanggrian.socialviewexample.model;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import io.github.hendraanggrian.socialview.Mentionable;
+import io.github.hendraanggrian.socialview.commons.Mentionable;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)

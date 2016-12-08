@@ -18,6 +18,9 @@ import android.widget.MultiAutoCompleteTextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.hendraanggrian.socialview.commons.Hashtagable;
+import io.github.hendraanggrian.socialview.commons.Mentionable;
+import io.github.hendraanggrian.socialview.commons.SuggestionAdapter;
 import rx.Observable;
 
 /**
