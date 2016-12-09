@@ -1,5 +1,5 @@
-![snippet](/art/snippet.png) SocialView
-=======================================
+![logo](/art/logo.png) SocialView
+=================================
 
 ![demo](/art/demo.gif)
 
