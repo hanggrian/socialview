@@ -15,9 +15,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -153,11 +151,6 @@ public final class SocialView implements SocialViewBase, TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        Log.d("s", s.toString());
-        Log.d("start", String.valueOf(start));
-        Log.d("before", String.valueOf(before));
-        Log.d("count", String.valueOf(count));
-
         if (s.length() > 0) {
             final Spannable spannable = (Spannable) view.getText();
             for (CharacterStyle style : spannable.getSpans(0, s.length(), CharacterStyle.class))
@@ -177,9 +170,9 @@ public final class SocialView implements SocialViewBase, TextWatcher {
                             isHashtagEditing = false;
                             isMentionEditing = false;
                         } else if (onHashtagEditingListener != null && isHashtagEditing) {
-                            onHashtagEditingListener.onEditing(s.subSequence(indexOfPreviousSocialChar(s, 0, start) + 1, start + count).toString());
+                            onHashtagEditingListener.onEditing(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start) + 1, start + count).toString());
                         } else if (onMentionEditingListener != null && isMentionEditing) {
-                            onMentionEditingListener.onEditing(s.subSequence(indexOfPreviousSocialChar(s, 0, start) + 1, start + count).toString());
+                            onMentionEditingListener.onEditing(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start) + 1, start + count).toString());
                         }
                         break;
                 }
@@ -248,12 +241,12 @@ public final class SocialView implements SocialViewBase, TextWatcher {
 
     public interface OnSocialClickListener {
 
-        void onClick(View view, String clicked);
+        void onClick(TextView view, String clicked);
     }
 
     public interface OnSocialEditingListener {
 
-        void onEditing(String text);
+        void onEditing(TextView view, String text);
     }
 
     public static SocialView attach(@NonNull TextView view) {

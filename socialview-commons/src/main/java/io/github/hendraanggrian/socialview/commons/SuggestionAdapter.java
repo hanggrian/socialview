@@ -24,9 +24,9 @@ public abstract class SuggestionAdapter<T> extends ArrayAdapter<T> {
     @NonNull
     public abstract SuggestionFilter initializeFilter();
 
-    @NonNull protected final List<T> tempItems;
-    @NonNull protected final List<T> suggestions;
-    @NonNull protected final SuggestionFilter filter;
+    private final List<T> tempItems;
+    private final List<T> suggestions;
+    private final SuggestionFilter filter;
 
     public SuggestionAdapter(@NonNull Context context, int resource, int textViewResourceId) {
         super(context, resource, textViewResourceId, new ArrayList<T>());
@@ -69,19 +69,19 @@ public abstract class SuggestionAdapter<T> extends ArrayAdapter<T> {
         clear(true);
     }
 
-    protected void add(@NonNull T item, boolean affectTempItems) {
+    void add(@NonNull T item, boolean affectTempItems) {
         if (affectTempItems)
             tempItems.add(item);
         super.add(item);
     }
 
-    protected void clear(boolean affectTempItems) {
+    void clear(boolean affectTempItems) {
         if (affectTempItems)
             tempItems.clear();
         super.clear();
     }
 
-    protected abstract class SuggestionFilter extends Filter {
+    abstract class SuggestionFilter extends Filter {
 
         public abstract String getString(T item);
 

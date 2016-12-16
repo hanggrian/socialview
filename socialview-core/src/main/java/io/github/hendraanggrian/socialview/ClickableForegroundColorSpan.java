@@ -25,9 +25,10 @@ final class ClickableForegroundColorSpan extends ClickableSpan {
 
     @Override
     public void onClick(View widget) {
-        final Spanned spanned = (Spanned) ((TextView) widget).getText();
+        final TextView view = (TextView) widget;
+        final Spanned spanned = (Spanned) view.getText();
         final int start = spanned.getSpanStart(ClickableForegroundColorSpan.this) + 1;
         final int end = spanned.getSpanEnd(ClickableForegroundColorSpan.this);
-        listener.onClick(widget, spanned.subSequence(start, end).toString());
+        listener.onClick(view, spanned.subSequence(start, end).toString());
     }
 }

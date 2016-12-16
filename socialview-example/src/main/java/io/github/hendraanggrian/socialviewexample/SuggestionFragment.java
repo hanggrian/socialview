@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import io.github.hendraanggrian.socialview.SocialSuggestionEditText;
 import io.github.hendraanggrian.socialview.SocialView;
@@ -37,13 +38,13 @@ public class SuggestionFragment extends Fragment {
         editText.setMentionAdapter(new MentionAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Mentionable>
         editText.setOnHashtagEditingListener(new SocialView.OnSocialEditingListener() {
             @Override
-            public void onEditing(String text) {
+            public void onEditing(TextView view, String text) {
                 Log.d("#", text);
             }
         });
         editText.setOnMentionEditingListener(new SocialView.OnSocialEditingListener() {
             @Override
-            public void onEditing(String text) {
+            public void onEditing(TextView view, String text) {
                 Log.d("@", text);
             }
         });

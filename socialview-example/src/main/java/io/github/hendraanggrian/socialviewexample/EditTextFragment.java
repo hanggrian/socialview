@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import io.github.hendraanggrian.socialview.SocialEditText;
@@ -29,13 +30,13 @@ public class EditTextFragment extends Fragment {
         SocialEditText editText = (SocialEditText) view.findViewById(R.id.socialedittext);
         editText.setOnHashtagClickListener(new SocialView.OnSocialClickListener() {
             @Override
-            public void onClick(View view, String clicked) {
+            public void onClick(TextView view, String clicked) {
                 Toast.makeText(getContext(), "#" + clicked, Toast.LENGTH_SHORT).show();
             }
         });
         editText.setOnMentionClickListener(new SocialView.OnSocialClickListener() {
             @Override
-            public void onClick(View view, String clicked) {
+            public void onClick(TextView view, String clicked) {
                 Toast.makeText(getContext(), "@" + clicked, Toast.LENGTH_SHORT).show();
             }
         });
