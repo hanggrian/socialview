@@ -28,6 +28,10 @@ public interface SocialViewBase {
 
     void setOnMentionClickListener(@Nullable SocialView.OnSocialClickListener listener);
 
+    void setOnHashtagEditingListener(@Nullable SocialView.OnSocialEditingListener listener);
+
+    void setOnMentionEditingListener(@Nullable SocialView.OnSocialEditingListener listener);
+
     @ColorInt
     int getHashtagColor();
 

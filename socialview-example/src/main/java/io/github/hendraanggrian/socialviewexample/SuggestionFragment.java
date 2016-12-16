@@ -4,15 +4,17 @@ package io.github.hendraanggrian.socialviewexample;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import io.github.hendraanggrian.socialview.SocialSuggestionEditText;
+import io.github.hendraanggrian.socialview.SocialView;
 import io.github.hendraanggrian.socialview.commons.Hashtag;
 import io.github.hendraanggrian.socialview.commons.HashtagAdapter;
 import io.github.hendraanggrian.socialview.commons.Mention;
 import io.github.hendraanggrian.socialview.commons.MentionAdapter;
-import io.github.hendraanggrian.socialview.SocialSuggestionEditText;
 import io.github.hendraanggrian.socialviewexample.model.Interest;
 import io.github.hendraanggrian.socialviewexample.model.User;
 
@@ -33,6 +35,19 @@ public class SuggestionFragment extends Fragment {
         SocialSuggestionEditText editText = (SocialSuggestionEditText) view.findViewById(R.id.socialsuggestionedittext);
         editText.setHashtagAdapter(new HashtagAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Hashtagable>
         editText.setMentionAdapter(new MentionAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Mentionable>
+        editText.setOnHashtagEditingListener(new SocialView.OnSocialEditingListener() {
+            @Override
+            public void onEditing(String text) {
+                Log.d("#", text);
+            }
+        });
+        editText.setOnMentionEditingListener(new SocialView.OnSocialEditingListener() {
+            @Override
+            public void onEditing(String text) {
+                Log.d("@", text);
+            }
+        });
+
 
         // use default item Hashtag
         editText.getHashtagAdapter().add(new Hashtag("follow"));

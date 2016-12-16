@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class SocialTextView extends TextView implements SocialViewBase {
 
-    private final SocialView socialView;
+    @NonNull private final SocialView socialView;
 
     public SocialTextView(Context context) {
         super(context);
@@ -78,6 +78,16 @@ public class SocialTextView extends TextView implements SocialViewBase {
     @Override
     public void setOnMentionClickListener(@Nullable SocialView.OnSocialClickListener listener) {
         socialView.setOnMentionClickListener(listener);
+    }
+
+    @Override
+    public void setOnHashtagEditingListener(@Nullable SocialView.OnSocialEditingListener listener) {
+        socialView.setOnHashtagEditingListener(listener);
+    }
+
+    @Override
+    public void setOnMentionEditingListener(@Nullable SocialView.OnSocialEditingListener listener) {
+        socialView.setOnMentionEditingListener(listener);
     }
 
     @Override

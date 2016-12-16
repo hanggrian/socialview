@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
@@ -8,10 +7,6 @@ android {
     defaultConfig {
         minSdkVersion ANDROID_SDK_MIN
         targetSdkVersion ANDROID_SDK_TARGET
-    }
-    compileOptions {
-        sourceCompatibility JAVA_VERSION
-        targetCompatibility JAVA_VERSION
     }
 }
 

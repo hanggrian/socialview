@@ -22,14 +22,11 @@ task clean(type: Delete) {
 }
 
 ext {
-    ANDROID_BUILD_TOOLS = '25.0.1'
+    ANDROID_BUILD_TOOLS = '25.0.2'
     ANDROID_SDK_MIN = 11
     ANDROID_SDK_TARGET = 25
 
-    JAVA_VERSION = JavaVersion.VERSION_1_8
-
-    CORE_SUPPORT_LIBRARY = '25.0.1'
-    CORE_RXJAVA = '1.1.6'
+    CORE_SUPPORT_LIBRARY = '25.1.0'
 
     COMMONS_CIRCLE_IMAGE_VIEW = '2.1.0'
     COMMONS_PICASSO = '2.5.2'
@@ -38,7 +35,7 @@ ext {
     BINTRAY_GROUP_ID = 'io.github.hendraanggrian'
     BINTRAY_ARTIFACT_ID_CORE = 'socialview-core'
     BINTRAY_ARTIFACT_ID_COMMONS = 'socialview-commons'
-    BINTRAY_PUBLISH_VERSION = '0.1.0'
+    BINTRAY_PUBLISH_VERSION = '0.2.0'
     BINTRAY_DESC = 'Android TextView and EditText with hashtag and mention support.'
     BINTRAY_WEBSITE = 'https://github.com/hendraanggrian/socialview'
 }

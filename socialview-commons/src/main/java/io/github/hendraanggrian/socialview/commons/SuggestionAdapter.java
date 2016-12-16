@@ -29,7 +29,7 @@ public abstract class SuggestionAdapter<T> extends ArrayAdapter<T> {
     @NonNull protected final SuggestionFilter filter;
 
     public SuggestionAdapter(@NonNull Context context, int resource, int textViewResourceId) {
-        super(context, resource, textViewResourceId, new ArrayList<>());
+        super(context, resource, textViewResourceId, new ArrayList<T>());
         this.tempItems = new ArrayList<>();
         this.suggestions = new ArrayList<>();
         this.filter = initializeFilter();

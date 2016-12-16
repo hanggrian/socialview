@@ -10,8 +10,6 @@ import android.widget.TextView;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import rx.Observable;
-
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
@@ -33,15 +31,15 @@ public final class HashtagAdapter extends SuggestionAdapter<Hashtagable> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Observable.just(getItem(position)).filter(item -> item != null).subscribe(item -> {
+        final Hashtagable item = getItem(position);
+        if (item != null) {
             holder.textViewHashtag.setText(item.getHashtag());
-
             if (item.getHashtagCount() != null)
                 holder.textViewHashtagCount.setText(item.getHashtagCount() == 1
                         ? "1 post"
                         : String.format("%s posts", NumberFormat.getNumberInstance(Locale.US).format(item.getHashtagCount())));
             holder.textViewHashtagCount.setVisibility(item.getHashtagCount() == null ? View.GONE : View.VISIBLE);
-        });
+        }
         return convertView;
     }
 

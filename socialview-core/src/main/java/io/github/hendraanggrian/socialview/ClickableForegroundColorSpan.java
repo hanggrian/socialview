@@ -8,8 +8,6 @@ import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.TextView;
 
-import rx.Observable;
-
 final class ClickableForegroundColorSpan extends ClickableSpan {
 
     @ColorInt private final int color;
@@ -27,14 +25,9 @@ final class ClickableForegroundColorSpan extends ClickableSpan {
 
     @Override
     public void onClick(View widget) {
-        Observable.just(widget)
-                .map(view -> (TextView) view)
-                .map(TextView::getText)
-                .map(charSequence -> (Spanned) charSequence)
-                .subscribe(spanned -> {
-                    int start = spanned.getSpanStart(ClickableForegroundColorSpan.this) + 1;
-                    int end = spanned.getSpanEnd(ClickableForegroundColorSpan.this);
-                    listener.onClick(widget, spanned.subSequence(start, end).toString());
-                });
+        final Spanned spanned = (Spanned) ((TextView) widget).getText();
+        final int start = spanned.getSpanStart(ClickableForegroundColorSpan.this) + 1;
+        final int end = spanned.getSpanEnd(ClickableForegroundColorSpan.this);
+        listener.onClick(widget, spanned.subSequence(start, end).toString());
     }
 }

@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import rx.Observable;
-
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
@@ -44,7 +42,8 @@ public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Observable.just(getItem(position)).filter(item -> item != null).subscribe(item -> {
+        final Mentionable item = getItem(position);
+        if (item != null) {
             holder.textViewUsername.setText(item.getUsername());
 
             if (item.getAvatar() == null)
@@ -62,7 +61,7 @@ public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
             if (!TextUtils.isEmpty(item.getDisplayname()))
                 holder.textViewDisplayname.setText(item.getDisplayname());
             holder.textViewDisplayname.setVisibility(TextUtils.isEmpty(item.getDisplayname()) ? View.GONE : View.VISIBLE);
-        });
+        }
         return convertView;
     }
 

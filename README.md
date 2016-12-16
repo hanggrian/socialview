@@ -12,7 +12,7 @@ The `core` module comes with basic `SocialTextView` and `SocialEditText`.
 It also contains `SocialView` to implement hashtag and mention support to any view extending `TextView`.
 
 ```gradle
-compile 'io.github.hendraanggrian:socialview-core:0.1.0'
+compile 'io.github.hendraanggrian:socialview-core:0.2.0'
 ```
 
 #### Commons
@@ -21,7 +21,7 @@ The `commons` module has all `core` module components plus `SocialSuggestionEdit
 You can use custom model extending `Hashtagable` and `Mentionable`, or even use your adapter extending `SuggestionAdapter<Hashtagable>` and `SuggestionAdapter<Mentionable>`.
 
 ```gradle
-compile 'io.github.hendraanggrian:socialview-commons:0.1.0'
+compile 'io.github.hendraanggrian:socialview-commons:0.2.0'
 ```
 
 Core

@@ -21,75 +21,46 @@ import java.util.List;
 import io.github.hendraanggrian.socialview.commons.Hashtagable;
 import io.github.hendraanggrian.socialview.commons.Mentionable;
 import io.github.hendraanggrian.socialview.commons.SuggestionAdapter;
-import rx.Observable;
+
+import static io.github.hendraanggrian.socialview.SocialView.HASHTAG;
+import static io.github.hendraanggrian.socialview.SocialView.MENTION;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialSuggestionEditText extends MultiAutoCompleteTextView implements SocialViewBase {
+public class SocialSuggestionEditText extends MultiAutoCompleteTextView implements SocialViewBase, TextWatcher {
 
-    private SocialView socialView;
+    private final SocialView socialView;
     private SuggestionAdapter<Hashtagable> hashtagAdapter;
     private SuggestionAdapter<Mentionable> mentionAdapter;
-    private TextWatcher watcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            Observable.just(s)
-                    .filter(charSequence -> charSequence.length() > 0)
-                    .filter(charSequence -> count == 1)
-                    .map(charSequence -> charSequence.charAt(start))
-                    .subscribe(character -> {
-                        switch (character) {
-                            case '#':
-                                if (getAdapter() == null || getAdapter() != hashtagAdapter)
-                                    setAdapter(hashtagAdapter);
-                                break;
-                            case '@':
-                                if (getAdapter() == null || getAdapter() != mentionAdapter)
-                                    setAdapter(mentionAdapter);
-                                break;
-                        }
-                    });
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-        }
-    };
 
     public SocialSuggestionEditText(Context context) {
         super(context);
-        init(context, null);
+        socialView = new SocialView(this, context);
+        setTokenizer(new SocialTokenizer());
+        setThreshold(1);
     }
 
     public SocialSuggestionEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        socialView = new SocialView(this, context, attrs);
+        setTokenizer(new SocialTokenizer());
+        setThreshold(1);
     }
 
     public SocialSuggestionEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs);
+        socialView = new SocialView(this, context, attrs);
+        setTokenizer(new SocialTokenizer());
+        setThreshold(1);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public SocialSuggestionEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs);
-    }
-
-    private void init(@NonNull Context context, @Nullable AttributeSet attrs) {
-        if (attrs == null)
-            socialView = new SocialView(this, context);
-        else
-            socialView = new SocialView(this, context, attrs);
-        setTokenizer(new SocialTokenizer(isHashtagEnabled(), isMentionEnabled()));
+        socialView = new SocialView(this, context, attrs);
+        setTokenizer(new SocialTokenizer());
         setThreshold(1);
-        addTextChangedListener(watcher);
     }
 
     @Override
@@ -130,6 +101,16 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
     @Override
     public void setOnMentionClickListener(@Nullable SocialView.OnSocialClickListener listener) {
         socialView.setOnMentionClickListener(listener);
+    }
+
+    @Override
+    public void setOnHashtagEditingListener(@Nullable SocialView.OnSocialEditingListener listener) {
+        socialView.setOnHashtagEditingListener(listener);
+    }
+
+    @Override
+    public void setOnMentionEditingListener(@Nullable SocialView.OnSocialEditingListener listener) {
+        socialView.setOnMentionEditingListener(listener);
     }
 
     @Override
@@ -180,14 +161,37 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
         return mentionAdapter;
     }
 
-    private static class SocialTokenizer implements Tokenizer {
-        @NonNull private final List<Character> symbols = new ArrayList<>();
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
 
-        private SocialTokenizer(boolean hashtagEnabled, boolean atEnabled) {
-            if (hashtagEnabled)
-                symbols.add('#');
-            if (atEnabled)
-                symbols.add('@');
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s.length() > 0 && count == 1)
+            switch (s.charAt(start)) {
+                case HASHTAG:
+                    if (getAdapter() != hashtagAdapter)
+                        setAdapter(hashtagAdapter);
+                    break;
+                case MENTION:
+                    if (getAdapter() != mentionAdapter)
+                        setAdapter(mentionAdapter);
+                    break;
+            }
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+    }
+
+    private class SocialTokenizer implements Tokenizer {
+        private final List<Character> symbols = new ArrayList<>();
+
+        private SocialTokenizer() {
+            if (isHashtagEnabled())
+                symbols.add(HASHTAG);
+            if (isMentionEnabled())
+                symbols.add(MENTION);
         }
 
         public int findTokenStart(CharSequence text, int cursor) {
@@ -218,7 +222,7 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
             if (i > 0 && symbols.contains(text.charAt(i - 1))) {
                 return text;
             } else if (text instanceof Spanned) {
-                SpannableString sp = new SpannableString(text + " ");
+                final SpannableString sp = new SpannableString(text + " ");
                 TextUtils.copySpansFrom((Spanned) text, 0, text.length(), Object.class, sp, 0);
                 return sp;
             } else {
