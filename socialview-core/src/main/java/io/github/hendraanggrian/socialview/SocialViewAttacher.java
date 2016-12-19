@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public final class SocialView implements SocialViewBase, TextWatcher {
+public final class SocialViewAttacher implements SocialViewBase, TextWatcher {
 
     static final char HASHTAG = '#';
     static final char MENTION = '@';
@@ -39,68 +39,76 @@ public final class SocialView implements SocialViewBase, TextWatcher {
 
     private boolean isHashtagEditing, isMentionEditing;
 
-    SocialView(@NonNull TextView view, @NonNull Context context) {
-        this.view = view;
-        this.hashtagColor = getDefaultColor(context);
-        this.mentionColor = getDefaultColor(context);
-        this.hashtagEnabled = true;
-        this.mentionEnabled = true;
-        view.addTextChangedListener(this);
-        refresh();
+    SocialViewAttacher(@NonNull TextView view, @NonNull Context context) {
+        this(view, context, null);
     }
 
-    SocialView(@NonNull TextView view, @NonNull Context context, @NonNull AttributeSet attrs) {
+    SocialViewAttacher(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
         this.view = view;
-        final TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0);
-        this.hashtagColor = array.getColor(R.styleable.SocialTextView_hashtagColor, getDefaultColor(context));
-        this.mentionColor = array.getColor(R.styleable.SocialTextView_mentionColor, getDefaultColor(context));
-        this.hashtagEnabled = array.getBoolean(R.styleable.SocialTextView_hashtagEnabled, true);
-        this.mentionEnabled = array.getBoolean(R.styleable.SocialTextView_mentionEnabled, true);
-        array.recycle();
-        view.addTextChangedListener(this);
-        refresh();
+        this.view.setText(view.getText(), TextView.BufferType.SPANNABLE);
+        this.view.setMovementMethod(LinkMovementMethod.getInstance());
+        this.view.setHighlightColor(Color.TRANSPARENT);
+        this.view.addTextChangedListener(this);
+        if (attrs != null) {
+            final TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0);
+            this.hashtagColor = array.getColor(R.styleable.SocialTextView_hashtagColor, getDefaultColor(context));
+            this.mentionColor = array.getColor(R.styleable.SocialTextView_mentionColor, getDefaultColor(context));
+            this.hashtagEnabled = array.getBoolean(R.styleable.SocialTextView_hashtagEnabled, true);
+            this.mentionEnabled = array.getBoolean(R.styleable.SocialTextView_mentionEnabled, true);
+            array.recycle();
+        } else {
+            this.hashtagColor = getDefaultColor(context);
+            this.mentionColor = getDefaultColor(context);
+            this.hashtagEnabled = true;
+            this.mentionEnabled = true;
+        }
+        colorize();
     }
 
     @Override
     public void setHashtagColor(@ColorInt int color) {
         this.hashtagColor = color;
+        colorize();
     }
 
     @Override
     public void setHashtagColorRes(@ColorRes int colorRes) {
         this.hashtagColor = ContextCompat.getColor(view.getContext(), colorRes);
+        colorize();
     }
 
     @Override
     public void setMentionColor(@ColorInt int color) {
         this.mentionColor = color;
+        colorize();
     }
 
     @Override
     public void setMentionColorRes(@ColorRes int colorRes) {
         this.mentionColor = ContextCompat.getColor(view.getContext(), colorRes);
+        colorize();
     }
 
     @Override
     public void setHashtagEnabled(boolean enabled) {
         this.hashtagEnabled = enabled;
+        colorize();
     }
 
     @Override
     public void setMentionEnabled(boolean enabled) {
         this.mentionEnabled = enabled;
+        colorize();
     }
 
     @Override
     public void setOnHashtagClickListener(@Nullable OnSocialClickListener listener) {
         this.onHashtagClickListener = listener;
-        refresh();
     }
 
     @Override
     public void setOnMentionClickListener(@Nullable OnSocialClickListener listener) {
         this.onMentionClickListener = listener;
-        refresh();
     }
 
     @Override
@@ -190,12 +198,7 @@ public final class SocialView implements SocialViewBase, TextWatcher {
                 : view.getCurrentTextColor();
     }
 
-    private void refresh() {
-        view.setText(view.getText(), TextView.BufferType.SPANNABLE);
-        if (onHashtagClickListener != null || onMentionClickListener != null) {
-            view.setMovementMethod(LinkMovementMethod.getInstance());
-            view.setHighlightColor(Color.TRANSPARENT);
-        }
+    private void colorize() {
         colorize(view.getText());
     }
 
@@ -249,7 +252,7 @@ public final class SocialView implements SocialViewBase, TextWatcher {
         void onEditing(TextView view, String text);
     }
 
-    public static SocialView attach(@NonNull TextView view) {
-        return new SocialView(view, view.getContext());
+    public static SocialViewAttacher attach(@NonNull TextView view) {
+        return new SocialViewAttacher(view, view.getContext());
     }
 }

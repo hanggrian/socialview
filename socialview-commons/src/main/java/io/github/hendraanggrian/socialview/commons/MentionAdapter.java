@@ -47,9 +47,11 @@ public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
             holder.textViewUsername.setText(item.getUsername());
 
             if (item.getAvatar() == null)
-                picasso.load(defaultAvatar).into(holder.imageView);
+                picasso.load(defaultAvatar)
+                        .into(holder.imageView);
             else if (item.getAvatar() instanceof Integer)
-                picasso.load((int) item.getAvatar()).into(holder.imageView);
+                picasso.load((int) item.getAvatar())
+                        .into(holder.imageView);
             else if (item.getAvatar() instanceof String)
                 picasso.load((String) item.getAvatar())
                         .placeholder(defaultAvatar)
@@ -58,9 +60,12 @@ public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
             else
                 throw new RuntimeException("Mentionable avatar can only be String url and int resource.");
 
-            if (!TextUtils.isEmpty(item.getDisplayname()))
+            if (!TextUtils.isEmpty(item.getDisplayname())) {
                 holder.textViewDisplayname.setText(item.getDisplayname());
-            holder.textViewDisplayname.setVisibility(TextUtils.isEmpty(item.getDisplayname()) ? View.GONE : View.VISIBLE);
+                holder.textViewDisplayname.setVisibility(View.VISIBLE);
+            } else {
+                holder.textViewDisplayname.setVisibility(View.GONE);
+            }
         }
         return convertView;
     }
@@ -76,9 +81,9 @@ public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
         };
     }
 
-    private class ViewHolder {
-        @NonNull private final ImageView imageView;
-        @NonNull private final TextView textViewUsername, textViewDisplayname;
+    private static class ViewHolder {
+        private final ImageView imageView;
+        private final TextView textViewUsername, textViewDisplayname;
 
         private ViewHolder(@NonNull View view) {
             imageView = (ImageView) view.findViewById(R.id.imageview_username);

@@ -48,20 +48,21 @@ public abstract class SuggestionAdapter<T> extends ArrayAdapter<T> {
 
     @Override
     public void addAll(@NonNull Collection<? extends T> collection) {
-        tempItems.addAll(collection);
         super.addAll(collection);
+        tempItems.addAll(collection);
     }
 
     @Override
-    public void addAll(@NonNull T... items) {
-        Collections.addAll(tempItems, items);
+    @SafeVarargs
+    public final void addAll(@NonNull T... items) {
         super.addAll(items);
+        Collections.addAll(tempItems, items);
     }
 
     @Override
     public void remove(T object) {
-        tempItems.remove(object);
         super.remove(object);
+        tempItems.remove(object);
     }
 
     @Override
@@ -69,16 +70,16 @@ public abstract class SuggestionAdapter<T> extends ArrayAdapter<T> {
         clear(true);
     }
 
-    void add(@NonNull T item, boolean affectTempItems) {
+    private void add(@NonNull T item, boolean affectTempItems) {
+        super.add(item);
         if (affectTempItems)
             tempItems.add(item);
-        super.add(item);
     }
 
-    void clear(boolean affectTempItems) {
+    private void clear(boolean affectTempItems) {
+        super.clear();
         if (affectTempItems)
             tempItems.clear();
-        super.clear();
     }
 
     abstract class SuggestionFilter extends Filter {

@@ -22,35 +22,35 @@ import io.github.hendraanggrian.socialview.commons.Hashtagable;
 import io.github.hendraanggrian.socialview.commons.Mentionable;
 import io.github.hendraanggrian.socialview.commons.SuggestionAdapter;
 
-import static io.github.hendraanggrian.socialview.SocialView.HASHTAG;
-import static io.github.hendraanggrian.socialview.SocialView.MENTION;
+import static io.github.hendraanggrian.socialview.SocialViewAttacher.HASHTAG;
+import static io.github.hendraanggrian.socialview.SocialViewAttacher.MENTION;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class SocialSuggestionEditText extends MultiAutoCompleteTextView implements SocialViewBase, TextWatcher {
 
-    private final SocialView socialView;
+    private final SocialViewAttacher socialView;
     private SuggestionAdapter<Hashtagable> hashtagAdapter;
     private SuggestionAdapter<Mentionable> mentionAdapter;
 
     public SocialSuggestionEditText(Context context) {
         super(context);
-        socialView = new SocialView(this, context);
+        socialView = new SocialViewAttacher(this, context);
         setTokenizer(new SocialTokenizer());
         setThreshold(1);
     }
 
     public SocialSuggestionEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        socialView = new SocialView(this, context, attrs);
+        socialView = new SocialViewAttacher(this, context, attrs);
         setTokenizer(new SocialTokenizer());
         setThreshold(1);
     }
 
     public SocialSuggestionEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        socialView = new SocialView(this, context, attrs);
+        socialView = new SocialViewAttacher(this, context, attrs);
         setTokenizer(new SocialTokenizer());
         setThreshold(1);
     }
@@ -58,7 +58,7 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public SocialSuggestionEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        socialView = new SocialView(this, context, attrs);
+        socialView = new SocialViewAttacher(this, context, attrs);
         setTokenizer(new SocialTokenizer());
         setThreshold(1);
     }
@@ -94,22 +94,22 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
     }
 
     @Override
-    public void setOnHashtagClickListener(@Nullable SocialView.OnSocialClickListener listener) {
+    public void setOnHashtagClickListener(@Nullable SocialViewAttacher.OnSocialClickListener listener) {
         socialView.setOnHashtagClickListener(listener);
     }
 
     @Override
-    public void setOnMentionClickListener(@Nullable SocialView.OnSocialClickListener listener) {
+    public void setOnMentionClickListener(@Nullable SocialViewAttacher.OnSocialClickListener listener) {
         socialView.setOnMentionClickListener(listener);
     }
 
     @Override
-    public void setOnHashtagEditingListener(@Nullable SocialView.OnSocialEditingListener listener) {
+    public void setOnHashtagEditingListener(@Nullable SocialViewAttacher.OnSocialEditingListener listener) {
         socialView.setOnHashtagEditingListener(listener);
     }
 
     @Override
-    public void setOnMentionEditingListener(@Nullable SocialView.OnSocialEditingListener listener) {
+    public void setOnMentionEditingListener(@Nullable SocialViewAttacher.OnSocialEditingListener listener) {
         socialView.setOnMentionEditingListener(listener);
     }
 

@@ -24,13 +24,13 @@ public interface SocialViewBase {
 
     void setMentionEnabled(boolean enabled);
 
-    void setOnHashtagClickListener(@Nullable SocialView.OnSocialClickListener listener);
+    void setOnHashtagClickListener(@Nullable SocialViewAttacher.OnSocialClickListener listener);
 
-    void setOnMentionClickListener(@Nullable SocialView.OnSocialClickListener listener);
+    void setOnMentionClickListener(@Nullable SocialViewAttacher.OnSocialClickListener listener);
 
-    void setOnHashtagEditingListener(@Nullable SocialView.OnSocialEditingListener listener);
+    void setOnHashtagEditingListener(@Nullable SocialViewAttacher.OnSocialEditingListener listener);
 
-    void setOnMentionEditingListener(@Nullable SocialView.OnSocialEditingListener listener);
+    void setOnMentionEditingListener(@Nullable SocialViewAttacher.OnSocialEditingListener listener);
 
     @ColorInt
     int getHashtagColor();

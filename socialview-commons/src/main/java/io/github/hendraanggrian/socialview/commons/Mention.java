@@ -9,9 +9,9 @@ import android.support.annotation.Nullable;
  */
 public class Mention implements Mentionable {
 
-    @NonNull private final String username;
-    @Nullable private final String displayname;
-    @Nullable private final Object avatar;
+    @NonNull private String username;
+    @Nullable private String displayname;
+    @Nullable private Object avatar;
 
     public Mention(@NonNull String username) {
         this(username, null, (Object) null);
@@ -21,12 +21,12 @@ public class Mention implements Mentionable {
         this(username, displayname, (Object) null);
     }
 
-    public Mention(@NonNull String username, @Nullable String displayname, @Nullable String avatarUrl) {
-        this(username, displayname, (Object) avatarUrl);
-    }
-
     public Mention(@NonNull String username, @Nullable String displayname, @DrawableRes int avatarDrawable) {
         this(username, displayname, (Object) avatarDrawable);
+    }
+
+    public Mention(@NonNull String username, @Nullable String displayname, @Nullable String avatarUrl) {
+        this(username, displayname, (Object) avatarUrl);
     }
 
     private Mention(@NonNull String username, @Nullable String displayname, @Nullable Object avatar) {

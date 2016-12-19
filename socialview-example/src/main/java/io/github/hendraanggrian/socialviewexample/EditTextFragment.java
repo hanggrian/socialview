@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import io.github.hendraanggrian.socialview.SocialEditText;
-import io.github.hendraanggrian.socialview.SocialView;
+import io.github.hendraanggrian.socialview.SocialViewAttacher;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -28,13 +28,13 @@ public class EditTextFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         SocialEditText editText = (SocialEditText) view.findViewById(R.id.socialedittext);
-        editText.setOnHashtagClickListener(new SocialView.OnSocialClickListener() {
+        editText.setOnHashtagClickListener(new SocialViewAttacher.OnSocialClickListener() {
             @Override
             public void onClick(TextView view, String clicked) {
                 Toast.makeText(getContext(), "#" + clicked, Toast.LENGTH_SHORT).show();
             }
         });
-        editText.setOnMentionClickListener(new SocialView.OnSocialClickListener() {
+        editText.setOnMentionClickListener(new SocialViewAttacher.OnSocialClickListener() {
             @Override
             public void onClick(TextView view, String clicked) {
                 Toast.makeText(getContext(), "@" + clicked, Toast.LENGTH_SHORT).show();

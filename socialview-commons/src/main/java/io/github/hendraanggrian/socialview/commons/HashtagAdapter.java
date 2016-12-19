@@ -34,11 +34,15 @@ public final class HashtagAdapter extends SuggestionAdapter<Hashtagable> {
         final Hashtagable item = getItem(position);
         if (item != null) {
             holder.textViewHashtag.setText(item.getHashtag());
-            if (item.getHashtagCount() != null)
+
+            if (item.getHashtagCount() != null) {
                 holder.textViewHashtagCount.setText(item.getHashtagCount() == 1
                         ? "1 post"
                         : String.format("%s posts", NumberFormat.getNumberInstance(Locale.US).format(item.getHashtagCount())));
-            holder.textViewHashtagCount.setVisibility(item.getHashtagCount() == null ? View.GONE : View.VISIBLE);
+                holder.textViewHashtagCount.setVisibility(View.VISIBLE);
+            } else {
+                holder.textViewHashtagCount.setVisibility(View.GONE);
+            }
         }
         return convertView;
     }
@@ -54,8 +58,8 @@ public final class HashtagAdapter extends SuggestionAdapter<Hashtagable> {
         };
     }
 
-    private class ViewHolder {
-        @NonNull private final TextView textViewHashtag, textViewHashtagCount;
+    private static class ViewHolder {
+        private final TextView textViewHashtag, textViewHashtagCount;
 
         private ViewHolder(@NonNull View view) {
             textViewHashtag = (TextView) view.findViewById(R.id.textview_hashtag);
