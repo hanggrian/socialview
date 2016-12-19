@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public final class SocialViewAttacher implements SocialViewBase, TextWatcher {
+public final class SocialViewAttacher implements SocialView, TextWatcher {
 
     static final char HASHTAG = '#';
     static final char MENTION = '@';
@@ -47,7 +47,6 @@ public final class SocialViewAttacher implements SocialViewBase, TextWatcher {
         this.view = view;
         this.view.setText(view.getText(), TextView.BufferType.SPANNABLE);
         this.view.setMovementMethod(LinkMovementMethod.getInstance());
-        this.view.setHighlightColor(Color.TRANSPARENT);
         this.view.addTextChangedListener(this);
         if (attrs != null) {
             final TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0);
@@ -240,16 +239,6 @@ public final class SocialViewAttacher implements SocialViewBase, TextWatcher {
         while (matcher.find())
             list.add(matcher.group(1));
         return list;
-    }
-
-    public interface OnSocialClickListener {
-
-        void onClick(TextView view, String clicked);
-    }
-
-    public interface OnSocialEditingListener {
-
-        void onEditing(TextView view, String text);
     }
 
     public static SocialViewAttacher attach(@NonNull TextView view) {

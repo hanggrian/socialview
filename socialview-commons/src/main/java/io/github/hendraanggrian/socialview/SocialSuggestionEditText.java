@@ -28,29 +28,29 @@ import static io.github.hendraanggrian.socialview.SocialViewAttacher.MENTION;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialSuggestionEditText extends MultiAutoCompleteTextView implements SocialViewBase, TextWatcher {
+public class SocialSuggestionEditText extends MultiAutoCompleteTextView implements SocialView, TextWatcher {
 
-    private final SocialViewAttacher socialView;
+    private final SocialViewAttacher attacher;
     private SuggestionAdapter<Hashtagable> hashtagAdapter;
     private SuggestionAdapter<Mentionable> mentionAdapter;
 
     public SocialSuggestionEditText(Context context) {
         super(context);
-        socialView = new SocialViewAttacher(this, context);
+        attacher = new SocialViewAttacher(this, context);
         setTokenizer(new SocialTokenizer());
         setThreshold(1);
     }
 
     public SocialSuggestionEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        socialView = new SocialViewAttacher(this, context, attrs);
+        attacher = new SocialViewAttacher(this, context, attrs);
         setTokenizer(new SocialTokenizer());
         setThreshold(1);
     }
 
     public SocialSuggestionEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        socialView = new SocialViewAttacher(this, context, attrs);
+        attacher = new SocialViewAttacher(this, context, attrs);
         setTokenizer(new SocialTokenizer());
         setThreshold(1);
     }
@@ -58,91 +58,91 @@ public class SocialSuggestionEditText extends MultiAutoCompleteTextView implemen
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public SocialSuggestionEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        socialView = new SocialViewAttacher(this, context, attrs);
+        attacher = new SocialViewAttacher(this, context, attrs);
         setTokenizer(new SocialTokenizer());
         setThreshold(1);
     }
 
     @Override
     public void setHashtagColor(@ColorInt int color) {
-        socialView.setHashtagColor(color);
+        attacher.setHashtagColor(color);
     }
 
     @Override
     public void setHashtagColorRes(@ColorRes int colorRes) {
-        socialView.setHashtagColorRes(colorRes);
+        attacher.setHashtagColorRes(colorRes);
     }
 
     @Override
     public void setMentionColor(@ColorInt int color) {
-        socialView.setMentionColor(color);
+        attacher.setMentionColor(color);
     }
 
     @Override
     public void setMentionColorRes(@ColorRes int colorRes) {
-        socialView.setMentionColorRes(colorRes);
+        attacher.setMentionColorRes(colorRes);
     }
 
     @Override
     public void setHashtagEnabled(boolean enabled) {
-        socialView.setHashtagEnabled(enabled);
+        attacher.setHashtagEnabled(enabled);
     }
 
     @Override
     public void setMentionEnabled(boolean enabled) {
-        socialView.setMentionEnabled(enabled);
+        attacher.setMentionEnabled(enabled);
     }
 
     @Override
-    public void setOnHashtagClickListener(@Nullable SocialViewAttacher.OnSocialClickListener listener) {
-        socialView.setOnHashtagClickListener(listener);
+    public void setOnHashtagClickListener(@Nullable OnSocialClickListener listener) {
+        attacher.setOnHashtagClickListener(listener);
     }
 
     @Override
-    public void setOnMentionClickListener(@Nullable SocialViewAttacher.OnSocialClickListener listener) {
-        socialView.setOnMentionClickListener(listener);
+    public void setOnMentionClickListener(@Nullable OnSocialClickListener listener) {
+        attacher.setOnMentionClickListener(listener);
     }
 
     @Override
-    public void setOnHashtagEditingListener(@Nullable SocialViewAttacher.OnSocialEditingListener listener) {
-        socialView.setOnHashtagEditingListener(listener);
+    public void setOnHashtagEditingListener(@Nullable OnSocialEditingListener listener) {
+        attacher.setOnHashtagEditingListener(listener);
     }
 
     @Override
-    public void setOnMentionEditingListener(@Nullable SocialViewAttacher.OnSocialEditingListener listener) {
-        socialView.setOnMentionEditingListener(listener);
+    public void setOnMentionEditingListener(@Nullable OnSocialEditingListener listener) {
+        attacher.setOnMentionEditingListener(listener);
     }
 
     @Override
     public int getHashtagColor() {
-        return socialView.getHashtagColor();
+        return attacher.getHashtagColor();
     }
 
     @Override
     public int getMentionColor() {
-        return socialView.getMentionColor();
+        return attacher.getMentionColor();
     }
 
     @Override
     public boolean isHashtagEnabled() {
-        return socialView.isHashtagEnabled();
+        return attacher.isHashtagEnabled();
     }
 
     @Override
     public boolean isMentionEnabled() {
-        return socialView.isMentionEnabled();
+        return attacher.isMentionEnabled();
     }
 
     @NonNull
     @Override
     public List<String> getHashtags() {
-        return socialView.getHashtags();
+        return attacher.getHashtags();
     }
 
     @NonNull
     @Override
     public List<String> getMentions() {
-        return socialView.getMentions();
+        return attacher.getMentions();
     }
 
     public void setHashtagAdapter(@NonNull SuggestionAdapter<Hashtagable> adapter) {

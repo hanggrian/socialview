@@ -11,9 +11,9 @@ import android.widget.TextView;
 final class ClickableForegroundColorSpan extends ClickableSpan {
 
     @ColorInt private final int color;
-    @NonNull private final SocialViewAttacher.OnSocialClickListener listener;
+    @NonNull private final SocialView.OnSocialClickListener listener;
 
-    ClickableForegroundColorSpan(@ColorInt int color, @NonNull SocialViewAttacher.OnSocialClickListener listener) {
+    ClickableForegroundColorSpan(@ColorInt int color, @NonNull SocialView.OnSocialClickListener listener) {
         this.color = color;
         this.listener = listener;
     }

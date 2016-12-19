@@ -4,13 +4,14 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.TextView;
 
 import java.util.List;
 
 /**
  * @author Hendra Anggian (hendraanggrian@gmail.com)
  */
-public interface SocialViewBase {
+public interface SocialView {
 
     void setHashtagColor(@ColorInt int color);
 
@@ -24,13 +25,13 @@ public interface SocialViewBase {
 
     void setMentionEnabled(boolean enabled);
 
-    void setOnHashtagClickListener(@Nullable SocialViewAttacher.OnSocialClickListener listener);
+    void setOnHashtagClickListener(@Nullable OnSocialClickListener listener);
 
-    void setOnMentionClickListener(@Nullable SocialViewAttacher.OnSocialClickListener listener);
+    void setOnMentionClickListener(@Nullable OnSocialClickListener listener);
 
-    void setOnHashtagEditingListener(@Nullable SocialViewAttacher.OnSocialEditingListener listener);
+    void setOnHashtagEditingListener(@Nullable OnSocialEditingListener listener);
 
-    void setOnMentionEditingListener(@Nullable SocialViewAttacher.OnSocialEditingListener listener);
+    void setOnMentionEditingListener(@Nullable OnSocialEditingListener listener);
 
     @ColorInt
     int getHashtagColor();
@@ -47,4 +48,14 @@ public interface SocialViewBase {
 
     @NonNull
     List<String> getMentions();
+
+    interface OnSocialClickListener {
+
+        void onClick(TextView view, String clicked);
+    }
+
+    interface OnSocialEditingListener {
+
+        void onEditing(TextView view, String text);
+    }
 }

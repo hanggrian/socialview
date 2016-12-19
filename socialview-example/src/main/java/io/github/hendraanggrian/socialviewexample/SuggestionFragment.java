@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import io.github.hendraanggrian.socialview.SocialSuggestionEditText;
-import io.github.hendraanggrian.socialview.SocialViewAttacher;
+import io.github.hendraanggrian.socialview.SocialView;
 import io.github.hendraanggrian.socialview.commons.Hashtag;
 import io.github.hendraanggrian.socialview.commons.HashtagAdapter;
 import io.github.hendraanggrian.socialview.commons.Mention;
@@ -36,13 +36,13 @@ public class SuggestionFragment extends Fragment {
         SocialSuggestionEditText editText = (SocialSuggestionEditText) view.findViewById(R.id.socialsuggestionedittext);
         editText.setHashtagAdapter(new HashtagAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Hashtagable>
         editText.setMentionAdapter(new MentionAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Mentionable>
-        editText.setOnHashtagEditingListener(new SocialViewAttacher.OnSocialEditingListener() {
+        editText.setOnHashtagEditingListener(new SocialView.OnSocialEditingListener() {
             @Override
             public void onEditing(TextView view, String text) {
                 Log.d("#", text);
             }
         });
-        editText.setOnMentionEditingListener(new SocialViewAttacher.OnSocialEditingListener() {
+        editText.setOnMentionEditingListener(new SocialView.OnSocialEditingListener() {
             @Override
             public void onEditing(TextView view, String text) {
                 Log.d("@", text);

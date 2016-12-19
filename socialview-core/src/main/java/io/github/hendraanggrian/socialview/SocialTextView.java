@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialTextView extends TextView implements SocialViewBase {
+public class SocialTextView extends TextView implements SocialView {
 
     private final SocialViewAttacher attacher;
 
@@ -71,22 +71,22 @@ public class SocialTextView extends TextView implements SocialViewBase {
     }
 
     @Override
-    public void setOnHashtagClickListener(@Nullable SocialViewAttacher.OnSocialClickListener listener) {
+    public void setOnHashtagClickListener(@Nullable OnSocialClickListener listener) {
         attacher.setOnHashtagClickListener(listener);
     }
 
     @Override
-    public void setOnMentionClickListener(@Nullable SocialViewAttacher.OnSocialClickListener listener) {
+    public void setOnMentionClickListener(@Nullable OnSocialClickListener listener) {
         attacher.setOnMentionClickListener(listener);
     }
 
     @Override
-    public void setOnHashtagEditingListener(@Nullable SocialViewAttacher.OnSocialEditingListener listener) {
+    public void setOnHashtagEditingListener(@Nullable OnSocialEditingListener listener) {
         attacher.setOnHashtagEditingListener(listener);
     }
 
     @Override
-    public void setOnMentionEditingListener(@Nullable SocialViewAttacher.OnSocialEditingListener listener) {
+    public void setOnMentionEditingListener(@Nullable OnSocialEditingListener listener) {
         attacher.setOnMentionEditingListener(listener);
     }
 

@@ -21,7 +21,7 @@ The `commons` module has all `core` module components plus `SocialSuggestionEdit
 You can use custom model extending `Hashtagable` and `Mentionable`, or even use your adapter extending `SuggestionAdapter<Hashtagable>` and `SuggestionAdapter<Mentionable>`.
 
 ```gradle
-compile 'io.github.hendraanggrian:socialview-commons:0.2.1'
+compile 'io.github.hendraanggrian:socialview-commons:0.2.2'
 ```
 
 Core
@@ -66,10 +66,10 @@ Note that `SocialTextView` and `SocialEditText` are basically just `TextView` an
 
 ```java
 CustomTextView textView = ...;
-SocialView socialView = SocialView.attach(textView);
-socialView.setHashtagColorRes(R.color.red);
-socialView.setMentionEnabled(false);
-socialView.setOnHashtagClickListener((view, clicked) -> {});
+SocialViewAttacher attacher = SocialViewAttacher.attach(textView);
+attacher.setHashtagColorRes(R.color.red);
+attacher.setMentionEnabled(false);
+attacher.setOnHashtagClickListener((view, clicked) -> {});
 // etc.
 ```
 
