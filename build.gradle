@@ -32,7 +32,7 @@ ext {
     BINTRAY_GROUP_ID = 'io.github.hendraanggrian'
     BINTRAY_ARTIFACT_ID_CORE = 'socialview-core'
     BINTRAY_ARTIFACT_ID_COMMONS = 'socialview-commons'
-    BINTRAY_PUBLISH_VERSION = '0.2.4'
+    BINTRAY_PUBLISH_VERSION = '0.2.5'
     BINTRAY_DESC = 'Android TextView and EditText with hashtag and mention support.'
     BINTRAY_WEBSITE = 'https://github.com/hendraanggrian/socialview'
 }

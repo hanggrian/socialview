@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <public name="ic_placeholder_mention" type="drawable"/>
+    <public name="item_hashtag" type="layout"/>
+    <public name="item_mention" type="layout"/>
 </resources>
