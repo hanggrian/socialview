@@ -25,7 +25,7 @@ public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
     }
 
     public MentionAdapter(@NonNull Context context, @DrawableRes int defaultAvatar) {
-        super(context, R.layout.item_mention, R.id.textview_username);
+        super(context, R.layout.item_mention, R.id.textview_mention_username);
         this.picasso = Picasso.with(context);
         this.defaultAvatar = defaultAvatar;
     }
@@ -86,9 +86,9 @@ public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
         private final TextView textViewUsername, textViewDisplayname;
 
         private ViewHolder(@NonNull View view) {
-            imageView = (ImageView) view.findViewById(R.id.imageview_username);
-            textViewUsername = (TextView) view.findViewById(R.id.textview_username);
-            textViewDisplayname = (TextView) view.findViewById(R.id.textview_displayname);
+            imageView = (ImageView) view.findViewById(R.id.imageview_mention_username);
+            textViewUsername = (TextView) view.findViewById(R.id.textview_mention_username);
+            textViewDisplayname = (TextView) view.findViewById(R.id.textview_mention_displayname);
         }
     }
 }

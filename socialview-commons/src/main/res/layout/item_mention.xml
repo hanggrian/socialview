@@ -7,7 +7,7 @@
     android:orientation="horizontal">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageview_username"
+        android:id="@+id/imageview_mention_username"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginLeft="12dp"
@@ -20,7 +20,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textview_displayname"
+            android:id="@+id/textview_mention_displayname"
             style="?android:attr/dropDownItemStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large"/>
 
         <TextView
-            android:id="@+id/textview_username"
+            android:id="@+id/textview_mention_username"
             style="?android:attr/dropDownItemStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

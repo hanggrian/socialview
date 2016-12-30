@@ -16,7 +16,7 @@ import java.util.Locale;
 public final class HashtagAdapter extends SuggestionAdapter<Hashtagable> {
 
     public HashtagAdapter(@NonNull Context context) {
-        super(context, R.layout.item_hashtag, R.id.textview_hashtag);
+        super(context, R.layout.item_hashtag, R.id.textview_hashtag_value);
     }
 
     @NonNull
@@ -62,8 +62,8 @@ public final class HashtagAdapter extends SuggestionAdapter<Hashtagable> {
         private final TextView textViewHashtag, textViewHashtagCount;
 
         private ViewHolder(@NonNull View view) {
-            textViewHashtag = (TextView) view.findViewById(R.id.textview_hashtag);
-            textViewHashtagCount = (TextView) view.findViewById(R.id.textview_hashtagcount);
+            textViewHashtag = (TextView) view.findViewById(R.id.textview_hashtag_value);
+            textViewHashtagCount = (TextView) view.findViewById(R.id.textview_hashtag_count);
         }
     }
 }
