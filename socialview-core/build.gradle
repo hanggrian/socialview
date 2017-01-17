@@ -2,23 +2,32 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion ANDROID_SDK_TARGET
-    buildToolsVersion ANDROID_BUILD_TOOLS
+    compileSdkVersion rootProject.android.sdk.target
+    buildToolsVersion rootProject.android.buildTools
     defaultConfig {
-        minSdkVersion ANDROID_SDK_MIN
-        targetSdkVersion ANDROID_SDK_TARGET
+        minSdkVersion rootProject.android.sdk.min
+        targetSdkVersion rootProject.android.sdk.target
+        testInstrumentationRunner rootProject.android.testRunner
     }
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:$rootProject.ext.CORE_SUPPORT_LIBRARY"
+    deps.test.each {
+        testCompile it
+    }
+    deps.androidTest.each {
+        androidTestCompile it
+    }
+    deps.core.each {
+        compile it
+    }
 }
 
 publish {
-    userOrg = rootProject.ext.BINTRAY_USER_ORG
-    groupId = rootProject.ext.BINTRAY_GROUP_ID
-    artifactId = rootProject.ext.BINTRAY_ARTIFACT_ID_CORE
-    publishVersion = rootProject.ext.BINTRAY_PUBLISH_VERSION
-    desc = rootProject.ext.BINTRAY_DESC
-    website = rootProject.ext.BINTRAY_WEBSITE
+    userOrg = bintray.user
+    groupId = bintray.group
+    artifactId = bintray.artifact.core
+    publishVersion = bintray.version
+    desc = bintray.desc
+    website = bintray.website
 }

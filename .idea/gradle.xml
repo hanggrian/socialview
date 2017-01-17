@@ -10,7 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/socialview-commons" />
             <option value="$PROJECT_DIR$/socialview-core" />
-            <option value="$PROJECT_DIR$/socialview-example" />
+            <option value="$PROJECT_DIR$/socialview-demo" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

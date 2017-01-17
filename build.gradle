@@ -18,24 +18,42 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-ext {
-    ANDROID_BUILD_TOOLS = '25.0.2'
-    ANDROID_SDK_MIN = 11
-    ANDROID_SDK_TARGET = 25
+ext.android = [
+        sdk       : [
+                'min'   : 11,
+                'target': 25
+        ],
+        buildTools: '25.0.2',
+        testRunner: 'android.support.test.runner.AndroidJUnitRunner'
+]
 
-    CORE_SUPPORT_LIBRARY = '25.1.0'
+ext.deps = [
+        test       : [
+                'junit:junit:4.12'
+        ],
+        androidTest: [
+                'com.android.support.test:runner:0.5',
+                'com.android.support.test.espresso:espresso-core:2.2.2'
+        ],
+        core       : [
+                'com.android.support:appcompat-v7:25.1.0'
+        ],
+        commons    : [
+                'com.squareup.picasso:picasso:2.5.2'
+        ]
+]
 
-    COMMONS_CIRCLE_IMAGE_VIEW = '2.1.0'
-    COMMONS_PICASSO = '2.5.2'
-
-    BINTRAY_USER_ORG = 'hendraanggrian'
-    BINTRAY_GROUP_ID = 'io.github.hendraanggrian'
-    BINTRAY_ARTIFACT_ID_CORE = 'socialview-core'
-    BINTRAY_ARTIFACT_ID_COMMONS = 'socialview-commons'
-    BINTRAY_PUBLISH_VERSION = '0.2.6'
-    BINTRAY_DESC = 'Android TextView and EditText with hashtag and mention support.'
-    BINTRAY_WEBSITE = 'https://github.com/hendraanggrian/socialview'
-}
+ext.bintray = [
+        user    : 'hendraanggrian',
+        group   : 'io.github.hendraanggrian',
+        artifact: [
+                'core'   : 'socialview-core',
+                'commons': 'socialview-commons'
+        ],
+        version : '0.2.7',
+        desc    : 'Android TextView and EditText with hashtag and mention support.',
+        website : 'https://github.com/hendraanggrian/socialview'
+]
 
 //$ ./gradlew socialview-core:bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false
 //$ ./gradlew socialview-commons:bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false

@@ -2,26 +2,33 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion ANDROID_SDK_TARGET
-    buildToolsVersion ANDROID_BUILD_TOOLS
+    compileSdkVersion rootProject.android.sdk.target
+    buildToolsVersion rootProject.android.buildTools
     defaultConfig {
-        minSdkVersion ANDROID_SDK_MIN
-        targetSdkVersion ANDROID_SDK_TARGET
+        minSdkVersion rootProject.android.sdk.min
+        targetSdkVersion rootProject.android.sdk.target
+        testInstrumentationRunner rootProject.android.testRunner
     }
 }
 
 dependencies {
-    compile "de.hdodenhof:circleimageview:$rootProject.ext.COMMONS_CIRCLE_IMAGE_VIEW"
-    compile "com.squareup.picasso:picasso:$rootProject.ext.COMMONS_PICASSO"
-
+    deps.test.each {
+        testCompile it
+    }
+    deps.androidTest.each {
+        androidTestCompile it
+    }
+    deps.commons.each {
+        compile it
+    }
     compile project(':socialview-core')
 }
 
 publish {
-    userOrg = rootProject.ext.BINTRAY_USER_ORG
-    groupId = rootProject.ext.BINTRAY_GROUP_ID
-    artifactId = rootProject.ext.BINTRAY_ARTIFACT_ID_COMMONS
-    publishVersion = rootProject.ext.BINTRAY_PUBLISH_VERSION
-    desc = rootProject.ext.BINTRAY_DESC
-    website = rootProject.ext.BINTRAY_WEBSITE
+    userOrg = bintray.user
+    groupId = bintray.group
+    artifactId = bintray.artifact.commons
+    publishVersion = bintray.version
+    desc = bintray.desc
+    website = bintray.website
 }

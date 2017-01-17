@@ -11,13 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
 
-    @NonNull private final Picasso picasso;
     @DrawableRes private final int defaultAvatar;
 
     public MentionAdapter(@NonNull Context context) {
@@ -26,7 +26,6 @@ public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
 
     public MentionAdapter(@NonNull Context context, @DrawableRes int defaultAvatar) {
         super(context, R.layout.item_mention, R.id.textview_mention_username);
-        this.picasso = Picasso.with(context);
         this.defaultAvatar = defaultAvatar;
     }
 
@@ -46,19 +45,23 @@ public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
         if (item != null) {
             holder.textViewUsername.setText(item.getUsername());
 
+            final RequestCreator request;
             if (item.getAvatar() == null)
-                picasso.load(defaultAvatar)
-                        .into(holder.imageView);
+                request = Picasso.with(getContext())
+                        .load(defaultAvatar);
             else if (item.getAvatar() instanceof Integer)
-                picasso.load((int) item.getAvatar())
-                        .into(holder.imageView);
+                request = Picasso.with(getContext())
+                        .load((int) item.getAvatar());
             else if (item.getAvatar() instanceof String)
-                picasso.load((String) item.getAvatar())
+                request = Picasso.with(getContext())
+                        .load((String) item.getAvatar())
                         .placeholder(defaultAvatar)
-                        .error(defaultAvatar)
-                        .into(holder.imageView);
+                        .error(defaultAvatar);
             else
                 throw new RuntimeException("Mentionable avatar can only be String url and int resource.");
+            request.transform(PicassoTransformations.circular())
+                    .fit()
+                    .into(holder.imageView);
 
             if (!TextUtils.isEmpty(item.getDisplayname())) {
                 holder.textViewDisplayname.setText(item.getDisplayname());
