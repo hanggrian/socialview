@@ -2,7 +2,6 @@ package io.github.hendraanggrian.socialview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -31,11 +30,15 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     static final char HASHTAG = '#';
     static final char MENTION = '@';
 
-    private final TextView view;
-    private int hashtagColor, mentionColor;
-    private boolean hashtagEnabled, mentionEnabled;
-    private OnSocialClickListener onHashtagClickListener, onMentionClickListener;
-    private OnSocialEditingListener onHashtagEditingListener, onMentionEditingListener;
+    @NonNull private final TextView view;
+    private boolean hashtagEnabled;
+    private boolean mentionEnabled;
+    @ColorInt private int hashtagColor;
+    @ColorInt private int mentionColor;
+    @Nullable private OnSocialClickListener onHashtagClickListener;
+    @Nullable private OnSocialClickListener onMentionClickListener;
+    @Nullable private OnSocialEditingListener onHashtagEditingListener;
+    @Nullable private OnSocialEditingListener onMentionEditingListener;
 
     private boolean isHashtagEditing, isMentionEditing;
 
@@ -241,6 +244,7 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
         return list;
     }
 
+    @NonNull
     public static SocialViewAttacher attach(@NonNull TextView view) {
         return new SocialViewAttacher(view, view.getContext());
     }

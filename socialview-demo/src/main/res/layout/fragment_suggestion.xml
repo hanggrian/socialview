@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <io.github.hendraanggrian.socialview.SocialSuggestionEditText
+    <io.github.hendraanggrian.socialview.SocialAutoCompleteTextView
         android:id="@+id/socialsuggestionedittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

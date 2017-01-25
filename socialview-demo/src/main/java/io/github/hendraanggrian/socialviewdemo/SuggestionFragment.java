@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.github.hendraanggrian.socialview.SocialSuggestionEditText;
+import io.github.hendraanggrian.socialview.SocialAutoCompleteTextView;
 import io.github.hendraanggrian.socialview.SocialView;
 import io.github.hendraanggrian.socialview.commons.Hashtag;
 import io.github.hendraanggrian.socialview.commons.HashtagAdapter;
@@ -33,7 +33,7 @@ public class SuggestionFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        SocialSuggestionEditText editText = (SocialSuggestionEditText) view.findViewById(R.id.socialsuggestionedittext);
+        SocialAutoCompleteTextView editText = (SocialAutoCompleteTextView) view.findViewById(R.id.socialsuggestionedittext);
         editText.setHashtagAdapter(new HashtagAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Hashtagable>
         editText.setMentionAdapter(new MentionAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Mentionable>
         editText.setOnHashtagEditingListener(new SocialView.OnSocialEditingListener() {

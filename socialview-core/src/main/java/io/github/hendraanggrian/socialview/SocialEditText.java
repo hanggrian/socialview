@@ -1,12 +1,10 @@
 package io.github.hendraanggrian.socialview;
 
 import android.content.Context;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
@@ -17,26 +15,18 @@ import java.util.List;
  */
 public class SocialEditText extends EditText implements SocialView {
 
-    private final SocialViewAttacher attacher;
+    @NonNull private final SocialViewAttacher attacher;
 
     public SocialEditText(Context context) {
-        super(context);
-        attacher = new SocialViewAttacher(this, context);
+        this(context, null);
     }
 
     public SocialEditText(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        attacher = new SocialViewAttacher(this, context, attrs);
+        this(context, attrs, com.android.internal.R.attr.editTextStyle);
     }
 
     public SocialEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        attacher = new SocialViewAttacher(this, context, attrs);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public SocialEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         attacher = new SocialViewAttacher(this, context, attrs);
     }
 

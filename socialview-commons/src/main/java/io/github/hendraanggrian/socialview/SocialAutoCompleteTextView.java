@@ -1,12 +1,10 @@
 package io.github.hendraanggrian.socialview;
 
 import android.content.Context;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -28,36 +26,22 @@ import static io.github.hendraanggrian.socialview.SocialViewAttacher.MENTION;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialSuggestionEditText extends MultiAutoCompleteTextView implements SocialView, TextWatcher {
+public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implements SocialView, TextWatcher {
 
-    private final SocialViewAttacher attacher;
-    private SuggestionAdapter<Hashtagable> hashtagAdapter;
-    private SuggestionAdapter<Mentionable> mentionAdapter;
+    @NonNull private final SocialViewAttacher attacher;
+    @Nullable private SuggestionAdapter<Hashtagable> hashtagAdapter;
+    @Nullable private SuggestionAdapter<Mentionable> mentionAdapter;
 
-    public SocialSuggestionEditText(Context context) {
-        super(context);
-        attacher = new SocialViewAttacher(this, context);
-        setTokenizer(new SocialTokenizer());
-        setThreshold(1);
+    public SocialAutoCompleteTextView(Context context) {
+        this(context, null);
     }
 
-    public SocialSuggestionEditText(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        attacher = new SocialViewAttacher(this, context, attrs);
-        setTokenizer(new SocialTokenizer());
-        setThreshold(1);
+    public SocialAutoCompleteTextView(Context context, AttributeSet attrs) {
+        this(context, attrs, com.android.internal.R.attr.autoCompleteTextViewStyle);
     }
 
-    public SocialSuggestionEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SocialAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        attacher = new SocialViewAttacher(this, context, attrs);
-        setTokenizer(new SocialTokenizer());
-        setThreshold(1);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public SocialSuggestionEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         attacher = new SocialViewAttacher(this, context, attrs);
         setTokenizer(new SocialTokenizer());
         setThreshold(1);
