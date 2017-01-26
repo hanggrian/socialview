@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.github.hendraanggrian.socialview.internal.ClickableForegroundColorSpan;
+
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */

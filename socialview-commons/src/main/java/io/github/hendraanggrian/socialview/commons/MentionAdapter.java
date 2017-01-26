@@ -16,7 +16,7 @@ import com.squareup.picasso.RequestCreator;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
+public final class MentionAdapter extends SuggestionAdapter<Mention> {
 
     @DrawableRes private final int defaultAvatar;
 
@@ -41,7 +41,7 @@ public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final Mentionable item = getItem(position);
+        final Mention item = getItem(position);
         if (item != null) {
             holder.textViewUsername.setText(item.getUsername());
 
@@ -78,7 +78,7 @@ public final class MentionAdapter extends SuggestionAdapter<Mentionable> {
     public SuggestionFilter initializeFilter() {
         return new SuggestionFilter() {
             @Override
-            public String getString(Mentionable item) {
+            public String getString(Mention item) {
                 return item.getUsername();
             }
         };

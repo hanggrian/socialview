@@ -13,7 +13,7 @@ import java.util.Locale;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public final class HashtagAdapter extends SuggestionAdapter<Hashtagable> {
+public final class HashtagAdapter extends SuggestionAdapter<Hashtag> {
 
     public HashtagAdapter(@NonNull Context context) {
         super(context, R.layout.item_hashtag, R.id.textview_hashtag_value);
@@ -31,7 +31,7 @@ public final class HashtagAdapter extends SuggestionAdapter<Hashtagable> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final Hashtagable item = getItem(position);
+        final Hashtag item = getItem(position);
         if (item != null) {
             holder.textViewHashtag.setText(item.getHashtag());
 
@@ -52,7 +52,7 @@ public final class HashtagAdapter extends SuggestionAdapter<Hashtagable> {
     public SuggestionFilter initializeFilter() {
         return new SuggestionFilter() {
             @Override
-            public String getString(Hashtagable item) {
+            public String getString(Hashtag item) {
                 return item.getHashtag();
             }
         };

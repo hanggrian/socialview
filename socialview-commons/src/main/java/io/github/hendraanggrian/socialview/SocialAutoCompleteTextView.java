@@ -11,14 +11,11 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.widget.ArrayAdapter;
 import android.widget.MultiAutoCompleteTextView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.github.hendraanggrian.socialview.commons.Hashtagable;
-import io.github.hendraanggrian.socialview.commons.Mentionable;
-import io.github.hendraanggrian.socialview.commons.SuggestionAdapter;
 
 import static io.github.hendraanggrian.socialview.SocialViewAttacher.HASHTAG;
 import static io.github.hendraanggrian.socialview.SocialViewAttacher.MENTION;
@@ -26,11 +23,11 @@ import static io.github.hendraanggrian.socialview.SocialViewAttacher.MENTION;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implements SocialView, TextWatcher {
+public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView implements SocialView, TextWatcher {
 
     @NonNull private final SocialViewAttacher attacher;
-    @Nullable private SuggestionAdapter<Hashtagable> hashtagAdapter;
-    @Nullable private SuggestionAdapter<Mentionable> mentionAdapter;
+    private ArrayAdapter<H> hashtagAdapter;
+    private ArrayAdapter<M> mentionAdapter;
 
     public SocialAutoCompleteTextView(Context context) {
         this(context, null);
@@ -129,22 +126,6 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
         return attacher.getMentions();
     }
 
-    public void setHashtagAdapter(@NonNull SuggestionAdapter<Hashtagable> adapter) {
-        hashtagAdapter = adapter;
-    }
-
-    public SuggestionAdapter<Hashtagable> getHashtagAdapter() {
-        return hashtagAdapter;
-    }
-
-    public void setMentionAdapter(@NonNull SuggestionAdapter<Mentionable> adapter) {
-        mentionAdapter = adapter;
-    }
-
-    public SuggestionAdapter<Mentionable> getMentionAdapter() {
-        return mentionAdapter;
-    }
-
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
     }
@@ -166,6 +147,22 @@ public class SocialAutoCompleteTextView extends MultiAutoCompleteTextView implem
 
     @Override
     public void afterTextChanged(Editable editable) {
+    }
+
+    public void setHashtagAdapter(@NonNull ArrayAdapter<H> adapter) {
+        hashtagAdapter = adapter;
+    }
+
+    public ArrayAdapter<H> getHashtagAdapter() {
+        return hashtagAdapter;
+    }
+
+    public void setMentionAdapter(@NonNull ArrayAdapter<M> adapter) {
+        mentionAdapter = adapter;
+    }
+
+    public ArrayAdapter<M> getMentionAdapter() {
+        return mentionAdapter;
     }
 
     private class SocialTokenizer implements Tokenizer {
