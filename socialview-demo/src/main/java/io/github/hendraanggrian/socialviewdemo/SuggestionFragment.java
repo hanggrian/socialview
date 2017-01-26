@@ -2,6 +2,7 @@ package io.github.hendraanggrian.socialviewdemo;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -34,31 +35,41 @@ public class SuggestionFragment extends Fragment {
         SocialAutoCompleteTextView<Hashtag, Mention> editText = (SocialAutoCompleteTextView<Hashtag, Mention>) view.findViewById(R.id.socialsuggestionedittext);
         editText.setHashtagAdapter(new HashtagAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Hashtagable>
         editText.setMentionAdapter(new MentionAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Mentionable>
-        editText.setOnHashtagEditingListener(new SocialView.OnSocialEditingListener() {
+        editText.setHashtagTextChangedListener(new SocialView.SocialTextWatcher() {
             @Override
-            public void onEditing(TextView view, String text) {
+            public void onTextChanged(@NonNull TextView view, @NonNull String text) {
                 Log.d("#", text);
             }
         });
-        editText.setOnMentionEditingListener(new SocialView.OnSocialEditingListener() {
+        editText.setMentionTextChangedListener(new SocialView.SocialTextWatcher() {
             @Override
-            public void onEditing(TextView view, String text) {
+            public void onTextChanged(@NonNull TextView view, @NonNull String text) {
                 Log.d("@", text);
             }
         });
 
-        // use default item Hashtag
-        editText.getHashtagAdapter().add(new Hashtag("follow"));
-        // a hashtag can have count
-        //editText.getHashtagAdapter().add(new Hashtag("followme", 1000));
-        // or use custom model implementing Hashtagable
-        //editText.getHashtagAdapter().add(new Interest("followmeorillkillyou", 500));
+        Hashtag hashtag1 = new Hashtag("follow");
+        editText.getHashtagAdapter().add(hashtag1);
 
-        // use default item Mention
-        editText.getMentionAdapter().add(new Mention("dirtyhobo"));
-        // a mention can have display name and avatar (can be drawable or string url)
-        //editText.getMentionAdapter().add(new Mention("hobo", "Regular Hobo", R.mipmap.ic_launcher));
-        // or use custom model implementing Mentionable
-        //editText.getMentionAdapter().add(new User("hendraanggrian", "Hendra Anggrian", "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"));
+        Hashtag hashtag2 = new Hashtag("followme");
+        hashtag2.setCount(1000);
+        editText.getHashtagAdapter().add(hashtag2);
+
+        Hashtag hashtag3 = new Hashtag("followmeorillkillyou");
+        hashtag3.setCount(500);
+        editText.getHashtagAdapter().add(hashtag3);
+
+        Mention mention1 = new Mention("dirtyhobo");
+        editText.getMentionAdapter().add(mention1);
+
+        Mention mention2 = new Mention("hobo");
+        mention2.setDisplayname("Regular Hobo");
+        mention2.setAvatar(R.mipmap.ic_launcher);
+        editText.getMentionAdapter().add(mention2);
+
+        Mention mention3 = new Mention("hendraanggrian");
+        mention3.setDisplayname("Hendra Anggrian");
+        mention3.setAvatar("https://avatars0.githubusercontent.com/u/11507430?v=3&s=460");
+        editText.getMentionAdapter().add(mention3);
     }
 }

@@ -6,10 +6,10 @@ import android.support.annotation.Nullable;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class Hashtag  {
+public class Hashtag {
 
     @NonNull private final String hashtag;
-    @Nullable private Integer hashtagCount;
+    @Nullable private Integer count;
 
     public Hashtag(@NonNull String hashtag) {
         this.hashtag = hashtag;
@@ -21,11 +21,11 @@ public class Hashtag  {
     }
 
     @Nullable
-    public Integer getHashtagCount() {
-        return hashtagCount;
+    public Integer getCount() {
+        return count;
     }
 
-    public void setHashtagCount(@Nullable Integer hashtagCount) {
-        this.hashtagCount = hashtagCount;
+    public void setCount(@Nullable Integer count) {
+        this.count = count;
     }
 }

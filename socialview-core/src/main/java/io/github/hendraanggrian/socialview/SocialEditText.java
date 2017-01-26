@@ -18,11 +18,13 @@ public class SocialEditText extends EditText implements SocialView {
     @NonNull private final SocialViewAttacher attacher;
 
     public SocialEditText(Context context) {
-        this(context, null);
+        super(context);
+        attacher = new SocialViewAttacher(this, context);
     }
 
     public SocialEditText(Context context, AttributeSet attrs) {
-        this(context, attrs, com.android.internal.R.attr.editTextStyle);
+        super(context, attrs);
+        attacher = new SocialViewAttacher(this, context, attrs);
     }
 
     public SocialEditText(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -71,13 +73,13 @@ public class SocialEditText extends EditText implements SocialView {
     }
 
     @Override
-    public void setOnHashtagEditingListener(@Nullable OnSocialEditingListener listener) {
-        attacher.setOnHashtagEditingListener(listener);
+    public void setHashtagTextChangedListener(@Nullable SocialTextWatcher watcher) {
+        attacher.setHashtagTextChangedListener(watcher);
     }
 
     @Override
-    public void setOnMentionEditingListener(@Nullable OnSocialEditingListener listener) {
-        attacher.setOnMentionEditingListener(listener);
+    public void setMentionTextChangedListener(@Nullable SocialTextWatcher watcher) {
+        attacher.setMentionTextChangedListener(watcher);
     }
 
     @Override

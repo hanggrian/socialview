@@ -29,9 +29,9 @@ public interface SocialView {
 
     void setOnMentionClickListener(@Nullable OnSocialClickListener listener);
 
-    void setOnHashtagEditingListener(@Nullable OnSocialEditingListener listener);
+    void setHashtagTextChangedListener(@Nullable SocialTextWatcher watcher);
 
-    void setOnMentionEditingListener(@Nullable OnSocialEditingListener listener);
+    void setMentionTextChangedListener(@Nullable SocialTextWatcher watcher);
 
     @ColorInt
     int getHashtagColor();
@@ -50,12 +50,10 @@ public interface SocialView {
     List<String> getMentions();
 
     interface OnSocialClickListener {
-
-        void onClick(TextView view, String clicked);
+        void onClick(@NonNull TextView view, @NonNull String clicked);
     }
 
-    interface OnSocialEditingListener {
-
-        void onEditing(TextView view, String text);
+    interface SocialTextWatcher {
+        void onTextChanged(@NonNull TextView view, @NonNull String text);
     }
 }

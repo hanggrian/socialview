@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="picasso-transformations-0.4.2">
+    <ANNOTATIONS>
+      <root url="jar://$PROJECT_DIR$/socialview-commons/build/intermediates/exploded-aar/io.github.hendraanggrian/picasso-transformations/0.4.2/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/socialview-commons/build/intermediates/exploded-aar/io.github.hendraanggrian/picasso-transformations/0.4.2/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/socialview-commons/build/intermediates/exploded-aar/io.github.hendraanggrian/picasso-transformations/0.4.2/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.hendraanggrian/picasso-transformations/0.4.2/8d1830b96aca3cb51257e7b0413692ca211c7f00/picasso-transformations-0.4.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

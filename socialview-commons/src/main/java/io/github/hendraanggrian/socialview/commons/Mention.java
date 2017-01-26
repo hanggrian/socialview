@@ -1,11 +1,8 @@
 package io.github.hendraanggrian.socialview.commons;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -39,15 +36,15 @@ public class Mention {
         return avatar;
     }
 
-    public void setAvatar(@NonNull Context context, @DrawableRes int avatarRes) {
-        this.avatar = ContextCompat.getDrawable(context, avatarRes);
-    }
-
-    public void setAvatar(@Nullable Drawable avatar) {
-        this.avatar = avatar;
+    public void setAvatar(@DrawableRes int avatarRes) {
+        this.avatar = avatarRes;
     }
 
     public void setAvatar(@Nullable String avatarUrl) {
         this.avatar = avatarUrl;
+    }
+
+    private void setAvatar(@Nullable Object avatar) {
+        this.avatar = avatar;
     }
 }

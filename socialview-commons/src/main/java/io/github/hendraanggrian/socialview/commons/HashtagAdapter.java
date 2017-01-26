@@ -35,10 +35,10 @@ public final class HashtagAdapter extends SuggestionAdapter<Hashtag> {
         if (item != null) {
             holder.textViewHashtag.setText(item.getHashtag());
 
-            if (item.getHashtagCount() != null) {
-                holder.textViewHashtagCount.setText(item.getHashtagCount() == 1
+            if (item.getCount() != null) {
+                holder.textViewHashtagCount.setText(item.getCount() == 1
                         ? "1 post"
-                        : String.format("%s posts", NumberFormat.getNumberInstance(Locale.US).format(item.getHashtagCount())));
+                        : String.format("%s posts", NumberFormat.getNumberInstance(Locale.US).format(item.getCount())));
                 holder.textViewHashtagCount.setVisibility(View.VISIBLE);
             } else {
                 holder.textViewHashtagCount.setVisibility(View.GONE);

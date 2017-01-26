@@ -30,18 +30,21 @@ public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView 
     private ArrayAdapter<M> mentionAdapter;
 
     public SocialAutoCompleteTextView(Context context) {
-        this(context, null);
+        super(context);
+        attacher = new SocialViewAttacher(this, context);
+        init();
     }
 
     public SocialAutoCompleteTextView(Context context, AttributeSet attrs) {
-        this(context, attrs, com.android.internal.R.attr.autoCompleteTextViewStyle);
+        super(context, attrs);
+        attacher = new SocialViewAttacher(this, context, attrs);
+        init();
     }
 
     public SocialAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         attacher = new SocialViewAttacher(this, context, attrs);
-        setTokenizer(new SocialTokenizer());
-        setThreshold(1);
+        init();
     }
 
     @Override
@@ -67,11 +70,13 @@ public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView 
     @Override
     public void setHashtagEnabled(boolean enabled) {
         attacher.setHashtagEnabled(enabled);
+        init();
     }
 
     @Override
     public void setMentionEnabled(boolean enabled) {
         attacher.setMentionEnabled(enabled);
+        init();
     }
 
     @Override
@@ -85,13 +90,13 @@ public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView 
     }
 
     @Override
-    public void setOnHashtagEditingListener(@Nullable OnSocialEditingListener listener) {
-        attacher.setOnHashtagEditingListener(listener);
+    public void setHashtagTextChangedListener(@Nullable SocialTextWatcher watcher) {
+        attacher.setHashtagTextChangedListener(watcher);
     }
 
     @Override
-    public void setOnMentionEditingListener(@Nullable OnSocialEditingListener listener) {
-        attacher.setOnMentionEditingListener(listener);
+    public void setMentionTextChangedListener(@Nullable SocialTextWatcher watcher) {
+        attacher.setMentionTextChangedListener(watcher);
     }
 
     @Override
@@ -165,13 +170,18 @@ public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView 
         return mentionAdapter;
     }
 
-    private class SocialTokenizer implements Tokenizer {
+    private void init() {
+        setTokenizer(new SocialTokenizer(isHashtagEnabled(), isMentionEnabled()));
+        setThreshold(1);
+    }
+
+    private static class SocialTokenizer implements Tokenizer {
         private final List<Character> symbols = new ArrayList<>();
 
-        private SocialTokenizer() {
-            if (isHashtagEnabled())
+        private SocialTokenizer(boolean hashtagEnabled, boolean mentionEnabled) {
+            if (hashtagEnabled)
                 symbols.add(HASHTAG);
-            if (isMentionEnabled())
+            if (mentionEnabled)
                 symbols.add(MENTION);
         }
 

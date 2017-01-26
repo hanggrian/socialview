@@ -2,6 +2,7 @@ package io.github.hendraanggrian.socialview.commons;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -42,7 +43,7 @@ public abstract class SuggestionAdapter<T> extends ArrayAdapter<T> {
     }
 
     @Override
-    public void add(@NonNull T item) {
+    public void add(@Nullable T item) {
         add(item, true);
     }
 
@@ -70,7 +71,7 @@ public abstract class SuggestionAdapter<T> extends ArrayAdapter<T> {
         clear(true);
     }
 
-    private void add(@NonNull T item, boolean affectTempItems) {
+    private void add(@Nullable T item, boolean affectTempItems) {
         super.add(item);
         if (affectTempItems)
             tempItems.add(item);

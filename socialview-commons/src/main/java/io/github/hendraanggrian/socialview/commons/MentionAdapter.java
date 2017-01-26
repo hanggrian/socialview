@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
+import io.github.hendraanggrian.picassotransformations.Transformations;
+
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
@@ -59,7 +61,7 @@ public final class MentionAdapter extends SuggestionAdapter<Mention> {
                         .error(defaultAvatar);
             else
                 throw new RuntimeException("Mentionable avatar can only be String url and int resource.");
-            request.transform(PicassoTransformations.circular())
+            request.transform(Transformations.circle())
                     .fit()
                     .into(holder.imageView);
 

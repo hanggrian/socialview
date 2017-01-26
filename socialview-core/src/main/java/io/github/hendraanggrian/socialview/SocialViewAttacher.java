@@ -33,38 +33,40 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     static final char MENTION = '@';
 
     @NonNull private final TextView view;
-    private boolean hashtagEnabled;
-    private boolean mentionEnabled;
     @ColorInt private int hashtagColor;
     @ColorInt private int mentionColor;
-    @Nullable private OnSocialClickListener onHashtagClickListener;
-    @Nullable private OnSocialClickListener onMentionClickListener;
-    @Nullable private OnSocialEditingListener onHashtagEditingListener;
-    @Nullable private OnSocialEditingListener onMentionEditingListener;
+    private boolean hashtagEnabled;
+    private boolean mentionEnabled;
 
-    private boolean isHashtagEditing, isMentionEditing;
+    @Nullable private OnSocialClickListener hashtagListener;
+    @Nullable private OnSocialClickListener mentionListener;
+    @Nullable private SocialTextWatcher hashtagWatcher;
+    @Nullable private SocialTextWatcher mentionWatcher;
 
-    SocialViewAttacher(@NonNull TextView view, @NonNull Context context) {
-        this(view, context, null);
+    private boolean isHashtagEditing;
+    private boolean isMentionEditing;
+
+    SocialViewAttacher(@NonNull TextView textView, @NonNull Context context) {
+        this(textView, context, null);
     }
 
-    SocialViewAttacher(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
-        this.view = view;
-        this.view.setText(view.getText(), TextView.BufferType.SPANNABLE);
-        this.view.setMovementMethod(LinkMovementMethod.getInstance());
-        this.view.addTextChangedListener(this);
+    SocialViewAttacher(@NonNull TextView textView, @NonNull Context context, @Nullable AttributeSet attrs) {
+        view = textView;
+        view.setText(textView.getText(), TextView.BufferType.SPANNABLE);
+        view.setMovementMethod(LinkMovementMethod.getInstance());
+        view.addTextChangedListener(this);
         if (attrs != null) {
-            final TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0);
-            this.hashtagColor = array.getColor(R.styleable.SocialTextView_hashtagColor, getDefaultColor(context));
-            this.mentionColor = array.getColor(R.styleable.SocialTextView_mentionColor, getDefaultColor(context));
-            this.hashtagEnabled = array.getBoolean(R.styleable.SocialTextView_hashtagEnabled, true);
-            this.mentionEnabled = array.getBoolean(R.styleable.SocialTextView_mentionEnabled, true);
+            TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0);
+            hashtagColor = array.getColor(R.styleable.SocialTextView_hashtagColor, getDefaultColor(context));
+            mentionColor = array.getColor(R.styleable.SocialTextView_mentionColor, getDefaultColor(context));
+            hashtagEnabled = array.getBoolean(R.styleable.SocialTextView_hashtagEnabled, true);
+            mentionEnabled = array.getBoolean(R.styleable.SocialTextView_mentionEnabled, true);
             array.recycle();
         } else {
-            this.hashtagColor = getDefaultColor(context);
-            this.mentionColor = getDefaultColor(context);
-            this.hashtagEnabled = true;
-            this.mentionEnabled = true;
+            hashtagColor = getDefaultColor(context);
+            mentionColor = getDefaultColor(context);
+            hashtagEnabled = true;
+            mentionEnabled = true;
         }
         colorize();
     }
@@ -107,22 +109,22 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
 
     @Override
     public void setOnHashtagClickListener(@Nullable OnSocialClickListener listener) {
-        this.onHashtagClickListener = listener;
+        this.hashtagListener = listener;
     }
 
     @Override
     public void setOnMentionClickListener(@Nullable OnSocialClickListener listener) {
-        this.onMentionClickListener = listener;
+        this.mentionListener = listener;
     }
 
     @Override
-    public void setOnHashtagEditingListener(@Nullable OnSocialEditingListener listener) {
-        this.onHashtagEditingListener = listener;
+    public void setHashtagTextChangedListener(@Nullable SocialTextWatcher watcher) {
+        this.hashtagWatcher = watcher;
     }
 
     @Override
-    public void setOnMentionEditingListener(@Nullable OnSocialEditingListener listener) {
-        this.onMentionEditingListener = listener;
+    public void setMentionTextChangedListener(@Nullable SocialTextWatcher watcher) {
+        this.mentionWatcher = watcher;
     }
 
     @Override
@@ -169,25 +171,27 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
                 spannable.removeSpan(style);
             colorize(spannable);
 
-            if (count == 1)
-                switch (s.charAt(start)) {
-                    case HASHTAG:
-                        isHashtagEditing = true;
-                        break;
-                    case MENTION:
-                        isMentionEditing = true;
-                        break;
-                    default:
-                        if (!Character.isLetterOrDigit(s.charAt(start))) {
-                            isHashtagEditing = false;
-                            isMentionEditing = false;
-                        } else if (onHashtagEditingListener != null && isHashtagEditing) {
-                            onHashtagEditingListener.onEditing(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start) + 1, start + count).toString());
-                        } else if (onMentionEditingListener != null && isMentionEditing) {
-                            onMentionEditingListener.onEditing(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start) + 1, start + count).toString());
-                        }
-                        break;
-                }
+            if (start >= s.length())
+                return;
+
+            switch (s.charAt(start)) {
+                case HASHTAG:
+                    isHashtagEditing = true;
+                    break;
+                case MENTION:
+                    isMentionEditing = true;
+                    break;
+                default:
+                    if (!Character.isLetterOrDigit(s.charAt(start))) {
+                        isHashtagEditing = false;
+                        isMentionEditing = false;
+                    } else if (hashtagWatcher != null && isHashtagEditing) {
+                        hashtagWatcher.onTextChanged(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start) + 1, start + count).toString());
+                    } else if (mentionWatcher != null && isMentionEditing) {
+                        mentionWatcher.onTextChanged(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start) + 1, start + count).toString());
+                    }
+                    break;
+            }
         }
     }
 
@@ -210,13 +214,13 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
         int index = 0;
         while (index < text.length() - 1) {
             if (text.charAt(index) == HASHTAG && hashtagEnabled)
-                ((Spannable) text).setSpan(onHashtagClickListener != null
-                                ? new ClickableForegroundColorSpan(hashtagColor, onHashtagClickListener)
+                ((Spannable) text).setSpan(hashtagListener != null
+                                ? new ClickableForegroundColorSpan(hashtagColor, hashtagListener)
                                 : new ForegroundColorSpan(hashtagColor)
                         , index, indexOfNextSocialChar(text, index), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             else if (text.charAt(index) == MENTION && mentionEnabled)
-                ((Spannable) text).setSpan(onMentionClickListener != null
-                                ? new ClickableForegroundColorSpan(mentionColor, onMentionClickListener)
+                ((Spannable) text).setSpan(mentionListener != null
+                                ? new ClickableForegroundColorSpan(mentionColor, mentionListener)
                                 : new ForegroundColorSpan(mentionColor)
                         , index, indexOfNextSocialChar(text, index), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             index++;
