@@ -137,17 +137,18 @@ public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView 
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.length() > 0 && count == 1)
-            switch (s.charAt(start)) {
-                case HASHTAG:
-                    if (getAdapter() != hashtagAdapter)
-                        setAdapter(hashtagAdapter);
-                    break;
-                case MENTION:
-                    if (getAdapter() != mentionAdapter)
-                        setAdapter(mentionAdapter);
-                    break;
-            }
+        if (s.length() > 0)
+            if (start < s.length())
+                switch (s.charAt(start)) {
+                    case HASHTAG:
+                        if (getAdapter() != hashtagAdapter)
+                            setAdapter(hashtagAdapter);
+                        break;
+                    case MENTION:
+                        if (getAdapter() != mentionAdapter)
+                            setAdapter(mentionAdapter);
+                        break;
+                }
     }
 
     @Override

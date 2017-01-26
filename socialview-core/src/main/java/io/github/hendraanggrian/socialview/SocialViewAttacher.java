@@ -14,6 +14,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
 
@@ -165,32 +166,41 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+        Log.d("onTextChanged", String.format("s=%s  start=%s    before=%s   count=%s", s, start, before, count));
         if (s.length() > 0) {
             final Spannable spannable = (Spannable) view.getText();
             for (CharacterStyle style : spannable.getSpans(0, s.length(), CharacterStyle.class))
                 spannable.removeSpan(style);
             colorize(spannable);
 
-            if (start >= s.length())
-                return;
-
-            switch (s.charAt(start)) {
-                case HASHTAG:
-                    isHashtagEditing = true;
-                    break;
-                case MENTION:
-                    isMentionEditing = true;
-                    break;
-                default:
-                    if (!Character.isLetterOrDigit(s.charAt(start))) {
-                        isHashtagEditing = false;
-                        isMentionEditing = false;
-                    } else if (hashtagWatcher != null && isHashtagEditing) {
-                        hashtagWatcher.onTextChanged(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start) + 1, start + count).toString());
-                    } else if (mentionWatcher != null && isMentionEditing) {
-                        mentionWatcher.onTextChanged(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start) + 1, start + count).toString());
-                    }
-                    break;
+            if (before > 0) {
+                if (!Character.isLetterOrDigit(s.charAt(start - before))) {
+                    isHashtagEditing = false;
+                    isMentionEditing = false;
+                } else if (hashtagWatcher != null && isHashtagEditing) {
+                    hashtagWatcher.onTextChanged(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start - before) + 1, start).toString());
+                } else if (mentionWatcher != null && isMentionEditing) {
+                    mentionWatcher.onTextChanged(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start - before) + 1, start).toString());
+                }
+            } else if (start < s.length()) {
+                switch (s.charAt(start)) {
+                    case HASHTAG:
+                        isHashtagEditing = true;
+                        break;
+                    case MENTION:
+                        isMentionEditing = true;
+                        break;
+                    default:
+                        if (!Character.isLetterOrDigit(s.charAt(start))) {
+                            isHashtagEditing = false;
+                            isMentionEditing = false;
+                        } else if (hashtagWatcher != null && isHashtagEditing) {
+                            hashtagWatcher.onTextChanged(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start) + 1, start + count).toString());
+                        } else if (mentionWatcher != null && isMentionEditing) {
+                            mentionWatcher.onTextChanged(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start) + 1, start + count).toString());
+                        }
+                        break;
+                }
             }
         }
     }
