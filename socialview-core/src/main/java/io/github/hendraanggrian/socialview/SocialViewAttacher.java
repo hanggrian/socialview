@@ -166,6 +166,31 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        // triggered when text is backspaced
+        Log.d("beforeTextChanged", String.format("s=%s  start=%s    count=%s    after=%s", s, start, count, after));
+        if (count > 0 && start > 0) {
+            Log.d("charAt", String.valueOf(s.charAt(start - 1)));
+            switch (s.charAt(start - 1)) {
+                case HASHTAG:
+                    isHashtagEditing = true;
+                    isMentionEditing = false;
+                    break;
+                case MENTION:
+                    isHashtagEditing = false;
+                    isMentionEditing = true;
+                    break;
+                default:
+                    if (!Character.isLetterOrDigit(s.charAt(start - 1))) {
+                        isHashtagEditing = false;
+                        isMentionEditing = false;
+                    } else if (hashtagWatcher != null && isHashtagEditing) {
+                        hashtagWatcher.onTextChanged(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start - 1) + 1, start).toString());
+                    } else if (mentionWatcher != null && isMentionEditing) {
+                        mentionWatcher.onTextChanged(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start - 1) + 1, start).toString());
+                    }
+                    break;
+            }
+        }
     }
 
     @Override
@@ -177,21 +202,16 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
                 spannable.removeSpan(style);
             colorize(spannable);
 
-            if (before > 0) {
-                if (!Character.isLetterOrDigit(s.charAt(start - before))) {
-                    isHashtagEditing = false;
-                    isMentionEditing = false;
-                } else if (hashtagWatcher != null && isHashtagEditing) {
-                    hashtagWatcher.onTextChanged(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start - before) + 1, start).toString());
-                } else if (mentionWatcher != null && isMentionEditing) {
-                    mentionWatcher.onTextChanged(view, s.subSequence(indexOfPreviousSocialChar(s, 0, start - before) + 1, start).toString());
-                }
-            } else if (start < s.length()) {
-                switch (s.charAt(start)) {
+            // triggered when text is added
+            if (start < s.length()) {
+                Log.d("charAt", String.valueOf(s.charAt(start + count - 1)));
+                switch (s.charAt(start + count - 1)) {
                     case HASHTAG:
                         isHashtagEditing = true;
+                        isMentionEditing = false;
                         break;
                     case MENTION:
+                        isHashtagEditing = false;
                         isMentionEditing = true;
                         break;
                     default:
@@ -250,8 +270,8 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
 
     @NonNull
     private List<String> extract(Pattern pattern) {
-        final List<String> list = new ArrayList<>();
-        final Matcher matcher = pattern.matcher(view.getText().toString());
+        List<String> list = new ArrayList<>();
+        Matcher matcher = pattern.matcher(view.getText().toString());
         while (matcher.find())
             list.add(matcher.group(1));
         return list;

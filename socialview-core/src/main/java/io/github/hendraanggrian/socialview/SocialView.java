@@ -50,10 +50,10 @@ public interface SocialView {
     List<String> getMentions();
 
     interface OnSocialClickListener {
-        void onClick(@NonNull TextView view, @NonNull String clicked);
+        void onClick(@NonNull TextView view, @NonNull String s);
     }
 
     interface SocialTextWatcher {
-        void onTextChanged(@NonNull TextView view, @NonNull String text);
+        void onTextChanged(@NonNull TextView view, @NonNull String s);
     }
 }

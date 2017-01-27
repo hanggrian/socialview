@@ -37,14 +37,14 @@ public class SuggestionFragment extends Fragment {
         editText.setMentionAdapter(new MentionAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Mentionable>
         editText.setHashtagTextChangedListener(new SocialView.SocialTextWatcher() {
             @Override
-            public void onTextChanged(@NonNull TextView view, @NonNull String text) {
-                Log.d("#", text);
+            public void onTextChanged(@NonNull TextView view, @NonNull String s) {
+                Log.d("#", s);
             }
         });
         editText.setMentionTextChangedListener(new SocialView.SocialTextWatcher() {
             @Override
-            public void onTextChanged(@NonNull TextView view, @NonNull String text) {
-                Log.d("@", text);
+            public void onTextChanged(@NonNull TextView view, @NonNull String s) {
+                Log.d("@", s);
             }
         });
 
