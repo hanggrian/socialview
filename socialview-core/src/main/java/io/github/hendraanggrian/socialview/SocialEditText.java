@@ -22,12 +22,12 @@ public class SocialEditText extends EditText implements SocialView {
         attacher = new SocialViewAttacher(this, context);
     }
 
-    public SocialEditText(Context context, AttributeSet attrs) {
+    public SocialEditText(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         attacher = new SocialViewAttacher(this, context, attrs);
     }
 
-    public SocialEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SocialEditText(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         attacher = new SocialViewAttacher(this, context, attrs);
     }

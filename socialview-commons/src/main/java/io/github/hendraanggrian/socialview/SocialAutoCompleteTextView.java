@@ -35,13 +35,13 @@ public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView 
         init();
     }
 
-    public SocialAutoCompleteTextView(Context context, AttributeSet attrs) {
+    public SocialAutoCompleteTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         attacher = new SocialViewAttacher(this, context, attrs);
         init();
     }
 
-    public SocialAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SocialAutoCompleteTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         attacher = new SocialViewAttacher(this, context, attrs);
         init();

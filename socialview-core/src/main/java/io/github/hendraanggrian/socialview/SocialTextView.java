@@ -22,12 +22,12 @@ public class SocialTextView extends TextView implements SocialView {
         attacher = new SocialViewAttacher(this, context);
     }
 
-    public SocialTextView(Context context, AttributeSet attrs) {
+    public SocialTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         attacher = new SocialViewAttacher(this, context, attrs);
     }
 
-    public SocialTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SocialTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         attacher = new SocialViewAttacher(this, context, attrs);
     }
