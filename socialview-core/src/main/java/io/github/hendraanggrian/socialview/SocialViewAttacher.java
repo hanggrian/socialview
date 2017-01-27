@@ -1,6 +1,7 @@
 package io.github.hendraanggrian.socialview;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
@@ -56,20 +57,23 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
         view.setText(textView.getText(), TextView.BufferType.SPANNABLE);
         view.setMovementMethod(LinkMovementMethod.getInstance());
         view.addTextChangedListener(this);
-        if (attrs != null) {
-            TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0);
-            hashtagColor = array.getColor(R.styleable.SocialTextView_hashtagColor, getDefaultColor(context));
-            mentionColor = array.getColor(R.styleable.SocialTextView_mentionColor, getDefaultColor(context));
+
+        Resources.Theme theme = context.getTheme();
+        TypedArray array = theme.obtainStyledAttributes(attrs, R.styleable.SocialTextView, 0, 0);
+        TypedValue value = new TypedValue();
+        try {
+            // the only reason why socialview uses appcompat-v7 instead of support-v4 is to get accent color
+            int colorAccent = theme.resolveAttribute(R.attr.colorAccent, value, true)
+                    ? value.data
+                    : view.getCurrentTextColor();
+            hashtagColor = array.getColor(R.styleable.SocialTextView_hashtagColor, colorAccent);
+            mentionColor = array.getColor(R.styleable.SocialTextView_mentionColor, colorAccent);
             hashtagEnabled = array.getBoolean(R.styleable.SocialTextView_hashtagEnabled, true);
             mentionEnabled = array.getBoolean(R.styleable.SocialTextView_mentionEnabled, true);
+        } finally {
             array.recycle();
-        } else {
-            hashtagColor = getDefaultColor(context);
-            mentionColor = getDefaultColor(context);
-            hashtagEnabled = true;
-            mentionEnabled = true;
+            colorize();
         }
-        colorize();
     }
 
     @Override
@@ -207,13 +211,6 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-    }
-
-    private int getDefaultColor(@NonNull Context context) {
-        final TypedValue value = new TypedValue();
-        return context.getTheme().resolveAttribute(R.attr.colorAccent, value, true)
-                ? value.data
-                : view.getCurrentTextColor();
     }
 
     private void colorize() {
