@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SocialTextView">
-        <attr name="hashtagColor" format="color"/>
-        <attr name="mentionColor" format="color"/>
+        <!-- determine whether each feature should be turned on/off, default is all true -->
         <attr name="hashtagEnabled" format="boolean"/>
         <attr name="mentionEnabled" format="boolean"/>
+        <attr name="hyperlinkEnabled" format="boolean"/>
+
+        <!-- each color that will be used if it is enabled, default is color accent of current theme -->
+        <attr name="hashtagColor" format="color"/>
+        <attr name="mentionColor" format="color"/>
+        <attr name="hyperlinkColor" format="color"/>
     </declare-styleable>
 </resources>

@@ -13,6 +13,19 @@ import java.util.List;
  */
 public interface SocialView {
 
+    char HASHTAG = '#';
+    char MENTION = '@';
+    String REGEX_HASHTAG = "#(\\w+)";
+    String REGEX_MENTION = "@(\\w+)";
+    String REGEX_HYPERLINK = "[a-z]+:\\/\\/[^ \\n]*";
+
+    //region setters
+    void setHashtagEnabled(boolean enabled);
+
+    void setMentionEnabled(boolean enabled);
+
+    void setHyperlinkEnabled(boolean enabled);
+
     void setHashtagColor(@ColorInt int color);
 
     void setHashtagColorRes(@ColorRes int colorRes);
@@ -21,17 +34,28 @@ public interface SocialView {
 
     void setMentionColorRes(@ColorRes int colorRes);
 
-    void setHashtagEnabled(boolean enabled);
+    void setHyperlinkColor(@ColorInt int color);
 
-    void setMentionEnabled(boolean enabled);
+    void setHyperlinkColorRes(@ColorRes int colorRes);
 
     void setOnHashtagClickListener(@Nullable OnSocialClickListener listener);
 
     void setOnMentionClickListener(@Nullable OnSocialClickListener listener);
 
+    void setOnHyperlinkClickListener(@Nullable OnSocialClickListener listener);
+
     void setHashtagTextChangedListener(@Nullable SocialTextWatcher watcher);
 
     void setMentionTextChangedListener(@Nullable SocialTextWatcher watcher);
+    //endregion
+
+    //region getters
+
+    boolean isHashtagEnabled();
+
+    boolean isMentionEnabled();
+
+    boolean isHyperlinkEnabled();
 
     @ColorInt
     int getHashtagColor();
@@ -39,9 +63,8 @@ public interface SocialView {
     @ColorInt
     int getMentionColor();
 
-    boolean isHashtagEnabled();
-
-    boolean isMentionEnabled();
+    @ColorInt
+    int getHyperlinkColor();
 
     @NonNull
     List<String> getHashtags();
@@ -49,11 +72,30 @@ public interface SocialView {
     @NonNull
     List<String> getMentions();
 
+    @NonNull
+    List<String> getHyperlinks();
+    //endregion
+
     interface OnSocialClickListener {
-        void onClick(@NonNull TextView view, @NonNull String s);
+        void onClick(@NonNull TextView view, @NonNull CharSequence text);
     }
 
     interface SocialTextWatcher {
-        void onTextChanged(@NonNull TextView view, @NonNull String s);
+        void onTextChanged(@NonNull TextView view, @NonNull CharSequence text);
+    }
+
+    class Property {
+        boolean enabled;
+        @ColorInt int color;
+        @Nullable OnSocialClickListener listener;
+
+        Property(boolean enabled, @ColorInt int color) {
+            this.enabled = enabled;
+            this.color = color;
+        }
+
+        SocialSpan createSpan() {
+            return new SocialSpan(color, listener);
+        }
     }
 }

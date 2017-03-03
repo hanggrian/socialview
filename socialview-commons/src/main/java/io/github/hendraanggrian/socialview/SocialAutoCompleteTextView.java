@@ -5,6 +5,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatMultiAutoCompleteTextView;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -12,7 +13,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
-import android.widget.MultiAutoCompleteTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import static io.github.hendraanggrian.socialview.SocialViewAttacher.MENTION;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView implements SocialView, TextWatcher {
+public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoCompleteTextView implements SocialView, TextWatcher {
 
     @NonNull private final SocialViewAttacher attacher;
     private ArrayAdapter<H> hashtagAdapter;
@@ -48,6 +48,23 @@ public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView 
     }
 
     @Override
+    public void setHashtagEnabled(boolean enabled) {
+        attacher.setHashtagEnabled(enabled);
+        init();
+    }
+
+    @Override
+    public void setMentionEnabled(boolean enabled) {
+        attacher.setMentionEnabled(enabled);
+        init();
+    }
+
+    @Override
+    public void setHyperlinkEnabled(boolean enabled) {
+        attacher.setHyperlinkEnabled(enabled);
+    }
+
+    @Override
     public void setHashtagColor(@ColorInt int color) {
         attacher.setHashtagColor(color);
     }
@@ -68,15 +85,13 @@ public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView 
     }
 
     @Override
-    public void setHashtagEnabled(boolean enabled) {
-        attacher.setHashtagEnabled(enabled);
-        init();
+    public void setHyperlinkColor(@ColorInt int color) {
+        attacher.setHyperlinkColor(color);
     }
 
     @Override
-    public void setMentionEnabled(boolean enabled) {
-        attacher.setMentionEnabled(enabled);
-        init();
+    public void setHyperlinkColorRes(@ColorRes int colorRes) {
+        attacher.setHyperlinkColorRes(colorRes);
     }
 
     @Override
@@ -90,6 +105,11 @@ public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView 
     }
 
     @Override
+    public void setOnHyperlinkClickListener(@Nullable OnSocialClickListener listener) {
+        attacher.setOnHyperlinkClickListener(listener);
+    }
+
+    @Override
     public void setHashtagTextChangedListener(@Nullable SocialTextWatcher watcher) {
         attacher.setHashtagTextChangedListener(watcher);
     }
@@ -97,6 +117,21 @@ public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView 
     @Override
     public void setMentionTextChangedListener(@Nullable SocialTextWatcher watcher) {
         attacher.setMentionTextChangedListener(watcher);
+    }
+
+    @Override
+    public boolean isHashtagEnabled() {
+        return attacher.isHashtagEnabled();
+    }
+
+    @Override
+    public boolean isMentionEnabled() {
+        return attacher.isMentionEnabled();
+    }
+
+    @Override
+    public boolean isHyperlinkEnabled() {
+        return attacher.isHyperlinkEnabled();
     }
 
     @Override
@@ -110,13 +145,8 @@ public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView 
     }
 
     @Override
-    public boolean isHashtagEnabled() {
-        return attacher.isHashtagEnabled();
-    }
-
-    @Override
-    public boolean isMentionEnabled() {
-        return attacher.isMentionEnabled();
+    public int getHyperlinkColor() {
+        return attacher.getHyperlinkColor();
     }
 
     @NonNull
@@ -129,6 +159,12 @@ public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView 
     @Override
     public List<String> getMentions() {
         return attacher.getMentions();
+    }
+
+    @NonNull
+    @Override
+    public List<String> getHyperlinks() {
+        return attacher.getHyperlinks();
     }
 
     @Override

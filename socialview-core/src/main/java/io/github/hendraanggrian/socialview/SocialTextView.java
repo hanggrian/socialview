@@ -5,32 +5,46 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import java.util.List;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialTextView extends TextView implements SocialView {
+public class SocialTextView extends AppCompatTextView implements SocialView {
 
     @NonNull private final SocialViewAttacher attacher;
 
     public SocialTextView(Context context) {
-        super(context);
-        attacher = new SocialViewAttacher(this, context);
+        this(context, null);
     }
 
-    public SocialTextView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        attacher = new SocialViewAttacher(this, context, attrs);
+    public SocialTextView(Context context, AttributeSet attrs) {
+        this(context, attrs, android.R.attr.textViewStyle);
     }
 
-    public SocialTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public SocialTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         attacher = new SocialViewAttacher(this, context, attrs);
     }
+
+    @Override
+    public void setHashtagEnabled(boolean enabled) {
+        attacher.setHashtagEnabled(enabled);
+    }
+
+    @Override
+    public void setMentionEnabled(boolean enabled) {
+        attacher.setMentionEnabled(enabled);
+    }
+
+    @Override
+    public void setHyperlinkEnabled(boolean enabled) {
+        attacher.setHyperlinkEnabled(enabled);
+    }
+
     @Override
     public void setHashtagColor(@ColorInt int color) {
         attacher.setHashtagColor(color);
@@ -52,13 +66,13 @@ public class SocialTextView extends TextView implements SocialView {
     }
 
     @Override
-    public void setHashtagEnabled(boolean enabled) {
-        attacher.setHashtagEnabled(enabled);
+    public void setHyperlinkColor(@ColorInt int color) {
+        attacher.setHyperlinkColor(color);
     }
 
     @Override
-    public void setMentionEnabled(boolean enabled) {
-        attacher.setMentionEnabled(enabled);
+    public void setHyperlinkColorRes(@ColorRes int colorRes) {
+        attacher.setHyperlinkColorRes(colorRes);
     }
 
     @Override
@@ -72,6 +86,11 @@ public class SocialTextView extends TextView implements SocialView {
     }
 
     @Override
+    public void setOnHyperlinkClickListener(@Nullable OnSocialClickListener listener) {
+        attacher.setOnHyperlinkClickListener(listener);
+    }
+
+    @Override
     public void setHashtagTextChangedListener(@Nullable SocialTextWatcher watcher) {
         attacher.setHashtagTextChangedListener(watcher);
     }
@@ -79,6 +98,21 @@ public class SocialTextView extends TextView implements SocialView {
     @Override
     public void setMentionTextChangedListener(@Nullable SocialTextWatcher watcher) {
         attacher.setMentionTextChangedListener(watcher);
+    }
+
+    @Override
+    public boolean isHashtagEnabled() {
+        return attacher.isHashtagEnabled();
+    }
+
+    @Override
+    public boolean isMentionEnabled() {
+        return attacher.isMentionEnabled();
+    }
+
+    @Override
+    public boolean isHyperlinkEnabled() {
+        return attacher.isHyperlinkEnabled();
     }
 
     @Override
@@ -92,13 +126,8 @@ public class SocialTextView extends TextView implements SocialView {
     }
 
     @Override
-    public boolean isHashtagEnabled() {
-        return attacher.isHashtagEnabled();
-    }
-
-    @Override
-    public boolean isMentionEnabled() {
-        return attacher.isMentionEnabled();
+    public int getHyperlinkColor() {
+        return attacher.getHyperlinkColor();
     }
 
     @NonNull
@@ -111,5 +140,11 @@ public class SocialTextView extends TextView implements SocialView {
     @Override
     public List<String> getMentions() {
         return attacher.getMentions();
+    }
+
+    @NonNull
+    @Override
+    public List<String> getHyperlinks() {
+        return attacher.getHyperlinks();
     }
 }

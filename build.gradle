@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.3.0'
         classpath 'com.novoda:bintray-release:0.3.4'
     }
 }
@@ -36,11 +36,11 @@ ext.deps = [
                 'com.android.support.test.espresso:espresso-core:2.2.2'
         ],
         core       : [
-                'com.android.support:appcompat-v7:25.1.0'
+                'com.android.support:appcompat-v7:25.2.0'
         ],
         commons    : [
                 'com.squareup.picasso:picasso:2.5.2',
-                'io.github.hendraanggrian:picasso-transformations:0.4.2@aar'
+                'io.github.hendraanggrian:picasso-transformations:0.5.0@aar'
         ]
 ]
 
@@ -51,8 +51,8 @@ ext.bintray = [
                 'core'   : 'socialview-core',
                 'commons': 'socialview-commons'
         ],
-        version : '0.3.0',
-        desc    : 'Android TextView and EditText with hashtag and mention support.',
+        version : '0.4.0',
+        desc    : 'Android TextView and EditText with hashtag, mention, and hyperlink support.',
         website : 'https://github.com/hendraanggrian/socialview'
 ]
 

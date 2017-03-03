@@ -9,10 +9,10 @@ Download
 #### Core
 
 The `core` module comes with basic `SocialTextView` and `SocialEditText`.
-It also contains `SocialView` to implement hashtag and mention support to any view extending `TextView`.
+It also contains `SocialView` to implement hashtag, mention, and hyperlink support to any view extending `TextView`.
 
 ```gradle
-compile 'io.github.hendraanggrian:socialview-core:0.3.0'
+compile 'io.github.hendraanggrian:socialview-core:0.4.0'
 ```
 
 #### Commons
@@ -21,7 +21,7 @@ The `commons` module has all `core` module components plus `SocialSuggestionEdit
 You can use custom model extending `Hashtagable` and `Mentionable`, or even use your adapter extending `SuggestionAdapter<Hashtagable>` and `SuggestionAdapter<Mentionable>`.
 
 ```gradle
-compile 'io.github.hendraanggrian:socialview-commons:0.3.0'
+compile 'io.github.hendraanggrian:socialview-commons:0.4.0'
 ```
 
 Core
@@ -38,10 +38,12 @@ Comes with `SocialTextView` and `SocialEditText`.
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="#hashtag and @mention."
-    app:hashtagColor="@color/blue" // if not set, color accent of current app theme is used
-    app:mentionColor="@color/red"  // if not set, color accent of current app theme is used
     app:hashtagEnabled="true"      // true by default
     app:mentionEnabled="false"     // true by default
+    app:hyperlinkEnabled="false"     // true by default
+    app:hashtagColor="@color/blue" // if not set, color accent of current app theme is used
+    app:mentionColor="@color/red"  // if not set, color accent of current app theme is used
+    app:hyperlinkColor="@color/red"  // if not set, color accent of current app theme is used
     />
 ```
 
@@ -87,10 +89,12 @@ Comes with `SocialSuggestionEditText` and all the interfaces, models, and adapte
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="What's on your mind?"
-    app:hashtagColor="@color/blue" // if not set, color accent of current app theme is used
-    app:mentionColor="@color/red"  // if not set, color accent of current app theme is used
     app:hashtagEnabled="true"      // true by default
     app:mentionEnabled="false"     // true by default
+    app:hyperlinkEnabled="false"     // true by default
+    app:hashtagColor="@color/blue" // if not set, color accent of current app theme is used
+    app:mentionColor="@color/red"  // if not set, color accent of current app theme is used
+    app:hyperlinkColor="@color/red"  // if not set, color accent of current app theme is used
 />
 ```
 

@@ -1,6 +1,5 @@
 package io.github.hendraanggrian.socialviewdemo;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,14 +36,14 @@ public class SuggestionFragment extends Fragment {
         editText.setMentionAdapter(new MentionAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Mentionable>
         editText.setHashtagTextChangedListener(new SocialView.SocialTextWatcher() {
             @Override
-            public void onTextChanged(@NonNull TextView view, @NonNull String s) {
-                Log.d("#", s);
+            public void onTextChanged(@NonNull TextView view, @NonNull CharSequence text) {
+                Log.d("#", text.toString());
             }
         });
         editText.setMentionTextChangedListener(new SocialView.SocialTextWatcher() {
             @Override
-            public void onTextChanged(@NonNull TextView view, @NonNull String s) {
-                Log.d("@", s);
+            public void onTextChanged(@NonNull TextView view, @NonNull CharSequence text) {
+                Log.d("@", text.toString());
             }
         });
 

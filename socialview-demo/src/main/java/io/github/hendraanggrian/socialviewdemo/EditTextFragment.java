@@ -1,6 +1,5 @@
 package io.github.hendraanggrian.socialviewdemo;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -33,28 +32,28 @@ public class EditTextFragment extends Fragment {
         SocialEditText editText = (SocialEditText) view.findViewById(R.id.socialedittext);
         editText.setOnHashtagClickListener(new SocialViewAttacher.OnSocialClickListener() {
             @Override
-            public void onClick(@NonNull TextView view, @NonNull String s) {
-                Toast.makeText(getContext(), "#" + s, Toast.LENGTH_SHORT).show();
+            public void onClick(@NonNull TextView view, @NonNull CharSequence text) {
+                Toast.makeText(getContext(), "#" + text, Toast.LENGTH_SHORT).show();
             }
         });
         editText.setOnMentionClickListener(new SocialViewAttacher.OnSocialClickListener() {
             @Override
-            public void onClick(@NonNull TextView view, @NonNull String s) {
-                Toast.makeText(getContext(), "@" + s, Toast.LENGTH_SHORT).show();
+            public void onClick(@NonNull TextView view, @NonNull CharSequence text) {
+                Toast.makeText(getContext(), "@" + text, Toast.LENGTH_SHORT).show();
             }
         });
 
         editText.setHashtagTextChangedListener(new SocialView.SocialTextWatcher() {
             @Override
-            public void onTextChanged(@NonNull TextView view, @NonNull String s) {
-                Log.d("#", s);
+            public void onTextChanged(@NonNull TextView view, @NonNull CharSequence text) {
+                Log.d("#", text.toString());
             }
         });
 
         editText.setMentionTextChangedListener(new SocialView.SocialTextWatcher() {
             @Override
-            public void onTextChanged(@NonNull TextView view, @NonNull String s) {
-                Log.d("@", s);
+            public void onTextChanged(@NonNull TextView view, @NonNull CharSequence text) {
+                Log.d("@", text.toString());
             }
         });
     }

@@ -10,7 +10,7 @@
     <io.github.hendraanggrian.socialview.SocialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This is a standard TextView with #hashtag and @mention support."
+        android:text="This is a standard TextView with #hashtag, @mention, and http://some.url support."
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <io.github.hendraanggrian.socialview.SocialTextView
@@ -20,14 +20,6 @@
         android:text="You can disable @mention to only have #hashtag."
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:mentionEnabled="false"/>
-
-    <io.github.hendraanggrian.socialview.SocialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="And @vice #versa."
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:hashtagEnabled="false"/>
 
     <io.github.hendraanggrian.socialview.SocialTextView
         android:layout_width="match_parent"
