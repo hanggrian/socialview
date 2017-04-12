@@ -11,16 +11,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hendraanggrian.widget.SocialAutoCompleteTextView;
-import com.hendraanggrian.widget.socialview.SociableView;
+import com.hendraanggrian.widget.socialview.SocialTextWatcher;
 import com.hendraanggrian.widget.socialview.commons.Hashtag;
 import com.hendraanggrian.widget.socialview.commons.HashtagAdapter;
 import com.hendraanggrian.widget.socialview.commons.Mention;
 import com.hendraanggrian.widget.socialview.commons.MentionAdapter;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class SuggestionFragment extends Fragment {
+
+    @BindView(R.id.socialsuggestionedittext) SocialAutoCompleteTextView<Hashtag, Mention> editText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,17 +35,17 @@ public class SuggestionFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
 
-        SocialAutoCompleteTextView<Hashtag, Mention> editText = (SocialAutoCompleteTextView<Hashtag, Mention>) view.findViewById(R.id.socialsuggestionedittext);
         editText.setHashtagAdapter(new HashtagAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Hashtagable>
         editText.setMentionAdapter(new MentionAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Mentionable>
-        editText.setHashtagTextChangedListener(new SociableView.SocialTextWatcher() {
+        editText.setHashtagTextChangedListener(new SocialTextWatcher() {
             @Override
             public void onTextChanged(@NonNull TextView view, @NonNull CharSequence text) {
                 Log.d("#", text.toString());
             }
         });
-        editText.setMentionTextChangedListener(new SociableView.SocialTextWatcher() {
+        editText.setMentionTextChangedListener(new SocialTextWatcher() {
             @Override
             public void onTextChanged(@NonNull TextView view, @NonNull CharSequence text) {
                 Log.d("@", text.toString());

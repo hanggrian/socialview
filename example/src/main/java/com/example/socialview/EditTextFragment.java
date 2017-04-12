@@ -12,13 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hendraanggrian.widget.SocialEditText;
-import com.hendraanggrian.widget.socialview.SociableView;
-import com.hendraanggrian.widget.socialview.SocialViewAttacher;
+import com.hendraanggrian.widget.socialview.OnSocialClickListener;
+import com.hendraanggrian.widget.socialview.SocialTextWatcher;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class EditTextFragment extends Fragment {
+
+    @BindView(R.id.socialedittext) SocialEditText editText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,29 +33,29 @@ public class EditTextFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
 
-        SocialEditText editText = (SocialEditText) view.findViewById(R.id.socialedittext);
-        editText.setOnHashtagClickListener(new SocialViewAttacher.OnSocialClickListener() {
+        editText.setOnHashtagClickListener(new OnSocialClickListener() {
             @Override
             public void onClick(@NonNull TextView view, @NonNull CharSequence text) {
                 Toast.makeText(getContext(), "#" + text, Toast.LENGTH_SHORT).show();
             }
         });
-        editText.setOnMentionClickListener(new SocialViewAttacher.OnSocialClickListener() {
+        editText.setOnMentionClickListener(new OnSocialClickListener() {
             @Override
             public void onClick(@NonNull TextView view, @NonNull CharSequence text) {
                 Toast.makeText(getContext(), "@" + text, Toast.LENGTH_SHORT).show();
             }
         });
 
-        editText.setHashtagTextChangedListener(new SociableView.SocialTextWatcher() {
+        editText.setHashtagTextChangedListener(new SocialTextWatcher() {
             @Override
             public void onTextChanged(@NonNull TextView view, @NonNull CharSequence text) {
                 Log.d("#", text.toString());
             }
         });
 
-        editText.setMentionTextChangedListener(new SociableView.SocialTextWatcher() {
+        editText.setMentionTextChangedListener(new SocialTextWatcher() {
             @Override
             public void onTextChanged(@NonNull TextView view, @NonNull CharSequence text) {
                 Log.d("@", text.toString());

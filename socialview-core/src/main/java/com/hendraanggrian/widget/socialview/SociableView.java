@@ -4,20 +4,20 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.TextView;
 
 import java.util.List;
 
 /**
+ * Base methods of all socialview's widgets.
+ * The logic, however, are calculated in {@link SocialViewAttacher} while the widgets are just
+ * passing these methods to the attacher.
+ *
  * @author Hendra Anggian (hendraanggrian@gmail.com)
+ * @see SocialViewAttacher
+ * @see com.hendraanggrian.widget.SocialTextView
+ * @see com.hendraanggrian.widget.SocialEditText
  */
 public interface SociableView {
-
-    char HASHTAG = '#';
-    char MENTION = '@';
-    String REGEX_HASHTAG = "#(\\w+)";
-    String REGEX_MENTION = "@(\\w+)";
-    String REGEX_HYPERLINK = "[a-z]+:\\/\\/[^ \\n]*";
 
     //region setters
     void setHashtagEnabled(boolean enabled);
@@ -50,7 +50,6 @@ public interface SociableView {
     //endregion
 
     //region getters
-
     boolean isHashtagEnabled();
 
     boolean isMentionEnabled();
@@ -75,27 +74,4 @@ public interface SociableView {
     @NonNull
     List<String> getHyperlinks();
     //endregion
-
-    interface OnSocialClickListener {
-        void onClick(@NonNull TextView view, @NonNull CharSequence text);
-    }
-
-    interface SocialTextWatcher {
-        void onTextChanged(@NonNull TextView view, @NonNull CharSequence text);
-    }
-
-    class Property {
-        boolean enabled;
-        @ColorInt int color;
-        @Nullable OnSocialClickListener listener;
-
-        Property(boolean enabled, @ColorInt int color) {
-            this.enabled = enabled;
-            this.color = color;
-        }
-
-        SocialSpan createSpan() {
-            return new SocialSpan(color, listener);
-        }
-    }
 }

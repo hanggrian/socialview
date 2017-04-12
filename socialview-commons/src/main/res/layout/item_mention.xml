@@ -12,6 +12,7 @@
         android:layout_height="40dp"
         android:layout_marginLeft="12dp"
         android:layout_marginStart="12dp"
+        android:contentDescription="@string/imageview_mention_username_description"
         android:src="@drawable/ic_placeholder_mention"/>
 
     <LinearLayout

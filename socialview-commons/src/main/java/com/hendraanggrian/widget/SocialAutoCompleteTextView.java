@@ -14,7 +14,9 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 
+import com.hendraanggrian.widget.socialview.OnSocialClickListener;
 import com.hendraanggrian.widget.socialview.SociableView;
+import com.hendraanggrian.widget.socialview.SocialTextWatcher;
 import com.hendraanggrian.widget.socialview.SocialViewAttacher;
 
 import java.util.ArrayList;
@@ -176,11 +178,11 @@ public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoComplete
         if (s.length() > 0)
             if (start < s.length())
                 switch (s.charAt(start)) {
-                    case HASHTAG:
+                    case '#':
                         if (getAdapter() != hashtagAdapter)
                             setAdapter(hashtagAdapter);
                         break;
-                    case MENTION:
+                    case '@':
                         if (getAdapter() != mentionAdapter)
                             setAdapter(mentionAdapter);
                         break;
@@ -217,9 +219,9 @@ public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoComplete
 
         private SocialTokenizer(boolean hashtagEnabled, boolean mentionEnabled) {
             if (hashtagEnabled)
-                symbols.add(HASHTAG);
+                symbols.add('#');
             if (mentionEnabled)
-                symbols.add(MENTION);
+                symbols.add('@');
         }
 
         public int findTokenStart(CharSequence text, int cursor) {

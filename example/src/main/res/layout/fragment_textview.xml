@@ -8,6 +8,7 @@
     android:padding="16dp">
 
     <com.hendraanggrian.widget.SocialTextView
+        android:id="@+id/socialTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="This is a standard TextView with #hashtag, @mention, and http://some.url support."

@@ -11,7 +11,6 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://dl.bintray.com/hendraanggrian/maven/" }
     }
 }
 
@@ -51,7 +50,7 @@ ext.bintray = [
                 'core'   : 'socialview-core',
                 'commons': 'socialview-commons'
         ],
-        version : '0.4.0',
+        version : '0.5.0',
         desc    : 'Android TextView and EditText with hashtag, mention, and hyperlink support.',
         website : 'https://github.com/hendraanggrian/socialview'
 ]
