@@ -8,13 +8,14 @@
     android:padding="16dp">
 
     <com.hendraanggrian.widget.SocialTextView
-        android:id="@+id/socialTextView"
+        android:id="@+id/socialtextview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="This is a standard TextView with #hashtag, @mention, and http://some.url support."
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <com.hendraanggrian.widget.SocialTextView
+        android:id="@+id/socialtextview2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -23,6 +24,7 @@
         app:mentionEnabled="false"/>
 
     <com.hendraanggrian.widget.SocialTextView
+        android:id="@+id/socialtextview3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

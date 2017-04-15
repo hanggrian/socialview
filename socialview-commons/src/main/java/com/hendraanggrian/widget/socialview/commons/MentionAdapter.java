@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ import com.squareup.picasso.RequestCreator;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public final class MentionAdapter extends SuggestionAdapter<Mention> {
+public final class MentionAdapter extends SocialAdapter<Mention> {
 
     @DrawableRes private final int defaultAvatar;
 
@@ -46,23 +47,20 @@ public final class MentionAdapter extends SuggestionAdapter<Mention> {
         if (item != null) {
             holder.textViewUsername.setText(item.getUsername());
 
-            final RequestCreator request;
+            Picasso picasso = Picasso.with(getContext());
+            RequestCreator request = null;
             if (item.getAvatar() == null)
-                request = Picasso.with(getContext())
-                        .load(defaultAvatar);
+                request = picasso.load(defaultAvatar);
             else if (item.getAvatar() instanceof Integer)
-                request = Picasso.with(getContext())
-                        .load((int) item.getAvatar());
+                request = picasso.load((int) item.getAvatar());
             else if (item.getAvatar() instanceof String)
-                request = Picasso.with(getContext())
-                        .load((String) item.getAvatar())
+                request = picasso.load((String) item.getAvatar())
                         .placeholder(defaultAvatar)
                         .error(defaultAvatar);
-            else
-                throw new RuntimeException("Mentionable avatar can only be String url and int resource.");
-            request.transform(Transformations.circle())
-                    .fit()
-                    .into(holder.imageView);
+            if (request != null)
+                request.transform(Transformations.circle())
+                        .fit()
+                        .into(holder.imageView);
 
             if (!TextUtils.isEmpty(item.getDisplayname())) {
                 holder.textViewDisplayname.setText(item.getDisplayname());
@@ -76,7 +74,7 @@ public final class MentionAdapter extends SuggestionAdapter<Mention> {
 
     @NonNull
     @Override
-    public SuggestionFilter initializeFilter() {
+    public Filter initializeFilter() {
         return new SuggestionFilter() {
             @Override
             public String getString(Mention item) {
@@ -86,8 +84,9 @@ public final class MentionAdapter extends SuggestionAdapter<Mention> {
     }
 
     private static class ViewHolder {
-        private final ImageView imageView;
-        private final TextView textViewUsername, textViewDisplayname;
+        @NonNull private final ImageView imageView;
+        @NonNull private final TextView textViewUsername;
+        @NonNull private final TextView textViewDisplayname;
 
         private ViewHolder(@NonNull View view) {
             imageView = (ImageView) view.findViewById(R.id.imageview_mention_username);

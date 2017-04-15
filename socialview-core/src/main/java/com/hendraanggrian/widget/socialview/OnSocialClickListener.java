@@ -8,5 +8,5 @@ import android.widget.TextView;
  */
 public interface OnSocialClickListener {
 
-    void onClick(@NonNull TextView view, @NonNull CharSequence text);
+    void onClick(@NonNull TextView v, @NonNull SocialView.Type type, @NonNull CharSequence s);
 }

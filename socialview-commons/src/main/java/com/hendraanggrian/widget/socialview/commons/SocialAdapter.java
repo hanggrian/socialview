@@ -17,19 +17,19 @@ import java.util.Locale;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public abstract class SuggestionAdapter<T> extends ArrayAdapter<T> {
+public abstract class SocialAdapter<T> extends ArrayAdapter<T> {
 
     @NonNull
     public abstract View getView(int position, View convertView, @NonNull ViewGroup parent);
 
     @NonNull
-    public abstract SuggestionFilter initializeFilter();
+    public abstract Filter initializeFilter();
 
     private final List<T> tempItems;
     private final List<T> suggestions;
-    private final SuggestionFilter filter;
+    private final Filter filter;
 
-    public SuggestionAdapter(@NonNull Context context, int resource, int textViewResourceId) {
+    public SocialAdapter(@NonNull Context context, int resource, int textViewResourceId) {
         super(context, resource, textViewResourceId, new ArrayList<T>());
         this.tempItems = new ArrayList<>();
         this.suggestions = new ArrayList<>();
@@ -38,7 +38,7 @@ public abstract class SuggestionAdapter<T> extends ArrayAdapter<T> {
 
     @NonNull
     @Override
-    public SuggestionFilter getFilter() {
+    public Filter getFilter() {
         return filter;
     }
 
@@ -83,7 +83,7 @@ public abstract class SuggestionAdapter<T> extends ArrayAdapter<T> {
             tempItems.clear();
     }
 
-    abstract class SuggestionFilter extends Filter {
+    public abstract class SuggestionFilter extends Filter {
 
         public abstract String getString(T item);
 

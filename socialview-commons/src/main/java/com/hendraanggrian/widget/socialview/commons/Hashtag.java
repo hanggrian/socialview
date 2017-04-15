@@ -12,7 +12,12 @@ public class Hashtag {
     @Nullable private Integer count;
 
     public Hashtag(@NonNull String hashtag) {
+        this(hashtag, null);
+    }
+
+    public Hashtag(@NonNull String hashtag, @Nullable Integer count) {
         this.hashtag = hashtag;
+        this.count = count;
     }
 
     @NonNull

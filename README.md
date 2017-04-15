@@ -5,37 +5,30 @@
 
 Download
 --------
-
 #### Core
-
 The `core` module comes with basic `SocialTextView` and `SocialEditText`.
 It also contains `SocialView` to implement hashtag, mention, and hyperlink support to any view extending `TextView`.
-
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:socialview-core:0.5.0'
+    compile 'com.hendraanggrian:socialview-core:0.6.0'
 }
 ```
 
 #### Commons
-
 The `commons` module has all `core` module components plus `SocialSuggestionEditText` that displays hashtag and mention suggestions as you type.
 You can use custom model extending `Hashtagable` and `Mentionable`, or even use your adapter extending `SuggestionAdapter<Hashtagable>` and `SuggestionAdapter<Mentionable>`.
-
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:socialview-commons:0.5.0'
+    compile 'com.hendraanggrian:socialview-commons:0.6.0'
 }
 ```
 
 Core
 ----
-
 <img src="/art/ss_core1.png" width="256">
 <img src="/art/ss_core2.png" width="256">
 
 Comes with `SocialTextView` and `SocialEditText`.
-
 ```xml
 <com.hendraanggrian.widget.SocialTextView
     android:id="@+id/socialtextview"
@@ -52,7 +45,6 @@ Comes with `SocialTextView` and `SocialEditText`.
 ```
 
 You can also change them programatically.
-
 ```java
 SocialTextView socialTextView = (SocialTextView) findViewById(R.id.socialtextview);
 socialTextView.setHashtagColor(ContextCompat.getColor(this, R.color.red));
@@ -69,7 +61,6 @@ socialTextView.setOnHashtagClickListener(new SocialView.OnSocialClickListener() 
 ```
 
 Note that `SocialTextView` and `SocialEditText` are basically just `TextView` and `EditText` that implement `SocialViewBase` of which overriden methods are passed for `SocialView` to process inside each of them. With this in mind, `SocialView` can be attached to any `TextView` or view extending `TextView`:
-
 ```java
 CustomTextView textView = ...;
 SocialViewAttacher attacher = SocialViewAttacher.attach(textView);
@@ -81,12 +72,10 @@ attacher.setOnHashtagClickListener((view, clicked) -> {});
 
 Commons
 -------
-
 <img src="/art/ss_commons1.png" width="256">
 <img src="/art/ss_commons2.png" width="256">
 
 Comes with `SocialSuggestionEditText` and all the interfaces, models, and adapters necessary to use it.
-
 ```xml
 <com.hendraanggrian.widget.SocialSuggestionEditText
     android:id="@+id/socialsuggestionedittext"
@@ -103,7 +92,6 @@ Comes with `SocialSuggestionEditText` and all the interfaces, models, and adapte
 ```
 
 To display suggestions, it is required to `setHashtagAdapter()` and `setMentionAdapter()`.
-
 ```java
 SocialSuggestionEditText editText = (SocialSuggestionEditText) view.findViewById(R.id.socialsuggestionedittext);
 editText.setHashtagAdapter(new HashtagAdapter(getContext())); // or use custom adapter extending SuggestionAdapter<Hashtagable>

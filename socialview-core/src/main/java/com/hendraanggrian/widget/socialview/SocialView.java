@@ -17,9 +17,8 @@ import java.util.List;
  * @see com.hendraanggrian.widget.SocialTextView
  * @see com.hendraanggrian.widget.SocialEditText
  */
-public interface SociableView {
+public interface SocialView {
 
-    //region setters
     void setHashtagEnabled(boolean enabled);
 
     void setMentionEnabled(boolean enabled);
@@ -38,18 +37,10 @@ public interface SociableView {
 
     void setHyperlinkColorRes(@ColorRes int colorRes);
 
-    void setOnHashtagClickListener(@Nullable OnSocialClickListener listener);
+    void setOnSocialClickListener(@Nullable OnSocialClickListener listener);
 
-    void setOnMentionClickListener(@Nullable OnSocialClickListener listener);
+    void setSocialTextChangedListener(@Nullable SocialTextWatcher watcher);
 
-    void setOnHyperlinkClickListener(@Nullable OnSocialClickListener listener);
-
-    void setHashtagTextChangedListener(@Nullable SocialTextWatcher watcher);
-
-    void setMentionTextChangedListener(@Nullable SocialTextWatcher watcher);
-    //endregion
-
-    //region getters
     boolean isHashtagEnabled();
 
     boolean isMentionEnabled();
@@ -73,5 +64,10 @@ public interface SociableView {
 
     @NonNull
     List<String> getHyperlinks();
-    //endregion
+
+    enum Type {
+        HASHTAG,
+        MENTION,
+        HYPERLINK
+    }
 }

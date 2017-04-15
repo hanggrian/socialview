@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -13,7 +14,7 @@ import java.util.Locale;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public final class HashtagAdapter extends SuggestionAdapter<Hashtag> {
+public final class HashtagAdapter extends SocialAdapter<Hashtag> {
 
     public HashtagAdapter(@NonNull Context context) {
         super(context, R.layout.item_hashtag, R.id.textview_hashtag_value);
@@ -49,7 +50,7 @@ public final class HashtagAdapter extends SuggestionAdapter<Hashtag> {
 
     @NonNull
     @Override
-    public SuggestionFilter initializeFilter() {
+    public Filter initializeFilter() {
         return new SuggestionFilter() {
             @Override
             public String getString(Hashtag item) {
@@ -59,7 +60,8 @@ public final class HashtagAdapter extends SuggestionAdapter<Hashtag> {
     }
 
     private static class ViewHolder {
-        private final TextView textViewHashtag, textViewHashtagCount;
+        @NonNull private final TextView textViewHashtag;
+        @NonNull private final TextView textViewHashtagCount;
 
         private ViewHolder(@NonNull View view) {
             textViewHashtag = (TextView) view.findViewById(R.id.textview_hashtag_value);

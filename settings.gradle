@@ -1,1 +1,2 @@
-include ':socialview-core', ':socialview-commons', ':example'
+include ':socialview-core', ':socialview-commons'
+include ':example'

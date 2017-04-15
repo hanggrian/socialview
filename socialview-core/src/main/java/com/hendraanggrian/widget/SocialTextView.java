@@ -9,7 +9,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
 import com.hendraanggrian.widget.socialview.OnSocialClickListener;
-import com.hendraanggrian.widget.socialview.SociableView;
+import com.hendraanggrian.widget.socialview.SocialView;
 import com.hendraanggrian.widget.socialview.SocialTextWatcher;
 import com.hendraanggrian.widget.socialview.SocialViewAttacher;
 
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialTextView extends AppCompatTextView implements SociableView {
+public class SocialTextView extends AppCompatTextView implements SocialView {
 
     @NonNull private final SocialViewAttacher attacher;
 
@@ -81,28 +81,13 @@ public class SocialTextView extends AppCompatTextView implements SociableView {
     }
 
     @Override
-    public void setOnHashtagClickListener(@Nullable OnSocialClickListener listener) {
-        attacher.setOnHashtagClickListener(listener);
+    public void setOnSocialClickListener(@Nullable OnSocialClickListener listener) {
+        attacher.setOnSocialClickListener(listener);
     }
 
     @Override
-    public void setOnMentionClickListener(@Nullable OnSocialClickListener listener) {
-        attacher.setOnMentionClickListener(listener);
-    }
-
-    @Override
-    public void setOnHyperlinkClickListener(@Nullable OnSocialClickListener listener) {
-        attacher.setOnHyperlinkClickListener(listener);
-    }
-
-    @Override
-    public void setHashtagTextChangedListener(@Nullable SocialTextWatcher watcher) {
-        attacher.setHashtagTextChangedListener(watcher);
-    }
-
-    @Override
-    public void setMentionTextChangedListener(@Nullable SocialTextWatcher watcher) {
-        attacher.setMentionTextChangedListener(watcher);
+    public void setSocialTextChangedListener(@Nullable SocialTextWatcher watcher) {
+        attacher.setSocialTextChangedListener(watcher);
     }
 
     @Override

@@ -14,7 +14,25 @@ public class Mention {
     @Nullable private Object avatar;
 
     public Mention(@NonNull String username) {
+        this(username, null);
+    }
+
+    public Mention(@NonNull String username, @Nullable String displayname) {
+        this(username, displayname, null);
+    }
+
+    public Mention(@NonNull String username, @Nullable String displayname, @Nullable String avatarUrl) {
+        this(username, displayname, (Object) avatarUrl);
+    }
+
+    public Mention(@NonNull String username, @Nullable String displayname, @DrawableRes int drawableRes) {
+        this(username, displayname, (Object) drawableRes);
+    }
+
+    private Mention(@NonNull String username, @Nullable String displayname, @Nullable Object avatar) {
         this.username = username;
+        this.displayname = displayname;
+        this.avatar = avatar;
     }
 
     @NonNull
@@ -42,9 +60,5 @@ public class Mention {
 
     public void setAvatar(@Nullable String avatarUrl) {
         this.avatar = avatarUrl;
-    }
-
-    private void setAvatar(@Nullable Object avatar) {
-        this.avatar = avatar;
     }
 }
