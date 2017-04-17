@@ -1,5 +1,6 @@
 ![logo](/art/logo.png) SocialView
 =================================
+Android TextView and EditText with hashtag, mention, and hyperlink support.
 
 ![demo](/art/demo.gif)
 
@@ -26,8 +27,7 @@ dependencies {
 
 Core
 ----
-<img src="/art/ss_core1.png" width="256">
-<img src="/art/ss_core2.png" width="256">
+<img src="/art/ss_core1.png" width="256"> <img src="/art/ss_core2.png" width="256">
 
 Comes with `SocialTextView` and `SocialEditText`.
 ```xml
@@ -73,8 +73,7 @@ attacher.setOnHashtagClickListener((view, clicked) -> {});
 
 Commons
 -------
-<img src="/art/ss_commons1.png" width="256">
-<img src="/art/ss_commons2.png" width="256">
+<img src="/art/ss_commons1.png" width="256"> <img src="/art/ss_commons2.png" width="256">
 
 Comes with `SocialAutoCompleteTextView` and all the interfaces, models, and adapters necessary to use it.
 ```xml
