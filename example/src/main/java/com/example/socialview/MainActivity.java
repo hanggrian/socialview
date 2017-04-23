@@ -1,66 +1,51 @@
 package com.example.socialview;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.BindViews;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    @BindView(R.id.viewpager) ViewPager viewPager;
-    @BindView(R.id.tablayout) TabLayout tabLayout;
+    @BindViews({
+            R.id.button_main_example1,
+            R.id.button_main_example2,
+            R.id.button_main_example3,
+            R.id.button_main_example4
+    }) Button[] buttons;
 
-    private Unbinder unbinder;
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_main;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        unbinder = ButterKnife.bind(this);
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
-        tabLayout.setupWithViewPager(viewPager);
+        for (Button button : buttons)
+            button.setOnClickListener(this);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
-
-    private static class ViewPagerAdapter extends FragmentStatePagerAdapter {
-        private ViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            if (position == 0) return new TextViewFragment();
-            else if (position == 1) return new EditTextFragment();
-            else if (position == 2) return new SuggestionDefaultFragment();
-            else return new SuggestionCustomFragment();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            if (position == 0) return "TextView";
-            else if (position == 1) return "EditText";
-            else if (position == 2) return "Suggestion default";
-            else return "Suggestion custom";
-        }
-
-        @Override
-        public int getCount() {
-            return 4;
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_main_example1:
+                startActivity(new Intent(this, Example1Activity.class));
+                break;
+            case R.id.button_main_example2:
+                startActivity(new Intent(this, Example2Activity.class));
+                break;
+            case R.id.button_main_example3:
+                startActivity(new Intent(this, Example3Activity.class));
+                break;
+            case R.id.button_main_example4:
+                startActivity(new Intent(this, Example4Activity.class));
+                break;
         }
     }
 }
