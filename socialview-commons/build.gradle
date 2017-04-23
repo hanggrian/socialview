@@ -2,26 +2,26 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion rootProject.android.sdk.target
-    buildToolsVersion rootProject.android.buildTools
+    compileSdkVersion config.sdk.target
+    buildToolsVersion config.buildTools
     defaultConfig {
-        minSdkVersion rootProject.android.sdk.min
-        targetSdkVersion rootProject.android.sdk.target
-        testInstrumentationRunner rootProject.android.testRunner
+        minSdkVersion config.sdk.min
+        targetSdkVersion config.sdk.target
+        testInstrumentationRunner config.testRunner
     }
 }
 
 dependencies {
-    deps.test.each {
-        testCompile it
+    testCompile deps.junit
+    androidTestCompile(deps.testRunner) {
+        exclude group: 'com.android.support', module: 'support-annotations'
     }
-    deps.androidTest.each {
-        androidTestCompile it
+    androidTestCompile(deps.testEspresso) {
+        exclude group: 'com.android.support', module: 'support-annotations'
     }
-    deps.commons.each {
-        compile it
-    }
+
     compile project(':socialview-core')
+    compile deps.picassoCommons
 }
 
 publish {
