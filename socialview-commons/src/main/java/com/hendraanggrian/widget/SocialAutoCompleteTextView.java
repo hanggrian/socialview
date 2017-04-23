@@ -14,11 +14,11 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 
-import com.hendraanggrian.widget.socialview.OnSocialClickListener;
-import com.hendraanggrian.widget.socialview.SocialView;
-import com.hendraanggrian.widget.socialview.SocialTextWatcher;
-import com.hendraanggrian.widget.socialview.SocialViewAttacher;
-import com.hendraanggrian.widget.socialview.commons.R;
+import com.hendraanggrian.socialview.OnSocialClickListener;
+import com.hendraanggrian.socialview.SocialView;
+import com.hendraanggrian.socialview.SocialTextWatcher;
+import com.hendraanggrian.socialview.SocialViewAttacher;
+import com.hendraanggrian.socialview.commons.R;
 
 import java.util.ArrayList;
 import java.util.List;

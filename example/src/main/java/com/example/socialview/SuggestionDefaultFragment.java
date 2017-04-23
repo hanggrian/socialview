@@ -8,12 +8,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hendraanggrian.widget.SocialAutoCompleteTextView;
-import com.hendraanggrian.widget.socialview.SocialTextWatcher;
-import com.hendraanggrian.widget.socialview.SocialView;
-import com.hendraanggrian.widget.socialview.commons.Hashtag;
-import com.hendraanggrian.widget.socialview.commons.HashtagAdapter;
-import com.hendraanggrian.widget.socialview.commons.Mention;
-import com.hendraanggrian.widget.socialview.commons.MentionAdapter;
+import com.hendraanggrian.socialview.SocialTextWatcher;
+import com.hendraanggrian.socialview.SocialView;
+import com.hendraanggrian.socialview.commons.Hashtag;
+import com.hendraanggrian.socialview.commons.HashtagAdapter;
+import com.hendraanggrian.socialview.commons.Mention;
+import com.hendraanggrian.socialview.commons.MentionAdapter;
 
 import butterknife.BindView;
 

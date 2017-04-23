@@ -1,4 +1,4 @@
-package com.hendraanggrian.widget.socialview;
+package com.hendraanggrian.socialview;
 
 import android.content.Context;
 import android.content.res.Resources;

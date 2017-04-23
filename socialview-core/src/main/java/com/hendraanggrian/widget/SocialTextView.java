@@ -8,10 +8,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
-import com.hendraanggrian.widget.socialview.OnSocialClickListener;
-import com.hendraanggrian.widget.socialview.SocialView;
-import com.hendraanggrian.widget.socialview.SocialTextWatcher;
-import com.hendraanggrian.widget.socialview.SocialViewAttacher;
+import com.hendraanggrian.socialview.OnSocialClickListener;
+import com.hendraanggrian.socialview.SocialView;
+import com.hendraanggrian.socialview.SocialTextWatcher;
+import com.hendraanggrian.socialview.SocialViewAttacher;
 
 import java.util.List;
 

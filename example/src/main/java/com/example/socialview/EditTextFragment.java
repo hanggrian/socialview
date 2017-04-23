@@ -9,9 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hendraanggrian.widget.SocialEditText;
-import com.hendraanggrian.widget.socialview.OnSocialClickListener;
-import com.hendraanggrian.widget.socialview.SocialTextWatcher;
-import com.hendraanggrian.widget.socialview.SocialView;
+import com.hendraanggrian.socialview.OnSocialClickListener;
+import com.hendraanggrian.socialview.SocialTextWatcher;
+import com.hendraanggrian.socialview.SocialView;
 
 import butterknife.BindView;
 

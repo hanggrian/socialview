@@ -12,9 +12,9 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import com.hendraanggrian.widget.SocialAutoCompleteTextView;
-import com.hendraanggrian.widget.socialview.SocialTextWatcher;
-import com.hendraanggrian.widget.socialview.SocialView;
-import com.hendraanggrian.widget.socialview.commons.SocialAdapter;
+import com.hendraanggrian.socialview.SocialTextWatcher;
+import com.hendraanggrian.socialview.SocialView;
+import com.hendraanggrian.socialview.commons.SocialAdapter;
 
 import butterknife.BindView;
 

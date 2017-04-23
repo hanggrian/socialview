@@ -1,4 +1,4 @@
-package com.hendraanggrian.widget.socialview.commons;
+package com.hendraanggrian.socialview.commons;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;

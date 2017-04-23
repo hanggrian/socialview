@@ -8,8 +8,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hendraanggrian.widget.SocialTextView;
-import com.hendraanggrian.widget.socialview.OnSocialClickListener;
-import com.hendraanggrian.widget.socialview.SocialView;
+import com.hendraanggrian.socialview.OnSocialClickListener;
+import com.hendraanggrian.socialview.SocialView;
 
 import butterknife.BindViews;
 

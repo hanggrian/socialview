@@ -1,4 +1,4 @@
-package com.hendraanggrian.widget.socialview;
+package com.hendraanggrian.socialview;
 
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;

@@ -2,7 +2,7 @@ package com.example.socialview;
 
 import android.app.Application;
 
-import com.hendraanggrian.widget.socialview.SocialViewAttacher;
+import com.hendraanggrian.socialview.SocialViewAttacher;
 
 import butterknife.ButterKnife;
 
