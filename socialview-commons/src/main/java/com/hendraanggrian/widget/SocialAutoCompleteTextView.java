@@ -15,8 +15,8 @@ import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 
 import com.hendraanggrian.socialview.OnSocialClickListener;
-import com.hendraanggrian.socialview.SocialView;
 import com.hendraanggrian.socialview.SocialTextWatcher;
+import com.hendraanggrian.socialview.SocialView;
 import com.hendraanggrian.socialview.SocialViewAttacher;
 import com.hendraanggrian.socialview.commons.R;
 
@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoCompleteTextView implements SocialView, TextWatcher {
 
-    @NonNull private final SocialViewAttacher attacher;
+    @NonNull private final SocialView socialView;
     private ArrayAdapter<H> hashtagAdapter;
     private ArrayAdapter<M> mentionAdapter;
 
@@ -42,114 +42,114 @@ public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoComplete
 
     public SocialAutoCompleteTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        attacher = new SocialViewAttacher(this, context, attrs);
+        socialView = SocialViewAttacher.attach(this, context, attrs);
         setTokenizer(new SocialTokenizer(isHashtagEnabled(), isMentionEnabled()));
         setThreshold(1);
     }
 
     @Override
     public void setHashtagEnabled(boolean enabled) {
-        attacher.setHashtagEnabled(enabled);
+        socialView.setHashtagEnabled(enabled);
         setTokenizer(new SocialTokenizer(isHashtagEnabled(), isMentionEnabled()));
     }
 
     @Override
     public void setMentionEnabled(boolean enabled) {
-        attacher.setMentionEnabled(enabled);
+        socialView.setMentionEnabled(enabled);
         setTokenizer(new SocialTokenizer(isHashtagEnabled(), isMentionEnabled()));
     }
 
     @Override
     public void setHyperlinkEnabled(boolean enabled) {
-        attacher.setHyperlinkEnabled(enabled);
+        socialView.setHyperlinkEnabled(enabled);
     }
 
     @Override
     public void setHashtagColor(@ColorInt int color) {
-        attacher.setHashtagColor(color);
+        socialView.setHashtagColor(color);
     }
 
     @Override
     public void setHashtagColorRes(@ColorRes int colorRes) {
-        attacher.setHashtagColorRes(colorRes);
+        socialView.setHashtagColorRes(colorRes);
     }
 
     @Override
     public void setMentionColor(@ColorInt int color) {
-        attacher.setMentionColor(color);
+        socialView.setMentionColor(color);
     }
 
     @Override
     public void setMentionColorRes(@ColorRes int colorRes) {
-        attacher.setMentionColorRes(colorRes);
+        socialView.setMentionColorRes(colorRes);
     }
 
     @Override
     public void setHyperlinkColor(@ColorInt int color) {
-        attacher.setHyperlinkColor(color);
+        socialView.setHyperlinkColor(color);
     }
 
     @Override
     public void setHyperlinkColorRes(@ColorRes int colorRes) {
-        attacher.setHyperlinkColorRes(colorRes);
+        socialView.setHyperlinkColorRes(colorRes);
     }
 
     @Override
     public void setOnSocialClickListener(@Nullable OnSocialClickListener listener) {
-        attacher.setOnSocialClickListener(listener);
+        socialView.setOnSocialClickListener(listener);
     }
 
     @Override
     public void setSocialTextChangedListener(@Nullable SocialTextWatcher watcher) {
-        attacher.setSocialTextChangedListener(watcher);
+        socialView.setSocialTextChangedListener(watcher);
     }
 
     @Override
     public boolean isHashtagEnabled() {
-        return attacher.isHashtagEnabled();
+        return socialView.isHashtagEnabled();
     }
 
     @Override
     public boolean isMentionEnabled() {
-        return attacher.isMentionEnabled();
+        return socialView.isMentionEnabled();
     }
 
     @Override
     public boolean isHyperlinkEnabled() {
-        return attacher.isHyperlinkEnabled();
+        return socialView.isHyperlinkEnabled();
     }
 
     @Override
     public int getHashtagColor() {
-        return attacher.getHashtagColor();
+        return socialView.getHashtagColor();
     }
 
     @Override
     public int getMentionColor() {
-        return attacher.getMentionColor();
+        return socialView.getMentionColor();
     }
 
     @Override
     public int getHyperlinkColor() {
-        return attacher.getHyperlinkColor();
+        return socialView.getHyperlinkColor();
     }
 
     @NonNull
     @Override
     public List<String> getHashtags() {
-        return attacher.getHashtags();
+        return socialView.getHashtags();
     }
 
     @NonNull
     @Override
     public List<String> getMentions() {
-        return attacher.getMentions();
+        return socialView.getMentions();
     }
 
     @NonNull
     @Override
     public List<String> getHyperlinks() {
-        return attacher.getHyperlinks();
+        return socialView.getHyperlinks();
     }
 
     @Override

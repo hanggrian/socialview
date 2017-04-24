@@ -5,7 +5,6 @@
         <attr name="hashtagEnabled" format="boolean"/>
         <attr name="mentionEnabled" format="boolean"/>
         <attr name="hyperlinkEnabled" format="boolean"/>
-
         <!-- each color that will be used if it is enabled, default is color accent of current theme -->
         <attr name="hashtagColor" format="color"/>
         <attr name="mentionColor" format="color"/>

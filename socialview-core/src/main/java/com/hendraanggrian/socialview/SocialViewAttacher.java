@@ -22,10 +22,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,7 +37,9 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     private static final String REGEX_MENTION = "@(\\w+)";
     private static final String REGEX_HYPERLINK = "[a-z]+:\\/\\/[^ \\n]*";
 
-    @Nullable private static Map<String, Pattern> patterns;
+    @Nullable private static WeakReference<Pattern> pattern_hashtag;
+    @Nullable private static WeakReference<Pattern> pattern_mention;
+    @Nullable private static WeakReference<Pattern> pattern_hyperlink;
     private static boolean debug;
 
     @NonNull private final TextView view;
@@ -54,10 +55,9 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     private boolean isHashtagEditing;
     private boolean isMentionEditing;
 
-    public SocialViewAttacher(@NonNull TextView textView, @NonNull Context context, @Nullable AttributeSet attrs) {
+    private SocialViewAttacher(@NonNull TextView textView, @NonNull Context context, @Nullable AttributeSet attrs) {
         view = textView;
         view.setText(textView.getText(), TextView.BufferType.SPANNABLE);
-        view.setMovementMethod(LinkMovementMethod.getInstance());
         view.addTextChangedListener(this);
         Resources.Theme theme = context.getTheme();
         int defaultColor = !view.isInEditMode()
@@ -131,6 +131,7 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     @Override
     public void setOnSocialClickListener(@Nullable OnSocialClickListener listener) {
         this.listener = listener;
+        this.view.setMovementMethod(LinkMovementMethod.getInstance());
         colorize();
     }
 
@@ -172,19 +173,19 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     @NonNull
     @Override
     public List<String> getHashtags() {
-        return toList(createMatcher(REGEX_HASHTAG, view.getText()));
+        return toList(createMatcher(REGEX_HASHTAG).matcher(view.getText()));
     }
 
     @NonNull
     @Override
     public List<String> getMentions() {
-        return toList(createMatcher(REGEX_MENTION, view.getText()));
+        return toList(createMatcher(REGEX_MENTION).matcher(view.getText()));
     }
 
     @NonNull
     @Override
     public List<String> getHyperlinks() {
-        return toList(createMatcher(REGEX_HYPERLINK, view.getText()));
+        return toList(createMatcher(REGEX_HYPERLINK).matcher(view.getText()));
     }
 
     @Override
@@ -272,17 +273,17 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
 
     private void colorize(CharSequence text) {
         if (hashtagEnabled) {
-            Matcher matcher = createMatcher(REGEX_HASHTAG, text);
+            Matcher matcher = createMatcher(REGEX_HASHTAG).matcher(text);
             while (matcher.find())
                 ((Spannable) text).setSpan(createSpan(hashtagColor, Type.HASHTAG), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         if (mentionEnabled) {
-            Matcher matcher = createMatcher(REGEX_MENTION, text);
+            Matcher matcher = createMatcher(REGEX_MENTION).matcher(text);
             while (matcher.find())
                 ((Spannable) text).setSpan(createSpan(mentionColor, Type.MENTION), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         if (hyperlinkEnabled) {
-            Matcher matcher = createMatcher(REGEX_HYPERLINK, text);
+            Matcher matcher = createMatcher(REGEX_HYPERLINK).matcher(text);
             while (matcher.find())
                 ((Spannable) text).setSpan(createSpan(hyperlinkColor, Type.HYPERLINK), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
@@ -323,18 +324,34 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     }
 
     @NonNull
-    private static Matcher createMatcher(@NonNull String regex, @NonNull CharSequence input) {
-        if (patterns == null)
-            patterns = new WeakHashMap<>();
-        if (patterns.containsKey(regex))
-            return patterns.get(regex).matcher(input);
-        patterns.put(regex, Pattern.compile(regex));
-        return createMatcher(regex, input);
+    private static Pattern createMatcher(@NonNull String regex) {
+        switch (regex) {
+            case REGEX_HASHTAG:
+                if (pattern_hashtag != null && pattern_hashtag.get() != null)
+                    return pattern_hashtag.get();
+                pattern_hashtag = new WeakReference<>(Pattern.compile(regex));
+                return createMatcher(regex);
+            case REGEX_MENTION:
+                if (pattern_mention != null && pattern_mention.get() != null)
+                    return pattern_mention.get();
+                pattern_mention = new WeakReference<>(Pattern.compile(regex));
+                return createMatcher(regex);
+            default:
+                if (pattern_hyperlink != null && pattern_hyperlink.get() != null)
+                    return pattern_hyperlink.get();
+                pattern_hyperlink = new WeakReference<>(Pattern.compile(regex));
+                return createMatcher(regex);
+        }
     }
 
     @NonNull
-    public static SocialViewAttacher attach(@NonNull TextView view) {
-        return new SocialViewAttacher(view, view.getContext(), null);
+    public static SocialView attach(@NonNull TextView view) {
+        return attach(view, view.getContext(), null);
+    }
+
+    @NonNull
+    public static SocialView attach(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
+        return new SocialViewAttacher(view, context, attrs);
     }
 
     public static void setDebug(boolean debug) {

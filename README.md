@@ -12,7 +12,7 @@ Download
  * Create custom `TextView` by implementing `SocialView`
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:socialview-core:0.6.1'
+    compile 'com.hendraanggrian:socialview-core:0.6.2'
 }
 ```
 
@@ -21,7 +21,7 @@ dependencies {
  * `SocialAutoCompleteTextView` for displaying suggestions as you type.
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:socialview-commons:0.6.1'
+    compile 'com.hendraanggrian:socialview-commons:0.6.2'
 }
 ```
 
