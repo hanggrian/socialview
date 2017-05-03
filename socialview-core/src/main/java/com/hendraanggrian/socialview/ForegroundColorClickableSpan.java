@@ -31,7 +31,7 @@ abstract class ForegroundColorClickableSpan extends ClickableSpan {
         TextView textView = (TextView) widget;
         Spanned spanned = (Spanned) textView.getText();
         onClick(textView, spanned.subSequence(
-                spanned.getSpanStart(this) + 1,
+                spanned.getSpanStart(this),
                 spanned.getSpanEnd(this)
         ));
     }

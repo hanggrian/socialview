@@ -10,7 +10,7 @@ Download
 Comes with `SocialTextView`, `SocialEditText`, and `SocialViewAttacher` to attach any TextView.
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:socialview-core:0.7.0'
+    compile 'com.hendraanggrian:socialview-core:0.7.1'
 }
 ```
 
@@ -18,7 +18,7 @@ dependencies {
 Comes with all core features and `SocialAutoCompleteTextView` to display suggestions as you type.
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:socialview-commons:0.7.0'
+    compile 'com.hendraanggrian:socialview-commons:0.7.1'
 }
 ```
 
@@ -38,9 +38,8 @@ Put the view in xml.
 Modify its state and set listeners in java.
 ```java
 SocialTextView textView = (SocialTextView) findViewById(R.id.socialtextview);
+textView.setMentionEnabled(false);
 textView.setHashtagColor(ContextCompat.getColor(this, R.color.red));
-textView.setMentionColorRes(R.color.blue);
-textView.setHashtagEnabled(false);
 textView.setOnSocialClickListener(new SocialView.OnSocialClickListener() {
     @Override
     public void(View v, SocialView.Type type, CharSequence text) {
@@ -53,16 +52,14 @@ Any TextView or subclasses of TextView can be attached.
 ```java
 CustomTextView tv = ...;
 SocialView socialView = SocialViewAttacher.attach(tv);
-socialView.setHashtagColorRes(R.color.red);
-socialView.setMentionEnabled(false);
 ```
 
 Full list of available attributes:
- * typeEnabled - types to enable, by default all types are enabled.
- * typeUnderlined - types to underlined, by default only hyperlink are underlined.
- * hashtagColor - by default color accent of current app theme is used.
- * mentionColor - by default color accent of current app theme is used.
- * hyperlinkColor - by default color accent of current app theme is used.
+ * `typeEnabled` - types to enable, by default all types are enabled.
+ * `typeUnderlined` - types to underlined, by default only hyperlink are underlined.
+ * `hashtagColor` - by default color accent of current app theme is used.
+ * `mentionColor` - by default color accent of current app theme is used.
+ * `hyperlinkColor` - by default color accent of current app theme is used.
 
 Commons
 -------

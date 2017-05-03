@@ -353,7 +353,10 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
         return new ForegroundColorClickableSpan(color, underlined) {
             @Override
             void onClick(@NonNull TextView v, @NonNull CharSequence text) {
-                listener.onClick(v, type, text);
+                // remove hashtag and mention symbol
+                listener.onClick(v, type, type == Type.HYPERLINK
+                        ? text
+                        : text.subSequence(1, text.length()));
             }
         };
     }
