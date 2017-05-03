@@ -25,15 +25,21 @@ public interface SocialView {
 
     void setHyperlinkEnabled(boolean enabled);
 
-    void setHashtagColor(@ColorInt int color);
+    void setHashtagUnderlined(boolean underlined);
 
-    void setHashtagColorRes(@ColorRes int colorRes);
+    void setMentionUnderlined(boolean underlined);
+
+    void setHyperlinkUnderlined(boolean underlined);
+
+    void setHashtagColor(@ColorInt int color);
 
     void setMentionColor(@ColorInt int color);
 
-    void setMentionColorRes(@ColorRes int colorRes);
-
     void setHyperlinkColor(@ColorInt int color);
+
+    void setHashtagColorRes(@ColorRes int colorRes);
+
+    void setMentionColorRes(@ColorRes int colorRes);
 
     void setHyperlinkColorRes(@ColorRes int colorRes);
 
@@ -46,6 +52,12 @@ public interface SocialView {
     boolean isMentionEnabled();
 
     boolean isHyperlinkEnabled();
+
+    boolean isHashtagUnderlined();
+
+    boolean isMentionUnderlined();
+
+    boolean isHyperlinkUnderlined();
 
     @ColorInt
     int getHashtagColor();

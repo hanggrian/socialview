@@ -19,9 +19,8 @@ dependencies {
     androidTestCompile(deps.testEspresso) {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-
-    compile project(':socialview-core')
     compile deps.picassoCommons
+    compile project(':socialview-core')
 }
 
 publish {

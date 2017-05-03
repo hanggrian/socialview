@@ -7,21 +7,18 @@ Android TextView and EditText with hashtag, mention, and hyperlink support.
 Download
 --------
 #### Core
- * `SocialTextView` and `SocialEditText`.
- * Attach any `TextView` with `SocialViewAttacher`.
- * Create custom `TextView` by implementing `SocialView`
+Comes with `SocialTextView`, `SocialEditText`, and `SocialViewAttacher` to attach any TextView.
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:socialview-core:0.6.2'
+    compile 'com.hendraanggrian:socialview-core:0.7.0'
 }
 ```
 
 #### Commons
- * All of core features
- * `SocialAutoCompleteTextView` for displaying suggestions as you type.
+Comes with all core features and `SocialAutoCompleteTextView` to display suggestions as you type.
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:socialview-commons:0.6.2'
+    compile 'com.hendraanggrian:socialview-commons:0.7.0'
 }
 ```
 
@@ -29,47 +26,43 @@ Core
 ----
 ![SocialTextView](/art/screenshot_core1.jpg) ![SocialEditText](/art/screenshot_core2.jpg)
 
-Comes with `SocialTextView` and `SocialEditText`.
+Put the view in xml.
 ```xml
 <com.hendraanggrian.widget.SocialTextView
     android:id="@+id/socialtextview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="#hashtag and @mention."
-    app:hashtagEnabled="true"      // true by default
-    app:mentionEnabled="false"     // true by default
-    app:hyperlinkEnabled="false"     // true by default
-    app:hashtagColor="@color/blue" // if not set, color accent of current app theme is used
-    app:mentionColor="@color/red"  // if not set, color accent of current app theme is used
-    app:hyperlinkColor="@color/red"  // if not set, color accent of current app theme is used
-    />
+    android:text="#hashtag and @mention."/>
 ```
 
-You can also change them programatically.
+Modify its state and set listeners in java.
 ```java
 SocialTextView textView = (SocialTextView) findViewById(R.id.socialtextview);
 textView.setHashtagColor(ContextCompat.getColor(this, R.color.red));
 textView.setMentionColorRes(R.color.blue);
 textView.setHashtagEnabled(false);
-
-// set listener
 textView.setOnSocialClickListener(new SocialView.OnSocialClickListener() {
     @Override
-    public void(View v, SocialView.Type type, String clicked) {
-        // do something
+    public void(View v, SocialView.Type type, CharSequence text) {
+        // TODO: do something
     }
 });
 ```
 
-Note that `SocialTextView` and `SocialEditText` are basically just `TextView` and `EditText` that implement `SocialViewBase` of which overriden methods are passed for `SocialView` to process inside each of them. With this in mind, `SocialView` can be attached to any `TextView` or view extending `TextView`:
+Any TextView or subclasses of TextView can be attached.
 ```java
-CustomTextView textView = ...;
-SocialViewAttacher attacher = SocialViewAttacher.attach(textView);
-attacher.setHashtagColorRes(R.color.red);
-attacher.setMentionEnabled(false);
-attacher.setOnHashtagClickListener((view, clicked) -> {});
-// etc.
+CustomTextView tv = ...;
+SocialView socialView = SocialViewAttacher.attach(tv);
+socialView.setHashtagColorRes(R.color.red);
+socialView.setMentionEnabled(false);
 ```
+
+Full list of available attributes:
+ * typeEnabled - types to enable, by default all types are enabled.
+ * typeUnderlined - types to underlined, by default only hyperlink are underlined.
+ * hashtagColor - by default color accent of current app theme is used.
+ * mentionColor - by default color accent of current app theme is used.
+ * hyperlinkColor - by default color accent of current app theme is used.
 
 Commons
 -------
@@ -81,14 +74,7 @@ Comes with `SocialAutoCompleteTextView` and all the interfaces, models, and adap
     android:id="@+id/socialsuggestionedittext"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:hint="What's on your mind?"
-    app:hashtagEnabled="true"      // true by default
-    app:mentionEnabled="false"     // true by default
-    app:hyperlinkEnabled="false"     // true by default
-    app:hashtagColor="@color/blue" // if not set, color accent of current app theme is used
-    app:mentionColor="@color/red"  // if not set, color accent of current app theme is used
-    app:hyperlinkColor="@color/red"  // if not set, color accent of current app theme is used
-/>
+    android:hint="What's on your mind?"/>
 ```
 
 To display suggestions, it is required to `setHashtagAdapter()` and `setMentionAdapter()`.

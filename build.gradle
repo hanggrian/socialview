@@ -39,9 +39,9 @@ ext.deps = [
         // android test
         testRunner      : "com.android.support.test:runner:$versionTestRunner",
         testEspresso    : "com.android.support.test.espresso:espresso-core:$versionTestEspresso",
-        // android
+        // core
         supportAppcompat: "com.android.support:appcompat-v7:$versionSupport",
-        // hendraanggrian
+        // commons
         picassoCommons  : "com.hendraanggrian:picasso-commons:$versionPicassoCommons"
 ]
 
@@ -52,10 +52,9 @@ ext.bintray = [
                 'core'   : 'socialview-core',
                 'commons': 'socialview-commons'
         ],
-        version : '0.6.2',
+        version : '0.7.0',
         desc    : 'Android TextView and EditText with hashtag, mention, and hyperlink support.',
-        website : 'https://github.com/hendraanggrian/socialview'
+        website : 'https://github.com/HendraAnggrian/socialview'
 ]
 
-//$ ./gradlew socialview-core:bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false
-//$ ./gradlew socialview-commons:bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false
+//$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false

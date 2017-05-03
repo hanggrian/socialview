@@ -19,7 +19,6 @@ dependencies {
     androidTestCompile(deps.testEspresso) {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-
     compile deps.supportAppcompat
 }
 

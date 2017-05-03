@@ -8,5 +8,12 @@ import android.widget.TextView;
  */
 public interface OnSocialClickListener {
 
-    void onClick(@NonNull TextView v, @NonNull SocialView.Type type, @NonNull CharSequence s);
+    /**
+     * Triggered when a span of hashtag, mention, or hyperlink is clicked.
+     *
+     * @param v    TextView or its subclasses attached with {@link SocialViewAttacher}.
+     * @param type a hashtag, mention, or hyperlink.
+     * @param text clicked span, in form of CharSequence.
+     */
+    void onClick(@NonNull TextView v, @NonNull SocialView.Type type, @NonNull CharSequence text);
 }

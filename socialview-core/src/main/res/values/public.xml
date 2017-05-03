@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="hashtagEnabled" type="attr"/>
-    <public name="mentionEnabled" type="attr"/>
-    <public name="hyperlinkEnabled" type="attr"/>
+    <public name="typeEnabled" type="attr"/>
+    <public name="typeUnderlined" type="attr"/>
     <public name="hashtagColor" type="attr"/>
     <public name="mentionColor" type="attr"/>
     <public name="hyperlinkColor" type="attr"/>

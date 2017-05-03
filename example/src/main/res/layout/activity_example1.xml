@@ -40,7 +40,7 @@
             android:layout_marginTop="16dp"
             android:text="You can disable @mention to only have #hashtag."
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            app:mentionEnabled="false"/>
+            app:typeEnabled="hashtag"/>
 
         <com.hendraanggrian.widget.SocialTextView
             android:id="@+id/socialtextview_example1_3"

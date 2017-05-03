@@ -51,13 +51,23 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
     }
 
     @Override
-    public void setHashtagColor(@ColorInt int color) {
-        socialView.setHashtagColor(color);
+    public void setHashtagUnderlined(boolean underlined) {
+        socialView.setHashtagUnderlined(underlined);
     }
 
     @Override
-    public void setHashtagColorRes(@ColorRes int colorRes) {
-        socialView.setHashtagColorRes(colorRes);
+    public void setMentionUnderlined(boolean underlined) {
+        socialView.setMentionUnderlined(underlined);
+    }
+
+    @Override
+    public void setHyperlinkUnderlined(boolean underlined) {
+        socialView.setHyperlinkUnderlined(underlined);
+    }
+
+    @Override
+    public void setHashtagColor(@ColorInt int color) {
+        socialView.setHashtagColor(color);
     }
 
     @Override
@@ -66,13 +76,18 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
     }
 
     @Override
-    public void setMentionColorRes(@ColorRes int colorRes) {
-        socialView.setMentionColorRes(colorRes);
+    public void setHyperlinkColor(@ColorInt int color) {
+        socialView.setHyperlinkColor(color);
     }
 
     @Override
-    public void setHyperlinkColor(@ColorInt int color) {
-        socialView.setHyperlinkColor(color);
+    public void setHashtagColorRes(@ColorRes int colorRes) {
+        socialView.setHashtagColorRes(colorRes);
+    }
+
+    @Override
+    public void setMentionColorRes(@ColorRes int colorRes) {
+        socialView.setMentionColorRes(colorRes);
     }
 
     @Override
@@ -106,15 +121,33 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
     }
 
     @Override
+    public boolean isHashtagUnderlined() {
+        return false;
+    }
+
+    @Override
+    public boolean isMentionUnderlined() {
+        return false;
+    }
+
+    @Override
+    public boolean isHyperlinkUnderlined() {
+        return false;
+    }
+
+    @ColorInt
+    @Override
     public int getHashtagColor() {
         return socialView.getHashtagColor();
     }
 
+    @ColorInt
     @Override
     public int getMentionColor() {
         return socialView.getMentionColor();
     }
 
+    @ColorInt
     @Override
     public int getHyperlinkColor() {
         return socialView.getHyperlinkColor();
