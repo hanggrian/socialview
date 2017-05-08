@@ -2,31 +2,13 @@ socialview
 ==========
 Android TextView and EditText with hashtag, mention, and hyperlink support.
 
-![demo](/art/demo.gif)
-
-Download
---------
-#### Core
-Comes with `SocialTextView`, `SocialEditText`, and `SocialViewAttacher` to attach any TextView.
-```gradle
-dependencies {
-    compile 'com.hendraanggrian:socialview-core:0.7.1'
-}
-```
-
-#### Commons
-Comes with all core features and `SocialAutoCompleteTextView` to display suggestions as you type.
-```gradle
-dependencies {
-    compile 'com.hendraanggrian:socialview-commons:0.7.1'
-}
-```
+![demo][demo]
 
 Core
 ----
-![SocialTextView](/art/screenshot_core1.jpg) ![SocialEditText](/art/screenshot_core2.jpg)
+![SocialTextView][core1] ![SocialEditText][core2]
 
-Put the view in xml.
+Comes with `SocialTextView`, `SocialEditText`, and `SocialViewAttacher` to attach any TextView.
 ```xml
 <com.hendraanggrian.widget.SocialTextView
     android:id="@+id/socialtextview"
@@ -54,18 +36,20 @@ CustomTextView tv = ...;
 SocialView socialView = SocialViewAttacher.attach(tv);
 ```
 
-Full list of available attributes:
- * `typeEnabled` - types to enable, by default all types are enabled.
- * `typeUnderlined` - types to underlined, by default only hyperlink are underlined.
- * `hashtagColor` - by default color accent of current app theme is used.
- * `mentionColor` - by default color accent of current app theme is used.
- * `hyperlinkColor` - by default color accent of current app theme is used.
+#### Attributes
+| Attributes       | Description                      | Default value/behavior       |
+|------------------|----------------------------------|------------------------------|
+| `typeEnabled`    | flags to enable span coloring    | `hashtag|mention|hyperlink`  |
+| `typeUnderlined` | flags to enable span underlining | `hyperlink`                  |
+| `hashtagColor`   | color of hashtag items           | current theme's accent color |
+| `mentionColor`   | color of mention items           | current theme's accent color |
+| `hyperlinkColor` | color of hyperlink items         | current theme's accent color |
 
 Commons
 -------
-![SocialAutoCompleteTextView hashtag suggestions](/art/screenshot_commons1.jpg) ![SocialAutoCompleteTextView mention suggestions](/art/screenshot_commons2.jpg)
+![SocialAutoCompleteTextView hashtag suggestions][commons1] ![SocialAutoCompleteTextView mention suggestions][commons2]
 
-Comes with `SocialAutoCompleteTextView` and all the interfaces, models, and adapters necessary to use it.
+Comes with all core features and `SocialAutoCompleteTextView` to display suggestions as you type.
 ```xml
 <com.hendraanggrian.widget.SocialAutoCompleteTextView
     android:id="@+id/socialsuggestionedittext"
@@ -88,3 +72,37 @@ textView.getMentionAdapter().add(new Mention("dirtyhobo"));
 textView.getMentionAdapter().add(new Mention("hobo", "Regular Hobo", R.mipmap.ic_launcher));
 textView.getMentionAdapter().add(new Mention("hendraanggrian", "Hendra Anggrian", "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"));
 ```
+
+Download
+--------
+```gradle
+dependencies {
+    // core only
+    compile 'com.hendraanggrian:socialview-core:0.7.2'
+    // core and commons
+    compile 'com.hendraanggrian:socialview-commons:0.7.2'
+}
+```
+
+License
+-------
+    Copyright 2016 Hendra Anggrian
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    
+    
+ [demo]: /art/demo.gif
+ [core1]: /art/screenshot_core1.jpg
+ [core2]: /art/screenshot_core2.jpg
+ [commons1]: /art/screenshot_commons1.jpg
+ [commons2]: /art/screenshot_commons2.jpg

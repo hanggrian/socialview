@@ -7,6 +7,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.TextWatcher;
@@ -16,6 +17,8 @@ import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.hendraanggrian.commons.content.Themes;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -60,8 +63,8 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
         this.textView.addTextChangedListener(this);
         Resources.Theme theme = context.getTheme();
         int defaultColor = !this.textView.isInEditMode()
-                ? ColorUtils.getThemeAccentColor(theme, this.textView.getCurrentTextColor())
-                : this.textView.getCurrentTextColor();
+                ? Themes.getColorFromAttrRes(textView.getContext(), R.attr.colorAccent, textView.getCurrentTextColor())
+                : textView.getCurrentTextColor();
         TypedArray array = theme.obtainStyledAttributes(attrs, R.styleable.SocialView, 0, 0);
         try {
             flagEnabled = array.getInteger(R.styleable.SocialView_typeEnabled, FLAG_HASHTAG | FLAG_MENTION | FLAG_HYPERLINK);
@@ -131,17 +134,17 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
 
     @Override
     public void setHashtagColorRes(@ColorRes int colorRes) {
-        setHashtagColor(ColorUtils.getColor(textView.getContext(), colorRes));
+        setHashtagColor(ContextCompat.getColor(textView.getContext(), colorRes));
     }
 
     @Override
     public void setMentionColorRes(@ColorRes int colorRes) {
-        setMentionColor(ColorUtils.getColor(textView.getContext(), colorRes));
+        setMentionColor(ContextCompat.getColor(textView.getContext(), colorRes));
     }
 
     @Override
     public void setHyperlinkColorRes(@ColorRes int colorRes) {
-        setHyperlinkColor(ColorUtils.getColor(textView.getContext(), colorRes));
+        setHyperlinkColor(ContextCompat.getColor(textView.getContext(), colorRes));
     }
 
     @Override

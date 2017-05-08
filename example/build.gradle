@@ -20,20 +20,20 @@ android {
 }
 
 dependencies {
-    testCompile deps.junit
-    androidTestCompile(deps.testRunner) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile(deps.testEspresso) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-
+    compile project(':socialview-commons')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
-
-    compile project(':socialview-commons')
-
     compile 'com.jakewharton:butterknife:8.5.1'
+
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    androidTestCompile(deps.supportTestRunner) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile(deps.supportTestEspresso) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+
+    testCompile deps.junit
 }
