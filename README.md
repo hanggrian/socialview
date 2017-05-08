@@ -6,8 +6,6 @@ Android TextView and EditText with hashtag, mention, and hyperlink support.
 
 Core
 ----
-![SocialTextView][core1] ![SocialEditText][core2]
-
 Comes with `SocialTextView`, `SocialEditText`, and `SocialViewAttacher` to attach any TextView.
 ```xml
 <com.hendraanggrian.widget.SocialTextView
@@ -16,6 +14,8 @@ Comes with `SocialTextView`, `SocialEditText`, and `SocialViewAttacher` to attac
     android:layout_height="wrap_content"
     android:text="#hashtag and @mention."/>
 ```
+
+![SocialTextView][core1] ![SocialEditText][core2]
 
 Modify its state and set listeners in java.
 ```java
@@ -37,18 +37,16 @@ SocialView socialView = SocialViewAttacher.attach(tv);
 ```
 
 #### Attributes
-| Attributes       | Description                      | Default value/behavior       |
-|------------------|----------------------------------|------------------------------|
-| `typeEnabled`    | flags to enable span coloring    | `hashtag|mention|hyperlink`  |
-| `typeUnderlined` | flags to enable span underlining | `hyperlink`                  |
-| `hashtagColor`   | color of hashtag items           | current theme's accent color |
-| `mentionColor`   | color of mention items           | current theme's accent color |
-| `hyperlinkColor` | color of hyperlink items         | current theme's accent color |
+| Attributes       | Description                      | Default value/behavior        |
+|------------------|----------------------------------|-------------------------------|
+| `typeEnabled`    | flags to enable span coloring    | `hashtag\|mention\|hyperlink` |
+| `typeUnderlined` | flags to enable span underlining | `hyperlink`                   |
+| `hashtagColor`   | color of hashtag items           | current theme's accent color  |
+| `mentionColor`   | color of mention items           | current theme's accent color  |
+| `hyperlinkColor` | color of hyperlink items         | current theme's accent color  |
 
 Commons
 -------
-![SocialAutoCompleteTextView hashtag suggestions][commons1] ![SocialAutoCompleteTextView mention suggestions][commons2]
-
 Comes with all core features and `SocialAutoCompleteTextView` to display suggestions as you type.
 ```xml
 <com.hendraanggrian.widget.SocialAutoCompleteTextView
@@ -57,6 +55,8 @@ Comes with all core features and `SocialAutoCompleteTextView` to display suggest
     android:layout_height="wrap_content"
     android:hint="What's on your mind?"/>
 ```
+
+![SocialAutoCompleteTextView hashtag suggestions][commons1] ![SocialAutoCompleteTextView mention suggestions][commons2]
 
 To display suggestions, it is required to `setHashtagAdapter()` and `setMentionAdapter()`.
 ```java
