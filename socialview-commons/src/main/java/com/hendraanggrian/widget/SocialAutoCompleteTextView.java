@@ -44,20 +44,20 @@ public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoComplete
     public SocialAutoCompleteTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         socialView = SocialViewAttacher.attach(this, context, attrs);
-        setTokenizer(new SocialTokenizer(isHashtagEnabled(), isMentionEnabled()));
+        setTokenizer(new HashtagMentionTokenizer(isHashtagEnabled(), isMentionEnabled()));
         setThreshold(1);
     }
 
     @Override
     public void setHashtagEnabled(boolean enabled) {
         socialView.setHashtagEnabled(enabled);
-        setTokenizer(new SocialTokenizer(isHashtagEnabled(), isMentionEnabled()));
+        setTokenizer(new HashtagMentionTokenizer(isHashtagEnabled(), isMentionEnabled()));
     }
 
     @Override
     public void setMentionEnabled(boolean enabled) {
         socialView.setMentionEnabled(enabled);
-        setTokenizer(new SocialTokenizer(isHashtagEnabled(), isMentionEnabled()));
+        setTokenizer(new HashtagMentionTokenizer(isHashtagEnabled(), isMentionEnabled()));
     }
 
     @Override
@@ -241,10 +241,10 @@ public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoComplete
         return mentionAdapter;
     }
 
-    private static class SocialTokenizer implements Tokenizer {
+    private static class HashtagMentionTokenizer implements Tokenizer {
         private final List<Character> symbols = new ArrayList<>();
 
-        private SocialTokenizer(boolean hashtagEnabled, boolean mentionEnabled) {
+        private HashtagMentionTokenizer(boolean hashtagEnabled, boolean mentionEnabled) {
             if (hashtagEnabled)
                 symbols.add('#');
             if (mentionEnabled)

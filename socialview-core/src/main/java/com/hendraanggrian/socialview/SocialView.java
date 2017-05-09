@@ -3,9 +3,12 @@ package com.hendraanggrian.socialview;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 /**
@@ -19,6 +22,10 @@ import java.util.List;
  * @see com.hendraanggrian.widget.SocialEditText
  */
 public interface SocialView {
+
+    int FLAG_HASHTAG = 1;
+    int FLAG_MENTION = 2;
+    int FLAG_HYPERLINK = 4;
 
     void setHashtagEnabled(boolean enabled);
 
@@ -84,9 +91,8 @@ public interface SocialView {
     @NonNull
     List<String> getHyperlinks();
 
-    enum Type {
-        HASHTAG,
-        MENTION,
-        HYPERLINK
+    @IntDef({FLAG_HASHTAG, FLAG_MENTION, FLAG_HYPERLINK})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Flag {
     }
 }

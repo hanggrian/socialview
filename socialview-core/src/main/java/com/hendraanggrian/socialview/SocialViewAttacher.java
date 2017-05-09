@@ -1,7 +1,6 @@
 package com.hendraanggrian.socialview;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
@@ -17,11 +16,12 @@ import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.widget.TextView;
 
 import com.hendraanggrian.commons.content.Themes;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,139 +34,145 @@ import java.util.regex.Pattern;
 public final class SocialViewAttacher implements SocialView, TextWatcher {
 
     private static final String TAG = SocialView.class.getSimpleName();
-    private static final String REGEX_HASHTAG = "#(\\w+)";
-    private static final String REGEX_MENTION = "@(\\w+)";
-    private static final String REGEX_HYPERLINK = "[a-z]+:\\/\\/[^ \\n]*";
-    private static final int FLAG_HASHTAG = 1;
-    private static final int FLAG_MENTION = 2;
-    private static final int FLAG_HYPERLINK = 4;
-
-    @Nullable private static WeakReference<Pattern> patternHashtag;
-    @Nullable private static WeakReference<Pattern> patternMention;
-    @Nullable private static WeakReference<Pattern> patternHyperlink;
+    @Nullable private static SparseArray<Pattern> patterns;
     private static boolean debug;
 
-    @NonNull private final TextView textView;
-    private int flagEnabled;
-    private int flagUnderlined;
-    @ColorInt private int colorHashtag;
-    @ColorInt private int colorMention;
-    @ColorInt private int colorHyperlink;
+    @NonNull private final TextView view;
+    private int underlinedFlag;
+    @NonNull private final SparseIntArray colors;
     @Nullable private OnSocialClickListener listener;
     @Nullable private SocialTextWatcher watcher;
 
     private boolean isHashtagEditing;
     private boolean isMentionEditing;
 
-    private SocialViewAttacher(@NonNull TextView textView, @NonNull Context context, @Nullable AttributeSet attrs) {
-        this.textView = textView;
-        this.textView.setText(textView.getText(), TextView.BufferType.SPANNABLE);
-        this.textView.addTextChangedListener(this);
-        Resources.Theme theme = context.getTheme();
-        int defaultColor = !this.textView.isInEditMode()
-                ? Themes.getColor(textView.getContext(), R.attr.colorAccent, textView.getCurrentTextColor())
-                : textView.getCurrentTextColor();
-        TypedArray array = theme.obtainStyledAttributes(attrs, R.styleable.SocialView, 0, 0);
+    private SocialViewAttacher(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
+        this.view = view;
+        this.view.setText(view.getText(), TextView.BufferType.SPANNABLE);
+        this.view.addTextChangedListener(this);
+        this.colors = new SparseIntArray(0);
+        int defaultColor = !this.view.isInEditMode()
+                ? Themes.getColor(view.getContext(), R.attr.colorAccent, view.getCurrentTextColor())
+                : view.getCurrentTextColor();
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SocialView, 0, 0);
         try {
-            flagEnabled = array.getInteger(R.styleable.SocialView_typeEnabled, FLAG_HASHTAG | FLAG_MENTION | FLAG_HYPERLINK);
-            flagUnderlined = array.getInteger(R.styleable.SocialView_typeUnderlined, FLAG_HYPERLINK);
-            colorHashtag = array.getColor(R.styleable.SocialView_hashtagColor, defaultColor);
-            colorMention = array.getColor(R.styleable.SocialView_mentionColor, defaultColor);
-            colorHyperlink = array.getColor(R.styleable.SocialView_hyperlinkColor, defaultColor);
+            underlinedFlag = a.getInteger(R.styleable.SocialView_typeUnderlined, FLAG_HYPERLINK);
+            int enabled = a.getInteger(R.styleable.SocialView_typeEnabled, FLAG_HASHTAG | FLAG_MENTION | FLAG_HYPERLINK);
+            if ((enabled | FLAG_HASHTAG) == enabled)
+                colors.put(FLAG_HASHTAG, a.getColor(R.styleable.SocialView_hashtagColor, defaultColor));
+            if ((enabled | FLAG_MENTION) == enabled)
+                colors.put(FLAG_MENTION, a.getColor(R.styleable.SocialView_mentionColor, defaultColor));
+            if ((enabled | FLAG_HYPERLINK) == enabled)
+                colors.put(FLAG_HYPERLINK, a.getColor(R.styleable.SocialView_hyperlinkColor, defaultColor));
         } finally {
-            array.recycle();
+            a.recycle();
             colorize();
         }
     }
 
     @Override
     public void setHashtagEnabled(boolean enabled) {
-        flagEnabled = combineFlag(flagEnabled, FLAG_HASHTAG, enabled);
+        if (enabled)
+            colors.put(FLAG_HASHTAG, Themes.getColor(view.getContext(), R.attr.colorAccent, view.getCurrentTextColor()));
+        else
+            colors.delete(FLAG_HASHTAG);
         colorize();
     }
 
     @Override
     public void setMentionEnabled(boolean enabled) {
-        flagEnabled = combineFlag(flagEnabled, FLAG_MENTION, enabled);
+        if (enabled)
+            colors.put(FLAG_MENTION, Themes.getColor(view.getContext(), R.attr.colorAccent, view.getCurrentTextColor()));
+        else
+            colors.delete(FLAG_MENTION);
         colorize();
     }
 
     @Override
     public void setHyperlinkEnabled(boolean enabled) {
-        flagEnabled = combineFlag(flagEnabled, FLAG_HYPERLINK, enabled);
+        if (enabled)
+            colors.put(FLAG_HYPERLINK, Themes.getColor(view.getContext(), R.attr.colorAccent, view.getCurrentTextColor()));
+        else
+            colors.delete(FLAG_HYPERLINK);
         colorize();
     }
 
     @Override
     public void setHashtagUnderlined(boolean underlined) {
-        flagUnderlined = combineFlag(flagUnderlined, FLAG_HASHTAG, underlined);
+        underlinedFlag = combineFlag(underlinedFlag, FLAG_HASHTAG, underlined);
         colorize();
+    }
+
+    private static int combineFlag(int flags, int flag, boolean addFlag) {
+        return addFlag
+                ? flags | flag
+                : flags & (~flag);
     }
 
     @Override
     public void setMentionUnderlined(boolean underlined) {
-        flagUnderlined = combineFlag(flagUnderlined, FLAG_MENTION, underlined);
+        underlinedFlag = combineFlag(underlinedFlag, FLAG_MENTION, underlined);
         colorize();
     }
 
     @Override
     public void setHyperlinkUnderlined(boolean underlined) {
-        flagUnderlined = combineFlag(flagUnderlined, FLAG_HYPERLINK, underlined);
+        underlinedFlag = combineFlag(underlinedFlag, FLAG_HYPERLINK, underlined);
         colorize();
     }
 
     @Override
     public void setHashtagColor(@ColorInt int color) {
-        colorHashtag = color;
+        colors.put(FLAG_HASHTAG, color);
         colorize();
     }
 
     @Override
     public void setMentionColor(@ColorInt int color) {
-        colorMention = color;
+        colors.put(FLAG_MENTION, color);
         colorize();
     }
 
     @Override
     public void setHyperlinkColor(@ColorInt int color) {
-        colorHyperlink = color;
+        colors.put(FLAG_HYPERLINK, color);
         colorize();
     }
 
     @Override
     public void setHashtagColorRes(@ColorRes int colorRes) {
-        setHashtagColor(ContextCompat.getColor(textView.getContext(), colorRes));
+        setHashtagColor(ContextCompat.getColor(view.getContext(), colorRes));
     }
 
     @Override
     public void setMentionColorRes(@ColorRes int colorRes) {
-        setMentionColor(ContextCompat.getColor(textView.getContext(), colorRes));
+        setMentionColor(ContextCompat.getColor(view.getContext(), colorRes));
     }
 
     @Override
     public void setHyperlinkColorRes(@ColorRes int colorRes) {
-        setHyperlinkColor(ContextCompat.getColor(textView.getContext(), colorRes));
+        setHyperlinkColor(ContextCompat.getColor(view.getContext(), colorRes));
     }
 
     @Override
     public void setHashtagColorAttr(@AttrRes int colorAttr) {
-        setHashtagColor(Themes.getColor(textView.getContext(), colorAttr, textView.getCurrentTextColor()));
+        setHashtagColor(Themes.getColor(view.getContext(), colorAttr, view.getCurrentTextColor()));
     }
 
     @Override
     public void setMentionColorAttr(@AttrRes int colorAttr) {
-        setMentionColor(Themes.getColor(textView.getContext(), colorAttr, textView.getCurrentTextColor()));
+        setMentionColor(Themes.getColor(view.getContext(), colorAttr, view.getCurrentTextColor()));
     }
 
     @Override
     public void setHyperlinkColorAttr(@AttrRes int colorAttr) {
-        setHyperlinkColor(Themes.getColor(textView.getContext(), colorAttr, textView.getCurrentTextColor()));
+        setHyperlinkColor(Themes.getColor(view.getContext(), colorAttr, view.getCurrentTextColor()));
     }
 
     @Override
     public void setOnSocialClickListener(@Nullable OnSocialClickListener listener) {
         this.listener = listener;
-        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
+        this.view.setMovementMethod(LinkMovementMethod.getInstance());
         colorize();
     }
 
@@ -177,50 +183,50 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
 
     @Override
     public boolean isHashtagEnabled() {
-        return (flagEnabled | FLAG_HASHTAG) == flagEnabled;
+        return colors.indexOfKey(FLAG_HASHTAG) < 0;
     }
 
     @Override
     public boolean isMentionEnabled() {
-        return (flagEnabled | FLAG_MENTION) == flagEnabled;
+        return colors.indexOfKey(FLAG_MENTION) < 0;
     }
 
     @Override
     public boolean isHyperlinkEnabled() {
-        return (flagEnabled | FLAG_HYPERLINK) == flagEnabled;
+        return colors.indexOfKey(FLAG_HYPERLINK) < 0;
     }
 
     @Override
     public boolean isHashtagUnderlined() {
-        return (flagUnderlined | FLAG_HASHTAG) == flagUnderlined;
+        return (underlinedFlag | FLAG_HASHTAG) == underlinedFlag;
     }
 
     @Override
     public boolean isMentionUnderlined() {
-        return (flagUnderlined | FLAG_MENTION) == flagUnderlined;
+        return (underlinedFlag | FLAG_MENTION) == underlinedFlag;
     }
 
     @Override
     public boolean isHyperlinkUnderlined() {
-        return (flagUnderlined | FLAG_HYPERLINK) == flagUnderlined;
+        return (underlinedFlag | FLAG_HYPERLINK) == underlinedFlag;
     }
 
     @ColorInt
     @Override
     public int getHashtagColor() {
-        return colorHashtag;
+        return colors.get(FLAG_HASHTAG);
     }
 
     @ColorInt
     @Override
     public int getMentionColor() {
-        return colorMention;
+        return colors.get(FLAG_MENTION);
     }
 
     @ColorInt
     @Override
     public int getHyperlinkColor() {
-        return colorHyperlink;
+        return colors.get(FLAG_HYPERLINK);
     }
 
     @NonNull
@@ -228,7 +234,7 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     public List<String> getHashtags() {
         if (!isHashtagEnabled())
             return Collections.emptyList();
-        return toList(REGEX_HASHTAG, textView.getText());
+        return toList(FLAG_HASHTAG, view.getText());
     }
 
     @NonNull
@@ -236,7 +242,7 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     public List<String> getMentions() {
         if (!isMentionEnabled())
             return Collections.emptyList();
-        return toList(REGEX_MENTION, textView.getText());
+        return toList(FLAG_MENTION, view.getText());
     }
 
     @NonNull
@@ -244,7 +250,7 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     public List<String> getHyperlinks() {
         if (!isHyperlinkEnabled())
             return Collections.emptyList();
-        return toList(REGEX_HYPERLINK, textView.getText());
+        return toList(FLAG_HYPERLINK, view.getText());
     }
 
     @Override
@@ -272,9 +278,9 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
                         isHashtagEditing = false;
                         isMentionEditing = false;
                     } else if (watcher != null && isHashtagEditing) {
-                        watcher.onTextChanged(textView, Type.HASHTAG, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start).toString());
+                        watcher.onTextChanged(view, FLAG_HASHTAG, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start).toString());
                     } else if (watcher != null && isMentionEditing) {
-                        watcher.onTextChanged(textView, Type.MENTION, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start).toString());
+                        watcher.onTextChanged(view, FLAG_MENTION, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start).toString());
                     }
                     break;
             }
@@ -287,7 +293,7 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
             Log.d(TAG, String.format("onTextChanged s=%s  start=%s    before=%s   count=%s", s, start, before, count));
 
         if (s.length() > 0) {
-            final Spannable spannable = (Spannable) textView.getText();
+            final Spannable spannable = (Spannable) view.getText();
             for (CharacterStyle style : spannable.getSpans(0, s.length(), CharacterStyle.class))
                 spannable.removeSpan(style);
             colorize(spannable);
@@ -312,9 +318,9 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
                             isHashtagEditing = false;
                             isMentionEditing = false;
                         } else if (watcher != null && isHashtagEditing) {
-                            watcher.onTextChanged(textView, Type.HASHTAG, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count).toString());
+                            watcher.onTextChanged(view, FLAG_HASHTAG, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count).toString());
                         } else if (watcher != null && isMentionEditing) {
-                            watcher.onTextChanged(textView, Type.MENTION, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count).toString());
+                            watcher.onTextChanged(view, FLAG_MENTION, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count).toString());
                         }
                         break;
                 }
@@ -327,27 +333,15 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     }
 
     private void colorize() {
-        colorize(textView.getText());
+        colorize(view.getText());
     }
 
     private void colorize(@NonNull CharSequence text) {
-        if (isHashtagEnabled()) {
-            boolean underlined = isHashtagUnderlined();
-            Matcher matcher = toPattern(REGEX_HASHTAG).matcher(text);
+        for (int i = 0; i < colors.size(); i++) {
+            boolean underlined = (underlinedFlag | colors.keyAt(i)) == underlinedFlag;
+            Matcher matcher = getPattern(colors.keyAt(i)).matcher(text);
             while (matcher.find())
-                ((Spannable) text).setSpan(createSpan(colorHashtag, underlined, Type.HASHTAG), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        if (isMentionEnabled()) {
-            boolean underlined = isMentionUnderlined();
-            Matcher matcher = toPattern(REGEX_MENTION).matcher(text);
-            while (matcher.find())
-                ((Spannable) text).setSpan(createSpan(colorMention, underlined, Type.MENTION), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        if (isHyperlinkEnabled()) {
-            boolean underlined = isHyperlinkUnderlined();
-            Matcher matcher = toPattern(REGEX_HYPERLINK).matcher(text);
-            while (matcher.find())
-                ((Spannable) text).setSpan(createSpan(colorHyperlink, underlined, Type.HYPERLINK), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                ((Spannable) text).setSpan(createSpan(colors.get(colors.keyAt(i)), underlined, colors.keyAt(i)), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     }
 
@@ -366,14 +360,14 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     }
 
     @NonNull
-    private CharacterStyle createSpan(int color, boolean underlined, @NonNull final Type type) {
+    private CharacterStyle createSpan(int color, boolean underlined, final int flag) {
         if (listener == null)
             return new ForegroundColorSpan(color);
         return new ForegroundColorClickableSpan(color, underlined) {
             @Override
             void onClick(@NonNull TextView v, @NonNull CharSequence text) {
                 // remove hashtag and mention symbol
-                listener.onClick(v, type, type == Type.HYPERLINK
+                listener.onClick(v, flag, flag == FLAG_HYPERLINK
                         ? text
                         : text.subSequence(1, text.length()));
             }
@@ -381,36 +375,30 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     }
 
     @NonNull
-    private static List<String> toList(@NonNull String regex, @NonNull CharSequence input) {
-        Matcher matcher = toPattern(regex).matcher(input);
+    private static List<String> toList(int flag, @NonNull CharSequence input) {
+        Matcher matcher = getPattern(flag).matcher(input);
         List<String> list = new ArrayList<>();
         while (matcher.find()) {
             // remove hashtag and mention symbol
-            list.add(matcher.group(regex.equals(REGEX_HYPERLINK) ? 0 : 1));
+            list.add(matcher.group(flag == FLAG_HYPERLINK ? 0 : 1));
         }
         return list;
     }
 
     @NonNull
-    private static Pattern toPattern(@NonNull String regex) {
-        switch (regex) {
-            case REGEX_HASHTAG:
-                if (patternHashtag != null && patternHashtag.get() != null)
-                    return patternHashtag.get();
-                patternHashtag = new WeakReference<>(Pattern.compile(regex));
-                break;
-            case REGEX_MENTION:
-                if (patternMention != null && patternMention.get() != null)
-                    return patternMention.get();
-                patternMention = new WeakReference<>(Pattern.compile(regex));
-                break;
-            case REGEX_HYPERLINK:
-                if (patternHyperlink != null && patternHyperlink.get() != null)
-                    return patternHyperlink.get();
-                patternHyperlink = new WeakReference<>(Pattern.compile(regex));
-                break;
-        }
-        return toPattern(regex);
+    private static Pattern getPattern(int flag) {
+        if (patterns == null)
+            patterns = new SparseArray<>(0);
+        Pattern pattern = patterns.get(flag);
+        if (pattern != null)
+            return pattern;
+        else if (flag == FLAG_HASHTAG)
+            patterns.put(flag, Pattern.compile("#(\\w+)"));
+        else if (flag == FLAG_MENTION)
+            patterns.put(flag, Pattern.compile("@(\\w+)"));
+        else
+            patterns.put(flag, Pattern.compile("[a-z]+:\\/\\/[^ \\n]*"));
+        return getPattern(flag);
     }
 
     public static void setDebug(boolean debug) {
@@ -429,7 +417,7 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     }
 
     /**
-     * Attach SocialView in custom views' constructors.
+     * Attach SocialView in custom view's class.
      *
      * @param view    TextView to attach, can't be null.
      * @param context context passed in constructor.
@@ -441,11 +429,5 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     @NonNull
     public static SocialView attach(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
         return new SocialViewAttacher(view, context, attrs);
-    }
-
-    private static int combineFlag(int flags, int flag, boolean addFlag) {
-        return addFlag
-                ? flags | flag
-                : flags & (~flag);
     }
 }

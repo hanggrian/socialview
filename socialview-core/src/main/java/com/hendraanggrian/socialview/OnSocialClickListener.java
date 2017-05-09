@@ -15,5 +15,5 @@ public interface OnSocialClickListener {
      * @param type a hashtag, mention, or hyperlink.
      * @param text clicked span, in form of CharSequence.
      */
-    void onClick(@NonNull TextView v, @NonNull SocialView.Type type, @NonNull CharSequence text);
+    void onClick(@NonNull TextView v, @SocialView.Flag int type, @NonNull CharSequence text);
 }

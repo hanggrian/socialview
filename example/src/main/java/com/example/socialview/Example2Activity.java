@@ -45,12 +45,12 @@ public final class Example2Activity extends BaseActivity implements OnSocialClic
     }
 
     @Override
-    public void onClick(@NonNull TextView v, @NonNull SocialView.Type type, @NonNull CharSequence s) {
-        Toast.makeText(this, String.format("%s clicked:\n%s", type.toString(), s), Toast.LENGTH_SHORT).show();
+    public void onTextChanged(@NonNull TextView v, @SocialView.Flag int type, @NonNull CharSequence s) {
+        Log.d("editing", String.format("%s - %s", type, s));
     }
 
     @Override
-    public void onTextChanged(@NonNull TextView v, @NonNull SocialView.Type type, @NonNull CharSequence s) {
-        Log.d("editing", String.format("%s - %s", type.toString(), s));
+    public void onClick(@NonNull TextView v, @SocialView.Flag int type, @NonNull CharSequence text) {
+        Toast.makeText(this, String.format("%s clicked:\n%s", type, text), Toast.LENGTH_SHORT).show();
     }
 }
