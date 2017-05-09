@@ -1,6 +1,7 @@
 package com.hendraanggrian.widget;
 
 import android.content.Context;
+import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -107,6 +108,21 @@ public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoComplete
     @Override
     public void setHyperlinkColorRes(@ColorRes int colorRes) {
         socialView.setHyperlinkColorRes(colorRes);
+    }
+
+    @Override
+    public void setHashtagColorAttr(@AttrRes int colorAttr) {
+        socialView.setHashtagColorAttr(colorAttr);
+    }
+
+    @Override
+    public void setMentionColorAttr(@AttrRes int colorAttr) {
+        socialView.setMentionColorAttr(colorAttr);
+    }
+
+    @Override
+    public void setHyperlinkColorAttr(@AttrRes int colorAttr) {
+        socialView.setHyperlinkColorAttr(colorAttr);
     }
 
     @Override

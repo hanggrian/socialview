@@ -3,6 +3,7 @@ package com.hendraanggrian.socialview;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -63,7 +64,7 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
         this.textView.addTextChangedListener(this);
         Resources.Theme theme = context.getTheme();
         int defaultColor = !this.textView.isInEditMode()
-                ? Themes.getColorFromAttrRes(textView.getContext(), R.attr.colorAccent, textView.getCurrentTextColor())
+                ? Themes.getColor(textView.getContext(), R.attr.colorAccent, textView.getCurrentTextColor())
                 : textView.getCurrentTextColor();
         TypedArray array = theme.obtainStyledAttributes(attrs, R.styleable.SocialView, 0, 0);
         try {
@@ -145,6 +146,21 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
     @Override
     public void setHyperlinkColorRes(@ColorRes int colorRes) {
         setHyperlinkColor(ContextCompat.getColor(textView.getContext(), colorRes));
+    }
+
+    @Override
+    public void setHashtagColorAttr(@AttrRes int colorAttr) {
+        setHashtagColor(Themes.getColor(textView.getContext(), colorAttr, textView.getCurrentTextColor()));
+    }
+
+    @Override
+    public void setMentionColorAttr(@AttrRes int colorAttr) {
+        setMentionColor(Themes.getColor(textView.getContext(), colorAttr, textView.getCurrentTextColor()));
+    }
+
+    @Override
+    public void setHyperlinkColorAttr(@AttrRes int colorAttr) {
+        setHyperlinkColor(Themes.getColor(textView.getContext(), colorAttr, textView.getCurrentTextColor()));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.hendraanggrian.socialview;
 
+import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -42,6 +43,12 @@ public interface SocialView {
     void setMentionColorRes(@ColorRes int colorRes);
 
     void setHyperlinkColorRes(@ColorRes int colorRes);
+
+    void setHashtagColorAttr(@AttrRes int colorAttr);
+
+    void setMentionColorAttr(@AttrRes int colorAttr);
+
+    void setHyperlinkColorAttr(@AttrRes int colorAttr);
 
     void setOnSocialClickListener(@Nullable OnSocialClickListener listener);
 
