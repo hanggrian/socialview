@@ -1,8 +1,11 @@
 package com.hendraanggrian.socialview.commons;
 
+import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import java.io.File;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -18,15 +21,23 @@ public class Mention {
     }
 
     public Mention(@NonNull String username, @Nullable String displayname) {
-        this(username, displayname, null);
+        this(username, displayname, (String) null);
+    }
+
+    public Mention(@NonNull String username, @Nullable String displayname, @DrawableRes int avatarRes) {
+        this(username, displayname, (Object) avatarRes);
     }
 
     public Mention(@NonNull String username, @Nullable String displayname, @Nullable String avatarUrl) {
         this(username, displayname, (Object) avatarUrl);
     }
 
-    public Mention(@NonNull String username, @Nullable String displayname, @DrawableRes int drawableRes) {
-        this(username, displayname, (Object) drawableRes);
+    public Mention(@NonNull String username, @Nullable String displayname, @Nullable Uri avatarUri) {
+        this(username, displayname, (Object) avatarUri);
+    }
+
+    public Mention(@NonNull String username, @Nullable String displayname, @Nullable File avatarFile) {
+        this(username, displayname, (Object) avatarFile);
     }
 
     private Mention(@NonNull String username, @Nullable String displayname, @Nullable Object avatar) {
@@ -54,11 +65,19 @@ public class Mention {
         return avatar;
     }
 
-    public void setAvatar(@DrawableRes int avatarRes) {
+    public void setAvatarDrawable(@DrawableRes int avatarRes) {
         this.avatar = avatarRes;
     }
 
-    public void setAvatar(@Nullable String avatarUrl) {
+    public void setAvatarUrl(@Nullable String avatarUrl) {
         this.avatar = avatarUrl;
+    }
+
+    public void setAvatarUri(@Nullable Uri avatarUri) {
+        this.avatar = avatarUri;
+    }
+
+    public void setAvatarFile(@Nullable File avatarFile) {
+        this.avatar = avatarFile;
     }
 }

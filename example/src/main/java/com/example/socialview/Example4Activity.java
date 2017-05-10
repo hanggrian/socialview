@@ -61,7 +61,7 @@ public final class Example4Activity extends BaseActivity implements SocialTextWa
     }
 
     @Override
-    public void onTextChanged(@NonNull TextView v, @SocialView.Flag int type, @NonNull CharSequence s) {
+    public void onTextChanged(@NonNull TextView v, @SocialView.Type int type, @NonNull CharSequence s) {
         Log.d("editing", String.format("%s - %s", type, s));
     }
 
@@ -74,6 +74,8 @@ public final class Example4Activity extends BaseActivity implements SocialTextWa
     }
 
     private static final class CustomAdapter extends SocialAdapter<Model> {
+        private Filter filter;
+
         private CustomAdapter(@NonNull Context context) {
             super(context, R.layout.item_custom, R.id.textview_custom);
         }
@@ -98,13 +100,15 @@ public final class Example4Activity extends BaseActivity implements SocialTextWa
 
         @NonNull
         @Override
-        public Filter initializeFilter() {
-            return new SuggestionFilter() {
-                @Override
-                public String getString(Model item) {
-                    return item.content;
-                }
-            };
+        public Filter getFilter() {
+            if (filter == null)
+                filter = new SuggestionFilter() {
+                    @Override
+                    public String getString(Model item) {
+                        return item.content;
+                    }
+                };
+            return filter;
         }
 
         private static class ViewHolder {

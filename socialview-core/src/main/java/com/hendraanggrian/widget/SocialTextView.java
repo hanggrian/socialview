@@ -6,8 +6,8 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import com.hendraanggrian.socialview.OnSocialClickListener;
 import com.hendraanggrian.socialview.SocialTextWatcher;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialTextView extends AppCompatTextView implements SocialView {
+public class SocialTextView extends TextView implements SocialView {
 
     @NonNull private final SocialView socialView;
 
@@ -138,17 +138,17 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
 
     @Override
     public boolean isHashtagUnderlined() {
-        return false;
+        return socialView.isHashtagUnderlined();
     }
 
     @Override
     public boolean isMentionUnderlined() {
-        return false;
+        return socialView.isMentionUnderlined();
     }
 
     @Override
     public boolean isHyperlinkUnderlined() {
-        return false;
+        return socialView.isHyperlinkUnderlined();
     }
 
     @ColorInt

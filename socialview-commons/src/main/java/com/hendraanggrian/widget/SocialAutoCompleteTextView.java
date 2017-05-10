@@ -6,7 +6,6 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatMultiAutoCompleteTextView;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -14,20 +13,21 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
+import android.widget.MultiAutoCompleteTextView;
 
 import com.hendraanggrian.socialview.OnSocialClickListener;
 import com.hendraanggrian.socialview.SocialTextWatcher;
 import com.hendraanggrian.socialview.SocialView;
 import com.hendraanggrian.socialview.SocialViewAttacher;
-import com.hendraanggrian.socialview.commons.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoCompleteTextView implements SocialView, TextWatcher {
+public class SocialAutoCompleteTextView<H, M> extends MultiAutoCompleteTextView implements SocialView, TextWatcher {
 
     @NonNull private final SocialView socialView;
     private ArrayAdapter<H> hashtagAdapter;
@@ -38,7 +38,7 @@ public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoComplete
     }
 
     public SocialAutoCompleteTextView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, R.attr.autoCompleteTextViewStyle);
+        this(context, attrs, android.R.attr.autoCompleteTextViewStyle);
     }
 
     public SocialAutoCompleteTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -152,17 +152,17 @@ public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoComplete
 
     @Override
     public boolean isHashtagUnderlined() {
-        return false;
+        return socialView.isHashtagUnderlined();
     }
 
     @Override
     public boolean isMentionUnderlined() {
-        return false;
+        return socialView.isMentionUnderlined();
     }
 
     @Override
     public boolean isHyperlinkUnderlined() {
-        return false;
+        return socialView.isHyperlinkUnderlined();
     }
 
     @ColorInt
@@ -242,7 +242,7 @@ public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoComplete
     }
 
     private static class HashtagMentionTokenizer implements Tokenizer {
-        private final List<Character> symbols = new ArrayList<>();
+        private final Collection<Character> symbols = new ArrayList<>();
 
         private HashtagMentionTokenizer(boolean hashtagEnabled, boolean mentionEnabled) {
             if (hashtagEnabled)

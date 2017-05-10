@@ -23,9 +23,9 @@ import java.util.List;
  */
 public interface SocialView {
 
-    int FLAG_HASHTAG = 1;
-    int FLAG_MENTION = 2;
-    int FLAG_HYPERLINK = 4;
+    int TYPE_HASHTAG = 1;
+    int TYPE_MENTION = 2;
+    int TYPE_HYPERLINK = 4;
 
     void setHashtagEnabled(boolean enabled);
 
@@ -91,8 +91,8 @@ public interface SocialView {
     @NonNull
     List<String> getHyperlinks();
 
-    @IntDef({FLAG_HASHTAG, FLAG_MENTION, FLAG_HYPERLINK})
+    @IntDef({TYPE_HASHTAG, TYPE_MENTION, TYPE_HYPERLINK})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface Flag {
+    public @interface Type {
     }
 }

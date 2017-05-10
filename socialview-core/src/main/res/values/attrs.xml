@@ -3,7 +3,8 @@
     <declare-styleable name="SocialView">
         <!-- Determine whether each feature should be turned on/off.
              Default is all true. -->
-        <attr name="typeEnabled">
+        <attr name="feature">
+            <!-- aaa -->
             <flag name="hashtag" value="1"/>
             <flag name="mention" value="2"/>
             <flag name="hyperlink" value="4"/>
@@ -12,7 +13,7 @@
         <!-- Determine whether each feature should be underlined.
              If particular feature is not enabled, this value will be ignored.
              Default is all true. -->
-        <attr name="typeUnderlined">
+        <attr name="featureUnderlined">
             <flag name="hashtag" value="1"/>
             <flag name="mention" value="2"/>
             <flag name="hyperlink" value="4"/>

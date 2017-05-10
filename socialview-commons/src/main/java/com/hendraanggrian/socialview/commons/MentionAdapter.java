@@ -1,8 +1,10 @@
 package com.hendraanggrian.socialview.commons;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +13,12 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hendraanggrian.commons.view.Views;
 import com.hendraanggrian.picasso.commons.transformation.Transformations;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+
+import java.io.File;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -21,6 +26,7 @@ import com.squareup.picasso.RequestCreator;
 public final class MentionAdapter extends SocialAdapter<Mention> {
 
     @DrawableRes private final int defaultAvatar;
+    @Nullable private Filter filter;
 
     public MentionAdapter(@NonNull Context context) {
         this(context, R.drawable.ic_placeholder_mention);
@@ -34,7 +40,7 @@ public final class MentionAdapter extends SocialAdapter<Mention> {
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        final ViewHolder holder;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_mention, parent, false);
             holder = new ViewHolder(convertView);
@@ -42,45 +48,51 @@ public final class MentionAdapter extends SocialAdapter<Mention> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        final Mention item = getItem(position);
+        Mention item = getItem(position);
         if (item != null) {
-            holder.textViewUsername.setText(item.getUsername());
-
-            Picasso picasso = Picasso.with(getContext());
             RequestCreator request = null;
-            if (item.getAvatar() == null)
-                request = picasso.load(defaultAvatar);
-            else if (item.getAvatar() instanceof Integer)
-                request = picasso.load((int) item.getAvatar());
-            else if (item.getAvatar() instanceof String)
-                request = picasso.load((String) item.getAvatar())
+            if (item.getAvatar() == null) {
+                request = Picasso.with(getContext())
+                        .load(defaultAvatar);
+            } else if (item.getAvatar() instanceof Integer) {
+                request = Picasso.with(getContext())
+                        .load((int) item.getAvatar());
+            } else if (item.getAvatar() instanceof String) {
+                request = Picasso.with(getContext())
+                        .load((String) item.getAvatar())
                         .placeholder(defaultAvatar)
                         .error(defaultAvatar);
+            } else if (item.getAvatar() instanceof Uri) {
+                request = Picasso.with(getContext())
+                        .load((Uri) item.getAvatar())
+                        .placeholder(defaultAvatar)
+                        .error(defaultAvatar);
+            } else if (item.getAvatar() instanceof File) {
+                request = Picasso.with(getContext())
+                        .load((File) item.getAvatar());
+            }
             if (request != null)
                 request.transform(Transformations.circle())
                         .fit()
                         .into(holder.imageView);
-
-            if (!TextUtils.isEmpty(item.getDisplayname())) {
+            holder.textViewUsername.setText(item.getUsername());
+            if (Views.setVisible(holder.textViewDisplayname, !TextUtils.isEmpty(item.getDisplayname())))
                 holder.textViewDisplayname.setText(item.getDisplayname());
-                holder.textViewDisplayname.setVisibility(View.VISIBLE);
-            } else {
-                holder.textViewDisplayname.setVisibility(View.GONE);
-            }
         }
         return convertView;
     }
 
     @NonNull
     @Override
-    public Filter initializeFilter() {
-        return new SuggestionFilter() {
-            @Override
-            public String getString(Mention item) {
-                return item.getUsername();
-            }
-        };
+    public Filter getFilter() {
+        if (filter == null)
+            filter = new SuggestionFilter() {
+                @Override
+                public String getString(Mention item) {
+                    return item.getUsername();
+                }
+            };
+        return filter;
     }
 
     private static class ViewHolder {

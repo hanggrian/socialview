@@ -14,6 +14,7 @@ android {
 dependencies {
     compile project(':socialview-core')
     compile deps.picassoCommons
+    compile deps.commonsView
 
     androidTestCompile(deps.supportTestRunner) {
         exclude group: 'com.android.support', module: 'support-annotations'

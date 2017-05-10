@@ -3,8 +3,6 @@ package com.hendraanggrian.socialview.commons;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 
@@ -19,27 +17,13 @@ import java.util.Locale;
  */
 public abstract class SocialAdapter<T> extends ArrayAdapter<T> {
 
-    @NonNull
-    public abstract View getView(int position, View convertView, @NonNull ViewGroup parent);
-
-    @NonNull
-    public abstract Filter initializeFilter();
-
     private final List<T> tempItems;
     private final List<T> suggestions;
-    private final Filter filter;
 
     public SocialAdapter(@NonNull Context context, int resource, int textViewResourceId) {
         super(context, resource, textViewResourceId, new ArrayList<T>());
         this.tempItems = new ArrayList<>();
         this.suggestions = new ArrayList<>();
-        this.filter = initializeFilter();
-    }
-
-    @NonNull
-    @Override
-    public Filter getFilter() {
-        return filter;
     }
 
     @Override

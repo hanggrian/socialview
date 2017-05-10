@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="typeEnabled" type="attr"/>
-    <public name="typeUnderlined" type="attr"/>
+    <public name="feature" type="attr"/>
+    <public name="featureUnderlined" type="attr"/>
     <public name="hashtagColor" type="attr"/>
     <public name="mentionColor" type="attr"/>
     <public name="hyperlinkColor" type="attr"/>

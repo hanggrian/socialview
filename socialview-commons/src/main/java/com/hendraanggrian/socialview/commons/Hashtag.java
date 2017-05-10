@@ -1,7 +1,6 @@
 package com.hendraanggrian.socialview.commons;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -9,13 +8,13 @@ import android.support.annotation.Nullable;
 public class Hashtag {
 
     @NonNull private final String hashtag;
-    @Nullable private Integer count;
+    private int count;
 
     public Hashtag(@NonNull String hashtag) {
-        this(hashtag, null);
+        this(hashtag, -1);
     }
 
-    public Hashtag(@NonNull String hashtag, @Nullable Integer count) {
+    public Hashtag(@NonNull String hashtag, int count) {
         this.hashtag = hashtag;
         this.count = count;
     }
@@ -25,12 +24,11 @@ public class Hashtag {
         return hashtag;
     }
 
-    @Nullable
-    public Integer getCount() {
+    public int getCount() {
         return count;
     }
 
-    public void setCount(@Nullable Integer count) {
+    public void setCount(int count) {
         this.count = count;
     }
 }
