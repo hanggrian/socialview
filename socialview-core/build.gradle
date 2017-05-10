@@ -12,7 +12,6 @@ android {
 }
 
 dependencies {
-    compile deps.supportCompat
     compile deps.commonsContent
 
     androidTestCompile(deps.supportTestRunner) {

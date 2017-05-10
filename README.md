@@ -6,7 +6,7 @@ Android TextView and EditText with hashtag, mention, and hyperlink support.
 
 Core
 ----
-Comes with `SocialTextView`, `SocialEditText`, and `SocialViewAttacher` to attach any TextView.
+Lightweight library that comes with `SocialTextView` and `SocialViewAttacher` to attach any TextView.
 ```xml
 <com.hendraanggrian.widget.SocialTextView
     android:id="@+id/socialtextview"
@@ -15,7 +15,7 @@ Comes with `SocialTextView`, `SocialEditText`, and `SocialViewAttacher` to attac
     android:text="#hashtag and @mention."/>
 ```
 
-![SocialTextView][core1] ![SocialEditText][core2]
+![SocialTextView][core1]
 
 Modify its state and set listeners in java.
 ```java
@@ -47,7 +47,7 @@ SocialView socialView = SocialViewAttacher.attach(tv);
 
 Commons
 -------
-Comes with all core features and `SocialAutoCompleteTextView` to display suggestions as you type.
+Extended core library with `SocialEditText` and `SocialAutoCompleteTextView` to display suggestions as you type.
 ```xml
 <com.hendraanggrian.widget.SocialAutoCompleteTextView
     android:id="@+id/socialsuggestionedittext"
@@ -56,7 +56,7 @@ Comes with all core features and `SocialAutoCompleteTextView` to display suggest
     android:hint="What's on your mind?"/>
 ```
 
-![SocialAutoCompleteTextView hashtag suggestions][commons1] ![SocialAutoCompleteTextView mention suggestions][commons2]
+![SocialEditText][commons1] ![SocialAutoCompleteTextView hashtag suggestions][commons2] ![SocialAutoCompleteTextView mention suggestions][commons3]
 
 To display suggestions, it is required to `setHashtagAdapter()` and `setMentionAdapter()`.
 ```java
@@ -102,7 +102,7 @@ License
     
     
  [demo]: /art/demo.gif
- [core1]: /art/screenshot_core1.jpg
- [core2]: /art/screenshot_core2.jpg
- [commons1]: /art/screenshot_commons1.jpg
- [commons2]: /art/screenshot_commons2.jpg
+ [core1]: /art/ss_core1.jpg
+ [commons1]: /art/ss_commons1.jpg
+ [commons2]: /art/ss_commons2.jpg
+ [commons3]: /art/ss_commons3.jpg

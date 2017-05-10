@@ -18,8 +18,6 @@ import java.util.List;
  *
  * @author Hendra Anggian (hendraanggrian@gmail.com)
  * @see SocialViewAttacher
- * @see com.hendraanggrian.widget.SocialTextView
- * @see com.hendraanggrian.widget.SocialEditText
  */
 public interface SocialView {
 
@@ -27,17 +25,38 @@ public interface SocialView {
     int TYPE_MENTION = 2;
     int TYPE_HYPERLINK = 4;
 
+    boolean isHashtagEnabled();
+
+    boolean isMentionEnabled();
+
+    boolean isHyperlinkEnabled();
+
     void setHashtagEnabled(boolean enabled);
 
     void setMentionEnabled(boolean enabled);
 
     void setHyperlinkEnabled(boolean enabled);
 
+    boolean isHashtagUnderlined();
+
+    boolean isMentionUnderlined();
+
+    boolean isHyperlinkUnderlined();
+
     void setHashtagUnderlined(boolean underlined);
 
     void setMentionUnderlined(boolean underlined);
 
     void setHyperlinkUnderlined(boolean underlined);
+
+    @ColorInt
+    int getHashtagColor();
+
+    @ColorInt
+    int getMentionColor();
+
+    @ColorInt
+    int getHyperlinkColor();
 
     void setHashtagColor(@ColorInt int color);
 
@@ -60,27 +79,6 @@ public interface SocialView {
     void setOnSocialClickListener(@Nullable OnSocialClickListener listener);
 
     void setSocialTextChangedListener(@Nullable SocialTextWatcher watcher);
-
-    boolean isHashtagEnabled();
-
-    boolean isMentionEnabled();
-
-    boolean isHyperlinkEnabled();
-
-    boolean isHashtagUnderlined();
-
-    boolean isMentionUnderlined();
-
-    boolean isHyperlinkUnderlined();
-
-    @ColorInt
-    int getHashtagColor();
-
-    @ColorInt
-    int getMentionColor();
-
-    @ColorInt
-    int getHyperlinkColor();
 
     @NonNull
     List<String> getHashtags();

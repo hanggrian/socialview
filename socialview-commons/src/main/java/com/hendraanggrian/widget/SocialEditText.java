@@ -6,8 +6,8 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
-import android.widget.EditText;
 
 import com.hendraanggrian.socialview.OnSocialClickListener;
 import com.hendraanggrian.socialview.SocialTextWatcher;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialEditText extends EditText implements SocialView {
+public class SocialEditText extends AppCompatEditText implements SocialView {
 
     @NonNull private final SocialView socialView;
 
@@ -28,12 +28,27 @@ public class SocialEditText extends EditText implements SocialView {
     }
 
     public SocialEditText(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.editTextStyle);
+        this(context, attrs, android.support.v7.appcompat.R.attr.editTextStyle);
     }
 
     public SocialEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         socialView = SocialViewAttacher.attach(this, context, attrs);
+    }
+
+    @Override
+    public boolean isHashtagEnabled() {
+        return socialView.isHashtagEnabled();
+    }
+
+    @Override
+    public boolean isMentionEnabled() {
+        return socialView.isMentionEnabled();
+    }
+
+    @Override
+    public boolean isHyperlinkEnabled() {
+        return socialView.isHyperlinkEnabled();
     }
 
     @Override
@@ -52,6 +67,21 @@ public class SocialEditText extends EditText implements SocialView {
     }
 
     @Override
+    public boolean isHashtagUnderlined() {
+        return socialView.isHashtagUnderlined();
+    }
+
+    @Override
+    public boolean isMentionUnderlined() {
+        return socialView.isMentionUnderlined();
+    }
+
+    @Override
+    public boolean isHyperlinkUnderlined() {
+        return socialView.isHyperlinkUnderlined();
+    }
+
+    @Override
     public void setHashtagUnderlined(boolean underlined) {
         socialView.setHashtagUnderlined(underlined);
     }
@@ -64,6 +94,24 @@ public class SocialEditText extends EditText implements SocialView {
     @Override
     public void setHyperlinkUnderlined(boolean underlined) {
         socialView.setHyperlinkUnderlined(underlined);
+    }
+
+    @ColorInt
+    @Override
+    public int getHashtagColor() {
+        return socialView.getHashtagColor();
+    }
+
+    @ColorInt
+    @Override
+    public int getMentionColor() {
+        return socialView.getMentionColor();
+    }
+
+    @ColorInt
+    @Override
+    public int getHyperlinkColor() {
+        return socialView.getHyperlinkColor();
     }
 
     @Override
@@ -119,54 +167,6 @@ public class SocialEditText extends EditText implements SocialView {
     @Override
     public void setSocialTextChangedListener(@Nullable SocialTextWatcher watcher) {
         socialView.setSocialTextChangedListener(watcher);
-    }
-
-    @Override
-    public boolean isHashtagEnabled() {
-        return socialView.isHashtagEnabled();
-    }
-
-    @Override
-    public boolean isMentionEnabled() {
-        return socialView.isMentionEnabled();
-    }
-
-    @Override
-    public boolean isHyperlinkEnabled() {
-        return socialView.isHyperlinkEnabled();
-    }
-
-    @Override
-    public boolean isHashtagUnderlined() {
-        return socialView.isHashtagUnderlined();
-    }
-
-    @Override
-    public boolean isMentionUnderlined() {
-        return socialView.isMentionUnderlined();
-    }
-
-    @Override
-    public boolean isHyperlinkUnderlined() {
-        return socialView.isHyperlinkUnderlined();
-    }
-
-    @ColorInt
-    @Override
-    public int getHashtagColor() {
-        return socialView.getHashtagColor();
-    }
-
-    @ColorInt
-    @Override
-    public int getMentionColor() {
-        return socialView.getMentionColor();
-    }
-
-    @ColorInt
-    @Override
-    public int getHyperlinkColor() {
-        return socialView.getHyperlinkColor();
     }
 
     @NonNull

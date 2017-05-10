@@ -10,5 +10,5 @@ import android.widget.TextView;
  */
 public interface SocialTextWatcher {
 
-    void onTextChanged(@NonNull TextView v, @SocialView.Type int type, @NonNull CharSequence s);
+    void onSocialTextChanged(@NonNull TextView v, @SocialView.Type int type, @NonNull CharSequence s);
 }

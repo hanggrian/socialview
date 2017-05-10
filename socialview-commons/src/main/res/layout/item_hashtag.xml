@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:ellipsize="marquee"
         android:maxLines="1"
-        android:textAppearance="?android:attr/textAppearanceLargePopupMenu"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large"
         android:visibility="visible"/>
 
     <TextView
@@ -24,5 +24,5 @@
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
         android:maxLines="1"
-        android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Small"/>
 </LinearLayout>

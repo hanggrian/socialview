@@ -59,7 +59,7 @@ public final class Example3Activity extends BaseActivity implements SocialTextWa
     }
 
     @Override
-    public void onTextChanged(@NonNull TextView v, @SocialView.Type int type, @NonNull CharSequence s) {
+    public void onSocialTextChanged(@NonNull TextView v, @SocialView.Type int type, @NonNull CharSequence s) {
         Log.d("editing", String.format("%s - %s", type, s));
     }
 }

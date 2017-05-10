@@ -31,7 +31,7 @@ ext.deps = [
         // test
         junit              : 'junit:junit:4.12',
         // android
-        supportCompat      : 'com.android.support:support-compat:25.3.1',
+        supportAppcompat   : 'com.android.support:appcompat-v7:25.3.1',
         supportTestRunner  : 'com.android.support.test:runner:0.5',
         supportTestEspresso: 'com.android.support.test.espresso:espresso-core:2.2.2',
         // utils

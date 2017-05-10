@@ -39,7 +39,7 @@
    *** get*();
 }
 
-# We want to keep methods in Activity that could be used in the XML attribute onClick
+# We want to keep methods in Activity that could be used in the XML attribute onSocialClick
 -keepclassmembers class * extends android.app.Activity {
    public void *(android.view.View);
 }

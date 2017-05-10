@@ -27,13 +27,28 @@ public class SocialTextView extends TextView implements SocialView {
         this(context, null);
     }
 
-    public SocialTextView(Context context, AttributeSet attrs) {
+    public SocialTextView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, android.R.attr.textViewStyle);
     }
 
-    public SocialTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SocialTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         socialView = SocialViewAttacher.attach(this, context, attrs);
+    }
+
+    @Override
+    public boolean isHashtagEnabled() {
+        return socialView.isHashtagEnabled();
+    }
+
+    @Override
+    public boolean isMentionEnabled() {
+        return socialView.isMentionEnabled();
+    }
+
+    @Override
+    public boolean isHyperlinkEnabled() {
+        return socialView.isHyperlinkEnabled();
     }
 
     @Override
@@ -52,6 +67,21 @@ public class SocialTextView extends TextView implements SocialView {
     }
 
     @Override
+    public boolean isHashtagUnderlined() {
+        return socialView.isHashtagUnderlined();
+    }
+
+    @Override
+    public boolean isMentionUnderlined() {
+        return socialView.isMentionUnderlined();
+    }
+
+    @Override
+    public boolean isHyperlinkUnderlined() {
+        return socialView.isHyperlinkUnderlined();
+    }
+
+    @Override
     public void setHashtagUnderlined(boolean underlined) {
         socialView.setHashtagUnderlined(underlined);
     }
@@ -64,6 +94,24 @@ public class SocialTextView extends TextView implements SocialView {
     @Override
     public void setHyperlinkUnderlined(boolean underlined) {
         socialView.setHyperlinkUnderlined(underlined);
+    }
+
+    @ColorInt
+    @Override
+    public int getHashtagColor() {
+        return socialView.getHashtagColor();
+    }
+
+    @ColorInt
+    @Override
+    public int getMentionColor() {
+        return socialView.getMentionColor();
+    }
+
+    @ColorInt
+    @Override
+    public int getHyperlinkColor() {
+        return socialView.getHyperlinkColor();
     }
 
     @Override
@@ -119,54 +167,6 @@ public class SocialTextView extends TextView implements SocialView {
     @Override
     public void setSocialTextChangedListener(@Nullable SocialTextWatcher watcher) {
         socialView.setSocialTextChangedListener(watcher);
-    }
-
-    @Override
-    public boolean isHashtagEnabled() {
-        return socialView.isHashtagEnabled();
-    }
-
-    @Override
-    public boolean isMentionEnabled() {
-        return socialView.isMentionEnabled();
-    }
-
-    @Override
-    public boolean isHyperlinkEnabled() {
-        return socialView.isHyperlinkEnabled();
-    }
-
-    @Override
-    public boolean isHashtagUnderlined() {
-        return socialView.isHashtagUnderlined();
-    }
-
-    @Override
-    public boolean isMentionUnderlined() {
-        return socialView.isMentionUnderlined();
-    }
-
-    @Override
-    public boolean isHyperlinkUnderlined() {
-        return socialView.isHyperlinkUnderlined();
-    }
-
-    @ColorInt
-    @Override
-    public int getHashtagColor() {
-        return socialView.getHashtagColor();
-    }
-
-    @ColorInt
-    @Override
-    public int getMentionColor() {
-        return socialView.getMentionColor();
-    }
-
-    @ColorInt
-    @Override
-    public int getHyperlinkColor() {
-        return socialView.getHyperlinkColor();
     }
 
     @NonNull
