@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 
 import com.hendraanggrian.socialview.OnSocialClickListener;
 import com.hendraanggrian.socialview.SocialTextWatcher;
-import com.hendraanggrian.socialview.SocialView;
+import com.hendraanggrian.socialview.SociableView;
 import com.hendraanggrian.socialview.SocialViewAttacher;
 
 import java.util.List;
@@ -19,9 +19,9 @@ import java.util.List;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialEditText extends AppCompatEditText implements SocialView {
+public class SocialEditText extends AppCompatEditText implements SociableView {
 
-    @NonNull private final SocialView socialView;
+    @NonNull private final SociableView socialView;
 
     public SocialEditText(Context context) {
         this(context, null);

@@ -19,7 +19,7 @@ import java.util.List;
  * @author Hendra Anggian (hendraanggrian@gmail.com)
  * @see SocialViewAttacher
  */
-public interface SocialView {
+public interface SociableView {
 
     int TYPE_HASHTAG = 1;
     int TYPE_MENTION = 2;

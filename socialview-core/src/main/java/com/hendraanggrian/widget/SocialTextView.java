@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.hendraanggrian.socialview.OnSocialClickListener;
 import com.hendraanggrian.socialview.SocialTextWatcher;
-import com.hendraanggrian.socialview.SocialView;
+import com.hendraanggrian.socialview.SociableView;
 import com.hendraanggrian.socialview.SocialViewAttacher;
 
 import java.util.List;
@@ -19,9 +19,9 @@ import java.util.List;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialTextView extends TextView implements SocialView {
+public class SocialTextView extends TextView implements SociableView {
 
-    @NonNull private final SocialView socialView;
+    @NonNull private final SociableView socialView;
 
     public SocialTextView(Context context) {
         this(context, null);

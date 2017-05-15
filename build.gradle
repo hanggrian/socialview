@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.android.tools.build:gradle:2.3.2'
         classpath 'com.novoda:bintray-release:0.3.4'
     }
 }
@@ -11,6 +11,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url 'https://dl.bintray.com/hendraanggrian/maven' }
     }
 }
 
@@ -36,8 +37,8 @@ ext.deps = [
         supportTestEspresso: 'com.android.support.test.espresso:espresso-core:2.2.2',
         // utils
         picassoCommons     : 'com.hendraanggrian:picasso-commons:0.8.0',
-        commonsContent     : 'com.hendraanggrian:commons-content:0.2',
-        commonsView        : 'com.hendraanggrian:commons-view:0.7',
+        compatContent     : 'com.hendraanggrian:compat-content:0.1',
+        compatView        : 'com.hendraanggrian:compat-view:0.1',
 ]
 
 ext.bintray = [

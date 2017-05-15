@@ -13,7 +13,7 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hendraanggrian.commons.view.Views;
+import com.hendraanggrian.compat.view.Views;
 import com.hendraanggrian.picasso.commons.transformation.Transformations;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;

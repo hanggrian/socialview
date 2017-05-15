@@ -22,7 +22,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hendraanggrian.commons.content.Themes;
+import com.hendraanggrian.compat.content.Themes;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public final class SocialViewAttacher implements SocialView, TextWatcher {
+public final class SocialViewAttacher implements SociableView, TextWatcher {
 
     private static final String TAG = SocialViewAttacher.class.getSimpleName();
     @Nullable private static SparseArray<Pattern> patterns;
@@ -427,7 +427,7 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
      * @return SocialView interface.
      */
     @NonNull
-    public static SocialView attach(@NonNull TextView view) {
+    public static SociableView attach(@NonNull TextView view) {
         return attach(view, view.getContext(), null);
     }
 
@@ -440,7 +440,7 @@ public final class SocialViewAttacher implements SocialView, TextWatcher {
      * @return SocialView interface.
      */
     @NonNull
-    public static SocialView attach(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
+    public static SociableView attach(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
         return new SocialViewAttacher(view, context, attrs);
     }
 }

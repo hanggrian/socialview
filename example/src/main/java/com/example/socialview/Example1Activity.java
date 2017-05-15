@@ -9,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hendraanggrian.socialview.OnSocialClickListener;
-import com.hendraanggrian.socialview.SocialView;
+import com.hendraanggrian.socialview.SociableView;
 import com.hendraanggrian.widget.SocialTextView;
 
 import butterknife.BindView;
@@ -48,7 +48,7 @@ public final class Example1Activity extends BaseActivity implements OnSocialClic
     }
 
     @Override
-    public void onSocialClick(@NonNull TextView v, @SocialView.Type int type, @NonNull CharSequence text) {
+    public void onSocialClick(@NonNull TextView v, @SociableView.Type int type, @NonNull CharSequence text) {
         Toast.makeText(this, String.format("%s clicked:\n%s", type, text), Toast.LENGTH_SHORT).show();
     }
 }

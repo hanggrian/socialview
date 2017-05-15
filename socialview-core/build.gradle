@@ -12,7 +12,7 @@ android {
 }
 
 dependencies {
-    compile deps.commonsContent
+    compile deps.compatContent
 
     androidTestCompile(deps.supportTestRunner) {
         exclude group: 'com.android.support', module: 'support-annotations'

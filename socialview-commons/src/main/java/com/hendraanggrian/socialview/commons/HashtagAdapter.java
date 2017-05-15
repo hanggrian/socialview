@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.TextView;
 
-import com.hendraanggrian.commons.view.Views;
+import com.hendraanggrian.compat.view.Views;
 
 import java.text.NumberFormat;
 import java.util.Locale;
