@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.hendraanggrian.socialview.OnSocialClickListener;
 import com.hendraanggrian.socialview.SocialTextWatcher;
-import com.hendraanggrian.socialview.SociableView;
+import com.hendraanggrian.socialview.SocialView;
 import com.hendraanggrian.widget.SocialEditText;
 
 import butterknife.BindView;
@@ -45,12 +45,12 @@ public final class Example2Activity extends BaseActivity implements OnSocialClic
     }
 
     @Override
-    public void onSocialTextChanged(@NonNull TextView v, @SociableView.Type int type, @NonNull CharSequence s) {
+    public void onSocialTextChanged(@NonNull TextView v, @SocialView.Type int type, @NonNull CharSequence s) {
         Log.d("editing", String.format("%s - %s", type, s));
     }
 
     @Override
-    public void onSocialClick(@NonNull TextView v, @SociableView.Type int type, @NonNull CharSequence text) {
+    public void onSocialClick(@NonNull TextView v, @SocialView.Type int type, @NonNull CharSequence text) {
         Toast.makeText(this, String.format("%s clicked:\n%s", type, text), Toast.LENGTH_SHORT).show();
     }
 }

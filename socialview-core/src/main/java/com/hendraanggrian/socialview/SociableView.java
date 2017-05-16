@@ -3,27 +3,20 @@ package com.hendraanggrian.socialview;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
-import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 /**
  * Base methods of all socialview's widgets.
- * The logic, however, are calculated in {@link SocialViewImpl} while the widgets are just
+ * The logic, however, are calculated in {@link SocialView} while the widgets are just
  * passing these methods to the attacher.
  *
  * @author Hendra Anggian (hendraanggrian@gmail.com)
- * @see SocialViewImpl
+ * @see SocialView
  */
 public interface SociableView {
-
-    int TYPE_HASHTAG = 1;
-    int TYPE_MENTION = 2;
-    int TYPE_HYPERLINK = 4;
 
     boolean isHashtagEnabled();
 
@@ -88,9 +81,4 @@ public interface SociableView {
 
     @NonNull
     List<String> getHyperlinks();
-
-    @IntDef({TYPE_HASHTAG, TYPE_MENTION, TYPE_HYPERLINK})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Type {
-    }
 }

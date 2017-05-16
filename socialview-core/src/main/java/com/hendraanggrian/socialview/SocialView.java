@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +25,8 @@ import android.widget.TextView;
 
 import com.hendraanggrian.compat.content.Themes;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +36,16 @@ import java.util.regex.Pattern;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public final class SocialViewImpl implements SociableView, TextWatcher {
+public final class SocialView implements SociableView, TextWatcher {
+
+    private static final int TYPE_HASHTAG = 1;
+    private static final int TYPE_MENTION = 2;
+    private static final int TYPE_HYPERLINK = 4;
+
+    @IntDef({TYPE_HASHTAG, TYPE_MENTION, TYPE_HYPERLINK})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Type {
+    }
 
     private static final String TAG = "SocialView";
     @Nullable private static SparseArray<Pattern> patterns;
@@ -51,7 +63,7 @@ public final class SocialViewImpl implements SociableView, TextWatcher {
     private boolean isHashtagEditing;
     private boolean isMentionEditing;
 
-    private SocialViewImpl(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
+    private SocialView(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
         this.view = view;
         this.view.setText(view.getText(), TextView.BufferType.SPANNABLE);
         this.view.addTextChangedListener(this);
@@ -417,7 +429,7 @@ public final class SocialViewImpl implements SociableView, TextWatcher {
     }
 
     public static void setDebug(boolean debug) {
-        SocialViewImpl.debug = debug;
+        SocialView.debug = debug;
     }
 
     /**
@@ -441,6 +453,6 @@ public final class SocialViewImpl implements SociableView, TextWatcher {
      */
     @NonNull
     public static SociableView attach(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
-        return new SocialViewImpl(view, context, attrs);
+        return new SocialView(view, context, attrs);
     }
 }

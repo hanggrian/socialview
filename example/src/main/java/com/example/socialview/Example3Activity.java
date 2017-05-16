@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.hendraanggrian.socialview.SocialTextWatcher;
-import com.hendraanggrian.socialview.SociableView;
+import com.hendraanggrian.socialview.SocialView;
 import com.hendraanggrian.socialview.commons.Hashtag;
 import com.hendraanggrian.socialview.commons.HashtagAdapter;
 import com.hendraanggrian.socialview.commons.Mention;
@@ -59,7 +59,7 @@ public final class Example3Activity extends BaseActivity implements SocialTextWa
     }
 
     @Override
-    public void onSocialTextChanged(@NonNull TextView v, @SociableView.Type int type, @NonNull CharSequence s) {
+    public void onSocialTextChanged(@NonNull TextView v, @SocialView.Type int type, @NonNull CharSequence s) {
         Log.d("editing", String.format("%s - %s", type, s));
     }
 }

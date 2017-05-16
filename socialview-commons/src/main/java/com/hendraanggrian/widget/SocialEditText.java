@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 import com.hendraanggrian.socialview.OnSocialClickListener;
 import com.hendraanggrian.socialview.SocialTextWatcher;
 import com.hendraanggrian.socialview.SociableView;
-import com.hendraanggrian.socialview.SocialViewImpl;
+import com.hendraanggrian.socialview.SocialView;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class SocialEditText extends AppCompatEditText implements SociableView {
 
     public SocialEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        socialView = SocialViewImpl.attach(this, context, attrs);
+        socialView = SocialView.attach(this, context, attrs);
     }
 
     @Override

@@ -14,7 +14,7 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import com.hendraanggrian.socialview.SocialTextWatcher;
-import com.hendraanggrian.socialview.SociableView;
+import com.hendraanggrian.socialview.SocialView;
 import com.hendraanggrian.socialview.commons.SocialAdapter;
 import com.hendraanggrian.widget.SocialAutoCompleteTextView;
 
@@ -61,7 +61,7 @@ public final class Example4Activity extends BaseActivity implements SocialTextWa
     }
 
     @Override
-    public void onSocialTextChanged(@NonNull TextView v, @SociableView.Type int type, @NonNull CharSequence s) {
+    public void onSocialTextChanged(@NonNull TextView v, @SocialView.Type int type, @NonNull CharSequence s) {
         Log.d("editing", String.format("%s - %s", type, s));
     }
 

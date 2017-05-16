@@ -47,7 +47,7 @@ ext.bintray = [
                 'core'   : 'socialview-core',
                 'commons': 'socialview-commons'
         ],
-        version : '0.8.1',
+        version : '0.8.2',
         desc    : 'Android TextView and EditText with hashtag, mention, and hyperlink support.',
         website : 'https://github.com/HendraAnggrian/socialview'
 ]
