@@ -2,7 +2,7 @@ package com.example.socialview;
 
 import android.app.Application;
 
-import com.hendraanggrian.socialview.SocialViewAttacher;
+import com.hendraanggrian.socialview.SocialViewImpl;
 
 import butterknife.ButterKnife;
 
@@ -15,6 +15,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         ButterKnife.setDebug(BuildConfig.DEBUG);
-        SocialViewAttacher.setDebug(BuildConfig.DEBUG);
+        SocialViewImpl.setDebug(BuildConfig.DEBUG);
     }
 }

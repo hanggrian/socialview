@@ -33,9 +33,9 @@ import java.util.regex.Pattern;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public final class SocialViewAttacher implements SociableView, TextWatcher {
+public final class SocialViewImpl implements SociableView, TextWatcher {
 
-    private static final String TAG = SocialViewAttacher.class.getSimpleName();
+    private static final String TAG = "SocialView";
     @Nullable private static SparseArray<Pattern> patterns;
     private static boolean debug;
 
@@ -51,7 +51,7 @@ public final class SocialViewAttacher implements SociableView, TextWatcher {
     private boolean isHashtagEditing;
     private boolean isMentionEditing;
 
-    private SocialViewAttacher(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
+    private SocialViewImpl(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
         this.view = view;
         this.view.setText(view.getText(), TextView.BufferType.SPANNABLE);
         this.view.addTextChangedListener(this);
@@ -417,7 +417,7 @@ public final class SocialViewAttacher implements SociableView, TextWatcher {
     }
 
     public static void setDebug(boolean debug) {
-        SocialViewAttacher.debug = debug;
+        SocialViewImpl.debug = debug;
     }
 
     /**
@@ -441,6 +441,6 @@ public final class SocialViewAttacher implements SociableView, TextWatcher {
      */
     @NonNull
     public static SociableView attach(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
-        return new SocialViewAttacher(view, context, attrs);
+        return new SocialViewImpl(view, context, attrs);
     }
 }

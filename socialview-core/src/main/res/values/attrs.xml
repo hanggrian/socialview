@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SociableView">
+    <declare-styleable name="SocialView">
         <!-- Determine whether each feature should be turned on/off.
              Default is all true. -->
         <attr name="socialEnabled">

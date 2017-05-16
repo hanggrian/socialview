@@ -13,11 +13,11 @@ import java.util.List;
 
 /**
  * Base methods of all socialview's widgets.
- * The logic, however, are calculated in {@link SocialViewAttacher} while the widgets are just
+ * The logic, however, are calculated in {@link SocialViewImpl} while the widgets are just
  * passing these methods to the attacher.
  *
  * @author Hendra Anggian (hendraanggrian@gmail.com)
- * @see SocialViewAttacher
+ * @see SocialViewImpl
  */
 public interface SociableView {
 

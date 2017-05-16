@@ -76,11 +76,15 @@ textView.getMentionAdapter().add(new Mention("hendraanggrian", "Hendra Anggrian"
 Download
 --------
 ```gradle
+repositories {
+    jcenter()
+}
+
 dependencies {
     // core only
-    compile 'com.hendraanggrian:socialview-core:0.8.0'
+    compile 'com.hendraanggrian:socialview-core:0.8.1'
     // core and commons
-    compile 'com.hendraanggrian:socialview-commons:0.8.0'
+    compile 'com.hendraanggrian:socialview-commons:0.8.1'
 }
 ```
 
@@ -100,9 +104,8 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
     
-    
- [demo]: /art/demo.gif
- [core1]: /art/ss_core1.jpg
- [commons1]: /art/ss_commons1.jpg
- [commons2]: /art/ss_commons2.jpg
- [commons3]: /art/ss_commons3.jpg
+[demo]: /art/demo.gif
+[core1]: /art/ss_core1.jpg
+[commons1]: /art/ss_commons1.jpg
+[commons2]: /art/ss_commons2.jpg
+[commons3]: /art/ss_commons3.jpg

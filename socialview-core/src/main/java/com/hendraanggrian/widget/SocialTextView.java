@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.hendraanggrian.socialview.OnSocialClickListener;
 import com.hendraanggrian.socialview.SocialTextWatcher;
 import com.hendraanggrian.socialview.SociableView;
-import com.hendraanggrian.socialview.SocialViewAttacher;
+import com.hendraanggrian.socialview.SocialViewImpl;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class SocialTextView extends TextView implements SociableView {
 
     public SocialTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        socialView = SocialViewAttacher.attach(this, context, attrs);
+        socialView = SocialViewImpl.attach(this, context, attrs);
     }
 
     @Override
