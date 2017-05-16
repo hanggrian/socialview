@@ -82,9 +82,9 @@ repositories {
 
 dependencies {
     // core only
-    compile 'com.hendraanggrian:socialview-core:0.8.2'
+    compile 'com.hendraanggrian:socialview-core:0.8.3'
     // core and commons
-    compile 'com.hendraanggrian:socialview-commons:0.8.2'
+    compile 'com.hendraanggrian:socialview-commons:0.8.3'
 }
 ```
 

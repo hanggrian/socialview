@@ -38,9 +38,9 @@ import java.util.regex.Pattern;
  */
 public final class SocialView implements SociableView, TextWatcher {
 
-    private static final int TYPE_HASHTAG = 1;
-    private static final int TYPE_MENTION = 2;
-    private static final int TYPE_HYPERLINK = 4;
+    public static final int TYPE_HASHTAG = 1;
+    public static final int TYPE_MENTION = 2;
+    public static final int TYPE_HYPERLINK = 4;
 
     @IntDef({TYPE_HASHTAG, TYPE_MENTION, TYPE_HYPERLINK})
     @Retention(RetentionPolicy.SOURCE)
