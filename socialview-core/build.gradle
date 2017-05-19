@@ -1,5 +1,5 @@
-apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: plugin.android.lib
+apply plugin: plugin.novoda
 
 android {
     compileSdkVersion config.sdk.target
@@ -12,12 +12,12 @@ android {
 }
 
 dependencies {
-    compile deps.compatContent
+    compile deps.hendraanggrian.utils
 
-    androidTestCompile(deps.supportTestRunner) {
+    androidTestCompile(deps.support.test.runner) {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile(deps.supportTestRunner) {
+    androidTestCompile(deps.support.test.espresso) {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
 

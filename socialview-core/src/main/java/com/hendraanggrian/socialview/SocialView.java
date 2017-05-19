@@ -23,7 +23,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hendraanggrian.compat.content.Themes;
+import com.hendraanggrian.support.utils.content.Themes;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

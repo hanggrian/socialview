@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<lint>
+    <issue id="ResourceType">
+        <!-- Remove this when this is fixed: https://github.com/JakeWharton/butterknife/issues/338 -->
+        <ignore path="**/*_ViewBinding.java"/>
+    </issue>
+</lint>

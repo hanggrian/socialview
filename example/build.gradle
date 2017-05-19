@@ -1,4 +1,6 @@
-apply plugin: 'com.android.application'
+apply plugin: plugin.android.app
+apply plugin: plugin.kotlin.android
+apply plugin: plugin.kotlin.kapt
 
 android {
     compileSdkVersion config.sdk.target
@@ -21,17 +23,17 @@ android {
 
 dependencies {
     compile project(':socialview-commons')
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.jakewharton:butterknife:8.5.1'
+    compile deps.support.appcompat
+    compile deps.support.design
+    compile deps.kotlin
 
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile deps.butterknife.main
+    kapt deps.butterknife.processor
 
-    androidTestCompile(deps.supportTestRunner) {
+    androidTestCompile(deps.support.test.runner) {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile(deps.supportTestEspresso) {
+    androidTestCompile(deps.support.test.espresso) {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
 
