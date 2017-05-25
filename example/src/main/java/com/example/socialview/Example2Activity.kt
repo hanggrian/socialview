@@ -9,7 +9,6 @@ import android.widget.Toast
 import butterknife.BindView
 import com.hendraanggrian.socialview.OnSocialClickListener
 import com.hendraanggrian.socialview.SocialTextWatcher
-import com.hendraanggrian.socialview.SocialView
 import com.hendraanggrian.widget.SocialEditText
 
 /**
@@ -26,8 +25,10 @@ class Example2Activity : BaseActivity(), OnSocialClickListener, SocialTextWatche
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
-        socialEditText.setOnSocialClickListener(this)
-        socialEditText.setSocialTextChangedListener(this)
+        socialEditText.setOnHashtagClickListener(this)
+        socialEditText.setOnMentionClickListener(this)
+        socialEditText.setHashtagTextChangedListener(this)
+        socialEditText.setMentionTextChangedListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -36,11 +37,11 @@ class Example2Activity : BaseActivity(), OnSocialClickListener, SocialTextWatche
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onSocialTextChanged(v: TextView, @SocialView.Type type: Int, s: CharSequence) {
-        Log.d("editing", String.format("%s - %s", type, s))
+    override fun onSocialTextChanged(v: TextView, s: CharSequence) {
+        Log.d("editing", s.toString())
     }
 
-    override fun onSocialClick(v: TextView, @SocialView.Type type: Int, text: CharSequence) {
-        Toast.makeText(this, String.format("%s clicked:\n%s", type, text), Toast.LENGTH_SHORT).show()
+    override fun onSocialClick(v: TextView, text: String) {
+        Toast.makeText(this, String.format("clicked:\n%s", text), Toast.LENGTH_SHORT).show()
     }
 }

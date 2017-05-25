@@ -8,7 +8,6 @@ import android.widget.Toast
 import butterknife.BindView
 import butterknife.BindViews
 import com.hendraanggrian.socialview.OnSocialClickListener
-import com.hendraanggrian.socialview.SocialView
 import com.hendraanggrian.widget.SocialTextView
 
 /**
@@ -25,8 +24,10 @@ class Example1Activity : BaseActivity(), OnSocialClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
-        for (textView in socialTextViews)
-            textView.setOnSocialClickListener(this)
+        for (textView in socialTextViews) {
+            textView.setOnHashtagClickListener(this)
+            textView.setOnMentionClickListener(this)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -35,7 +36,7 @@ class Example1Activity : BaseActivity(), OnSocialClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onSocialClick(v: TextView, @SocialView.Type type: Int, text: CharSequence) {
-        Toast.makeText(this, String.format("%s clicked:\n%s", type, text), Toast.LENGTH_SHORT).show()
+    override fun onSocialClick(v: TextView, text: String) {
+        Toast.makeText(this, String.format("clicked:\n%s", text), Toast.LENGTH_SHORT).show()
     }
 }

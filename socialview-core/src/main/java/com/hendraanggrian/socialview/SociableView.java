@@ -6,15 +6,15 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Base methods of all socialview's widgets.
- * The logic, however, are calculated in {@link SocialView} while the widgets are just
+ * The logic, however, are calculated in {@link SociableViewImpl} while the widgets are just
  * passing these methods to the attacher.
  *
  * @author Hendra Anggian (hendraanggrian@gmail.com)
- * @see SocialView
+ * @see SociableViewImpl
  */
 public interface SociableView {
 
@@ -29,18 +29,6 @@ public interface SociableView {
     void setMentionEnabled(boolean enabled);
 
     void setHyperlinkEnabled(boolean enabled);
-
-    boolean isHashtagUnderlined();
-
-    boolean isMentionUnderlined();
-
-    boolean isHyperlinkUnderlined();
-
-    void setHashtagUnderlined(boolean underlined);
-
-    void setMentionUnderlined(boolean underlined);
-
-    void setHyperlinkUnderlined(boolean underlined);
 
     @ColorInt
     int getHashtagColor();
@@ -69,16 +57,20 @@ public interface SociableView {
 
     void setHyperlinkColorAttr(@AttrRes int colorAttr);
 
-    void setOnSocialClickListener(@Nullable OnSocialClickListener listener);
+    void setOnHashtagClickListener(@Nullable OnSocialClickListener listener);
 
-    void setSocialTextChangedListener(@Nullable SocialTextWatcher watcher);
+    void setOnMentionClickListener(@Nullable OnSocialClickListener listener);
 
-    @NonNull
-    List<String> getHashtags();
+    void setHashtagTextChangedListener(@Nullable SocialTextWatcher watcher);
 
-    @NonNull
-    List<String> getMentions();
+    void setMentionTextChangedListener(@Nullable SocialTextWatcher watcher);
 
     @NonNull
-    List<String> getHyperlinks();
+    Collection<String> getHashtags();
+
+    @NonNull
+    Collection<String> getMentions();
+
+    @NonNull
+    Collection<String> getHyperlinks();
 }

@@ -10,18 +10,18 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.hendraanggrian.socialview.OnSocialClickListener;
-import com.hendraanggrian.socialview.SocialTextWatcher;
 import com.hendraanggrian.socialview.SociableView;
-import com.hendraanggrian.socialview.SocialView;
+import com.hendraanggrian.socialview.SocialTextWatcher;
+import com.hendraanggrian.socialview.SociableViewImpl;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class SocialTextView extends TextView implements SociableView {
 
-    @NonNull private final SociableView socialView;
+    @NonNull private final SociableView impl;
 
     public SocialTextView(Context context) {
         this(context, null);
@@ -33,157 +33,137 @@ public class SocialTextView extends TextView implements SociableView {
 
     public SocialTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        socialView = SocialView.attach(this, context, attrs);
+        impl = SociableViewImpl.attach(this, context, attrs);
     }
 
     @Override
     public boolean isHashtagEnabled() {
-        return socialView.isHashtagEnabled();
+        return impl.isHashtagEnabled();
     }
 
     @Override
     public boolean isMentionEnabled() {
-        return socialView.isMentionEnabled();
+        return impl.isMentionEnabled();
     }
 
     @Override
     public boolean isHyperlinkEnabled() {
-        return socialView.isHyperlinkEnabled();
+        return impl.isHyperlinkEnabled();
     }
 
     @Override
     public void setHashtagEnabled(boolean enabled) {
-        socialView.setHashtagEnabled(enabled);
+        impl.setHashtagEnabled(enabled);
     }
 
     @Override
     public void setMentionEnabled(boolean enabled) {
-        socialView.setMentionEnabled(enabled);
+        impl.setMentionEnabled(enabled);
     }
 
     @Override
     public void setHyperlinkEnabled(boolean enabled) {
-        socialView.setHyperlinkEnabled(enabled);
-    }
-
-    @Override
-    public boolean isHashtagUnderlined() {
-        return socialView.isHashtagUnderlined();
-    }
-
-    @Override
-    public boolean isMentionUnderlined() {
-        return socialView.isMentionUnderlined();
-    }
-
-    @Override
-    public boolean isHyperlinkUnderlined() {
-        return socialView.isHyperlinkUnderlined();
-    }
-
-    @Override
-    public void setHashtagUnderlined(boolean underlined) {
-        socialView.setHashtagUnderlined(underlined);
-    }
-
-    @Override
-    public void setMentionUnderlined(boolean underlined) {
-        socialView.setMentionUnderlined(underlined);
-    }
-
-    @Override
-    public void setHyperlinkUnderlined(boolean underlined) {
-        socialView.setHyperlinkUnderlined(underlined);
+        impl.setHyperlinkEnabled(enabled);
     }
 
     @ColorInt
     @Override
     public int getHashtagColor() {
-        return socialView.getHashtagColor();
+        return impl.getHashtagColor();
     }
 
     @ColorInt
     @Override
     public int getMentionColor() {
-        return socialView.getMentionColor();
+        return impl.getMentionColor();
     }
 
     @ColorInt
     @Override
     public int getHyperlinkColor() {
-        return socialView.getHyperlinkColor();
+        return impl.getHyperlinkColor();
     }
 
     @Override
     public void setHashtagColor(@ColorInt int color) {
-        socialView.setHashtagColor(color);
+        impl.setHashtagColor(color);
     }
 
     @Override
     public void setMentionColor(@ColorInt int color) {
-        socialView.setMentionColor(color);
+        impl.setMentionColor(color);
     }
 
     @Override
     public void setHyperlinkColor(@ColorInt int color) {
-        socialView.setHyperlinkColor(color);
+        impl.setHyperlinkColor(color);
     }
 
     @Override
     public void setHashtagColorRes(@ColorRes int colorRes) {
-        socialView.setHashtagColorRes(colorRes);
+        impl.setHashtagColorRes(colorRes);
     }
 
     @Override
     public void setMentionColorRes(@ColorRes int colorRes) {
-        socialView.setMentionColorRes(colorRes);
+        impl.setMentionColorRes(colorRes);
     }
 
     @Override
     public void setHyperlinkColorRes(@ColorRes int colorRes) {
-        socialView.setHyperlinkColorRes(colorRes);
+        impl.setHyperlinkColorRes(colorRes);
     }
 
     @Override
     public void setHashtagColorAttr(@AttrRes int colorAttr) {
-        socialView.setHashtagColorAttr(colorAttr);
+        impl.setHashtagColorAttr(colorAttr);
     }
 
     @Override
     public void setMentionColorAttr(@AttrRes int colorAttr) {
-        socialView.setMentionColorAttr(colorAttr);
+        impl.setMentionColorAttr(colorAttr);
     }
 
     @Override
     public void setHyperlinkColorAttr(@AttrRes int colorAttr) {
-        socialView.setHyperlinkColorAttr(colorAttr);
+        impl.setHyperlinkColorAttr(colorAttr);
     }
 
     @Override
-    public void setOnSocialClickListener(@Nullable OnSocialClickListener listener) {
-        socialView.setOnSocialClickListener(listener);
+    public void setOnHashtagClickListener(@Nullable OnSocialClickListener listener) {
+        impl.setOnHashtagClickListener(listener);
     }
 
     @Override
-    public void setSocialTextChangedListener(@Nullable SocialTextWatcher watcher) {
-        socialView.setSocialTextChangedListener(watcher);
+    public void setOnMentionClickListener(@Nullable OnSocialClickListener listener) {
+        impl.setOnMentionClickListener(listener);
+    }
+
+    @Override
+    public void setHashtagTextChangedListener(@Nullable SocialTextWatcher watcher) {
+        impl.setHashtagTextChangedListener(watcher);
+    }
+
+    @Override
+    public void setMentionTextChangedListener(@Nullable SocialTextWatcher watcher) {
+        impl.setMentionTextChangedListener(watcher);
     }
 
     @NonNull
     @Override
-    public List<String> getHashtags() {
-        return socialView.getHashtags();
+    public Collection<String> getHashtags() {
+        return impl.getHashtags();
     }
 
     @NonNull
     @Override
-    public List<String> getMentions() {
-        return socialView.getMentions();
+    public Collection<String> getMentions() {
+        return impl.getMentions();
     }
 
     @NonNull
     @Override
-    public List<String> getHyperlinks() {
-        return socialView.getHyperlinks();
+    public Collection<String> getHyperlinks() {
+        return impl.getHyperlinks();
     }
 }

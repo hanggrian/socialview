@@ -12,7 +12,6 @@ import android.widget.Filter
 import android.widget.TextView
 import butterknife.BindView
 import com.hendraanggrian.socialview.SocialTextWatcher
-import com.hendraanggrian.socialview.SocialView
 import com.hendraanggrian.socialview.commons.SocialAdapter
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
 
@@ -33,7 +32,8 @@ class Example4Activity : BaseActivity(), SocialTextWatcher {
 
         socialAutoCompleteTextView.hashtagAdapter = CustomAdapter(this)
         socialAutoCompleteTextView.mentionAdapter = CustomAdapter(this)
-        socialAutoCompleteTextView.setSocialTextChangedListener(this)
+        socialAutoCompleteTextView.setHashtagTextChangedListener(this)
+        socialAutoCompleteTextView.setHashtagTextChangedListener(this)
 
         val hashtag1 = Model("follow")
         val hashtag2 = Model("followme")
@@ -52,8 +52,8 @@ class Example4Activity : BaseActivity(), SocialTextWatcher {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onSocialTextChanged(v: TextView, @SocialView.Type type: Int, s: CharSequence) {
-        Log.d("editing", String.format("%s - %s", type, s))
+    override fun onSocialTextChanged(v: TextView, s: CharSequence) {
+        Log.d("editing", s.toString())
     }
 
     class Model constructor(val content: String)

@@ -9,13 +9,13 @@ android {
         applicationId "com.example.socialview"
         versionCode 1
         versionName "1.0"
-        minSdkVersion config.sdk.min
+        minSdkVersion 11
         targetSdkVersion config.sdk.target
         testInstrumentationRunner config.testRunner
     }
     buildTypes {
         debug {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

@@ -6,7 +6,7 @@ Android TextView and EditText with hashtag, mention, and hyperlink support.
 
 Core
 ----
-Lightweight library that comes with `SocialTextView` and `SocialViewAttacher` to attach any TextView.
+Lightweight library that comes with `SocialTextView` and `SocialViewImpl` to attach any TextView.
 ```xml
 <com.hendraanggrian.widget.SocialTextView
     android:id="@+id/socialtextview"
@@ -22,9 +22,9 @@ Modify its state and set listeners in java.
 SocialTextView textView = (SocialTextView) findViewById(R.id.socialtextview);
 textView.setMentionEnabled(false);
 textView.setHashtagColor(ContextCompat.getColor(this, R.color.red));
-textView.setOnSocialClickListener(new SocialView.OnSocialClickListener() {
+textView.setOnHashtagClickListener(new SocialView.OnSocialClickListener() {
     @Override
-    public void(View v, SocialView.Type type, CharSequence text) {
+    public void(View v, String text) {
         // TODO: do something
     }
 });
@@ -33,14 +33,13 @@ textView.setOnSocialClickListener(new SocialView.OnSocialClickListener() {
 Any TextView or subclasses of TextView can be attached.
 ```java
 CustomTextView tv = ...;
-SocialView socialView = SocialViewAttacher.attach(tv);
+SocialView socialView = SocialViewImpl.attach(tv);
 ```
 
 #### Attributes
 | Attributes       | Description                      | Default value/behavior        |
 |------------------|----------------------------------|-------------------------------|
 | `typeEnabled`    | flags to enable span coloring    | `hashtag\|mention\|hyperlink` |
-| `typeUnderlined` | flags to enable span underlining | `hyperlink`                   |
 | `hashtagColor`   | color of hashtag items           | current theme's accent color  |
 | `mentionColor`   | color of mention items           | current theme's accent color  |
 | `hyperlinkColor` | color of hyperlink items         | current theme's accent color  |
@@ -82,9 +81,9 @@ repositories {
 
 dependencies {
     // core only
-    compile 'com.hendraanggrian:socialview-core:0.8.4'
+    compile 'com.hendraanggrian:socialview-core:0.9.0'
     // core and commons
-    compile 'com.hendraanggrian:socialview-commons:0.8.4'
+    compile 'com.hendraanggrian:socialview-commons:0.9.0'
 }
 ```
 

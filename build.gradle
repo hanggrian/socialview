@@ -23,14 +23,13 @@ buildscript {
 allprojects {
     ext.config = [
             sdk       : [
-                    'min'   : 11,
+                    'min'   : 9,
                     'target': 25
             ],
-            buildTools: '25.0.2',
+            buildTools: '25.0.3',
             testRunner: 'android.support.test.runner.AndroidJUnitRunner'
     ]
     ext.deps = [
-            // test
             junit         : 'junit:junit:4.12',
             support       : [
                     appcompat: 'com.android.support:appcompat-v7:25.3.1',
@@ -40,12 +39,10 @@ allprojects {
                             espresso: 'com.android.support.test.espresso:espresso-core:2.2.2'
                     ]
             ],
-            hendraanggrian: [
-                    picassoCommons: 'com.hendraanggrian:picasso-commons:0.8.0@aar',
-                    utils         : 'com.hendraanggrian:support-utils:0.1',
-            ],
+            utils         : 'com.hendraanggrian:support-utils:0.5',
+            picassoCommons: 'com.hendraanggrian:picasso-commons:0.9.0@aar',
             picasso       : 'com.squareup.picasso:picasso:2.5.2',
-            butterknife    : [
+            butterknife   : [
                     main     : 'com.jakewharton:butterknife:8.5.1',
                     processor: 'com.jakewharton:butterknife-compiler:8.5.1'
             ],
@@ -67,7 +64,7 @@ ext.bintray = [
                 'core'   : 'socialview-core',
                 'commons': 'socialview-commons'
         ],
-        version : '0.8.4',
+        version : '0.9.0',
         desc    : 'Android TextView and EditText with hashtag, mention, and hyperlink support.',
         website : 'https://github.com/HendraAnggrian/socialview'
 ]

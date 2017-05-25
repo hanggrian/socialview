@@ -1,6 +1,7 @@
 package com.hendraanggrian.socialview.commons;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.ArrayAdapter;
@@ -33,15 +34,23 @@ public abstract class SocialAdapter<T> extends ArrayAdapter<T> {
 
     @Override
     public void addAll(@NonNull Collection<? extends T> collection) {
-        super.addAll(collection);
-        tempItems.addAll(collection);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            super.addAll(collection);
+            tempItems.addAll(collection);
+        } else {
+            throw new RuntimeException("Unsupported operation: addAll() requires min SDK 11!");
+        }
     }
 
     @Override
     @SafeVarargs
     public final void addAll(@NonNull T... items) {
-        super.addAll(items);
-        Collections.addAll(tempItems, items);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            super.addAll(items);
+            Collections.addAll(tempItems, items);
+        } else {
+            throw new RuntimeException("Unsupported operation: addAll() requires min SDK 11!");
+        }
     }
 
     @Override

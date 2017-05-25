@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.widget.TextView
 import butterknife.BindView
 import com.hendraanggrian.socialview.SocialTextWatcher
-import com.hendraanggrian.socialview.SocialView
 import com.hendraanggrian.socialview.commons.Hashtag
 import com.hendraanggrian.socialview.commons.HashtagAdapter
 import com.hendraanggrian.socialview.commons.Mention
@@ -31,7 +30,8 @@ class Example3Activity : BaseActivity(), SocialTextWatcher {
 
         socialAutoCompleteTextView.hashtagAdapter = HashtagAdapter(this)
         socialAutoCompleteTextView.mentionAdapter = MentionAdapter(this)
-        socialAutoCompleteTextView.setSocialTextChangedListener(this)
+        socialAutoCompleteTextView.setHashtagTextChangedListener(this)
+        socialAutoCompleteTextView.setMentionTextChangedListener(this)
 
         val hashtag1 = Hashtag("follow")
         val hashtag2 = Hashtag("followme", 1000)
@@ -50,7 +50,7 @@ class Example3Activity : BaseActivity(), SocialTextWatcher {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onSocialTextChanged(v: TextView, @SocialView.Type type: Int, s: CharSequence) {
-        Log.d("editing", String.format("%s - %s", type, s))
+    override fun onSocialTextChanged(v: TextView, s: CharSequence) {
+        Log.d("editing", s.toString())
     }
 }

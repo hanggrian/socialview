@@ -3,13 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
-      <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
       <module fileurl="file://$PROJECT_DIR$/example2/example2.iml" filepath="$PROJECT_DIR$/example2/example2.iml" />
       <module fileurl="file://$PROJECT_DIR$/socialview.iml" filepath="$PROJECT_DIR$/socialview.iml" />
-      <module fileurl="file://$PROJECT_DIR$/socialview.iml" filepath="$PROJECT_DIR$/socialview.iml" />
       <module fileurl="file://$PROJECT_DIR$/socialview-commons/socialview-commons.iml" filepath="$PROJECT_DIR$/socialview-commons/socialview-commons.iml" />
-      <module fileurl="file://$PROJECT_DIR$/socialview-commons/socialview-commons.iml" filepath="$PROJECT_DIR$/socialview-commons/socialview-commons.iml" />
-      <module fileurl="file://$PROJECT_DIR$/socialview-core/socialview-core.iml" filepath="$PROJECT_DIR$/socialview-core/socialview-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/socialview-core/socialview-core.iml" filepath="$PROJECT_DIR$/socialview-core/socialview-core.iml" />
     </modules>
   </component>
