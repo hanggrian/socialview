@@ -39,9 +39,11 @@ allprojects {
                             espresso: 'com.android.support.test.espresso:espresso-core:2.2.2'
                     ]
             ],
-            utils         : 'com.hendraanggrian:support-utils:0.5',
-            picassoCommons: 'com.hendraanggrian:picasso-commons:0.9.0@aar',
-            picasso       : 'com.squareup.picasso:picasso:2.5.2',
+            hendraanggrian: [
+                    picassoCommons: 'com.hendraanggrian:picasso-commons:0.10.1',
+                    text          : 'com.hendraanggrian:spannable-text:0.4',
+                    utils         : 'com.hendraanggrian:support-utils:0.7',
+            ],
             butterknife   : [
                     main     : 'com.jakewharton:butterknife:8.5.1',
                     processor: 'com.jakewharton:butterknife-compiler:8.5.1'
@@ -64,7 +66,7 @@ ext.bintray = [
                 'core'   : 'socialview-core',
                 'commons': 'socialview-commons'
         ],
-        version : '0.9.0',
+        version : '0.10.0',
         desc    : 'Android TextView and EditText with hashtag, mention, and hyperlink support.',
         website : 'https://github.com/HendraAnggrian/socialview'
 ]

@@ -50,30 +50,22 @@ public final class MentionAdapter extends SocialAdapter<Mention> {
         }
         Mention item = getItem(position);
         if (item != null) {
+            Picasso picasso = Picasso.with(getContext());
             RequestCreator request = null;
-            if (item.getAvatar() == null) {
-                request = Picasso.with(getContext())
-                        .load(defaultAvatar);
-            } else if (item.getAvatar() instanceof Integer) {
-                request = Picasso.with(getContext())
-                        .load((int) item.getAvatar());
-            } else if (item.getAvatar() instanceof String) {
-                request = Picasso.with(getContext())
-                        .load((String) item.getAvatar())
-                        .placeholder(defaultAvatar)
-                        .error(defaultAvatar);
-            } else if (item.getAvatar() instanceof Uri) {
-                request = Picasso.with(getContext())
-                        .load((Uri) item.getAvatar())
-                        .placeholder(defaultAvatar)
-                        .error(defaultAvatar);
-            } else if (item.getAvatar() instanceof File) {
-                request = Picasso.with(getContext())
-                        .load((File) item.getAvatar());
-            }
+            if (item.getAvatar() == null)
+                request = picasso.load(defaultAvatar);
+            else if (item.getAvatar() instanceof Integer)
+                request = picasso.load((int) item.getAvatar());
+            else if (item.getAvatar() instanceof String)
+                request = picasso.load((String) item.getAvatar());
+            else if (item.getAvatar() instanceof Uri)
+                request = picasso.load((Uri) item.getAvatar());
+            else if (item.getAvatar() instanceof File)
+                request = picasso.load((File) item.getAvatar());
             if (request != null)
-                request.transform(Transformations.circle())
-                        .fit()
+                request.placeholder(defaultAvatar)
+                        .error(defaultAvatar)
+                        .transform(Transformations.circle())
                         .into(holder.imageView);
             holder.textViewUsername.setText(item.getUsername());
             if (Views.setVisible(holder.textViewDisplayname, !TextUtils.isEmpty(item.getDisplayname())))

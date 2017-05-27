@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.Spannable;
+import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.CharacterStyle;
@@ -22,6 +23,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hendraanggrian.support.utils.content.Themes;
+import com.hendraanggrian.text.SpanGetter;
+import com.hendraanggrian.text.Spannables;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,14 +41,14 @@ public final class SociableViewImpl implements SociableView, TextWatcher {
     private static final int TYPE_MENTION = 2;
     private static final int TYPE_HYPERLINK = 4;
 
-    private static final String TAG = SociableViewImpl.class.getSimpleName();
+    private static final String TAG = "SocialView";
     private static boolean DEBUG;
     @Nullable private static Pattern PATTERN_HASHTAG;
     @Nullable private static Pattern PATTERN_MENTION;
     @Nullable private static Pattern PATTERN_HYPERLINK;
 
     @NonNull private final TextView view;
-    @NonNull private final List<Object> spans;
+    @NonNull private final List<Object> allSpans;
     private int enabledFlag;
     @ColorInt private int hashtagColor;
     @ColorInt private int mentionColor;
@@ -62,7 +65,7 @@ public final class SociableViewImpl implements SociableView, TextWatcher {
         this.view = view;
         this.view.setText(view.getText(), TextView.BufferType.SPANNABLE);
         this.view.addTextChangedListener(this);
-        this.spans = new ArrayList<>();
+        this.allSpans = new ArrayList<>();
         int defaultColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
                 ? Themes.getColor(view.getContext(), android.R.attr.colorAccent, view.getLinkTextColors().getDefaultColor())
                 : view.getLinkTextColors().getDefaultColor();
@@ -337,7 +340,7 @@ public final class SociableViewImpl implements SociableView, TextWatcher {
 
     @NonNull
     private Object addSpan(@NonNull Object span) {
-        spans.add(span);
+        allSpans.add(span);
         return span;
     }
 
@@ -346,50 +349,61 @@ public final class SociableViewImpl implements SociableView, TextWatcher {
     }
 
     private void colorize(@NonNull final Spannable text) {
-        // clear all spans
-        for (Object span : spans)
-            text.removeSpan(span);
-        spans.clear();
-        // refill text with new spans
-        Matcher matcher;
+        // clear all allSpans
+        Spannables.removeSpans(text, allSpans.toArray());
+        allSpans.clear();
+        // refill text with new allSpans
         if (isHashtagEnabled()) {
-            matcher = getPattern(TYPE_HASHTAG).matcher(text);
-            while (matcher.find()) {
-                int start = matcher.start();
-                int end = matcher.end();
-                if (hashtagListener != null)
-                    text.setSpan(addSpan(new NoUnderlineClickableSpan() {
+            allSpans.addAll(Spannables.putSpansAll(text, getPattern(TYPE_HASHTAG), new SpanGetter() {
+                @NonNull
+                @Override
+                public Object getSpan() {
+                    return hashtagListener == null
+                            ? new ForegroundColorSpan(hashtagColor)
+                            : new ForegroundColorClickableSpan(hashtagColor) {
                         @Override
                         public void onClick(View widget) {
                             hashtagListener.onSocialClick(view, text.subSequence(text.getSpanStart(this) + 1, text.getSpanEnd(this)).toString());
                         }
-                    }), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                text.setSpan(addSpan(new ForegroundColorSpan(hashtagColor)), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
+                    };
+                }
+            }));
         }
         if (isMentionEnabled()) {
-            matcher = getPattern(TYPE_MENTION).matcher(text);
-            while (matcher.find()) {
-                int start = matcher.start();
-                int end = matcher.end();
-                if (mentionListener != null)
-                    text.setSpan(addSpan(new NoUnderlineClickableSpan() {
+            allSpans.addAll(Spannables.putSpansAll(text, getPattern(TYPE_MENTION), new SpanGetter() {
+                @NonNull
+                @Override
+                public Object getSpan() {
+                    return mentionListener == null
+                            ? new ForegroundColorSpan(mentionColor)
+                            : new ForegroundColorClickableSpan(mentionColor) {
                         @Override
                         public void onClick(View widget) {
                             mentionListener.onSocialClick(view, text.subSequence(text.getSpanStart(this) + 1, text.getSpanEnd(this)).toString());
                         }
-                    }), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                text.setSpan(addSpan(new ForegroundColorSpan(mentionColor)), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
+                    };
+                }
+            }));
         }
         if (isHyperlinkEnabled()) {
-            matcher = getPattern(TYPE_HYPERLINK).matcher(text);
-            while (matcher.find()) {
-                int start = matcher.start();
-                int end = matcher.end();
-                String url = text.toString().substring(start, end);
-                text.setSpan(addSpan(new URLSpan(url)), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
+            allSpans.addAll(Spannables.putSpansAll(text, getPattern(TYPE_HYPERLINK), new SpanGetter() {
+                @NonNull
+                @Override
+                public Object getSpan() {
+                    return new URLSpan("") {
+                        @Override
+                        public String getURL() {
+                            return text.subSequence(text.getSpanStart(this), text.getSpanEnd(this)).toString();
+                        }
+
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            ds.linkColor = hyperlinkColor;
+                            super.updateDrawState(ds);
+                        }
+                    };
+                }
+            }));
         }
     }
 
