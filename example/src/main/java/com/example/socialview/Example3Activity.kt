@@ -14,7 +14,7 @@ import com.hendraanggrian.socialview.commons.MentionAdapter
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
 
 /**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
 class Example3Activity : BaseActivity(), SocialTextWatcher {
 
@@ -34,13 +34,23 @@ class Example3Activity : BaseActivity(), SocialTextWatcher {
         socialAutoCompleteTextView.setMentionTextChangedListener(this)
 
         val hashtag1 = Hashtag("follow")
-        val hashtag2 = Hashtag("followme", 1000)
-        val hashtag3 = Hashtag("followmeorillkillyou", 500)
+        val hashtag2 = Hashtag.Builder("followme")
+                .setCount(1000)
+                .build()
+        val hashtag3 = Hashtag.Builder("followmeorillkillyou")
+                .setCount(500)
+                .build()
         socialAutoCompleteTextView.hashtagAdapter.addAll(hashtag1, hashtag2, hashtag3)
 
         val mention1 = Mention("dirtyhobo")
-        val mention2 = Mention("hobo", "Regular Hobo", R.mipmap.ic_launcher)
-        val mention3 = Mention("hendraanggrian", "Hendra Anggrian", "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460")
+        val mention2 = Mention.Builder("hobo")
+                .setDisplayname("Regular Hobo")
+                .setAvatarDrawable(R.mipmap.ic_launcher)
+                .build()
+        val mention3 = Mention.Builder("hendraanggrian")
+                .setDisplayname("Hendra Anggrian")
+                .setAvatarURL("https://avatars0.githubusercontent.com/u/11507430?v=3&s=460")
+                .build()
         socialAutoCompleteTextView.mentionAdapter.addAll(mention1, mention2, mention3)
     }
 

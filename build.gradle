@@ -1,54 +1,28 @@
 buildscript {
-    ext.plugin = [
-            android: [
-                    app: 'com.android.application',
-                    lib: 'com.android.library'
-            ],
-            kotlin : [
-                    android: 'kotlin-android',
-                    kapt   : 'kotlin-kapt'
-            ],
-            novoda : 'com.novoda.bintray-release'
-    ]
     repositories {
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.2-3'
         classpath 'com.novoda:bintray-release:0.3.4'
     }
 }
 
 allprojects {
-    ext.config = [
-            sdk       : [
+    ext.versions = [
+            // android
+            sdk           : [
                     'min'   : 9,
                     'target': 25
             ],
-            buildTools: '25.0.3',
-            testRunner: 'android.support.test.runner.AndroidJUnitRunner'
-    ]
-    ext.deps = [
-            junit         : 'junit:junit:4.12',
-            support       : [
-                    appcompat: 'com.android.support:appcompat-v7:25.3.1',
-                    design   : 'com.android.support:design:25.3.1',
-                    test     : [
-                            runner  : 'com.android.support.test:runner:0.5',
-                            espresso: 'com.android.support.test.espresso:espresso-core:2.2.2'
-                    ]
-            ],
-            hendraanggrian: [
-                    picassoCommons: 'com.hendraanggrian:picasso-commons:0.10.1',
-                    text          : 'com.hendraanggrian:spannable-text:0.4',
-                    utils         : 'com.hendraanggrian:support-utils:0.7',
-            ],
-            butterknife   : [
-                    main     : 'com.jakewharton:butterknife:8.5.1',
-                    processor: 'com.jakewharton:butterknife-compiler:8.5.1'
-            ],
-            kotlin        : 'org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.2-3'
+            buildTools    : '25.0.3',
+
+            // main
+            support       : '25.3.1',
+            utils         : '0.8',
+            picassoCommons: '0.11.5',
+
+            release       : '0.11.0'
     ]
     repositories {
         jcenter()
@@ -59,16 +33,4 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-ext.bintray = [
-        user    : 'hendraanggrian',
-        group   : 'com.hendraanggrian',
-        artifact: [
-                'core'   : 'socialview-core',
-                'commons': 'socialview-commons'
-        ],
-        version : '0.10.0',
-        desc    : 'Android TextView and EditText with hashtag, mention, and hyperlink support.',
-        website : 'https://github.com/HendraAnggrian/socialview'
-]
-
-//$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false
+//$ ./gradlew bintrayUpload -PbintrayUser=com.hendraanggrian -PbintrayKey= -PdryRun=false

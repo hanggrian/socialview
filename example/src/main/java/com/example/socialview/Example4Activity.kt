@@ -16,7 +16,7 @@ import com.hendraanggrian.socialview.commons.SocialAdapter
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
 
 /**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
 class Example4Activity : BaseActivity(), SocialTextWatcher {
 

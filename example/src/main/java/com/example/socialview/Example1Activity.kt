@@ -11,7 +11,7 @@ import com.hendraanggrian.socialview.OnSocialClickListener
 import com.hendraanggrian.widget.SocialTextView
 
 /**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
 class Example1Activity : BaseActivity(), OnSocialClickListener {
 

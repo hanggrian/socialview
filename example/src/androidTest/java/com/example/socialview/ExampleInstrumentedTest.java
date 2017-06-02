@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("io.github.hendraanggrian.extrasample", appContext.getPackageName());
+        assertEquals("io.github.com.hendraanggrian.extrasample", appContext.getPackageName());
     }
 }

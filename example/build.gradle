@@ -1,17 +1,31 @@
-apply plugin: plugin.android.app
-apply plugin: plugin.kotlin.android
-apply plugin: plugin.kotlin.kapt
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+buildscript {
+    ext.kotlin = '1.1.2-3'
+    ext.butterknife = '8.6.0'
+    ext.runner = '0.5'
+    ext.espresso = '2.2.2'
+    ext.junit = '4.12'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin"
+    }
+}
 
 android {
-    compileSdkVersion config.sdk.target
-    buildToolsVersion config.buildTools
+    compileSdkVersion versions.sdk.target
+    buildToolsVersion versions.buildTools
     defaultConfig {
         applicationId "com.example.socialview"
         versionCode 1
         versionName "1.0"
         minSdkVersion 11
-        targetSdkVersion config.sdk.target
-        testInstrumentationRunner config.testRunner
+        targetSdkVersion versions.sdk.target
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         debug {
@@ -23,19 +37,18 @@ android {
 
 dependencies {
     compile project(':socialview-commons')
-    compile deps.support.appcompat
-    compile deps.support.design
-    compile deps.kotlin
+    compile "com.android.support:design:$versions.support"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin"
 
-    compile deps.butterknife.main
-    kapt deps.butterknife.processor
+    compile "com.jakewharton:butterknife:$butterknife"
+    kapt "com.jakewharton:butterknife-compiler:$butterknife"
 
-    androidTestCompile(deps.support.test.runner) {
+    androidTestCompile("com.android.support.test:runner:$runner") {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile(deps.support.test.espresso) {
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso") {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
 
-    testCompile deps.junit
+    testCompile "junit:junit:$junit"
 }

@@ -6,7 +6,7 @@ import com.hendraanggrian.socialview.SociableViewImpl
 import com.squareup.picasso.Picassos
 
 /**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
 class App : Application() {
 

@@ -8,7 +8,7 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 
 /**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
 abstract class BaseActivity : AppCompatActivity() {
 

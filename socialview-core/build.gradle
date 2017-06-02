@@ -1,35 +1,32 @@
-apply plugin: plugin.android.lib
-apply plugin: plugin.novoda
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+apply from: 'https://raw.githubusercontent.com/HendraAnggrian/hendraanggrian.github.io/master/bintray.gradle'
 
 android {
-    compileSdkVersion config.sdk.target
-    buildToolsVersion config.buildTools
+    compileSdkVersion versions.sdk.target
+    buildToolsVersion versions.buildTools
     defaultConfig {
-        minSdkVersion config.sdk.min
-        targetSdkVersion config.sdk.target
-        testInstrumentationRunner config.testRunner
+        minSdkVersion versions.sdk.min
+        targetSdkVersion versions.sdk.target
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+    }
+    sourceSets {
+        main.manifest.srcFile 'AndroidManifest.xml'
+        main.java.srcDirs 'src'
+        main.res.srcDirs = ['res', 'res-public']
+        main.resources.srcDir 'src'
     }
 }
 
 dependencies {
-    compile deps.hendraanggrian.text
-    compile deps.hendraanggrian.utils
-
-    androidTestCompile(deps.support.test.runner) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile(deps.support.test.espresso) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-
-    testCompile deps.junit
+    compile "com.hendraanggrian:support-utils:$versions.utils"
 }
 
 publish {
     userOrg = bintray.user
     groupId = bintray.group
-    artifactId = bintray.artifact.core
-    publishVersion = bintray.version
-    desc = bintray.desc
-    website = bintray.website
+    artifactId = bintray.artifact.socialview.id + '-core'
+    publishVersion = versions.release
+    desc = bintray.artifact.socialview.desc
+    website = bintray.artifact.socialview.website
 }

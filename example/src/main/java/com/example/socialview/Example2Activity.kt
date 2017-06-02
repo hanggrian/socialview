@@ -12,7 +12,7 @@ import com.hendraanggrian.socialview.SocialTextWatcher
 import com.hendraanggrian.widget.SocialEditText
 
 /**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
 class Example2Activity : BaseActivity(), OnSocialClickListener, SocialTextWatcher {
 

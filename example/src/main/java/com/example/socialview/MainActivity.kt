@@ -8,7 +8,7 @@ import android.widget.Button
 import butterknife.BindViews
 
 /**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
 class MainActivity : BaseActivity(), View.OnClickListener {
 
