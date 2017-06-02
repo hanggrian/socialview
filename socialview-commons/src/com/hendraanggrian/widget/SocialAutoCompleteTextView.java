@@ -18,7 +18,7 @@ import android.widget.ArrayAdapter;
 import com.hendraanggrian.socialview.OnSocialClickListener;
 import com.hendraanggrian.socialview.SociableView;
 import com.hendraanggrian.socialview.SocialTextWatcher;
-import com.hendraanggrian.socialview.SociableViewImpl;
+import com.hendraanggrian.socialview.SocialViewImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,7 +42,7 @@ public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoComplete
 
     public SocialAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        impl = SociableViewImpl.attach(this, context, attrs);
+        impl = SocialViewImpl.attach(this, context, attrs);
         setTokenizer(new HashtagMentionTokenizer(isHashtagEnabled(), isMentionEnabled()));
         setThreshold(1);
     }

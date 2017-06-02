@@ -19,10 +19,10 @@ allprojects {
 
             // main
             support       : '25.3.1',
-            utils         : '0.8',
-            picassoCommons: '0.11.5',
+            utils         : '0.10',
+            picassoCommons: '0.11.6',
 
-            release       : '0.11.0'
+            release       : '0.11.1'
     ]
     repositories {
         jcenter()

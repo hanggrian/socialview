@@ -15,6 +15,7 @@ import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.CharacterStyle;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
 import android.util.AttributeSet;
@@ -36,7 +37,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
-public final class SociableViewImpl implements com.hendraanggrian.socialview.SociableView, TextWatcher {
+public final class SocialViewImpl implements com.hendraanggrian.socialview.SociableView, TextWatcher {
 
     private static final String TAG = "SocialView";
     private static final int TYPE_HASHTAG = 1;
@@ -44,6 +45,7 @@ public final class SociableViewImpl implements com.hendraanggrian.socialview.Soc
     private static final int TYPE_HYPERLINK = 4;
     private static final Pattern PATTERN_HASHTAG = Pattern.compile("#(\\w+)");
     private static final Pattern PATTERN_MENTION = Pattern.compile("@(\\w+)");
+    private static final Pattern PATTERN_HYPERLINK = Patterns.WEB_URL;
     private static boolean DEBUG;
 
     @NonNull private final TextView view;
@@ -52,15 +54,15 @@ public final class SociableViewImpl implements com.hendraanggrian.socialview.Soc
     @ColorInt private int hashtagColor;
     @ColorInt private int mentionColor;
     @ColorInt private int hyperlinkColor;
-    @Nullable private com.hendraanggrian.socialview.OnSocialClickListener hashtagListener;
-    @Nullable private com.hendraanggrian.socialview.OnSocialClickListener mentionListener;
-    @Nullable private com.hendraanggrian.socialview.SocialTextWatcher hashtagWatcher;
-    @Nullable private com.hendraanggrian.socialview.SocialTextWatcher mentionWatcher;
+    @Nullable private OnSocialClickListener hashtagListener;
+    @Nullable private OnSocialClickListener mentionListener;
+    @Nullable private SocialTextWatcher hashtagWatcher;
+    @Nullable private SocialTextWatcher mentionWatcher;
 
     private boolean isHashtagEditing;
     private boolean isMentionEditing;
 
-    private SociableViewImpl(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
+    private SocialViewImpl(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
         this.view = view;
         this.view.setText(view.getText(), TextView.BufferType.SPANNABLE);
         this.view.addTextChangedListener(this);
@@ -230,7 +232,7 @@ public final class SociableViewImpl implements com.hendraanggrian.socialview.Soc
     public Collection<String> getHyperlinks() {
         if (!isHyperlinkEnabled())
             return Collections.emptyList();
-        return newList(Patterns.WEB_URL);
+        return newList(PATTERN_HYPERLINK);
     }
 
     @NonNull
@@ -351,9 +353,9 @@ public final class SociableViewImpl implements com.hendraanggrian.socialview.Soc
                 @NonNull
                 @Override
                 public Object getSpan() {
-                    return hashtagListener == null
-                            ? new ForegroundColorSpan(hashtagColor)
-                            : new com.hendraanggrian.socialview.ForegroundColorClickableSpan(hashtagColor) {
+                    if (hashtagListener == null)
+                        return new ForegroundColorSpan(hashtagColor);
+                    return new ForegroundColorClickableSpan(hashtagColor) {
                         @Override
                         public void onClick(View widget) {
                             hashtagListener.onSocialClick(view, text.subSequence(text.getSpanStart(this) + 1, text.getSpanEnd(this)).toString());
@@ -367,9 +369,9 @@ public final class SociableViewImpl implements com.hendraanggrian.socialview.Soc
                 @NonNull
                 @Override
                 public Object getSpan() {
-                    return mentionListener == null
-                            ? new ForegroundColorSpan(mentionColor)
-                            : new com.hendraanggrian.socialview.ForegroundColorClickableSpan(mentionColor) {
+                    if (mentionListener == null)
+                        return new ForegroundColorSpan(mentionColor);
+                    return new ForegroundColorClickableSpan(mentionColor) {
                         @Override
                         public void onClick(View widget) {
                             mentionListener.onSocialClick(view, text.subSequence(text.getSpanStart(this) + 1, text.getSpanEnd(this)).toString());
@@ -379,36 +381,25 @@ public final class SociableViewImpl implements com.hendraanggrian.socialview.Soc
             }));
         }
         if (isHyperlinkEnabled()) {
-            allSpans.addAll(Spannables.putSpansAll(text, Patterns.WEB_URL, new Spannables.SpanGetter() {
+            allSpans.addAll(Spannables.putSpansAll(text, PATTERN_HYPERLINK, new Spannables.SpanGetter() {
                 @NonNull
                 @Override
                 public Object getSpan() {
-                    return new URLSpan("") {
-                        @Override
-                        public String getURL() {
-                            return text.subSequence(text.getSpanStart(this), text.getSpanEnd(this)).toString();
-                        }
-
-                        @Override
-                        public void updateDrawState(TextPaint ds) {
-                            ds.linkColor = hyperlinkColor;
-                            super.updateDrawState(ds);
-                        }
-                    };
+                    return new SimpleURLSpan(text, hyperlinkColor);
                 }
             }));
         }
     }
 
     public static void setDebug(boolean debug) {
-        SociableViewImpl.DEBUG = debug;
+        SocialViewImpl.DEBUG = debug;
     }
 
     /**
      * Attach SocialView to any TextView or its subclasses.
      */
     @NonNull
-    public static com.hendraanggrian.socialview.SociableView attach(@NonNull TextView view) {
+    public static SociableView attach(@NonNull TextView view) {
         return attach(view, view.getContext(), null);
     }
 
@@ -416,7 +407,42 @@ public final class SociableViewImpl implements com.hendraanggrian.socialview.Soc
      * Attach SocialView in custom view's class.
      */
     @NonNull
-    public static com.hendraanggrian.socialview.SociableView attach(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
-        return new SociableViewImpl(view, context, attrs);
+    public static SociableView attach(@NonNull TextView view, @NonNull Context context, @Nullable AttributeSet attrs) {
+        return new SocialViewImpl(view, context, attrs);
+    }
+
+    private static abstract class ForegroundColorClickableSpan extends ClickableSpan {
+        @ColorInt private final int color;
+
+        private ForegroundColorClickableSpan(@ColorInt int color) {
+            this.color = color;
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            ds.setColor(color);
+        }
+    }
+
+    private static class SimpleURLSpan extends URLSpan {
+        @NonNull private final Spannable spannable;
+        @ColorInt private final int color;
+
+        private SimpleURLSpan(@NonNull Spannable spannable, @ColorInt int color) {
+            super("");
+            this.spannable = spannable;
+            this.color = color;
+        }
+
+        @Override
+        public String getURL() {
+            return spannable.subSequence(spannable.getSpanStart(this), spannable.getSpanEnd(this)).toString();
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            ds.linkColor = color;
+            super.updateDrawState(ds);
+        }
     }
 }

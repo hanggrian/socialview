@@ -11,7 +11,7 @@ public interface OnSocialClickListener {
     /**
      * Triggered when a span of hashtag, mention, or hyperlink is clicked.
      *
-     * @param v    TextView or its subclasses attached with {@link SociableViewImpl}.
+     * @param v    TextView or its subclasses attached with {@link SocialViewImpl}.
      * @param text clicked span, in form of CharSequence.
      */
     void onSocialClick(@NonNull TextView v, @NonNull String text);
