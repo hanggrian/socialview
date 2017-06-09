@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import com.hendraanggrian.socialview.OnSocialClickListener;
 import com.hendraanggrian.socialview.SociableView;
@@ -17,7 +18,7 @@ import com.hendraanggrian.socialview.SocialViewImpl;
 import java.util.Collection;
 
 /**
- * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class SocialEditText extends AppCompatEditText implements SociableView {
 
@@ -33,7 +34,13 @@ public class SocialEditText extends AppCompatEditText implements SociableView {
 
     public SocialEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        impl = SocialViewImpl.attach(this, context, attrs);
+        impl = new SocialViewImpl(this, context, attrs);
+    }
+
+    @NonNull
+    @Override
+    public TextView getTextView() {
+        return impl.getTextView();
     }
 
     @Override

@@ -8,7 +8,6 @@ android {
     defaultConfig {
         minSdkVersion versions.sdk.min
         targetSdkVersion versions.sdk.target
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     sourceSets {
         main.manifest.srcFile 'AndroidManifest.xml'
@@ -20,7 +19,6 @@ android {
 
 dependencies {
     compile project(':socialview-core')
-    compile "com.android.support:appcompat-v7:$versions.support"
     compile "com.hendraanggrian:picasso-commons:$versions.picassoCommons"
 }
 

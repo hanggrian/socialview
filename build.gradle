@@ -22,10 +22,19 @@ allprojects {
             utils         : '0.10',
             picassoCommons: '0.11.6',
 
-            release       : '0.11.1'
+            // test
+            runner        : '0.5',
+            espresso      : '2.2.2',
+            junit         : '4.12',
+
+            release       : '0.12.0'
     ]
     repositories {
         jcenter()
+    }
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
     }
 }
 

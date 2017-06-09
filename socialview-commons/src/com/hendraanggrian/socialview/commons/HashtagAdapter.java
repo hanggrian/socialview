@@ -15,7 +15,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
- * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class HashtagAdapter extends SocialAdapter<Hashtag> {
 

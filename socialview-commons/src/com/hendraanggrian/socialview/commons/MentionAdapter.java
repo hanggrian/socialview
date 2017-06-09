@@ -26,7 +26,7 @@ import com.squareup.picasso.RequestCreator;
 import java.io.File;
 
 /**
- * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class MentionAdapter extends SocialAdapter<Mention> {
 

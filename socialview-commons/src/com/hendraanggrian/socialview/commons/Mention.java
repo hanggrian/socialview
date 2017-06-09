@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import java.io.File;
 
 /**
- * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class Mention {
 

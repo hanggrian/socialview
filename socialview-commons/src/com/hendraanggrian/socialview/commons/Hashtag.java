@@ -3,7 +3,7 @@ package com.hendraanggrian.socialview.commons;
 import android.support.annotation.NonNull;
 
 /**
- * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class Hashtag {
 

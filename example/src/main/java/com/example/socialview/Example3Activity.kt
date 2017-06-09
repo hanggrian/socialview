@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.MenuItem
-import android.widget.TextView
 import butterknife.BindView
+import com.hendraanggrian.socialview.SociableView
 import com.hendraanggrian.socialview.SocialTextWatcher
 import com.hendraanggrian.socialview.commons.Hashtag
 import com.hendraanggrian.socialview.commons.HashtagAdapter
@@ -60,7 +60,7 @@ class Example3Activity : BaseActivity(), SocialTextWatcher {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onSocialTextChanged(v: TextView, s: CharSequence) {
+    override fun onSocialTextChanged(v: SociableView, s: CharSequence) {
         Log.d("editing", s.toString())
     }
 }

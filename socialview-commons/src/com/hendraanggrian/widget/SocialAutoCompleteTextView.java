@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.hendraanggrian.socialview.OnSocialClickListener;
 import com.hendraanggrian.socialview.SociableView;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoCompleteTextView implements SociableView, TextWatcher {
 
@@ -42,9 +43,14 @@ public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoComplete
 
     public SocialAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        impl = SocialViewImpl.attach(this, context, attrs);
+        impl = new SocialViewImpl(this, context, attrs);
         setTokenizer(new HashtagMentionTokenizer(isHashtagEnabled(), isMentionEnabled()));
-        setThreshold(1);
+    }
+
+    @NonNull
+    @Override
+    public TextView getTextView() {
+        return impl.getTextView();
     }
 
     @Override

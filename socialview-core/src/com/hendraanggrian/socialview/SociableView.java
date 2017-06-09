@@ -5,6 +5,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.TextView;
 
 import java.util.Collection;
 
@@ -13,10 +14,13 @@ import java.util.Collection;
  * The logic, however, are calculated in {@link SocialViewImpl} while the widgets are just
  * passing these methods to the attacher.
  *
- * @author Hendra Anggian (com.hendraanggrian@gmail.com)
+ * @author Hendra Anggian (hendraanggrian@gmail.com)
  * @see SocialViewImpl
  */
 public interface SociableView {
+
+    @NonNull
+    TextView getTextView();
 
     boolean isHashtagEnabled();
 

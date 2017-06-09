@@ -1,4 +1,4 @@
-package com.example.socialview.com.example.socialview;
+package com.example.socialview;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

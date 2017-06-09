@@ -13,13 +13,25 @@ android {
     sourceSets {
         main.manifest.srcFile 'AndroidManifest.xml'
         main.java.srcDirs 'src'
-        main.res.srcDirs = ['res', 'res-public']
+        main.res.srcDirs 'res', 'res-public'
         main.resources.srcDir 'src'
+        androidTest.setRoot('tests')
+        androidTest.java.srcDir 'tests/src'
     }
 }
 
 dependencies {
+    compile "com.android.support:appcompat-v7:$versions.support"
     compile "com.hendraanggrian:support-utils:$versions.utils"
+
+    androidTestCompile("com.android.support.test:runner:$versions.runner") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$versions.espresso") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+
+    testCompile "junit:junit:$versions.junit"
 }
 
 publish {

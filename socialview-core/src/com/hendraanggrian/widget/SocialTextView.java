@@ -6,6 +6,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -17,9 +18,9 @@ import com.hendraanggrian.socialview.SocialViewImpl;
 import java.util.Collection;
 
 /**
- * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialTextView extends TextView implements SociableView {
+public class SocialTextView extends AppCompatTextView implements SociableView {
 
     @NonNull private final SociableView impl;
 
@@ -33,7 +34,13 @@ public class SocialTextView extends TextView implements SociableView {
 
     public SocialTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        impl = SocialViewImpl.attach(this, context, attrs);
+        impl = new SocialViewImpl(this, context, attrs);
+    }
+
+    @NonNull
+    @Override
+    public TextView getTextView() {
+        return impl.getTextView();
     }
 
     @Override

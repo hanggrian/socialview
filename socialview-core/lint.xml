@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<lint>
-    <!-- core module is a lightweight library without appcompat-v7 -->
-    <issue id="AppCompatCustomView" severity="ignore"/>
-
-    <!-- private spans do not have parcel creators -->
-    <issue id="ParcelCreator" severity="ignore"/>
-</lint>

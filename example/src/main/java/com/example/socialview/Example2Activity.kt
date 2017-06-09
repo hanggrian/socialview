@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
 import butterknife.BindView
 import com.hendraanggrian.socialview.OnSocialClickListener
+import com.hendraanggrian.socialview.SociableView
 import com.hendraanggrian.socialview.SocialTextWatcher
 import com.hendraanggrian.widget.SocialEditText
 
@@ -37,11 +37,11 @@ class Example2Activity : BaseActivity(), OnSocialClickListener, SocialTextWatche
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onSocialTextChanged(v: TextView, s: CharSequence) {
+    override fun onSocialTextChanged(v: SociableView, s: CharSequence) {
         Log.d("editing", s.toString())
     }
 
-    override fun onSocialClick(v: TextView, text: String) {
+    override fun onSocialClick(v: SociableView, text: CharSequence) {
         Toast.makeText(this, String.format("clicked:\n%s", text), Toast.LENGTH_SHORT).show()
     }
 }

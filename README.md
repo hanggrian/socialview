@@ -6,7 +6,7 @@ Android TextView and EditText with hashtag, mention, and hyperlink support.
 
 Core
 ----
-Lightweight library that comes with `SocialTextView` and `SocialViewImpl` to attach any TextView.
+Lightweight library that comes with `SocialTextView`, `SocialEditText` and `SocialViewImpl` to attach any TextView.
 ```xml
 <com.hendraanggrian.widget.SocialTextView
     android:id="@+id/socialtextview"
@@ -15,7 +15,7 @@ Lightweight library that comes with `SocialTextView` and `SocialViewImpl` to att
     android:text="#hashtag and @mention."/>
 ```
 
-![SocialTextView][core1]
+![SocialTextView][core1] ![SocialEditText][core2]
 
 Modify its state and set listeners in java.
 ```java
@@ -55,7 +55,7 @@ Extended core library with `SocialEditText` and `SocialAutoCompleteTextView` to 
     android:hint="What's on your mind?"/>
 ```
 
-![SocialEditText][commons1] ![SocialAutoCompleteTextView hashtag suggestions][commons2] ![SocialAutoCompleteTextView mention suggestions][commons3]
+![SocialAutoCompleteTextView hashtag suggestions][commons1] ![SocialAutoCompleteTextView mention suggestions][commons2]
 
 To display suggestions, it is required to `setHashtagAdapter()` and `setMentionAdapter()`.
 ```java
@@ -105,6 +105,6 @@ License
     
 [demo]: /art/demo.gif
 [core1]: /art/ss_core1.jpg
+[core1]: /art/ss_core2.jpg
 [commons1]: /art/ss_commons1.jpg
 [commons2]: /art/ss_commons2.jpg
-[commons3]: /art/ss_commons3.jpg

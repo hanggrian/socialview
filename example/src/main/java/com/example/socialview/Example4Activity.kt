@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.TextView
 import butterknife.BindView
+import com.hendraanggrian.socialview.SociableView
 import com.hendraanggrian.socialview.SocialTextWatcher
 import com.hendraanggrian.socialview.commons.SocialAdapter
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
@@ -52,7 +53,7 @@ class Example4Activity : BaseActivity(), SocialTextWatcher {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onSocialTextChanged(v: TextView, s: CharSequence) {
+    override fun onSocialTextChanged(v: SociableView, s: CharSequence) {
         Log.d("editing", s.toString())
     }
 

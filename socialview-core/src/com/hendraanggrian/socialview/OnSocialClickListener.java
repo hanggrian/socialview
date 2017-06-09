@@ -1,18 +1,20 @@
 package com.hendraanggrian.socialview;
 
 import android.support.annotation.NonNull;
-import android.widget.TextView;
 
 /**
- * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
+ * Span click listener for hashtags and mentions.
+ * Hyperlinks are not affected by this listener.
+ *
+ * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public interface OnSocialClickListener {
 
     /**
      * Triggered when a span of hashtag, mention, or hyperlink is clicked.
      *
-     * @param v    TextView or its subclasses attached with {@link SocialViewImpl}.
-     * @param text clicked span, in form of CharSequence.
+     * @param v    a {@link SociableView}, use {@link SociableView#getTextView()} to obtain the original view.
+     * @param text clicked span.
      */
-    void onSocialClick(@NonNull TextView v, @NonNull String text);
+    void onSocialClick(@NonNull SociableView v, @NonNull CharSequence text);
 }

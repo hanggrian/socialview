@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
+ * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public abstract class SocialAdapter<T> extends ArrayAdapter<T> {
 

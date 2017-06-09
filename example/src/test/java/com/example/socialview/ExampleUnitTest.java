@@ -1,4 +1,4 @@
-package com.example.socialview.com.example.socialview;
+package com.example.socialview;
 
 import org.junit.Test;
 
