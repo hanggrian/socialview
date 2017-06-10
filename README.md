@@ -46,7 +46,7 @@ SocialView socialView = SocialViewImpl.attach(tv);
 
 Commons
 -------
-Extended core library with `SocialEditText` and `SocialAutoCompleteTextView` to display suggestions as you type.
+Extended core library with `SocialAutoCompleteTextView` to display suggestions as you type.
 ```xml
 <com.hendraanggrian.widget.SocialAutoCompleteTextView
     android:id="@+id/socialsuggestionedittext"
@@ -81,9 +81,9 @@ repositories {
 
 dependencies {
     // core only
-    compile 'com.hendraanggrian:socialview-core:0.11.1'
+    compile 'com.hendraanggrian:socialview-core:0.12.0'
     // core and commons
-    compile 'com.hendraanggrian:socialview-commons:0.11.1'
+    compile 'com.hendraanggrian:socialview-commons:0.12.0'
 }
 ```
 

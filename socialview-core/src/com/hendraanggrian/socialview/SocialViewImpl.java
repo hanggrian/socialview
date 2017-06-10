@@ -31,18 +31,21 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.hendraanggrian.socialview.R.styleable.SocialView;
+
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class SocialViewImpl implements SociableView, TextWatcher {
 
     private static final String TAG = "SocialView";
+    private static boolean DEBUG;
     private static final int TYPE_HASHTAG = 1;
     private static final int TYPE_MENTION = 2;
     private static final int TYPE_HYPERLINK = 4;
-    static final Pattern PATTERN_HASHTAG = Pattern.compile("#(\\w+)");
-    static final Pattern PATTERN_MENTION = Pattern.compile("@(\\w+)");
-    private static boolean DEBUG;
+    private static Pattern PATTERN_HASHTAG = Pattern.compile("(?i)[#＃]([0-9A-Z_À-ÖØ-öø-ÿ]*[A-Z_]+[a-z0-9_üÀ-ÖØ-öø-ÿ]*)");
+    private static Pattern PATTERN_MENTION = Pattern.compile("(?i)@([0-9A-Z_À-ÖØ-öø-ÿ]*[A-Z_]+[a-z0-9_üÀ-ÖØ-öø-ÿ]*)");
+
 
     @NonNull private final TextView textView;
     private int enabledFlag;
@@ -61,7 +64,7 @@ public class SocialViewImpl implements SociableView, TextWatcher {
         this.textView = textView;
         this.textView.setText(textView.getText(), TextView.BufferType.SPANNABLE);
         this.textView.addTextChangedListener(this);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SocialView, 0, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, SocialView, 0, 0);
         try {
             enabledFlag = a.getInteger(R.styleable.SocialView_socialEnabled, TYPE_HASHTAG | TYPE_MENTION | TYPE_HYPERLINK);
             int defaultColor = Themes.getColor(context, R.attr.colorAccent, textView.getCurrentTextColor());
@@ -196,16 +199,18 @@ public class SocialViewImpl implements SociableView, TextWatcher {
 
     @Override
     public void setOnHashtagClickListener(@Nullable OnSocialClickListener listener) {
-        if (textView.getMovementMethod() == null || !(textView.getMovementMethod() instanceof LinkMovementMethod))
+        if (textView.getMovementMethod() == null || !(textView.getMovementMethod() instanceof LinkMovementMethod)) {
             textView.setMovementMethod(LinkMovementMethod.getInstance());
+        }
         hashtagListener = listener;
         colorize();
     }
 
     @Override
     public void setOnMentionClickListener(@Nullable OnSocialClickListener listener) {
-        if (textView.getMovementMethod() == null || !(textView.getMovementMethod() instanceof LinkMovementMethod))
+        if (textView.getMovementMethod() == null || !(textView.getMovementMethod() instanceof LinkMovementMethod)) {
             textView.setMovementMethod(LinkMovementMethod.getInstance());
+        }
         mentionListener = listener;
         colorize();
     }
@@ -223,24 +228,27 @@ public class SocialViewImpl implements SociableView, TextWatcher {
     @NonNull
     @Override
     public Collection<String> getHashtags() {
-        if (!isHashtagEnabled())
+        if (!isHashtagEnabled()) {
             return Collections.emptyList();
+        }
         return listOf(textView.getText(), PATTERN_HASHTAG);
     }
 
     @NonNull
     @Override
     public Collection<String> getMentions() {
-        if (!isMentionEnabled())
+        if (!isMentionEnabled()) {
             return Collections.emptyList();
+        }
         return listOf(textView.getText(), PATTERN_MENTION);
     }
 
     @NonNull
     @Override
     public Collection<String> getHyperlinks() {
-        if (!isHyperlinkEnabled())
+        if (!isHyperlinkEnabled()) {
             return Collections.emptyList();
+        }
         return listOf(textView.getText(), Patterns.WEB_URL);
     }
 
@@ -354,8 +362,9 @@ public class SocialViewImpl implements SociableView, TextWatcher {
                 @NonNull
                 @Override
                 public Object getSpan() {
-                    if (hashtagListener == null)
+                    if (hashtagListener == null) {
                         return new ForegroundColorSpan(hashtagColor);
+                    }
                     return new ForegroundColorClickableSpan(hashtagColor) {
                         @Override
                         public void onClick(View widget) {
@@ -370,8 +379,9 @@ public class SocialViewImpl implements SociableView, TextWatcher {
                 @NonNull
                 @Override
                 public Object getSpan() {
-                    if (mentionListener == null)
+                    if (mentionListener == null) {
                         return new ForegroundColorSpan(mentionColor);
+                    }
                     return new ForegroundColorClickableSpan(mentionColor) {
                         @Override
                         public void onClick(View widget) {
@@ -405,7 +415,15 @@ public class SocialViewImpl implements SociableView, TextWatcher {
     }
 
     public static void setDebug(boolean debug) {
-        SocialViewImpl.DEBUG = debug;
+        DEBUG = debug;
+    }
+
+    public static void setHashtagPattern(@NonNull String regex) {
+        SocialViewImpl.PATTERN_HASHTAG = Pattern.compile(regex);
+    }
+
+    public static void setMentionPattern(@NonNull String regex) {
+        SocialViewImpl.PATTERN_MENTION = Pattern.compile(regex);
     }
 
     /**

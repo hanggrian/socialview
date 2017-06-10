@@ -31,6 +31,7 @@ class Example4Activity : BaseActivity(), SocialTextWatcher {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
 
+        socialAutoCompleteTextView.threshold = 1
         socialAutoCompleteTextView.hashtagAdapter = CustomAdapter(this)
         socialAutoCompleteTextView.mentionAdapter = CustomAdapter(this)
         socialAutoCompleteTextView.setHashtagTextChangedListener(this)

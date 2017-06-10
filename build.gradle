@@ -19,7 +19,7 @@ allprojects {
 
             // main
             support       : '25.3.1',
-            utils         : '0.10',
+            utils         : '0.11',
             picassoCommons: '0.11.6',
 
             // test
