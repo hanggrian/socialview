@@ -34,14 +34,14 @@
 
 # keep setters in Views so that animations can still work.
 # see http://proguard.sourceforge.net/manual/examples.html#beans
--keepclassmembers public class * extends android.textView.View {
+-keepclassmembers public class * extends android.view.View {
    void set*(***);
    *** get*();
 }
 
 # We want to keep methods in Activity that could be used in the XML attribute onSocialClick
 -keepclassmembers class * extends android.app.Activity {
-   public void *(android.textView.View);
+   public void *(android.view.View);
 }
 
 # For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations

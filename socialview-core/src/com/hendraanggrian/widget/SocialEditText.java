@@ -1,6 +1,7 @@
 package com.hendraanggrian.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
@@ -8,12 +9,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import com.hendraanggrian.socialview.OnSocialClickListener;
 import com.hendraanggrian.socialview.SociableView;
+import com.hendraanggrian.socialview.SociableViewImpl;
 import com.hendraanggrian.socialview.SocialTextWatcher;
-import com.hendraanggrian.socialview.SocialViewImpl;
 
 import java.util.Collection;
 
@@ -22,7 +22,7 @@ import java.util.Collection;
  */
 public class SocialEditText extends AppCompatEditText implements SociableView {
 
-    @NonNull private final SociableView impl;
+    @NonNull private final SociableViewImpl<SocialEditText> impl;
 
     public SocialEditText(Context context) {
         this(context, null);
@@ -34,13 +34,7 @@ public class SocialEditText extends AppCompatEditText implements SociableView {
 
     public SocialEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        impl = new SocialViewImpl(this, context, attrs);
-    }
-
-    @NonNull
-    @Override
-    public TextView getTextView() {
-        return impl.getTextView();
+        impl = new SociableViewImpl<>(this, attrs);
     }
 
     @Override
@@ -73,21 +67,18 @@ public class SocialEditText extends AppCompatEditText implements SociableView {
         impl.setHyperlinkEnabled(enabled);
     }
 
-    @ColorInt
     @Override
-    public int getHashtagColor() {
+    public ColorStateList getHashtagColor() {
         return impl.getHashtagColor();
     }
 
-    @ColorInt
     @Override
-    public int getMentionColor() {
+    public ColorStateList getMentionColor() {
         return impl.getMentionColor();
     }
 
-    @ColorInt
     @Override
-    public int getHyperlinkColor() {
+    public ColorStateList getHyperlinkColor() {
         return impl.getHyperlinkColor();
     }
 

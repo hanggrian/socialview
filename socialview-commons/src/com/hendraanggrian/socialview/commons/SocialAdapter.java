@@ -90,9 +90,11 @@ public abstract class SocialAdapter<T> extends ArrayAdapter<T> {
         protected FilterResults performFiltering(CharSequence constraint) {
             if (constraint != null) {
                 suggestions.clear();
-                for (T item : tempItems)
-                    if (convertResultToString(item).toString().toLowerCase(Locale.US).contains(constraint.toString().toLowerCase(Locale.US)))
+                for (T item : tempItems) {
+                    if (convertResultToString(item).toString().toLowerCase(Locale.US).contains(constraint.toString().toLowerCase(Locale.US))) {
                         suggestions.add(item);
+                    }
+                }
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = suggestions;
                 filterResults.count = suggestions.size();

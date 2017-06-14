@@ -31,7 +31,7 @@ public class RegexTest {
                 "SeFueEste",
                 "EsteNoEra",
                 "Name"
-        }, '#', SocialViewImpl.PATTERN_HASHTAG);
+        }, '#', SociableViewImpl.PATTERN_HASHTAG);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class RegexTest {
                 "SeFueÉste",
                 "ÉsteNoEra",
                 "Ñame"
-        }, '@', SocialViewImpl.PATTERN_MENTION);
+        }, '@', SociableViewImpl.PATTERN_MENTION);
     }
 
     private void test(@NonNull String[] names, char prefix, @NonNull Pattern pattern) {
@@ -53,7 +53,7 @@ public class RegexTest {
         for (int i = 0; i < names.length; i++) {
             namesWithPrefix[i] = prefix + names[i];
         }
-        List<String> list = SocialViewImpl.listOf(Arrays.toString(namesWithPrefix), pattern);
+        List<String> list = SociableViewImpl.listOf(Arrays.toString(namesWithPrefix), pattern);
         assertEquals(list.size(), names.length);
         for (int i = 0; i < list.size(); i++) {
             assertEquals(list.get(i), names[i]);

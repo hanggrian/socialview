@@ -3,7 +3,6 @@ package com.example.socialview
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +13,7 @@ import butterknife.BindView
 import com.hendraanggrian.socialview.SociableView
 import com.hendraanggrian.socialview.SocialTextWatcher
 import com.hendraanggrian.socialview.commons.SocialAdapter
+import com.hendraanggrian.support.utils.util.Logs
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
 
 /**
@@ -55,7 +55,7 @@ class Example4Activity : BaseActivity(), SocialTextWatcher {
     }
 
     override fun onSocialTextChanged(v: SociableView, s: CharSequence) {
-        Log.d("editing", s.toString())
+        Logs.d("editing", s)
     }
 
     class Model constructor(val content: String)

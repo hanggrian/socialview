@@ -77,13 +77,14 @@ Download
 ```gradle
 repositories {
     jcenter()
+    maven { url "https://maven.google.com" }
 }
 
 dependencies {
     // core only
-    compile 'com.hendraanggrian:socialview-core:0.12.0'
+    compile 'com.hendraanggrian:socialview-core:0.13.0'
     // core and commons
-    compile 'com.hendraanggrian:socialview-commons:0.12.0'
+    compile 'com.hendraanggrian:socialview-commons:0.13.0'
 }
 ```
 

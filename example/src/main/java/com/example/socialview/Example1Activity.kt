@@ -3,11 +3,11 @@ package com.example.socialview
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import android.widget.Toast
 import butterknife.BindView
 import butterknife.BindViews
 import com.hendraanggrian.socialview.OnSocialClickListener
 import com.hendraanggrian.socialview.SociableView
+import com.hendraanggrian.support.utils.widget.Toasts
 import com.hendraanggrian.widget.SocialTextView
 
 /**
@@ -37,6 +37,6 @@ class Example1Activity : BaseActivity(), OnSocialClickListener {
     }
 
     override fun onSocialClick(v: SociableView, text: CharSequence) {
-        Toast.makeText(this, String.format("clicked:\n%s", text), Toast.LENGTH_SHORT).show()
+        Toasts.showShort(this, String.format("clicked:\n%s", text))
     }
 }

@@ -28,23 +28,20 @@ public class Hashtag {
     }
 
     public static class Builder {
-        @NonNull private final String hashtag;
-        private int count;
+        private final Hashtag hashtag;
 
         public Builder(@NonNull String hashtag) {
-            this.hashtag = hashtag;
+            this.hashtag = new Hashtag(hashtag);
         }
 
         @NonNull
         public Builder setCount(int count) {
-            this.count = count;
+            hashtag.setCount(count);
             return this;
         }
 
         @NonNull
         public Hashtag build() {
-            Hashtag hashtag = new Hashtag(this.hashtag);
-            hashtag.setCount(count);
             return hashtag;
         }
     }

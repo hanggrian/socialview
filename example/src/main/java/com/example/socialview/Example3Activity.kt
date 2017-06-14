@@ -2,7 +2,6 @@ package com.example.socialview
 
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.MenuItem
 import butterknife.BindView
 import com.hendraanggrian.socialview.SociableView
@@ -11,6 +10,7 @@ import com.hendraanggrian.socialview.commons.Hashtag
 import com.hendraanggrian.socialview.commons.HashtagAdapter
 import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.socialview.commons.MentionAdapter
+import com.hendraanggrian.support.utils.util.Logs
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
 
 /**
@@ -62,6 +62,6 @@ class Example3Activity : BaseActivity(), SocialTextWatcher {
     }
 
     override fun onSocialTextChanged(v: SociableView, s: CharSequence) {
-        Log.d("editing", s.toString())
+        Logs.d("editing", s)
     }
 }

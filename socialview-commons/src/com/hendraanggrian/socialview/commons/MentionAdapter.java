@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,7 +30,12 @@ import java.io.File;
 public class MentionAdapter extends SocialAdapter<Mention> {
 
     @DrawableRes private final int defaultAvatar;
-    @Nullable private Filter filter;
+    private final Filter filter = new SuggestionFilter() {
+        @Override
+        public String getString(Mention item) {
+            return item.getUsername();
+        }
+    };
 
     public MentionAdapter(@NonNull Context context) {
         this(context, R.drawable.ic_placeholder_mention);
@@ -89,13 +93,6 @@ public class MentionAdapter extends SocialAdapter<Mention> {
     @NonNull
     @Override
     public Filter getFilter() {
-        if (filter == null)
-            filter = new SuggestionFilter() {
-                @Override
-                public String getString(Mention item) {
-                    return item.getUsername();
-                }
-            };
         return filter;
     }
 

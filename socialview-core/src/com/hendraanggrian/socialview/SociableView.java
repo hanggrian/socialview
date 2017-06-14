@@ -1,26 +1,23 @@
 package com.hendraanggrian.socialview;
 
+import android.content.res.ColorStateList;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.TextView;
 
 import java.util.Collection;
 
 /**
  * Base methods of all socialview's widgets.
- * The logic, however, are calculated in {@link SocialViewImpl} while the widgets are just
+ * The logic, however, are calculated in {@link SociableViewImpl} while the widgets are just
  * passing these methods to the attacher.
  *
  * @author Hendra Anggian (hendraanggrian@gmail.com)
- * @see SocialViewImpl
+ * @see SociableViewImpl
  */
 public interface SociableView {
-
-    @NonNull
-    TextView getTextView();
 
     boolean isHashtagEnabled();
 
@@ -34,14 +31,11 @@ public interface SociableView {
 
     void setHyperlinkEnabled(boolean enabled);
 
-    @ColorInt
-    int getHashtagColor();
+    ColorStateList getHashtagColor();
 
-    @ColorInt
-    int getMentionColor();
+    ColorStateList getMentionColor();
 
-    @ColorInt
-    int getHyperlinkColor();
+    ColorStateList getHyperlinkColor();
 
     void setHashtagColor(@ColorInt int color);
 

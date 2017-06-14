@@ -61,50 +61,45 @@ public class Mention {
     }
 
     public static class Builder {
-        @NonNull private final String username;
-        @Nullable private String displayname;
-        @Nullable private Object avatar;
+        private final Mention mention;
 
         public Builder(@NonNull String username) {
-            this.username = username;
+            this.mention = new Mention(username);
         }
 
         @NonNull
         public Builder setDisplayname(@Nullable String displayname) {
-            this.displayname = displayname;
+            mention.setDisplayname(displayname);
             return this;
         }
 
         @NonNull
         @SuppressWarnings("UnnecessaryBoxing")
         public Builder setAvatarDrawable(@DrawableRes int avatarRes) {
-            this.avatar = Integer.valueOf(avatarRes);
+            mention.setAvatarDrawable(Integer.valueOf(avatarRes));
             return this;
         }
 
         @NonNull
         public Builder setAvatarURL(@Nullable String avatarUrl) {
-            this.avatar = avatarUrl;
+            mention.setAvatarURL(avatarUrl);
             return this;
         }
 
         @NonNull
         public Builder setAvatarUri(@Nullable Uri avatarUri) {
-            this.avatar = avatarUri;
+            mention.setAvatarUri(avatarUri);
             return this;
         }
 
         @NonNull
         public Builder setAvatarUri(@Nullable File avatarFile) {
-            this.avatar = avatarFile;
+            mention.setAvatarUri(avatarFile);
             return this;
         }
 
         @NonNull
         public Mention build() {
-            Mention mention = new Mention(username);
-            mention.setDisplayname(displayname);
-            mention.setAvatar(avatar);
             return mention;
         }
     }

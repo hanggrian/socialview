@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 buildscript {
-    ext.kotlin = '1.1.2-3'
+    ext.kotlin = '1.1.2-5'
     ext.butterknife = '8.6.0'
     repositories {
         mavenCentral()

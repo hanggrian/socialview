@@ -2,13 +2,13 @@ package com.example.socialview
 
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
 import butterknife.BindView
 import com.hendraanggrian.socialview.OnSocialClickListener
 import com.hendraanggrian.socialview.SociableView
 import com.hendraanggrian.socialview.SocialTextWatcher
+import com.hendraanggrian.support.utils.util.Logs
+import com.hendraanggrian.support.utils.widget.Toasts
 import com.hendraanggrian.widget.SocialEditText
 
 /**
@@ -38,10 +38,10 @@ class Example2Activity : BaseActivity(), OnSocialClickListener, SocialTextWatche
     }
 
     override fun onSocialTextChanged(v: SociableView, s: CharSequence) {
-        Log.d("editing", s.toString())
+        Logs.d("editing", s)
     }
 
     override fun onSocialClick(v: SociableView, text: CharSequence) {
-        Toast.makeText(this, String.format("clicked:\n%s", text), Toast.LENGTH_SHORT).show()
+        Toasts.showShort(this, String.format("clicked:\n%s", text))
     }
 }
