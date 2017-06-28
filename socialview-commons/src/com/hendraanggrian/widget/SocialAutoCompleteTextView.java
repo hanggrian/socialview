@@ -27,11 +27,11 @@ import java.util.Collection;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoCompleteTextView implements SociableView, TextWatcher {
+public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextView implements SociableView, TextWatcher {
 
-    @NonNull private final SociableViewImpl<SocialAutoCompleteTextView<H, M>> impl;
-    private ArrayAdapter<H> hashtagAdapter;
-    private ArrayAdapter<M> mentionAdapter;
+    @NonNull private final SociableViewImpl<SocialAutoCompleteTextView> impl;
+    private ArrayAdapter hashtagAdapter;
+    private ArrayAdapter mentionAdapter;
 
     public SocialAutoCompleteTextView(Context context) {
         this(context, null);
@@ -201,19 +201,19 @@ public class SocialAutoCompleteTextView<H, M> extends AppCompatMultiAutoComplete
     public void afterTextChanged(Editable editable) {
     }
 
-    public void setHashtagAdapter(@NonNull ArrayAdapter<H> adapter) {
+    public void setHashtagAdapter(@NonNull ArrayAdapter adapter) {
         hashtagAdapter = adapter;
     }
 
-    public ArrayAdapter<H> getHashtagAdapter() {
+    public ArrayAdapter getHashtagAdapter() {
         return hashtagAdapter;
     }
 
-    public void setMentionAdapter(@NonNull ArrayAdapter<M> adapter) {
+    public void setMentionAdapter(@NonNull ArrayAdapter adapter) {
         mentionAdapter = adapter;
     }
 
-    public ArrayAdapter<M> getMentionAdapter() {
+    public ArrayAdapter getMentionAdapter() {
         return mentionAdapter;
     }
 

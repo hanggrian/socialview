@@ -2,50 +2,44 @@ package com.example.socialview
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.TextView
-import butterknife.BindView
 import com.hendraanggrian.socialview.SociableView
 import com.hendraanggrian.socialview.SocialTextWatcher
 import com.hendraanggrian.socialview.commons.SocialAdapter
 import com.hendraanggrian.support.utils.util.Logs
-import com.hendraanggrian.widget.SocialAutoCompleteTextView
+import kotlinx.android.synthetic.main.activity_example3.*
 
 /**
  * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
-class Example4Activity : BaseActivity(), SocialTextWatcher {
-
-    @BindView(R.id.toolbar_example3) lateinit var toolbar: Toolbar
-    @BindView(R.id.socialautocompletetextview_example3) lateinit var socialAutoCompleteTextView: SocialAutoCompleteTextView<Model, Model>
-
-    override val contentView: Int
-        get() = R.layout.activity_example3
+class Example4Activity : AppCompatActivity(), SocialTextWatcher {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_example3)
         setSupportActionBar(toolbar)
 
-        socialAutoCompleteTextView.threshold = 1
-        socialAutoCompleteTextView.hashtagAdapter = CustomAdapter(this)
-        socialAutoCompleteTextView.mentionAdapter = CustomAdapter(this)
-        socialAutoCompleteTextView.setHashtagTextChangedListener(this)
-        socialAutoCompleteTextView.setHashtagTextChangedListener(this)
+        textView.threshold = 1
+        textView.hashtagAdapter = CustomAdapter(this)
+        textView.mentionAdapter = CustomAdapter(this)
+        textView.setHashtagTextChangedListener(this)
+        textView.setHashtagTextChangedListener(this)
 
         val hashtag1 = Model("follow")
         val hashtag2 = Model("followme")
         val hashtag3 = Model("followmeorillkillyou")
-        socialAutoCompleteTextView.hashtagAdapter.addAll(hashtag1, hashtag2, hashtag3)
+        textView.hashtagAdapter.addAll(hashtag1, hashtag2, hashtag3)
 
         val mention1 = Model("dirtyhobo")
         val mention2 = Model("hobo")
         val mention3 = Model("hendraanggrian")
-        socialAutoCompleteTextView.mentionAdapter.addAll(mention1, mention2, mention3)
+        textView.mentionAdapter.addAll(mention1, mention2, mention3)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

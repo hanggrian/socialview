@@ -2,34 +2,29 @@ package com.example.socialview
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Button
-
-import butterknife.BindViews
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
-class MainActivity : BaseActivity(), View.OnClickListener {
-
-    @BindViews(R.id.button_main_example1, R.id.button_main_example2, R.id.button_main_example3, R.id.button_main_example4)
-    lateinit var buttons: Array<Button>
-
-    override val contentView: Int
-        get() = R.layout.activity_main
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        for (button in buttons)
+        setContentView(R.layout.activity_main)
+        for (button in arrayOf(button1, button2, button3, button4)) {
             button.setOnClickListener(this)
+        }
     }
 
     override fun onClick(v: View) {
-        when (v.id) {
-            R.id.button_main_example1 -> startActivity(Intent(this, Example1Activity::class.java))
-            R.id.button_main_example2 -> startActivity(Intent(this, Example2Activity::class.java))
-            R.id.button_main_example3 -> startActivity(Intent(this, Example3Activity::class.java))
-            R.id.button_main_example4 -> startActivity(Intent(this, Example4Activity::class.java))
-        }
+        startActivity(Intent(this, when (v.id) {
+            R.id.button1 -> Example1Activity::class.java
+            R.id.button2 -> Example2Activity::class.java
+            R.id.button3 -> Example3Activity::class.java
+            else -> Example4Activity::class.java
+        }))
     }
 }

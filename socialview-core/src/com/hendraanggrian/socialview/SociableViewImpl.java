@@ -278,17 +278,17 @@ public class SociableViewImpl<V extends TextView & SociableView> implements Text
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (DEBUG)
             Logs.d(TAG, "onSocialTextChanged s=%s  start=%s    before=%s   count=%s", s, start, before, count);
-
         if (s.length() > 0) {
             colorize();
-
             // triggered when text is added
             if (start < s.length()) {
-
+                if (start + count - 1 < 0) {
+                    return;
+                }
+                char cursor = s.charAt(start + count - 1);
                 if (DEBUG)
-                    Log.d(TAG, "charAt " + String.valueOf(s.charAt(start + count - 1)));
-
-                switch (s.charAt(start + count - 1)) {
+                    Log.d(TAG, "charAt " + String.valueOf(cursor));
+                switch (cursor) {
                     case '#':
                         isHashtagEditing = true;
                         isMentionEditing = false;

@@ -11,7 +11,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_example1"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:navigationIcon="?homeAsUpIndicator"
@@ -27,14 +27,14 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.hendraanggrian.widget.SocialTextView
-            android:id="@+id/socialtextview_example1_1"
+            android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="This is a standard TextView with #hashtag, @mention, and http://some.url support."
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
         <com.hendraanggrian.widget.SocialTextView
-            android:id="@+id/socialtextview_example1_2"
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -43,7 +43,7 @@
             app:socialEnabled="hashtag"/>
 
         <com.hendraanggrian.widget.SocialTextView
-            android:id="@+id/socialtextview_example1_3"
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

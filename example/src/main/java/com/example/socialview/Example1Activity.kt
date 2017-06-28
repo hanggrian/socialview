@@ -1,30 +1,23 @@
 package com.example.socialview
 
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import butterknife.BindView
-import butterknife.BindViews
 import com.hendraanggrian.socialview.OnSocialClickListener
 import com.hendraanggrian.socialview.SociableView
 import com.hendraanggrian.support.utils.widget.Toasts
-import com.hendraanggrian.widget.SocialTextView
+import kotlinx.android.synthetic.main.activity_example1.*
 
 /**
  * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
-class Example1Activity : BaseActivity(), OnSocialClickListener {
-
-    override val contentView: Int
-        get() = R.layout.activity_example1
-
-    @BindView(R.id.toolbar_example1) lateinit var toolbar: Toolbar
-    @BindViews(R.id.socialtextview_example1_1, R.id.socialtextview_example1_2, R.id.socialtextview_example1_3) lateinit var socialTextViews: Array<SocialTextView>
+class Example1Activity : AppCompatActivity(), OnSocialClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_example1)
         setSupportActionBar(toolbar)
-        for (textView in socialTextViews) {
+        for (textView in arrayOf(textView1, textView2, textView3)) {
             textView.setOnHashtagClickListener(this)
             textView.setOnMentionClickListener(this)
         }

@@ -1,34 +1,28 @@
 package com.example.socialview
 
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import butterknife.BindView
 import com.hendraanggrian.socialview.OnSocialClickListener
 import com.hendraanggrian.socialview.SociableView
 import com.hendraanggrian.socialview.SocialTextWatcher
 import com.hendraanggrian.support.utils.util.Logs
 import com.hendraanggrian.support.utils.widget.Toasts
-import com.hendraanggrian.widget.SocialEditText
+import kotlinx.android.synthetic.main.activity_example2.*
 
 /**
  * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
-class Example2Activity : BaseActivity(), OnSocialClickListener, SocialTextWatcher {
-
-    @BindView(R.id.toolbar_example2) lateinit var toolbar: Toolbar
-    @BindView(R.id.socialedittext_example2) lateinit var socialEditText: SocialEditText
-
-    override val contentView: Int
-        get() = R.layout.activity_example2
+class Example2Activity : AppCompatActivity(), OnSocialClickListener, SocialTextWatcher {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_example2)
         setSupportActionBar(toolbar)
-        socialEditText.setOnHashtagClickListener(this)
-        socialEditText.setOnMentionClickListener(this)
-        socialEditText.setHashtagTextChangedListener(this)
-        socialEditText.setMentionTextChangedListener(this)
+        editText.setOnHashtagClickListener(this)
+        editText.setOnMentionClickListener(this)
+        editText.setHashtagTextChangedListener(this)
+        editText.setMentionTextChangedListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

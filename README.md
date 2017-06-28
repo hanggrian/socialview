@@ -82,9 +82,9 @@ repositories {
 
 dependencies {
     // core only
-    compile 'com.hendraanggrian:socialview-core:0.13.0'
+    compile 'com.hendraanggrian:socialview-core:0.13.1'
     // core and commons
-    compile 'com.hendraanggrian:socialview-commons:0.13.0'
+    compile 'com.hendraanggrian:socialview-commons:0.13.1'
 }
 ```
 
@@ -106,6 +106,6 @@ License
     
 [demo]: /art/demo.gif
 [core1]: /art/ss_core1.jpg
-[core1]: /art/ss_core2.jpg
+[core2]: /art/ss_core2.jpg
 [commons1]: /art/ss_commons1.jpg
 [commons2]: /art/ss_commons2.jpg
