@@ -1,14 +1,17 @@
-![icon][icon]
-
 socialview
 ==========
+![icon][icon]
+
 Android TextView and EditText with hashtag, mention, and hyperlink support.
+Comes in 2 packages:
+ * **core** - comes with `SocialTextView`, `SocialEditText` and `SocialViewImpl` to attach any TextView.
+ * **commons** - extended core library with `SocialAutoCompleteTextView` to display suggestions as you type.
 
 Core
 ----
 ![core1][core1] ![core2][core2] ![core3][core3]
 
-Lightweight library that comes with `SocialTextView`, `SocialEditText` and `SocialViewImpl` to attach any TextView.
+Write `SocialTextView` or `SocialEditText` in xml.
 ```xml
 <com.hendraanggrian.widget.SocialTextView
     android:id="@+id/textView"
@@ -47,7 +50,7 @@ Commons
 -------
 ![commons1][commons1] ![commons2][commons2] ![commons3][commons3]
 
-Extended core library with `SocialAutoCompleteTextView` to display suggestions as you type.
+Write `SocialAutoCompleteTextView` in xml.
 ```xml
 <com.hendraanggrian.widget.SocialAutoCompleteTextView
     android:id="@+id/textView"
