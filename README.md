@@ -1,7 +1,7 @@
-socialview
-==========
 ![icon][icon]
 
+socialview
+==========
 Android TextView and EditText with hashtag, mention, and hyperlink support.
 
 Core
