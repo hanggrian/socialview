@@ -30,8 +30,8 @@ import java.util.Collection;
 public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextView implements SociableView, TextWatcher {
 
     @NonNull private final SociableViewImpl<SocialAutoCompleteTextView> impl;
-    private ArrayAdapter hashtagAdapter;
-    private ArrayAdapter mentionAdapter;
+    @Nullable private ArrayAdapter hashtagAdapter;
+    @Nullable private ArrayAdapter mentionAdapter;
 
     public SocialAutoCompleteTextView(Context context) {
         this(context, null);
@@ -44,7 +44,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     public SocialAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         impl = new SociableViewImpl<>(this, attrs);
-        setTokenizer(new HashtagMentionTokenizer(isHashtagEnabled(), isMentionEnabled()));
+        setTokenizer(new SymbolsTokenizer(getEnabledSymbols()));
     }
 
     @Override
@@ -65,13 +65,13 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     @Override
     public void setHashtagEnabled(boolean enabled) {
         impl.setHashtagEnabled(enabled);
-        setTokenizer(new HashtagMentionTokenizer(isHashtagEnabled(), isMentionEnabled()));
+        setTokenizer(new SymbolsTokenizer(getEnabledSymbols()));
     }
 
     @Override
     public void setMentionEnabled(boolean enabled) {
         impl.setMentionEnabled(enabled);
-        setTokenizer(new HashtagMentionTokenizer(isHashtagEnabled(), isMentionEnabled()));
+        setTokenizer(new SymbolsTokenizer(getEnabledSymbols()));
     }
 
     @Override
@@ -187,12 +187,10 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
             if (start < s.length())
                 switch (s.charAt(start)) {
                     case '#':
-                        if (getAdapter() != hashtagAdapter)
-                            setAdapter(hashtagAdapter);
+                        setAdapter(getAdapter() != hashtagAdapter ? hashtagAdapter : null);
                         break;
                     case '@':
-                        if (getAdapter() != mentionAdapter)
-                            setAdapter(mentionAdapter);
+                        setAdapter(getAdapter() != mentionAdapter ? mentionAdapter : null);
                         break;
                 }
     }
@@ -201,38 +199,51 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     public void afterTextChanged(Editable editable) {
     }
 
-    public void setHashtagAdapter(@NonNull ArrayAdapter adapter) {
+    public void setHashtagAdapter(@Nullable ArrayAdapter adapter) {
         hashtagAdapter = adapter;
     }
 
+    @Nullable
     public ArrayAdapter getHashtagAdapter() {
         return hashtagAdapter;
     }
 
-    public void setMentionAdapter(@NonNull ArrayAdapter adapter) {
+    public void setMentionAdapter(@Nullable ArrayAdapter adapter) {
         mentionAdapter = adapter;
     }
 
+    @Nullable
     public ArrayAdapter getMentionAdapter() {
         return mentionAdapter;
     }
 
-    private static class HashtagMentionTokenizer implements Tokenizer {
-        private final Collection<Character> symbols = new ArrayList<>();
+    @NonNull
+    private Collection<Character> getEnabledSymbols() {
+        Collection<Character> symbols = new ArrayList<>();
+        if (isHashtagEnabled()) {
+            symbols.add('#');
+        }
+        if (isMentionEnabled()) {
+            symbols.add('@');
+        }
+        return symbols;
+    }
 
-        private HashtagMentionTokenizer(boolean hashtagEnabled, boolean mentionEnabled) {
-            if (hashtagEnabled)
-                symbols.add('#');
-            if (mentionEnabled)
-                symbols.add('@');
+    private static class SymbolsTokenizer implements Tokenizer {
+        @NonNull private final Collection<Character> symbols;
+
+        private SymbolsTokenizer(@NonNull Collection<Character> symbols) {
+            this.symbols = symbols;
         }
 
         public int findTokenStart(CharSequence text, int cursor) {
             int i = cursor;
-            while (i > 0 && !symbols.contains(text.charAt(i - 1)))
+            while (i > 0 && !symbols.contains(text.charAt(i - 1))) {
                 i--;
-            while (i < cursor && text.charAt(i) == ' ')
+            }
+            while (i < cursor && text.charAt(i) == ' ') {
                 i++;
+            }
             return i;
         }
 
@@ -249,8 +260,9 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
 
         public CharSequence terminateToken(CharSequence text) {
             int i = text.length();
-            while (i > 0 && text.charAt(i - 1) == ' ')
+            while (i > 0 && text.charAt(i - 1) == ' ') {
                 i--;
+            }
 
             if (i > 0 && symbols.contains(text.charAt(i - 1))) {
                 return text;

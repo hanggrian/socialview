@@ -21,7 +21,12 @@ android {
         versionName "1.0"
         minSdkVersion 11
         targetSdkVersion versions.sdk.target
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+    }
+    sourceSets {
+        main.manifest.srcFile 'AndroidManifest.xml'
+        main.java.srcDirs 'src'
+        main.res.srcDirs 'res', 'res-public'
+        main.resources.srcDir 'src'
     }
     buildTypes {
         debug {
@@ -39,13 +44,4 @@ dependencies {
     compile project(':socialview-commons')
     compile "com.android.support:design:$versions.support"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin"
-
-    androidTestCompile("com.android.support.test:runner:$versions.runner") {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile("com.android.support.test.espresso:espresso-core:$versions.espresso") {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-
-    testCompile "junit:junit:$versions.junit"
 }

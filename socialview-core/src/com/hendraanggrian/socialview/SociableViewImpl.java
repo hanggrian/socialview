@@ -15,15 +15,13 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hendraanggrian.spannabletext.MultiSpannableImpl;
+import com.hendraanggrian.spannabletext.SpanSupplier;
 import com.hendraanggrian.support.utils.content.Themes;
-import com.hendraanggrian.support.utils.text.SpanSupplier;
-import com.hendraanggrian.support.utils.text.Spannables;
-import com.hendraanggrian.support.utils.util.Logs;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,12 +35,10 @@ import java.util.regex.Pattern;
  */
 public class SociableViewImpl<V extends TextView & SociableView> implements TextWatcher, SociableView {
 
-    private static final String TAG = "SocialView";
-    private static boolean DEBUG;
     private static final int TYPE_HASHTAG = 1;
     private static final int TYPE_MENTION = 2;
     private static final int TYPE_HYPERLINK = 4;
-    static Pattern PATTERN_HASHTAG = Pattern.compile("(?i)[#＃]([0-9A-Z_À-ÖØ-öø-ÿ]*[A-Z_]+[a-z0-9_üÀ-ÖØ-öø-ÿ]*)");
+    static Pattern PATTERN_HASHTAG = Pattern.compile("(?i)#([0-9A-Z_À-ÖØ-öø-ÿ]*[A-Z_]+[a-z0-9_üÀ-ÖØ-öø-ÿ]*)");
     static Pattern PATTERN_MENTION = Pattern.compile("(?i)@([0-9A-Z_À-ÖØ-öø-ÿ]*[A-Z_]+[a-z0-9_üÀ-ÖØ-öø-ÿ]*)");
 
     private final V view;
@@ -242,15 +238,7 @@ public class SociableViewImpl<V extends TextView & SociableView> implements Text
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        // triggered when text is backspaced
-        if (DEBUG)
-            Logs.d(TAG, "beforeTextChanged s=%s  start=%s    count=%s    after=%s", s, start, count, after);
-
         if (count > 0 && start > 0) {
-
-            if (DEBUG)
-                Log.d(TAG, "charAt " + String.valueOf(s.charAt(start - 1)));
-
             switch (s.charAt(start - 1)) {
                 case '#':
                     isHashtagEditing = true;
@@ -276,8 +264,6 @@ public class SociableViewImpl<V extends TextView & SociableView> implements Text
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (DEBUG)
-            Logs.d(TAG, "onSocialTextChanged s=%s  start=%s    before=%s   count=%s", s, start, before, count);
         if (s.length() > 0) {
             colorize();
             // triggered when text is added
@@ -285,10 +271,7 @@ public class SociableViewImpl<V extends TextView & SociableView> implements Text
                 if (start + count - 1 < 0) {
                     return;
                 }
-                char cursor = s.charAt(start + count - 1);
-                if (DEBUG)
-                    Log.d(TAG, "charAt " + String.valueOf(cursor));
-                switch (cursor) {
+                switch (s.charAt(start + count - 1)) {
                     case '#':
                         isHashtagEditing = true;
                         isMentionEditing = false;
@@ -345,8 +328,10 @@ public class SociableViewImpl<V extends TextView & SociableView> implements Text
             spannable.removeSpan(span);
         }
         // refill new spans
+        MultiSpannableImpl impl = new MultiSpannableImpl(spannable);
         if (isHashtagEnabled()) {
-            Spannables.putSpansAll(spannable, PATTERN_HASHTAG, new SpanSupplier() {
+            impl.putSpansAll(PATTERN_HASHTAG, new SpanSupplier() {
+                @NonNull
                 @Override
                 public Object getSpan() {
                     if (hashtagListener == null) {
@@ -362,7 +347,8 @@ public class SociableViewImpl<V extends TextView & SociableView> implements Text
             });
         }
         if (isMentionEnabled()) {
-            Spannables.putSpansAll(spannable, PATTERN_MENTION, new SpanSupplier() {
+            impl.putSpansAll(PATTERN_MENTION, new SpanSupplier() {
+                @NonNull
                 @Override
                 public Object getSpan() {
                     if (mentionListener == null) {
@@ -378,7 +364,8 @@ public class SociableViewImpl<V extends TextView & SociableView> implements Text
             });
         }
         if (isHyperlinkEnabled()) {
-            Spannables.putSpansAll(spannable, Patterns.WEB_URL, new SpanSupplier() {
+            impl.putSpansAll(Patterns.WEB_URL, new SpanSupplier() {
+                @NonNull
                 @Override
                 public Object getSpan() {
                     return new SimpleURLSpan(spannable, hyperlinkColor.getDefaultColor());
@@ -397,10 +384,6 @@ public class SociableViewImpl<V extends TextView & SociableView> implements Text
                     : 0));
         }
         return list;
-    }
-
-    public static void setDebug(boolean debug) {
-        DEBUG = debug;
     }
 
     public static void setHashtagPattern(@NonNull String regex) {

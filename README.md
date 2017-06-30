@@ -1,25 +1,24 @@
 socialview
 ==========
-Android TextView and EditText with hashtag, mention, and hyperlink support.
+![icon][icon]
 
-![demo][demo]
+Android TextView and EditText with hashtag, mention, and hyperlink support.
 
 Core
 ----
+![core1][core1] ![core2][core2] ![core3][core3]
+
 Lightweight library that comes with `SocialTextView`, `SocialEditText` and `SocialViewImpl` to attach any TextView.
 ```xml
 <com.hendraanggrian.widget.SocialTextView
-    android:id="@+id/socialtextview"
+    android:id="@+id/textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="#hashtag and @mention."/>
 ```
 
-![SocialTextView][core1] ![SocialEditText][core2]
-
 Modify its state and set listeners in java.
 ```java
-SocialTextView textView = (SocialTextView) findViewById(R.id.socialtextview);
 textView.setMentionEnabled(false);
 textView.setHashtagColor(ContextCompat.getColor(this, R.color.red));
 textView.setOnHashtagClickListener(new SocialView.OnSocialClickListener() {
@@ -46,30 +45,79 @@ SocialView socialView = SocialViewImpl.attach(tv);
 
 Commons
 -------
+![commons1][commons1] ![commons2][commons2] ![commons3][commons3]
+
 Extended core library with `SocialAutoCompleteTextView` to display suggestions as you type.
 ```xml
 <com.hendraanggrian.widget.SocialAutoCompleteTextView
-    android:id="@+id/socialsuggestionedittext"
+    android:id="@+id/textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="What's on your mind?"/>
 ```
 
-![SocialAutoCompleteTextView hashtag suggestions][commons1] ![SocialAutoCompleteTextView mention suggestions][commons2]
-
 To display suggestions, it is required to `setHashtagAdapter()` and `setMentionAdapter()`.
 ```java
-SocialAutoCompleteTextView<Hashtag, Mention> textView = (SocialAutoCompleteTextView) findViewById(R.id.socialsuggestionedittext);
-textView.setHashtagAdapter(new HashtagAdapter(getContext())); // or use custom adapter
-textView.setMentionAdapter(new MentionAdapter(getContext())); // or use custom adapter
+ArrayAdapter<Hashtag> hashtagAdapter = new HashtagAdapter(getContext());
+hashtagAdapter.add(new Hashtag("follow"));
+hashtagAdapter.add(new Hashtag("followme", 1000));
+hashtagAdapter.add(new Hashtag("followmeorillkillyou", 500));
+textView.setHashtagAdapter(hashtagAdapter);
 
-textView.getHashtagAdapter().add(new Hashtag("follow"));
-textView.getHashtagAdapter().add(new Hashtag("followme", 1000));
-textView.getHashtagAdapter().add(new Interest("followmeorillkillyou", 500));
+ArrayAdapter<Mention> mentionAdapter = new MentionAdapter(getContext());
+mentionAdapter.add(new Mention("dirtyhobo"));
+mentionAdapter.add(new Mention("hobo", "Regular Hobo", R.mipmap.ic_launcher));
+mentionAdapter.add(new Mention("hendraanggrian", "Hendra Anggrian", "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"));
+textView.setMentionAdapter(mentionAdapter);
+```
 
-textView.getMentionAdapter().add(new Mention("dirtyhobo"));
-textView.getMentionAdapter().add(new Mention("hobo", "Regular Hobo", R.mipmap.ic_launcher));
-textView.getMentionAdapter().add(new Mention("hendraanggrian", "Hendra Anggrian", "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"));
+To customize hashtag or mention adapter, create a custom adapter using customized `SocialAdapter` or write your own `ArrayAdapter`.
+```java
+public class Person {
+    public final String name;
+    
+    public Person(String name) {
+        this.name = name;
+    }
+}
+
+// easier
+public class PersonAdapter extends SocialAdapter<Person> {
+    private Filter filter = new SocialFilter() {
+        @Override
+        public CharSequence convertResultToString(Object resultValue) {
+            return ((Person) resultValue).name;
+        }
+    };
+    
+    public PersonAdapter(@NonNull Context context) {
+        super(context, R.layout.item_person, R.id.textview_person);
+    }
+
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        ...
+    }
+    
+    public Filter getFilter() {
+        return filter;
+    }
+    
+    ...
+}
+
+// this works too
+public class PersonAdapter extends ArrayAdapter<Person> {
+    // your own adapter layout, view holder, data binding
+    // and of course, filtering logic
+}
+```
+
+Then, use the custom adapter.
+```java
+ArrayAdapter<Person> adapter = new PersonAdapter(getContext());
+adapter.add(personA);
+adapter.add(personB);
+textView.setMentionAdapter(adapter);
 ```
 
 Download
@@ -82,9 +130,9 @@ repositories {
 
 dependencies {
     // core only
-    compile 'com.hendraanggrian:socialview-core:0.13.1'
+    compile 'com.hendraanggrian:socialview-core:0.14.0'
     // core and commons
-    compile 'com.hendraanggrian:socialview-commons:0.13.1'
+    compile 'com.hendraanggrian:socialview-commons:0.14.0'
 }
 ```
 
@@ -104,8 +152,10 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
     
-[demo]: /art/demo.gif
-[core1]: /art/ss_core1.jpg
-[core2]: /art/ss_core2.jpg
-[commons1]: /art/ss_commons1.jpg
+[icon]: /example/res/mipmap-xxxhdpi/ic_launcher.png
+[core1]: /art/ss_core1.gif
+[core2]: /art/ss_core2.gif
+[core3]: /art/ss_core3.gif
+[commons1]: /art/ss_commons1.gif
 [commons2]: /art/ss_commons2.jpg
+[commons3]: /art/ss_commons3.jpg

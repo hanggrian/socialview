@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import java.io.File;
 
 /**
+ * A data class of mention to be used with {@link MentionAdapter}.
+ *
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class Mention {
@@ -18,6 +20,33 @@ public class Mention {
 
     public Mention(@NonNull String username) {
         this.username = username;
+    }
+
+    public Mention(@NonNull String username, @Nullable String displayname) {
+        this.username = username;
+        this.displayname = displayname;
+    }
+
+    private Mention(@NonNull String username, @Nullable String displayname, @Nullable Object avatar) {
+        this.username = username;
+        this.displayname = displayname;
+        this.avatar = avatar;
+    }
+
+    public Mention(@NonNull String username, @Nullable String displayname, @DrawableRes int avatarDrawable) {
+        this(username, displayname, (Object) avatarDrawable);
+    }
+
+    public Mention(@NonNull String username, @Nullable String displayname, @Nullable String avatarURL) {
+        this(username, displayname, (Object) avatarURL);
+    }
+
+    public Mention(@NonNull String username, @Nullable String displayname, @Nullable Uri avatarUri) {
+        this(username, displayname, (Object) avatarUri);
+    }
+
+    public Mention(@NonNull String username, @Nullable String displayname, @Nullable File avatarFile) {
+        this(username, displayname, (Object) avatarFile);
     }
 
     @NonNull
@@ -43,9 +72,8 @@ public class Mention {
         this.avatar = avatar;
     }
 
-    @SuppressWarnings("UnnecessaryBoxing")
     public void setAvatarDrawable(@DrawableRes int avatarRes) {
-        this.avatar = Integer.valueOf(avatarRes);
+        this.avatar = avatarRes;
     }
 
     public void setAvatarURL(@Nullable String avatarUrl) {
@@ -58,49 +86,5 @@ public class Mention {
 
     public void setAvatarUri(@Nullable File avatarFile) {
         this.avatar = avatarFile;
-    }
-
-    public static class Builder {
-        private final Mention mention;
-
-        public Builder(@NonNull String username) {
-            this.mention = new Mention(username);
-        }
-
-        @NonNull
-        public Builder setDisplayname(@Nullable String displayname) {
-            mention.setDisplayname(displayname);
-            return this;
-        }
-
-        @NonNull
-        @SuppressWarnings("UnnecessaryBoxing")
-        public Builder setAvatarDrawable(@DrawableRes int avatarRes) {
-            mention.setAvatarDrawable(Integer.valueOf(avatarRes));
-            return this;
-        }
-
-        @NonNull
-        public Builder setAvatarURL(@Nullable String avatarUrl) {
-            mention.setAvatarURL(avatarUrl);
-            return this;
-        }
-
-        @NonNull
-        public Builder setAvatarUri(@Nullable Uri avatarUri) {
-            mention.setAvatarUri(avatarUri);
-            return this;
-        }
-
-        @NonNull
-        public Builder setAvatarUri(@Nullable File avatarFile) {
-            mention.setAvatarUri(avatarFile);
-            return this;
-        }
-
-        @NonNull
-        public Mention build() {
-            return mention;
-        }
     }
 }

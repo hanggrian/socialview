@@ -1,0 +1,5 @@
+<resources>
+    <style name="CustomStyle" parent="Widget.SocialView">
+        <item name="hashtagColor">?colorPrimaryDark</item>
+    </style>
+</resources>

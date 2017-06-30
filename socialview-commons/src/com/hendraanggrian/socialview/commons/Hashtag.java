@@ -3,6 +3,8 @@ package com.hendraanggrian.socialview.commons;
 import android.support.annotation.NonNull;
 
 /**
+ * A data class of hashtag to be used with {@link HashtagAdapter}.
+ *
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class Hashtag {
@@ -12,6 +14,11 @@ public class Hashtag {
 
     public Hashtag(@NonNull String hashtag) {
         this.hashtag = hashtag;
+    }
+
+    public Hashtag(@NonNull String hashtag, int count) {
+        this.hashtag = hashtag;
+        this.count = count;
     }
 
     @NonNull
@@ -25,24 +32,5 @@ public class Hashtag {
 
     public void setCount(int count) {
         this.count = count;
-    }
-
-    public static class Builder {
-        private final Hashtag hashtag;
-
-        public Builder(@NonNull String hashtag) {
-            this.hashtag = new Hashtag(hashtag);
-        }
-
-        @NonNull
-        public Builder setCount(int count) {
-            hashtag.setCount(count);
-            return this;
-        }
-
-        @NonNull
-        public Hashtag build() {
-            return hashtag;
-        }
     }
 }

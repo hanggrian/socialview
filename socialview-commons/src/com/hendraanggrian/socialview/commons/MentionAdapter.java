@@ -1,7 +1,6 @@
 package com.hendraanggrian.socialview.commons;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 
 import com.hendraanggrian.picasso.commons.target.Targets;
 import com.hendraanggrian.picasso.commons.transformation.Transformations;
+import com.hendraanggrian.support.utils.content.Resources2;
 import com.hendraanggrian.support.utils.view.Views;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -25,15 +25,17 @@ import com.squareup.picasso.RequestCreator;
 import java.io.File;
 
 /**
+ * Default adapter for displaying mention in {@link com.hendraanggrian.widget.SocialAutoCompleteTextView}.
+ *
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class MentionAdapter extends SocialAdapter<Mention> {
 
     @DrawableRes private final int defaultAvatar;
-    private final Filter filter = new SuggestionFilter() {
+    private final Filter filter = new SocialFilter() {
         @Override
-        public String getString(Mention item) {
-            return item.getUsername();
+        public CharSequence convertResultToString(Object resultValue) {
+            return ((Mention) resultValue).getUsername();
         }
     };
 
@@ -42,7 +44,7 @@ public class MentionAdapter extends SocialAdapter<Mention> {
     }
 
     public MentionAdapter(@NonNull Context context, @DrawableRes int defaultAvatar) {
-        super(context, R.layout.item_mention, R.id.textview_mention_username);
+        super(context, R.layout.widget_socialview_mention, R.id.textViewUsername);
         this.defaultAvatar = defaultAvatar;
     }
 
@@ -51,7 +53,7 @@ public class MentionAdapter extends SocialAdapter<Mention> {
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_mention, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.widget_socialview_mention, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -61,20 +63,21 @@ public class MentionAdapter extends SocialAdapter<Mention> {
         if (item != null) {
             Picasso picasso = Picasso.with(getContext());
             RequestCreator request = null;
-            if (item.getAvatar() == null)
+            if (item.getAvatar() == null) {
                 request = picasso.load(defaultAvatar);
-            else if (item.getAvatar() instanceof Integer)
+            } else if (item.getAvatar() instanceof Integer) {
                 request = picasso.load((Integer) item.getAvatar());
-            else if (item.getAvatar() instanceof String)
+            } else if (item.getAvatar() instanceof String) {
                 request = picasso.load((String) item.getAvatar());
-            else if (item.getAvatar() instanceof Uri)
+            } else if (item.getAvatar() instanceof Uri) {
                 request = picasso.load((Uri) item.getAvatar());
-            else if (item.getAvatar() instanceof File)
+            } else if (item.getAvatar() instanceof File) {
                 request = picasso.load((File) item.getAvatar());
+            }
 
             if (request != null) {
-                Resources res = getContext().getResources();
-                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(res.getDimensionPixelSize(R.dimen.mention_progressbar_size), res.getDimensionPixelSize(R.dimen.mention_progressbar_size));
+                int progressBarSize = Resources2.toPx(24);
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(progressBarSize, progressBarSize);
                 lp.gravity = Gravity.CENTER;
                 ProgressBar progressBar = new ProgressBar(getContext());
                 progressBar.setLayoutParams(lp);
@@ -84,8 +87,9 @@ public class MentionAdapter extends SocialAdapter<Mention> {
             }
 
             holder.textViewUsername.setText(item.getUsername());
-            if (Views.setVisible(holder.textViewDisplayname, !TextUtils.isEmpty(item.getDisplayname())))
+            if (Views.setVisible(holder.textViewDisplayname, !TextUtils.isEmpty(item.getDisplayname()))) {
                 holder.textViewDisplayname.setText(item.getDisplayname());
+            }
         }
         return convertView;
     }
@@ -102,9 +106,9 @@ public class MentionAdapter extends SocialAdapter<Mention> {
         @NonNull private final TextView textViewDisplayname;
 
         private ViewHolder(@NonNull View view) {
-            imageView = (ImageView) view.findViewById(R.id.imageview_mention_username);
-            textViewUsername = (TextView) view.findViewById(R.id.textview_mention_username);
-            textViewDisplayname = (TextView) view.findViewById(R.id.textview_mention_displayname);
+            imageView = (ImageView) view.findViewById(R.id.imageView);
+            textViewUsername = (TextView) view.findViewById(R.id.textViewUsername);
+            textViewDisplayname = (TextView) view.findViewById(R.id.textViewDisplayname);
         }
     }
 }

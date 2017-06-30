@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Locale;
 
 /**
+ * An ArrayAdapter customized with Filter to display suggestions.
+ * It is a direct parent of default {@link HashtagAdapter} and {@link MentionAdapter}.
+ *
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public abstract class SocialAdapter<T> extends ArrayAdapter<T> {
@@ -38,7 +41,7 @@ public abstract class SocialAdapter<T> extends ArrayAdapter<T> {
             super.addAll(collection);
             tempItems.addAll(collection);
         } else {
-            throw new RuntimeException("Unsupported operation: addAll() requires min SDK 11!");
+            throw new UnsupportedOperationException("addAll() requires min SDK 11!");
         }
     }
 
@@ -49,7 +52,7 @@ public abstract class SocialAdapter<T> extends ArrayAdapter<T> {
             super.addAll(items);
             Collections.addAll(tempItems, items);
         } else {
-            throw new RuntimeException("Unsupported operation: addAll() requires min SDK 11!");
+            throw new UnsupportedOperationException("addAll() requires min SDK 11!");
         }
     }
 
@@ -66,25 +69,19 @@ public abstract class SocialAdapter<T> extends ArrayAdapter<T> {
 
     private void add(@Nullable T item, boolean affectTempItems) {
         super.add(item);
-        if (affectTempItems)
+        if (affectTempItems) {
             tempItems.add(item);
+        }
     }
 
     private void clear(boolean affectTempItems) {
         super.clear();
-        if (affectTempItems)
+        if (affectTempItems) {
             tempItems.clear();
+        }
     }
 
-    public abstract class SuggestionFilter extends Filter {
-
-        public abstract String getString(T item);
-
-        @Override
-        @SuppressWarnings("unchecked")
-        public CharSequence convertResultToString(Object resultValue) {
-            return getString((T) resultValue);
-        }
+    public abstract class SocialFilter extends Filter {
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -110,8 +107,9 @@ public abstract class SocialAdapter<T> extends ArrayAdapter<T> {
             List<T> filterList = (ArrayList<T>) results.values;
             if (results.count > 0) {
                 clear(false);
-                for (T item : filterList)
+                for (T item : filterList) {
                     add(item, false);
+                }
                 notifyDataSetChanged();
             }
         }
