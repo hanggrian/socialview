@@ -31,12 +31,15 @@
         </FrameLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <com.hendraanggrian.widget.SocialEditText
-        android:id="@+id/editText"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@null"
-        android:gravity="center"
         android:padding="16dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.hendraanggrian.widget.SocialAutoCompleteTextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>

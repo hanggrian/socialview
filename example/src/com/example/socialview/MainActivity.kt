@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity(), SocialTextWatcher {
 
     var defaultHashtagAdapter: ArrayAdapter<Hashtag>? = null
     var defaultMentionAdapter: ArrayAdapter<Mention>? = null
-    var customHashtagAdapter: ArrayAdapter<Model>? = null
-    var customMentionAdapter: ArrayAdapter<Model>? = null
+    var customHashtagAdapter: ArrayAdapter<Person>? = null
+    var customMentionAdapter: ArrayAdapter<Person>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,18 +41,18 @@ class MainActivity : AppCompatActivity(), SocialTextWatcher {
                 Mention("hendraanggrian", "Hendra Anggrian", "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460")
         )
 
-        customHashtagAdapter = CustomAdapter(this)
+        customHashtagAdapter = PersonAdapter(this)
         customHashtagAdapter!!.addAll(
-                Model("follow"),
-                Model("followme"),
-                Model("followmeorillkillyou")
+                Person("follow"),
+                Person("followme"),
+                Person("followmeorillkillyou")
         )
 
-        customMentionAdapter = CustomAdapter(this)
+        customMentionAdapter = PersonAdapter(this)
         customMentionAdapter!!.addAll(
-                Model("dirtyhobo"),
-                Model("hobo"),
-                Model("hendraanggrian"))
+                Person("dirtyhobo"),
+                Person("hobo"),
+                Person("hendraanggrian"))
 
         textView.threshold = 1
         textView.hashtagAdapter = defaultHashtagAdapter
@@ -86,16 +86,16 @@ class MainActivity : AppCompatActivity(), SocialTextWatcher {
         Logs.d("editing", s)
     }
 
-    class Model constructor(val content: String)
+    class Person constructor(val name: String)
 
-    class CustomAdapter constructor(context: Context) : SocialAdapter<Model>(context, R.layout.item_custom, R.id.textview_custom) {
+    class PersonAdapter constructor(context: Context) : SocialAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
         private var filter: Filter? = null
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             var convertView = convertView
             val holder: ViewHolder
             if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.item_custom, parent, false)
+                convertView = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
                 holder = ViewHolder(convertView!!)
                 convertView.tag = holder
             } else {
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity(), SocialTextWatcher {
             }
             val model = getItem(position)
             if (model != null) {
-                holder.textView.text = model.content
+                holder.textView.text = model.name
             }
             return convertView
         }
@@ -112,14 +112,14 @@ class MainActivity : AppCompatActivity(), SocialTextWatcher {
             if (filter == null)
                 filter = object : SocialFilter() {
                     override fun convertResultToString(resultValue: Any): CharSequence {
-                        return (resultValue as Model).content
+                        return (resultValue as Person).name
                     }
                 }
             return filter as Filter
         }
 
         private class ViewHolder constructor(view: View) {
-            val textView: TextView = view.findViewById(R.id.textview_custom) as TextView
+            val textView: TextView = view.findViewById(R.id.textViewName) as TextView
         }
     }
 }

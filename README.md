@@ -156,9 +156,9 @@ License
     limitations under the License.
     
 [icon]: /example/res/mipmap-xxxhdpi/ic_launcher.png
-[core1]: /art/ss_core1.gif
-[core2]: /art/ss_core2.gif
-[core3]: /art/ss_core3.gif
-[commons1]: /art/ss_commons1.gif
-[commons2]: /art/ss_commons2.jpg
-[commons3]: /art/ss_commons3.jpg
+[core1]: /art/core1.gif
+[core2]: /art/core2.gif
+[core3]: /art/core3.gif
+[commons1]: /art/commons1.gif
+[commons2]: /art/commons2.gif
+[commons3]: /art/commons3.gif
