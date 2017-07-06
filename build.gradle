@@ -20,8 +20,8 @@ allprojects {
             // main
             support       : '25.4.0',
             spannable     : '0.8',
-            utils         : '0.13',
-            picassoCommons: '0.12.0',
+            utils         : '0.15',
+            picassoCommons: '0.12.3',
 
             // test
             runner        : '0.5',
