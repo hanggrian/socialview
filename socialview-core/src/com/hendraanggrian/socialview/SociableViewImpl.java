@@ -156,29 +156,17 @@ public class SociableViewImpl<V extends TextView & SociableView> implements Text
 
     @Override
     public void setHashtagColorAttr(@AttrRes int colorAttr) {
-        int color = Themes.getColor(view.getContext(), colorAttr, 0);
-        if (color == 0) {
-            throw new IllegalArgumentException("color attribute not found in current theme!");
-        }
-        setHashtagColor(color);
+        setHashtagColor(Themes.getColor(view.getContext(), colorAttr));
     }
 
     @Override
     public void setMentionColorAttr(@AttrRes int colorAttr) {
-        int color = Themes.getColor(view.getContext(), colorAttr, 0);
-        if (color == 0) {
-            throw new IllegalArgumentException("color attribute not found in current theme!");
-        }
-        setMentionColor(color);
+        setMentionColor(Themes.getColor(view.getContext(), colorAttr));
     }
 
     @Override
     public void setHyperlinkColorAttr(@AttrRes int colorAttr) {
-        int color = Themes.getColor(view.getContext(), colorAttr, 0);
-        if (color == 0) {
-            throw new IllegalArgumentException("color attribute not found in current theme!");
-        }
-        setHyperlinkColor(color);
+        setHyperlinkColor(Themes.getColor(view.getContext(), colorAttr));
     }
 
     @Override
