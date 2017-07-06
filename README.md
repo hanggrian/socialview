@@ -1,11 +1,11 @@
 socialview
 ==========
-![icon][icon]
-
 Android TextView and EditText with hashtag, mention, and hyperlink support.
 Comes in 2 packages:
  * **core** - comes with `SocialTextView`, `SocialEditText` and `SocialViewImpl` to attach any TextView.
  * **commons** - extended core library with `SocialAutoCompleteTextView` to display suggestions as you type.
+
+![commons1][commons1]
 
 Core
 ----
@@ -155,7 +155,6 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
     
-[icon]: /example/res/mipmap-xxxhdpi/ic_launcher.png
 [core1]: /art/core1.gif
 [core2]: /art/core2.gif
 [core3]: /art/core3.gif
