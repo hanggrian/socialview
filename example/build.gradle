@@ -2,23 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-buildscript {
-    ext.kotlin = '1.1.3-2'
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin"
-    }
-}
-
 android {
     compileSdkVersion versions.sdk.target
     buildToolsVersion versions.buildTools
     defaultConfig {
-        applicationId "com.example.socialview"
+        applicationId 'com.example.socialview'
         versionCode 1
-        versionName "1.0"
+        versionName '1.0'
         minSdkVersion 11
         targetSdkVersion versions.sdk.target
     }
@@ -40,8 +30,13 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://dl.bintray.com/hendraanggrian/maven/' }
+}
+
 dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
     compile project(':socialview-commons')
     compile "com.android.support:design:$versions.support"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin"
+    compile "org.jetbrains.anko:anko-commons:$versions.kotlin.anko"
 }

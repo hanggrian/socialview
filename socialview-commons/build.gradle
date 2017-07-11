@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.novoda.bintray-release'
 apply from: 'https://raw.githubusercontent.com/HendraAnggrian/hendraanggrian.github.io/master/bintray.gradle'
 
@@ -24,6 +26,7 @@ android {
 }
 
 dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
     compile project(':socialview-core')
     compile "com.hendraanggrian:picasso-commons:$versions.picassoCommons"
     androidTestCompile "com.android.support:design:$versions.support"

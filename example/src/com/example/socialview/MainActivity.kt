@@ -3,20 +3,21 @@ package com.example.socialview
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Filter
 import android.widget.TextView
-import com.hendraanggrian.socialview.SociableView
-import com.hendraanggrian.socialview.SocialTextWatcher
 import com.hendraanggrian.socialview.commons.*
-import com.hendraanggrian.support.utils.util.Logs
+import com.hendraanggrian.support.utils.content.int
+import com.hendraanggrian.support.utils.content.string
+import com.hendraanggrian.support.utils.view.findViewBy
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
  */
-class MainActivity : AppCompatActivity(), SocialTextWatcher {
+class MainActivity : AppCompatActivity() {
 
     var defaultHashtagAdapter: ArrayAdapter<Hashtag>? = null
     var defaultMentionAdapter: ArrayAdapter<Mention>? = null
@@ -30,35 +31,33 @@ class MainActivity : AppCompatActivity(), SocialTextWatcher {
 
         defaultHashtagAdapter = HashtagAdapter(this)
         defaultHashtagAdapter!!.addAll(
-                Hashtag("follow"),
-                Hashtag("followme", 1000),
-                Hashtag("followmeorillkillyou", 500))
+                Hashtag(R.string.hashtag1.string(this)),
+                Hashtag(R.string.hashtag2.string(this), R.integer.hashtag2.int(this)),
+                Hashtag(R.string.hashtag3.string(this), R.integer.hashtag3.int(this)))
 
         defaultMentionAdapter = MentionAdapter(this)
         defaultMentionAdapter!!.addAll(
-                Mention("dirtyhobo"),
-                Mention("hobo", "Regular Hobo", R.mipmap.ic_launcher),
-                Mention("hendraanggrian", "Hendra Anggrian", "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460")
-        )
+                Mention(R.string.mention1_username.string(this)),
+                Mention(R.string.mention2_username.string(this), R.string.mention2_displayname.string(this), R.mipmap.ic_launcher),
+                Mention(R.string.mention3_username.string(this), R.string.mention3_displayname.string(this), "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"))
 
         customHashtagAdapter = PersonAdapter(this)
         customHashtagAdapter!!.addAll(
-                Person("follow"),
-                Person("followme"),
-                Person("followmeorillkillyou")
-        )
+                Person(R.string.hashtag1.string(this)),
+                Person(R.string.hashtag2.string(this)),
+                Person(R.string.hashtag3.string(this)))
 
         customMentionAdapter = PersonAdapter(this)
         customMentionAdapter!!.addAll(
-                Person("dirtyhobo"),
-                Person("hobo"),
-                Person("hendraanggrian"))
+                Person(R.string.mention1_username.string(this)),
+                Person(R.string.mention2_username.string(this)),
+                Person(R.string.mention3_username.string(this)))
 
         textView.threshold = 1
         textView.hashtagAdapter = defaultHashtagAdapter
         textView.mentionAdapter = defaultMentionAdapter
-        textView.setHashtagTextChangedListener(this)
-        textView.setMentionTextChangedListener(this)
+        textView.setHashtagTextChangedListener { _, s -> Log.d("editing", s.toString()) }
+        textView.setMentionTextChangedListener { _, s -> Log.d("editing", s.toString()) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -82,10 +81,6 @@ class MainActivity : AppCompatActivity(), SocialTextWatcher {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onSocialTextChanged(v: SociableView, s: CharSequence) {
-        Logs.d("editing", s)
-    }
-
     class Person constructor(val name: String)
 
     class PersonAdapter constructor(context: Context) : SocialAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
@@ -96,7 +91,7 @@ class MainActivity : AppCompatActivity(), SocialTextWatcher {
             val holder: ViewHolder
             if (convertView == null) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
-                holder = ViewHolder(convertView!!)
+                holder = ViewHolder(convertView)
                 convertView.tag = holder
             } else {
                 holder = convertView.tag as ViewHolder
@@ -105,7 +100,7 @@ class MainActivity : AppCompatActivity(), SocialTextWatcher {
             if (model != null) {
                 holder.textView.text = model.name
             }
-            return convertView
+            return convertView!!
         }
 
         override fun getFilter(): Filter {
@@ -119,7 +114,7 @@ class MainActivity : AppCompatActivity(), SocialTextWatcher {
         }
 
         private class ViewHolder constructor(view: View) {
-            val textView: TextView = view.findViewById(R.id.textViewName) as TextView
+            val textView = view.findViewBy<TextView>(R.id.textViewName)
         }
     }
 }

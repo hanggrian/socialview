@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">socialview</string>
+
+    <string name="hashtag1">follow</string>
+    <string name="hashtag2">followme</string>
+    <string name="hashtag3">followmeorillkillyou</string>
+
+    <string name="mention1_username">dirtyhobo</string>
+    <string name="mention2_username">hobo</string>
+    <string name="mention3_username">hendraanggrian</string>
+
+    <string name="mention2_displayname">Regular Hobo</string>
+    <string name="mention3_displayname">Hendra Anggrian</string>
 </resources>
