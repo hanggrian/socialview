@@ -1,0 +1,38 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion versions.sdk.target
+    buildToolsVersion versions.buildTools
+    defaultConfig {
+        applicationId 'com.example.socialview'
+        versionCode 1
+        versionName '1.0'
+        minSdkVersion 11
+        targetSdkVersion versions.sdk.target
+    }
+    sourceSets {
+        main.manifest.srcFile 'AndroidManifest.xml'
+        main.java.srcDirs 'src'
+        main.res.srcDirs 'res', 'res-public'
+        main.resources.srcDir 'src'
+    }
+    buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
+    compile project(':socialview-commons')
+    compile "com.android.support:design:$versions.support"
+    compile "org.jetbrains.anko:anko-commons:$versions.kotlin.anko"
+}

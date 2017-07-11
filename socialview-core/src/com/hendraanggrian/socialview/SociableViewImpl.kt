@@ -72,7 +72,7 @@ class SociableViewImpl<out T>(
                     if (start + count - 1 < 0) {
                         return
                     }
-                    when (s.get(start + count - 1)) {
+                    when (s[start + count - 1]) {
                         '#' -> {
                             isHashtagEditing = true
                             isMentionEditing = false
@@ -98,6 +98,7 @@ class SociableViewImpl<out T>(
     }
 
     private var enabledFlag: Int
+    private var isInit: Boolean = false
     private var hashtagListener: ((SociableView, CharSequence) -> Unit)? = null
     private var mentionListener: ((SociableView, CharSequence) -> Unit)? = null
     private var hashtagWatcher: ((SociableView, CharSequence) -> Unit)? = null
@@ -110,9 +111,56 @@ class SociableViewImpl<out T>(
     override val mentions: Collection<String> get() = if (!isHashtagEnabled) emptyList() else newList(PATTERN_MENTION, view.text)
     override val hyperlinks: Collection<String> get() = if (!isHashtagEnabled) emptyList() else newList(Patterns.WEB_URL, view.text)
 
+    override var isHashtagEnabled: Boolean
+        get() = enabledFlag or TYPE_HASHTAG == enabledFlag
+        set(value) {
+            enabledFlag = if (value)
+                enabledFlag or TYPE_HASHTAG
+            else
+                enabledFlag and TYPE_HASHTAG.inv()
+            colorize()
+        }
+
+    override var isMentionEnabled: Boolean
+        get() = enabledFlag or TYPE_MENTION == enabledFlag
+        set(value) {
+            enabledFlag = if (value)
+                enabledFlag or TYPE_MENTION
+            else
+                enabledFlag and TYPE_MENTION.inv()
+            colorize()
+        }
+
+    override var isHyperlinkEnabled: Boolean
+        get() = enabledFlag or TYPE_HYPERLINK == enabledFlag
+        set(value) {
+            enabledFlag = if (value)
+                enabledFlag or TYPE_HYPERLINK
+            else
+                enabledFlag and TYPE_HYPERLINK.inv()
+            colorize()
+        }
+
     override var hashtagColor: Int = 0
+        get() = field
+        set(value) {
+            field = value
+            if (isInit) colorize()
+        }
+
     override var mentionColor: Int = 0
+        get() = field
+        set(value) {
+            field = value
+            if (isInit) colorize()
+        }
+
     override var hyperlinkColor: Int = 0
+        get() = field
+        set(value) {
+            field = value
+            if (isInit) colorize()
+        }
 
     init {
         view.addTextChangedListener(mTextWatcher)
@@ -124,34 +172,8 @@ class SociableViewImpl<out T>(
         hyperlinkColor = a.getColorStateList(R.styleable.SocialView_hyperlinkColor).defaultColor
         a.recycle()
         colorize()
+        isInit = true
     }
-
-    override var isHashtagEnabled: Boolean
-        get() = enabledFlag or TYPE_HASHTAG == enabledFlag
-        set(value) {
-            enabledFlag = if (value)
-                enabledFlag or TYPE_HASHTAG
-            else
-                enabledFlag and TYPE_HASHTAG.inv()
-        }
-
-    override var isMentionEnabled: Boolean
-        get() = enabledFlag or TYPE_MENTION == enabledFlag
-        set(value) {
-            enabledFlag = if (value)
-                enabledFlag or TYPE_MENTION
-            else
-                enabledFlag and TYPE_MENTION.inv()
-        }
-
-    override var isHyperlinkEnabled: Boolean
-        get() = enabledFlag or TYPE_HYPERLINK == enabledFlag
-        set(value) {
-            enabledFlag = if (value)
-                enabledFlag or TYPE_HYPERLINK
-            else
-                enabledFlag and TYPE_HYPERLINK.inv()
-        }
 
     override fun setOnHashtagClickListener(listener: ((SociableView, CharSequence) -> Unit)?) {
         hashtagListener = listener
@@ -175,7 +197,7 @@ class SociableViewImpl<out T>(
 
     private fun colorize() {
         val spannable = view.text
-        check(spannable !is Spannable, { "Attached text is not a Spannable, add TextView.BufferType.SPANNABLE when setting text to this TextView." })
+        check(spannable is Spannable, { "Attached text is not a Spannable, add TextView.BufferType.SPANNABLE when setting text to this TextView." })
         spannable as Spannable
         spannable.removeSpans(spannable.getSpans(0, spannable.length, CharacterStyle::class.java))
         if (isHashtagEnabled) {

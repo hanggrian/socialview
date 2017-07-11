@@ -14,7 +14,7 @@ buildscript {
             ],
             support       : '25.4.0',
             utils         : '0.21',
-            picassoCommons: '0.12.3',
+            picassoCommons: '0.13.1',
 
             // test
             runner        : '0.5',

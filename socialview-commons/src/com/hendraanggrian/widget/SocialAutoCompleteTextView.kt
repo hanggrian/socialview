@@ -8,7 +8,6 @@ import android.widget.MultiAutoCompleteTextView
 import com.hendraanggrian.socialview.SociableView
 import com.hendraanggrian.socialview.SociableViewImpl
 
-
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */

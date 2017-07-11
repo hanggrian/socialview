@@ -83,14 +83,16 @@ abstract class SocialAdapter<T>(context: Context, resource: Int, textViewResourc
         }
 
         @Suppress("UNCHECKED_CAST")
-        override fun publishResults(constraint: CharSequence, results: Filter.FilterResults) {
-            val filterList = results.values as ArrayList<T>
-            if (results.count > 0) {
-                clear(false)
-                for (item in filterList) {
-                    add(item, false)
+        override fun publishResults(constraint: CharSequence?, results: Filter.FilterResults) {
+            if (results.values != null) {
+                val filterList = results.values as ArrayList<T>
+                if (results.count > 0) {
+                    clear(false)
+                    for (item in filterList) {
+                        add(item, false)
+                    }
+                    notifyDataSetChanged()
                 }
-                notifyDataSetChanged()
             }
         }
     }

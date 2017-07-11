@@ -18,6 +18,7 @@ import com.hendraanggrian.support.utils.content.colorAttr
 interface SociableView {
 
     val internalContext: Context
+
     val hashtags: Collection<String>
     val mentions: Collection<String>
     val hyperlinks: Collection<String>

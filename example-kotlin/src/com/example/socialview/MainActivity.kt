@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    class Person constructor(val name: String)
+    data class Person constructor(val name: String)
 
     class PersonAdapter constructor(context: Context) : SocialAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
         private var filter: Filter? = null

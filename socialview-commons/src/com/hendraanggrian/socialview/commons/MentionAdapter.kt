@@ -14,8 +14,8 @@ import com.hendraanggrian.picasso.commons.transformation.Transformations
 import com.hendraanggrian.support.utils.content.toPx
 import com.hendraanggrian.support.utils.view.findViewBy
 import com.hendraanggrian.support.utils.view.setVisibleBy
-import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
+import com.squareup.picasso.load
 import java.io.File
 
 /**
@@ -39,36 +39,32 @@ class MentionAdapter @JvmOverloads constructor(context: Context, @param:Drawable
         } else {
             holder = convertView.tag as ViewHolder
         }
-        val item = getItem(position)
-        if (item != null) {
-            val picasso = Picasso.with(context)
-            var request: RequestCreator? = null
-            if (item.avatar == null) {
-                request = picasso.load(defaultAvatar)
-            } else if (item.avatar is Int) {
-                request = picasso.load((item.avatar as Int?)!!)
-            } else if (item.avatar is String) {
-                request = picasso.load(item.avatar as String?)
-            } else if (item.avatar is Uri) {
-                request = picasso.load(item.avatar as Uri?)
-            } else if (item.avatar is File) {
-                request = picasso.load(item.avatar as File?)
+        getItem(position)?.let {
+            val request: RequestCreator
+            if (it.avatar == null) {
+                request = context.load(defaultAvatar)
+            } else if (it.avatar is Int) {
+                request = context.load(it.avatar)
+            } else if (it.avatar is String) {
+                request = context.load(it.avatar)
+            } else if (it.avatar is Uri) {
+                request = context.load(it.avatar)
+            } else if (it.avatar is File) {
+                request = context.load(it.avatar)
+            } else {
+                throw IllegalStateException("Unsupported avatar type. See Mention.kt for more.")
             }
-
-            if (request != null) {
-                val progressBarSize = 24.toPx()
-                val lp = FrameLayout.LayoutParams(progressBarSize, progressBarSize)
-                lp.gravity = Gravity.CENTER
-                val progressBar = ProgressBar(context)
-                progressBar.layoutParams = lp
-                request.error(defaultAvatar)
-                        .transform(Transformations.circle())
-                        .into(Targets.placeholder(holder.imageView, progressBar))
-            }
-
-            holder.textViewUsername.text = item.username
-            if (holder.textViewDisplayname.setVisibleBy(!TextUtils.isEmpty(item.displayname))) {
-                holder.textViewDisplayname.text = item.displayname
+            request.error(defaultAvatar)
+                    .transform(Transformations.circle())
+                    .into(Targets.placeholder(holder.imageView, ProgressBar(context).apply {
+                        val progressBarSize = 24.toPx()
+                        layoutParams = FrameLayout.LayoutParams(progressBarSize, progressBarSize).apply {
+                            gravity = Gravity.CENTER
+                        }
+                    }))
+            holder.textViewUsername.text = it.username
+            if (holder.textViewDisplayname.setVisibleBy(!TextUtils.isEmpty(it.displayname))) {
+                holder.textViewDisplayname.text = it.displayname
             }
         }
         return convertView

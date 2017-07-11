@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example-java/example-java.iml" filepath="$PROJECT_DIR$/example-java/example-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example-kotlin/example-kotlin.iml" filepath="$PROJECT_DIR$/example-kotlin/example-kotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/example2/example2.iml" filepath="$PROJECT_DIR$/example2/example2.iml" />
       <module fileurl="file://$PROJECT_DIR$/socialview.iml" filepath="$PROJECT_DIR$/socialview.iml" />
       <module fileurl="file://$PROJECT_DIR$/socialview-commons/socialview-commons.iml" filepath="$PROJECT_DIR$/socialview-commons/socialview-commons.iml" />
