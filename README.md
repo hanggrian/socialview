@@ -133,9 +133,9 @@ repositories {
 
 dependencies {
     // core only
-    compile 'com.hendraanggrian:socialview-core:0.14.1'
+    compile 'com.hendraanggrian:socialview-core:0.15.0'
     // core and commons
-    compile 'com.hendraanggrian:socialview-commons:0.14.1'
+    compile 'com.hendraanggrian:socialview-commons:0.15.0'
 }
 ```
 

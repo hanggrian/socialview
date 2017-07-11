@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.Editable
 import android.text.Spannable
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
 import android.text.style.CharacterStyle
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
@@ -38,6 +39,14 @@ class SociableViewImpl<out T>(
             }
             return list
         }
+
+        fun setHashtagPattern(regex: String) {
+            PATTERN_HASHTAG = Pattern.compile(regex)
+        }
+
+        fun setMentionPattern(regex: String) {
+            PATTERN_MENTION = Pattern.compile(regex)
+        }
     }
 
     private val mTextWatcher = object : TextWatcher {
@@ -52,7 +61,7 @@ class SociableViewImpl<out T>(
                         isHashtagEditing = false
                         isMentionEditing = true
                     }
-                    else -> if (!Character.isLetterOrDigit(s.get(start - 1))) {
+                    else -> if (!Character.isLetterOrDigit(s[start - 1])) {
                         isHashtagEditing = false
                         isMentionEditing = false
                     } else if (hashtagWatcher != null && isHashtagEditing) {
@@ -176,11 +185,19 @@ class SociableViewImpl<out T>(
     }
 
     override fun setOnHashtagClickListener(listener: ((SociableView, CharSequence) -> Unit)?) {
+        if (view.movementMethod == null || view.movementMethod !is LinkMovementMethod) {
+            view.movementMethod = LinkMovementMethod.getInstance()
+        }
         hashtagListener = listener
+        colorize()
     }
 
     override fun setOnMentionClickListener(listener: ((SociableView, CharSequence) -> Unit)?) {
+        if (view.movementMethod == null || view.movementMethod !is LinkMovementMethod) {
+            view.movementMethod = LinkMovementMethod.getInstance()
+        }
         mentionListener = listener
+        colorize()
     }
 
     override fun setHashtagTextChangedListener(watcher: ((SociableView, CharSequence) -> Unit)?) {

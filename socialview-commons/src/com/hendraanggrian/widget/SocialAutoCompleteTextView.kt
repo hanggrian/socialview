@@ -18,15 +18,19 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
 
     private val impl = SociableViewImpl(this, attrs)
     private val mTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            if (s.isNotEmpty())
-                if (start < s.length)
-                    when (s[start]) {
-                        '#' -> setAdapter(if (adapter !== hashtagAdapter) hashtagAdapter else null)
-                        '@' -> setAdapter(if (adapter !== mentionAdapter) mentionAdapter else null)
+            if (s.isNotEmpty() && start < s.length) {
+                when (s[start]) {
+                    '#' -> if (adapter !== hashtagAdapter) {
+                        setAdapter(hashtagAdapter)
                     }
+                    '@' -> if (adapter !== mentionAdapter) {
+                        setAdapter(mentionAdapter)
+                    }
+                }
+            }
         }
 
         override fun afterTextChanged(editable: Editable?) {}
@@ -94,7 +98,7 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
         }
     }
 
-    private class SymbolsTokenizer internal constructor(private val symbols: Collection<Char>) : MultiAutoCompleteTextView.Tokenizer {
+    class SymbolsTokenizer(val symbols: Collection<Char>) : MultiAutoCompleteTextView.Tokenizer {
         override fun findTokenStart(text: CharSequence, cursor: Int): Int {
             var i = cursor
             while (i > 0 && !symbols.contains(text[i - 1])) {
