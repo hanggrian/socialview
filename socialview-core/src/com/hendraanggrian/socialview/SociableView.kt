@@ -3,8 +3,8 @@ package com.hendraanggrian.socialview
 import android.content.Context
 import android.support.annotation.AttrRes
 import android.support.annotation.ColorRes
-import com.hendraanggrian.support.utils.content.color
-import com.hendraanggrian.support.utils.content.colorAttr
+import com.hendraanggrian.support.utils.content.getColor
+import com.hendraanggrian.support.utils.content.getColor2
 
 /**
  * Base methods of all socialview's widgets.
@@ -32,27 +32,27 @@ interface SociableView {
     var hyperlinkColor: Int
 
     fun setHashtagColorRes(@ColorRes id: Int) {
-        hashtagColor = id.color(internalContext)
+        hashtagColor = internalContext.getColor2(id)
     }
 
     fun setMentionColorRes(@ColorRes id: Int) {
-        mentionColor = id.color(internalContext)
+        mentionColor = internalContext.getColor2(id)
     }
 
     fun setHyperlinkColorRes(@ColorRes id: Int) {
-        hyperlinkColor = id.color(internalContext)
+        hyperlinkColor = internalContext.getColor2(id)
     }
 
     fun setHashtagColorAttr(@AttrRes id: Int) {
-        hashtagColor = id.colorAttr(internalContext, true)
+        hashtagColor = internalContext.theme.getColor(id, true)
     }
 
     fun setMentionColorAttr(@AttrRes id: Int) {
-        mentionColor = id.colorAttr(internalContext, true)
+        mentionColor = internalContext.theme.getColor(id, true)
     }
 
     fun setHyperlinkColorAttr(@AttrRes id: Int) {
-        hyperlinkColor = id.colorAttr(internalContext, true)
+        hyperlinkColor = internalContext.theme.getColor(id, true)
     }
 
     fun setOnHashtagClickListener(listener: ((SociableView, CharSequence) -> Unit)?)

@@ -9,8 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Filter
 import android.widget.TextView
 import com.hendraanggrian.socialview.commons.*
-import com.hendraanggrian.support.utils.content.int
-import com.hendraanggrian.support.utils.content.string
+import com.hendraanggrian.support.utils.content.getInteger
 import com.hendraanggrian.support.utils.view.findViewBy
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -31,27 +30,27 @@ class MainActivity : AppCompatActivity() {
 
         defaultHashtagAdapter = HashtagAdapter(this)
         defaultHashtagAdapter!!.addAll(
-                Hashtag(R.string.hashtag1.string(this)),
-                Hashtag(R.string.hashtag2.string(this), R.integer.hashtag2.int(this)),
-                Hashtag(R.string.hashtag3.string(this), R.integer.hashtag3.int(this)))
+                Hashtag(getString(R.string.hashtag1)),
+                Hashtag(getString(R.string.hashtag2), getInteger(R.integer.hashtag2)),
+                Hashtag(getString(R.string.hashtag3), getInteger(R.integer.hashtag3)))
 
         defaultMentionAdapter = MentionAdapter(this)
         defaultMentionAdapter!!.addAll(
-                Mention(R.string.mention1_username.string(this)),
-                Mention(R.string.mention2_username.string(this), R.string.mention2_displayname.string(this), R.mipmap.ic_launcher),
-                Mention(R.string.mention3_username.string(this), R.string.mention3_displayname.string(this), "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"))
+                Mention(getString(R.string.mention1_username)),
+                Mention(getString(R.string.mention2_username), getString(R.string.mention2_displayname), R.mipmap.ic_launcher),
+                Mention(getString(R.string.mention3_username), getString(R.string.mention3_displayname), "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"))
 
         customHashtagAdapter = PersonAdapter(this)
         customHashtagAdapter!!.addAll(
-                Person(R.string.hashtag1.string(this)),
-                Person(R.string.hashtag2.string(this)),
-                Person(R.string.hashtag3.string(this)))
+                Person(getString(R.string.hashtag1)),
+                Person(getString(R.string.hashtag2)),
+                Person(getString(R.string.hashtag3)))
 
         customMentionAdapter = PersonAdapter(this)
         customMentionAdapter!!.addAll(
-                Person(R.string.mention1_username.string(this)),
-                Person(R.string.mention2_username.string(this)),
-                Person(R.string.mention3_username.string(this)))
+                Person(getString(R.string.mention1_username)),
+                Person(getString(R.string.mention2_username)),
+                Person(getString(R.string.mention3_username)))
 
         textView.threshold = 1
         textView.hashtagAdapter = defaultHashtagAdapter

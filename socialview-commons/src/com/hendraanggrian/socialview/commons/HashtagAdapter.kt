@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
 import android.widget.TextView
 import com.hendraanggrian.support.utils.view.findViewBy
 import com.hendraanggrian.support.utils.view.setVisibleBy
@@ -19,7 +18,7 @@ import java.util.*
 class HashtagAdapter(context: Context) : SocialAdapter<Hashtag>(context, R.layout.widget_socialview_hashtag, R.id.textViewHashtag) {
 
     private val filter = object : SocialFilter() {
-        override fun convertResultToString(resultValue: Any): CharSequence = (resultValue as Hashtag).hashtag
+        override fun convertResultToString(resultValue: Any) = (resultValue as Hashtag).hashtag
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -44,7 +43,7 @@ class HashtagAdapter(context: Context) : SocialAdapter<Hashtag>(context, R.layou
         return convertView
     }
 
-    override fun getFilter(): Filter = filter
+    override fun getFilter() = filter
 
     private class ViewHolder(view: View) {
         val textViewHashtag: TextView = view.findViewBy(R.id.textViewHashtag)

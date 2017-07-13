@@ -8,7 +8,7 @@ import com.squareup.picasso.PicassosKt;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class App extends Application {
+public class App2 extends Application {
 
     @Override
     public void onCreate() {

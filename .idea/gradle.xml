@@ -8,8 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/example-java" />
-            <option value="$PROJECT_DIR$/example-kotlin" />
+            <option value="$PROJECT_DIR$/example" />
             <option value="$PROJECT_DIR$/socialview-commons" />
             <option value="$PROJECT_DIR$/socialview-core" />
           </set>

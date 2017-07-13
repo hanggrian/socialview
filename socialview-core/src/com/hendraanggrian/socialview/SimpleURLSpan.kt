@@ -15,7 +15,7 @@ internal class SimpleURLSpan(private val spannable: Spannable, @param:ColorInt p
 
     override fun writeToParcel(dest: Parcel, flags: Int) = dest.writeString(url)
 
-    override fun getURL(): String = spannable.subSequence(spannable.getSpanStart(this), spannable.getSpanEnd(this)).toString()
+    override fun getURL() = spannable.subSequence(spannable.getSpanStart(this), spannable.getSpanEnd(this)).toString()
 
     override fun updateDrawState(ds: TextPaint) {
         ds.linkColor = color

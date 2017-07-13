@@ -8,14 +8,17 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import com.hendraanggrian.picasso.commons.target.Targets
 import com.hendraanggrian.picasso.commons.transformation.Transformations
 import com.hendraanggrian.support.utils.content.toPx
 import com.hendraanggrian.support.utils.view.findViewBy
 import com.hendraanggrian.support.utils.view.setVisibleBy
 import com.squareup.picasso.RequestCreator
-import com.squareup.picasso.load
+import com.squareup.picasso.getPicasso
 import java.io.File
 
 /**
@@ -26,7 +29,7 @@ import java.io.File
 class MentionAdapter @JvmOverloads constructor(context: Context, @param:DrawableRes private val defaultAvatar: Int = R.drawable.ic_placeholder_mention) : SocialAdapter<Mention>(context, R.layout.widget_socialview_mention, R.id.textViewUsername) {
 
     private val filter = object : SocialFilter() {
-        override fun convertResultToString(resultValue: Any): CharSequence = (resultValue as Mention).username
+        override fun convertResultToString(resultValue: Any) = (resultValue as Mention).username
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -42,15 +45,15 @@ class MentionAdapter @JvmOverloads constructor(context: Context, @param:Drawable
         getItem(position)?.let {
             val request: RequestCreator
             if (it.avatar == null) {
-                request = context.load(defaultAvatar)
+                request = context.getPicasso().load(defaultAvatar)
             } else if (it.avatar is Int) {
-                request = context.load(it.avatar)
+                request = context.getPicasso().load(it.avatar)
             } else if (it.avatar is String) {
-                request = context.load(it.avatar)
+                request = context.getPicasso().load(it.avatar)
             } else if (it.avatar is Uri) {
-                request = context.load(it.avatar)
+                request = context.getPicasso().load(it.avatar)
             } else if (it.avatar is File) {
-                request = context.load(it.avatar)
+                request = context.getPicasso().load(it.avatar)
             } else {
                 throw IllegalStateException("Unsupported avatar type. See Mention.kt for more.")
             }
@@ -70,7 +73,7 @@ class MentionAdapter @JvmOverloads constructor(context: Context, @param:Drawable
         return convertView
     }
 
-    override fun getFilter(): Filter = filter
+    override fun getFilter() = filter
 
     private class ViewHolder(view: View) {
         val imageView: ImageView = view.findViewBy(R.id.imageView)
