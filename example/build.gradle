@@ -32,7 +32,7 @@ android {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
+    compile "org.jetbrains.anko:anko-commons:$versions.kotlin.anko"
     compile project(':socialview-commons')
     compile "com.android.support:design:$versions.support"
-    compile "org.jetbrains.anko:anko-commons:$versions.kotlin.anko"
 }

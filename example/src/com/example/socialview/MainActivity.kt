@@ -8,9 +8,9 @@ import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Filter
 import android.widget.TextView
+import com.hendraanggrian.kota.content.getInteger
+import com.hendraanggrian.kota.view.findViewBy
 import com.hendraanggrian.socialview.commons.*
-import com.hendraanggrian.support.utils.content.getInteger
-import com.hendraanggrian.support.utils.view.findViewBy
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -18,10 +18,10 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 class MainActivity : AppCompatActivity() {
 
-    var defaultHashtagAdapter: ArrayAdapter<Hashtag>? = null
-    var defaultMentionAdapter: ArrayAdapter<Mention>? = null
-    var customHashtagAdapter: ArrayAdapter<Person>? = null
-    var customMentionAdapter: ArrayAdapter<Person>? = null
+    lateinit var defaultHashtagAdapter: ArrayAdapter<Hashtag>
+    lateinit var defaultMentionAdapter: ArrayAdapter<Mention>
+    lateinit var customHashtagAdapter: ArrayAdapter<Person>
+    lateinit var customMentionAdapter: ArrayAdapter<Person>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -27,7 +27,7 @@ android {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
     compile "com.android.support:appcompat-v7:$versions.support"
-    compile "com.hendraanggrian:support-utils:$versions.utils"
+    compile "com.hendraanggrian:kota:$versions.kota"
     androidTestCompile "org.jetbrains.anko:anko-commons:$versions.kotlin.anko"
     androidTestCompile "com.android.support:design:$versions.support"
     androidTestCompile("com.android.support.test:rules:$versions.rules") {

@@ -16,13 +16,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
-import com.hendraanggrian.socialview.SociableView;
+import com.hendraanggrian.kota.content.ResourcesKt;
+import com.hendraanggrian.socialview.SocialView;
 import com.hendraanggrian.socialview.commons.Hashtag;
 import com.hendraanggrian.socialview.commons.HashtagAdapter;
 import com.hendraanggrian.socialview.commons.Mention;
 import com.hendraanggrian.socialview.commons.MentionAdapter;
 import com.hendraanggrian.socialview.commons.SocialAdapter;
-import com.hendraanggrian.support.utils.content.Resources2Kt;
 import com.hendraanggrian.widget.SocialAutoCompleteTextView;
 
 import kotlin.Unit;
@@ -52,8 +52,8 @@ public class MainActivity2 extends AppCompatActivity {
         defaultHashtagAdapter = new HashtagAdapter(this);
         defaultHashtagAdapter.addAll(
                 new Hashtag(getString(R.string.hashtag1)),
-                new Hashtag(getString(R.string.hashtag2), Resources2Kt.getInteger(this, R.integer.hashtag2)),
-                new Hashtag(getString(R.string.hashtag3), Resources2Kt.getInteger(this, R.integer.hashtag3)));
+                new Hashtag(getString(R.string.hashtag2), ResourcesKt.getInteger(this, R.integer.hashtag2)),
+                new Hashtag(getString(R.string.hashtag3), ResourcesKt.getInteger(this, R.integer.hashtag3)));
 
         defaultMentionAdapter = new MentionAdapter(this);
         defaultMentionAdapter.addAll(
@@ -76,16 +76,16 @@ public class MainActivity2 extends AppCompatActivity {
         textView.setThreshold(1);
         textView.setHashtagAdapter(defaultHashtagAdapter);
         textView.setMentionAdapter(defaultMentionAdapter);
-        textView.setHashtagTextChangedListener(new Function2<SociableView, CharSequence, Unit>() {
+        textView.setHashtagTextChangedListener(new Function2<SocialView, CharSequence, Unit>() {
             @Override
-            public Unit invoke(SociableView sociableView, CharSequence s) {
+            public Unit invoke(SocialView socialView, CharSequence s) {
                 Log.d("editing", s.toString());
                 return null;
             }
         });
-        textView.setMentionTextChangedListener(new Function2<SociableView, CharSequence, Unit>() {
+        textView.setMentionTextChangedListener(new Function2<SocialView, CharSequence, Unit>() {
             @Override
-            public Unit invoke(SociableView sociableView, CharSequence s) {
+            public Unit invoke(SocialView socialView, CharSequence s) {
                 Log.d("editing", s.toString());
                 return null;
             }

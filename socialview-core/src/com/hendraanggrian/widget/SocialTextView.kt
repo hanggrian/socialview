@@ -3,8 +3,9 @@ package com.hendraanggrian.widget
 import android.content.Context
 import android.support.v7.widget.AppCompatEditText
 import android.util.AttributeSet
-import com.hendraanggrian.socialview.SociableView
-import com.hendraanggrian.socialview.SociableViewImpl
+import android.widget.TextView
+import com.hendraanggrian.socialview.SocialView
+import com.hendraanggrian.socialview.SocialViewImpl
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -12,14 +13,11 @@ import com.hendraanggrian.socialview.SociableViewImpl
 class SocialTextView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
-        defStyleAttr: Int = android.R.attr.textViewStyle) : AppCompatEditText(context, attrs, defStyleAttr), SociableView {
+        defStyleAttr: Int = android.R.attr.textViewStyle) : AppCompatEditText(context, attrs, defStyleAttr), SocialView {
 
-    private val impl = SociableViewImpl(this, attrs)
+    private val impl = SocialViewImpl(this, attrs)
 
-    override val internalContext: Context get() = context
-    override val hashtags: Collection<String> get() = impl.hashtags
-    override val mentions: Collection<String> get() = impl.mentions
-    override val hyperlinks: Collection<String> get() = impl.hyperlinks
+    override val view: TextView = this
 
     override var isHashtagEnabled: Boolean
         get() = impl.isHashtagEnabled
@@ -53,9 +51,12 @@ class SocialTextView @JvmOverloads constructor(
             impl.hyperlinkColor = value
         }
 
-    override fun setOnHashtagClickListener(listener: ((SociableView, CharSequence) -> Unit)?) = impl.setOnHashtagClickListener(listener)
-    override fun setOnMentionClickListener(listener: ((SociableView, CharSequence) -> Unit)?) = impl.setOnMentionClickListener(listener)
+    override fun getOnHashtagClickListener(): ((SocialView, CharSequence) -> Unit)? = impl.getOnHashtagClickListener()
+    override fun getOnMentionClickListener(): ((SocialView, CharSequence) -> Unit)? = impl.getOnMentionClickListener()
 
-    override fun setHashtagTextChangedListener(watcher: ((SociableView, CharSequence) -> Unit)?) = impl.setHashtagTextChangedListener(watcher)
-    override fun setMentionTextChangedListener(watcher: ((SociableView, CharSequence) -> Unit)?) = impl.setMentionTextChangedListener(watcher)
+    override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = impl.setOnHashtagClickListener(listener)
+    override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = impl.setOnMentionClickListener(listener)
+
+    override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = impl.setHashtagTextChangedListener(watcher)
+    override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = impl.setMentionTextChangedListener(watcher)
 }

@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.hendraanggrian.support.utils.view.findViewBy
-import com.hendraanggrian.support.utils.view.setVisibleBy
+import com.hendraanggrian.kota.view.findViewBy
+import com.hendraanggrian.kota.view.setVisibleBy
 import java.text.NumberFormat
 import java.util.*
 
@@ -46,7 +46,7 @@ class HashtagAdapter(context: Context) : SocialAdapter<Hashtag>(context, R.layou
     override fun getFilter() = filter
 
     private class ViewHolder(view: View) {
-        val textViewHashtag: TextView = view.findViewBy(R.id.textViewHashtag)
-        val textViewCount: TextView = view.findViewBy(R.id.textViewCount)
+        val textViewHashtag = view.findViewBy<TextView>(R.id.textViewHashtag)
+        val textViewCount = view.findViewBy<TextView>(R.id.textViewCount)
     }
 }

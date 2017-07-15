@@ -147,7 +147,7 @@ public class InstrumentedTest {
 
             @Override
             public void perform(UiController uiController, View view) {
-                final ProgressBar progressBar = rule.getActivity().progressBar;
+                final ProgressBar progressBar = rule.getActivity().getProgressBar();
                 new CountDownTimer(DELAY_COUNTDOWN, 100) {
                     @Override
                     public void onTick(long millisUntilFinished) {

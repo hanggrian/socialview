@@ -28,6 +28,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
     compile project(':socialview-core')
     compile "com.hendraanggrian:picasso-commons:$versions.picassoCommons"
+    androidTestCompile project(':socialview-core')
     androidTestCompile "com.android.support:design:$versions.support"
     androidTestCompile("com.android.support.test:rules:$versions.rules") {
         exclude group: 'com.android.support', module: 'support-annotations'
