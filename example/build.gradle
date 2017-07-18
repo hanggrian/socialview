@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId 'com.example.socialview'
         versionCode 1
-        versionName '1.0'
+        versionName '0.1'
         minSdkVersion 11
         targetSdkVersion versions.sdk.target
     }
@@ -20,7 +20,7 @@ android {
     }
     buildTypes {
         debug {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {

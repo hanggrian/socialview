@@ -13,7 +13,7 @@ buildscript {
                     anko  : '0.10.1'
             ],
             support       : '25.4.0',
-            kota          : '0.1.1',
+            kota          : '0.1.4',
             picassoCommons: '0.13.3',
 
             // test
@@ -37,7 +37,7 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url "https://maven.google.com" }
+        maven { url 'https://maven.google.com' }
         jcenter()
     }
     tasks.withType(Javadoc) {
