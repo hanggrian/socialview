@@ -17,12 +17,12 @@ import java.util.regex.Pattern
 
 /**
  * Base methods of all socialview's widgets.
- * The logic, however, are calculated in [SocialViewImpl] while the widgets are just
+ * The logic, however, are calculated in [SocialViewHelper] while the widgets are just
  * passing these methods to the attacher.
 
  * @author Hendra Anggian (hendraanggrian@gmail.com)
  * *
- * @see SocialViewImpl
+ * @see SocialViewHelper
  */
 interface SocialView {
 
@@ -35,6 +35,8 @@ interface SocialView {
     var hashtagColor: Int
     var mentionColor: Int
     var hyperlinkColor: Int
+
+    fun detach()
 
     fun setHashtagColorRes(@ColorRes id: Int) {
         hashtagColor = view.context.getColor2(id)
@@ -103,15 +105,10 @@ interface SocialView {
     fun getMentions(): Collection<String> = newList(isMentionEnabled, MENTION_PATTERN)
     fun getHyperlinks(): Collection<String> = newList(isHyperlinkEnabled, Patterns.WEB_URL)
 
-    private fun newList(condition: Boolean, pattern: Pattern): Collection<String> {
-        if (!condition) {
-            return emptyList()
-        }
+    private fun newList(condition: Boolean, pattern: Pattern): Collection<String> = if (!condition) emptyList() else ArrayList<String>().apply {
         val matcher = pattern.matcher(view.text)
-        return ArrayList<String>().apply {
-            while (matcher.find()) {
-                add(matcher.group(if (pattern != Patterns.WEB_URL) 1 /* remove hashtag and mention symbol */ else 0))
-            }
+        while (matcher.find()) {
+            add(matcher.group(if (pattern != Patterns.WEB_URL) 1 /* remove hashtag and mention symbol */ else 0))
         }
     }
 

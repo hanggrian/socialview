@@ -3,17 +3,16 @@ package com.hendraanggrian.socialview
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
+import android.text.method.MovementMethod
 import android.util.AttributeSet
 import android.widget.TextView
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-class SocialViewImpl<out T>(
-        override val view: T, // original View
-        attrs: AttributeSet? = null // styles and shit
-) : SocialView where T : TextView, T : SocialView {
+class SocialViewHelper private constructor(override val view: TextView, attrs: AttributeSet? = null) : SocialView {
 
+    private val lastMovementMethod: MovementMethod? = view.movementMethod
     private val mTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             if (count > 0 && start > 0) {
@@ -30,39 +29,38 @@ class SocialViewImpl<out T>(
                         isHashtagEditing = false
                         isMentionEditing = false
                     } else if (hashtagWatcher != null && isHashtagEditing) {
-                        hashtagWatcher!!.invoke(view, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start).toString())
+                        hashtagWatcher!!.invoke(this@SocialViewHelper, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start).toString())
                     } else if (mentionWatcher != null && isMentionEditing) {
-                        mentionWatcher!!.invoke(view, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start).toString())
+                        mentionWatcher!!.invoke(this@SocialViewHelper, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start).toString())
                     }
                 }
             }
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            if (s.isNotEmpty()) {
-                colorize()
-                // triggered when text is added
-                if (start < s.length) {
-                    if (start + count - 1 < 0) {
-                        return
+            // triggered when text is added
+            if (s.isEmpty()) return
+            colorize()
+            if (start < s.length) {
+                if (start + count - 1 < 0) {
+                    return
+                }
+                when (s[start + count - 1]) {
+                    '#' -> {
+                        isHashtagEditing = true
+                        isMentionEditing = false
                     }
-                    when (s[start + count - 1]) {
-                        '#' -> {
-                            isHashtagEditing = true
-                            isMentionEditing = false
-                        }
-                        '@' -> {
-                            isHashtagEditing = false
-                            isMentionEditing = true
-                        }
-                        else -> if (!Character.isLetterOrDigit(s[start])) {
-                            isHashtagEditing = false
-                            isMentionEditing = false
-                        } else if (hashtagWatcher != null && isHashtagEditing) {
-                            hashtagWatcher!!.invoke(this@SocialViewImpl, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count).toString())
-                        } else if (mentionWatcher != null && isMentionEditing) {
-                            mentionWatcher!!.invoke(this@SocialViewImpl, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count).toString())
-                        }
+                    '@' -> {
+                        isHashtagEditing = false
+                        isMentionEditing = true
+                    }
+                    else -> if (!Character.isLetterOrDigit(s[start])) {
+                        isHashtagEditing = false
+                        isMentionEditing = false
+                    } else if (hashtagWatcher != null && isHashtagEditing) {
+                        hashtagWatcher!!.invoke(this@SocialViewHelper, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count).toString())
+                    } else if (mentionWatcher != null && isMentionEditing) {
+                        mentionWatcher!!.invoke(this@SocialViewHelper, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count).toString())
                     }
                 }
             }
@@ -80,7 +78,7 @@ class SocialViewImpl<out T>(
     private var isHashtagEditing = false
     private var isMentionEditing = false
 
-    override var isHashtagEnabled: Boolean
+    override var isHashtagEnabled
         get() = enabledFlag or SocialView.FLAG_HASHTAG == enabledFlag
         set(value) {
             enabledFlag = if (value)
@@ -90,7 +88,7 @@ class SocialViewImpl<out T>(
             colorize()
         }
 
-    override var isMentionEnabled: Boolean
+    override var isMentionEnabled
         get() = enabledFlag or SocialView.FLAG_MENTION == enabledFlag
         set(value) {
             enabledFlag = if (value)
@@ -100,7 +98,7 @@ class SocialViewImpl<out T>(
             colorize()
         }
 
-    override var isHyperlinkEnabled: Boolean
+    override var isHyperlinkEnabled
         get() = enabledFlag or SocialView.FLAG_HYPERLINK == enabledFlag
         set(value) {
             enabledFlag = if (value)
@@ -110,21 +108,21 @@ class SocialViewImpl<out T>(
             colorize()
         }
 
-    override var hashtagColor: Int = 0
+    override var hashtagColor = 0
         get() = field
         set(value) {
             field = value
             if (isInit) colorize()
         }
 
-    override var mentionColor: Int = 0
+    override var mentionColor = 0
         get() = field
         set(value) {
             field = value
             if (isInit) colorize()
         }
 
-    override var hyperlinkColor: Int = 0
+    override var hyperlinkColor = 0
         get() = field
         set(value) {
             field = value
@@ -142,6 +140,11 @@ class SocialViewImpl<out T>(
         a.recycle()
         colorize()
         isInit = true
+    }
+
+    override fun detach() {
+        view.movementMethod = lastMovementMethod
+        view.removeTextChangedListener(mTextWatcher)
     }
 
     override fun getOnHashtagClickListener(): ((SocialView, CharSequence) -> Unit)? = hashtagListener
@@ -174,4 +177,9 @@ class SocialViewImpl<out T>(
     private fun indexOfNextNonLetterDigit(text: CharSequence, start: Int): Int = (start + 1..text.length - 1).firstOrNull { !Character.isLetterOrDigit(text[it]) } ?: text.length
 
     private fun indexOfPreviousNonLetterDigit(text: CharSequence, start: Int, end: Int): Int = (end downTo start + 1).firstOrNull { !Character.isLetterOrDigit(text[it]) } ?: start
+
+    companion object {
+        @JvmOverloads
+        fun attach(view: TextView, attrs: AttributeSet? = null): SocialView = SocialViewHelper(view, attrs)
+    }
 }

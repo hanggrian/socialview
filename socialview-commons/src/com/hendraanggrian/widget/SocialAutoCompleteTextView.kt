@@ -5,9 +5,8 @@ import android.text.*
 import android.util.AttributeSet
 import android.widget.ArrayAdapter
 import android.widget.MultiAutoCompleteTextView
-import android.widget.TextView
 import com.hendraanggrian.socialview.SocialView
-import com.hendraanggrian.socialview.SocialViewImpl
+import com.hendraanggrian.socialview.SocialViewHelper
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -17,7 +16,6 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
         attrs: AttributeSet? = null,
         defStyleAttr: Int = android.support.v7.appcompat.R.attr.autoCompleteTextViewStyle) : MultiAutoCompleteTextView(context, attrs, defStyleAttr), SocialView {
 
-    private val impl = SocialViewImpl(this, attrs)
     private val mTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
@@ -40,56 +38,61 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
     var hashtagAdapter: ArrayAdapter<*>? = null
     var mentionAdapter: ArrayAdapter<*>? = null
 
-    override val view: TextView = this
+    private val helper = SocialViewHelper.attach(this, attrs)
+    override val view = this
 
     init {
         addTextChangedListener(mTextWatcher)
         setTokenizer(SymbolsTokenizer(getEnabledSymbols()))
     }
 
-    override var isHashtagEnabled: Boolean
-        get() = impl.isHashtagEnabled
+    override fun detach() {
+        helper.detach()
+        removeTextChangedListener(mTextWatcher)
+        setTokenizer(null)
+    }
+
+    override var isHashtagEnabled
+        get() = helper.isHashtagEnabled
         set(value) {
-            impl.isHashtagEnabled = value
+            helper.isHashtagEnabled = value
             setTokenizer(SymbolsTokenizer(getEnabledSymbols()))
         }
-    override var isMentionEnabled: Boolean
-        get() = impl.isMentionEnabled
+    override var isMentionEnabled
+        get() = helper.isMentionEnabled
         set(value) {
-            impl.isMentionEnabled = value
+            helper.isMentionEnabled = value
             setTokenizer(SymbolsTokenizer(getEnabledSymbols()))
         }
-    override var isHyperlinkEnabled: Boolean
-        get() = impl.isHyperlinkEnabled
+    override var isHyperlinkEnabled
+        get() = helper.isHyperlinkEnabled
         set(value) {
-            impl.isHyperlinkEnabled = value
+            helper.isHyperlinkEnabled = value
             setTokenizer(SymbolsTokenizer(getEnabledSymbols()))
         }
 
-    override var hashtagColor: Int
-        get() = impl.hashtagColor
+    override var hashtagColor
+        get() = helper.hashtagColor
         set(value) {
-            impl.hashtagColor = value
+            helper.hashtagColor = value
         }
-    override var mentionColor: Int
-        get() = impl.mentionColor
+    override var mentionColor
+        get() = helper.mentionColor
         set(value) {
-            impl.mentionColor = value
+            helper.mentionColor = value
         }
-    override var hyperlinkColor: Int
-        get() = impl.hyperlinkColor
+    override var hyperlinkColor
+        get() = helper.hyperlinkColor
         set(value) {
-            impl.hyperlinkColor = value
+            helper.hyperlinkColor = value
         }
 
-    override fun getOnHashtagClickListener(): ((SocialView, CharSequence) -> Unit)? = impl.getOnHashtagClickListener()
-    override fun getOnMentionClickListener(): ((SocialView, CharSequence) -> Unit)? = impl.getOnMentionClickListener()
-
-    override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = impl.setOnHashtagClickListener(listener)
-    override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = impl.setOnMentionClickListener(listener)
-
-    override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = impl.setHashtagTextChangedListener(watcher)
-    override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = impl.setMentionTextChangedListener(watcher)
+    override fun getOnHashtagClickListener(): ((SocialView, CharSequence) -> Unit)? = helper.getOnHashtagClickListener()
+    override fun getOnMentionClickListener(): ((SocialView, CharSequence) -> Unit)? = helper.getOnMentionClickListener()
+    override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = helper.setOnHashtagClickListener(listener)
+    override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = helper.setOnMentionClickListener(listener)
+    override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = helper.setHashtagTextChangedListener(watcher)
+    override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = helper.setMentionTextChangedListener(watcher)
 
     private fun getEnabledSymbols(): Collection<Char> = ArrayList<Char>().apply {
         if (isHashtagEnabled) {
