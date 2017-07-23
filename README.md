@@ -133,15 +133,9 @@ repositories {
 
 dependencies {
     // core only
-<<<<<<< HEAD
-    compile 'com.hendraanggrian:socialview-core:0.16.0'
-    // core and commons
-    compile 'com.hendraanggrian:socialview-commons:0.16.0'
-=======
     compile 'com.hendraanggrian:socialview-core:0.15.1'
     // core and commons
     compile 'com.hendraanggrian:socialview-commons:0.15.1'
->>>>>>> 79019fc728e99ea10ebbfccf0de244a1b41d3f74
 }
 ```
 
