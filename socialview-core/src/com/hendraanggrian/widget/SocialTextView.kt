@@ -2,6 +2,7 @@ package com.hendraanggrian.widget
 
 import android.content.Context
 import android.support.v7.widget.AppCompatEditText
+import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
 import com.hendraanggrian.socialview.SocialView
 import com.hendraanggrian.socialview.SocialViewHelper
@@ -12,7 +13,7 @@ import com.hendraanggrian.socialview.SocialViewHelper
 class SocialTextView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
-        defStyleAttr: Int = android.R.attr.textViewStyle) : AppCompatEditText(context, attrs, defStyleAttr), SocialView {
+        defStyleAttr: Int = android.R.attr.textViewStyle) : AppCompatTextView(context, attrs, defStyleAttr), SocialView {
 
     private val helper = SocialViewHelper.attach(this, attrs)
     override val view = this

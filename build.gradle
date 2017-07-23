@@ -22,7 +22,7 @@ buildscript {
             espresso      : '2.2.2',
             junit         : '4.12',
 
-            release       : '0.15.1'
+            release       : '0.15.2'
     ]
     repositories {
         jcenter()

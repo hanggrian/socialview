@@ -1,6 +1,7 @@
 package com.hendraanggrian.widget
 
 import android.content.Context
+import android.support.v7.widget.AppCompatMultiAutoCompleteTextView
 import android.text.*
 import android.util.AttributeSet
 import android.widget.ArrayAdapter
@@ -14,7 +15,7 @@ import com.hendraanggrian.socialview.SocialViewHelper
 class SocialAutoCompleteTextView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
-        defStyleAttr: Int = android.support.v7.appcompat.R.attr.autoCompleteTextViewStyle) : MultiAutoCompleteTextView(context, attrs, defStyleAttr), SocialView {
+        defStyleAttr: Int = android.support.v7.appcompat.R.attr.autoCompleteTextViewStyle) : AppCompatMultiAutoCompleteTextView(context, attrs, defStyleAttr), SocialView {
 
     private val mTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
