@@ -8,8 +8,8 @@ android {
     defaultConfig {
         applicationId 'com.example.socialview'
         versionCode 1
-        versionName '0.1'
-        minSdkVersion 11
+        versionName versions.release
+        minSdkVersion versions.sdk.min
         targetSdkVersion versions.sdk.target
     }
     sourceSets {
@@ -31,8 +31,8 @@ android {
 }
 
 dependencies {
+    compile project(':socialview-commons')
     compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
     compile "org.jetbrains.anko:anko-commons:$versions.kotlin.anko"
-    compile project(':socialview-commons')
     compile "com.android.support:design:$versions.support"
 }

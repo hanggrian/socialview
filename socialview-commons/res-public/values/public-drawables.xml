@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="ic_placeholder_mention" type="drawable"/>
+    <public name="socialview_ic_mention_placeholder" type="drawable"/>
 </resources>

@@ -16,13 +16,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
-import com.hendraanggrian.kota.content.ResourcesKt;
+import com.hendraanggrian.kota.content.res.ResourcesKt;
 import com.hendraanggrian.socialview.SocialView;
 import com.hendraanggrian.socialview.commons.Hashtag;
-import com.hendraanggrian.socialview.commons.HashtagAdapter;
 import com.hendraanggrian.socialview.commons.Mention;
-import com.hendraanggrian.socialview.commons.MentionAdapter;
-import com.hendraanggrian.socialview.commons.SocialAdapter;
+import com.hendraanggrian.widget.FilteredAdapter;
+import com.hendraanggrian.widget.HashtagAdapter;
+import com.hendraanggrian.widget.MentionAdapter;
 import com.hendraanggrian.widget.SocialAutoCompleteTextView;
 
 import kotlin.Unit;
@@ -123,7 +123,7 @@ public class MainActivity2 extends AppCompatActivity {
         }
     }
 
-    private static class PersonAdapter extends SocialAdapter<Person> {
+    private static class PersonAdapter extends FilteredAdapter<Person> {
         final Filter filter = new SocialFilter() {
             @Override
             public CharSequence convertResultToString(Object resultValue) {
@@ -163,7 +163,7 @@ public class MainActivity2 extends AppCompatActivity {
             final TextView textView;
 
             ViewHolder(@NonNull View view) {
-                this.textView = (TextView) view.findViewById(R.id.textViewName);
+                this.textView = view.findViewById(R.id.textViewName);
             }
         }
     }

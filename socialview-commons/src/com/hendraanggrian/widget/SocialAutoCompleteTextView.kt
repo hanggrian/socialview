@@ -19,7 +19,7 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
 
     private val mTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
+        override fun afterTextChanged(editable: Editable?) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             if (s.isNotEmpty() && start < s.length) {
                 when (s[start]) {
@@ -32,8 +32,6 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
                 }
             }
         }
-
-        override fun afterTextChanged(editable: Editable?) {}
     }
 
     var hashtagAdapter: ArrayAdapter<*>? = null
@@ -45,12 +43,6 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
     init {
         addTextChangedListener(mTextWatcher)
         setTokenizer(SymbolsTokenizer(getEnabledSymbols()))
-    }
-
-    override fun detach() {
-        helper.detach()
-        removeTextChangedListener(mTextWatcher)
-        setTokenizer(null)
     }
 
     override var isHashtagEnabled
@@ -94,6 +86,12 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
     override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = helper.setOnMentionClickListener(listener)
     override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = helper.setHashtagTextChangedListener(watcher)
     override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = helper.setMentionTextChangedListener(watcher)
+
+    override fun detach() {
+        helper.detach()
+        removeTextChangedListener(mTextWatcher)
+        setTokenizer(null)
+    }
 
     private fun getEnabledSymbols(): Collection<Char> = ArrayList<Char>().apply {
         if (isHashtagEnabled) {

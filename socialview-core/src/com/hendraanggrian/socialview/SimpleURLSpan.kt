@@ -11,7 +11,7 @@ import android.text.style.URLSpan
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 @SuppressLint("ParcelCreator")
-internal class SimpleURLSpan(private val spannable: Spannable, @param:ColorInt private val color: Int) : URLSpan("") {
+internal class SimpleURLSpan(private val spannable: Spannable, @ColorInt private val color: Int) : URLSpan("") {
 
     override fun writeToParcel(dest: Parcel, flags: Int) = dest.writeString(url)
 

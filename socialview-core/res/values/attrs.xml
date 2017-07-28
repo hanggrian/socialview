@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="SocialViewStyle">
+        <attr name="socialViewStyle" format="reference"/>
+    </declare-styleable>
+
     <declare-styleable name="SocialView">
         <!-- Determine whether each feature should be turned on/off.
              Default is all true. -->
-        <attr name="socialEnabled">
+        <attr name="socialFlags">
             <flag name="hashtag" value="1"/>
             <flag name="mention" value="2"/>
             <flag name="hyperlink" value="4"/>

@@ -1,7 +1,6 @@
 package com.hendraanggrian.widget
 
 import android.content.Context
-import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
 import com.hendraanggrian.socialview.SocialView
@@ -17,8 +16,6 @@ class SocialTextView @JvmOverloads constructor(
 
     private val helper = SocialViewHelper.attach(this, attrs)
     override val view = this
-
-    override fun detach() = helper.detach()
 
     override var isHashtagEnabled
         get() = helper.isHashtagEnabled
@@ -57,4 +54,6 @@ class SocialTextView @JvmOverloads constructor(
     override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = helper.setOnMentionClickListener(listener)
     override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = helper.setHashtagTextChangedListener(watcher)
     override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = helper.setMentionTextChangedListener(watcher)
+
+    override fun detach() = helper.detach()
 }

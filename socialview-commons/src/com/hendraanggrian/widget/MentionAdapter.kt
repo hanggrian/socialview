@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview.commons
+package com.hendraanggrian.widget
 
 import android.content.Context
 import android.net.Uri
@@ -9,21 +9,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.hendraanggrian.kota.content.toPx
-import com.hendraanggrian.kota.view.findViewBy
+import com.hendraanggrian.kota.content.res.getDimensionPixelSize
 import com.hendraanggrian.kota.view.setVisibleBy
-import com.hendraanggrian.picasso.commons.target.Targets
-import com.hendraanggrian.picasso.commons.transformation.Transformations
+import com.hendraanggrian.picasso.target.Targets
+import com.hendraanggrian.picasso.transformation.Transformations
+import com.hendraanggrian.socialview.commons.Mention
+import com.hendraanggrian.socialview.commons.R
 import com.squareup.picasso.RequestCreator
 import com.squareup.picasso.getPicasso
 import java.io.File
 
 /**
- * Default adapter for displaying mention in [com.hendraanggrian.widget.SocialAutoCompleteTextView].
-
+ * Default adapter for displaying mention in [SocialAutoCompleteTextView].
+ *
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-class MentionAdapter @JvmOverloads constructor(context: Context, @param:DrawableRes private val defaultAvatar: Int = R.drawable.ic_placeholder_mention) : SocialAdapter<Mention>(context, R.layout.widget_socialview_mention, R.id.textViewUsername) {
+class MentionAdapter @JvmOverloads constructor(context: Context, @DrawableRes private val defaultAvatar: Int = R.drawable.socialview_ic_mention_placeholder) :
+        FilteredAdapter<Mention>(context, R.layout.socialview_layout_mention, R.id.socialview_mention_username) {
 
     private val filter = object : SocialFilter() {
         override fun convertResultToString(resultValue: Any) = (resultValue as Mention).username
@@ -31,13 +33,13 @@ class MentionAdapter @JvmOverloads constructor(context: Context, @param:Drawable
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val holder: ViewHolder
-        var convertView = convertView
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.widget_socialview_mention, parent, false)
-            holder = ViewHolder(convertView!!)
-            convertView.tag = holder
+        var _convertView = convertView
+        if (_convertView == null) {
+            _convertView = LayoutInflater.from(context).inflate(R.layout.socialview_layout_mention, parent, false)
+            holder = ViewHolder(_convertView!!)
+            _convertView.tag = holder
         } else {
-            holder = convertView.tag as ViewHolder
+            holder = _convertView.tag as ViewHolder
         }
         getItem(position)?.let {
             val request: RequestCreator
@@ -54,7 +56,7 @@ class MentionAdapter @JvmOverloads constructor(context: Context, @param:Drawable
             } else {
                 throw IllegalStateException("Unsupported avatar type. See Mention.kt for more.")
             }
-            val progressBarSize = 24.toPx()
+            val progressBarSize = context.getDimensionPixelSize(R.dimen.socialview_mention_progress)
             request.error(defaultAvatar)
                     .transform(Transformations.circle())
                     .into(Targets.placeholder(holder.imageView, progressBarSize, progressBarSize))
@@ -63,14 +65,14 @@ class MentionAdapter @JvmOverloads constructor(context: Context, @param:Drawable
                 holder.textViewDisplayname.text = it.displayname
             }
         }
-        return convertView
+        return _convertView
     }
 
     override fun getFilter() = filter
 
     private class ViewHolder(view: View) {
-        val imageView = view.findViewBy<ImageView>(R.id.imageView)
-        val textViewUsername = view.findViewBy<TextView>(R.id.textViewUsername)
-        val textViewDisplayname = view.findViewBy<TextView>(R.id.textViewDisplayname)
+        val imageView = view.findViewById<ImageView>(R.id.socialview_mention_avatar)!!
+        val textViewUsername = view.findViewById<TextView>(R.id.socialview_mention_username)!!
+        val textViewDisplayname = view.findViewById<TextView>(R.id.socialview_mention_displayname)!!
     }
 }

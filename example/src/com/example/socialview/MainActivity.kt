@@ -8,9 +8,12 @@ import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Filter
 import android.widget.TextView
-import com.hendraanggrian.kota.content.getInteger
-import com.hendraanggrian.kota.view.findViewBy
-import com.hendraanggrian.socialview.commons.*
+import com.hendraanggrian.kota.content.res.getInteger
+import com.hendraanggrian.socialview.commons.Hashtag
+import com.hendraanggrian.socialview.commons.Mention
+import com.hendraanggrian.widget.FilteredAdapter
+import com.hendraanggrian.widget.HashtagAdapter
+import com.hendraanggrian.widget.MentionAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -29,25 +32,25 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         defaultHashtagAdapter = HashtagAdapter(this)
-        defaultHashtagAdapter!!.addAll(
+        defaultHashtagAdapter.addAll(
                 Hashtag(getString(R.string.hashtag1)),
                 Hashtag(getString(R.string.hashtag2), getInteger(R.integer.hashtag2)),
                 Hashtag(getString(R.string.hashtag3), getInteger(R.integer.hashtag3)))
 
         defaultMentionAdapter = MentionAdapter(this)
-        defaultMentionAdapter!!.addAll(
+        defaultMentionAdapter.addAll(
                 Mention(getString(R.string.mention1_username)),
                 Mention(getString(R.string.mention2_username), getString(R.string.mention2_displayname), R.mipmap.ic_launcher),
                 Mention(getString(R.string.mention3_username), getString(R.string.mention3_displayname), "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"))
 
         customHashtagAdapter = PersonAdapter(this)
-        customHashtagAdapter!!.addAll(
+        customHashtagAdapter.addAll(
                 Person(getString(R.string.hashtag1)),
                 Person(getString(R.string.hashtag2)),
                 Person(getString(R.string.hashtag3)))
 
         customMentionAdapter = PersonAdapter(this)
-        customMentionAdapter!!.addAll(
+        customMentionAdapter.addAll(
                 Person(getString(R.string.mention1_username)),
                 Person(getString(R.string.mention2_username)),
                 Person(getString(R.string.mention3_username)))
@@ -82,24 +85,24 @@ class MainActivity : AppCompatActivity() {
 
     data class Person constructor(val name: String)
 
-    class PersonAdapter constructor(context: Context) : SocialAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
+    class PersonAdapter constructor(context: Context) : FilteredAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
         private var filter: Filter? = null
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            var convertView = convertView
             val holder: ViewHolder
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
-                holder = ViewHolder(convertView)
-                convertView.tag = holder
+            var _convertView = convertView
+            if (_convertView == null) {
+                _convertView = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
+                holder = ViewHolder(_convertView!!)
+                _convertView.tag = holder
             } else {
-                holder = convertView.tag as ViewHolder
+                holder = _convertView.tag as ViewHolder
             }
             val model = getItem(position)
             if (model != null) {
                 holder.textView.text = model.name
             }
-            return convertView!!
+            return _convertView
         }
 
         override fun getFilter(): Filter {
@@ -113,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         private class ViewHolder constructor(view: View) {
-            val textView = view.findViewBy<TextView>(R.id.textViewName)
+            val textView = view.findViewById<TextView>(R.id.textViewName)!!
         }
     }
 }

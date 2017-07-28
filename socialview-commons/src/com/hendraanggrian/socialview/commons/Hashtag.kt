@@ -1,7 +1,7 @@
 package com.hendraanggrian.socialview.commons
 
 /**
- * A data class of hashtag to be used with {@link HashtagAdapter}.
+ * A data class of hashtag to be used with [HashtagAdapter].
  *
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */

@@ -1,7 +1,7 @@
 package com.hendraanggrian.socialview.commons
 
 /**
- * A data class of mention to be used with {@link MentionAdapter}.
+ * A data class of mention to be used with [MentionAdapter].
  *
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */

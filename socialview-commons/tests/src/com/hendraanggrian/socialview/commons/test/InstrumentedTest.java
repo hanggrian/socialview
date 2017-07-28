@@ -12,9 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 
 import com.hendraanggrian.socialview.commons.Hashtag;
-import com.hendraanggrian.socialview.commons.HashtagAdapter;
+import com.hendraanggrian.widget.HashtagAdapter;
 import com.hendraanggrian.socialview.commons.Mention;
-import com.hendraanggrian.socialview.commons.MentionAdapter;
+import com.hendraanggrian.widget.MentionAdapter;
 import com.hendraanggrian.widget.SocialAutoCompleteTextView;
 
 import org.hamcrest.Matcher;

@@ -25,9 +25,9 @@ android {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
     compile project(':socialview-core')
-    compile "com.hendraanggrian:picasso-commons:$versions.picassoCommons"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
+    compile "com.hendraanggrian:picasso-utils:$versions.picassoUtils"
     androidTestCompile project(':socialview-core')
     androidTestCompile "com.android.support:design:$versions.support"
     androidTestCompile("com.android.support.test:rules:$versions.rules") {

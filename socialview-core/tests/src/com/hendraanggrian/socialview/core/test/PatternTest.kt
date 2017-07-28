@@ -10,6 +10,7 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
+import com.hendraanggrian.socialview.core.test.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.test.R
 import org.jetbrains.anko.toast
 import org.junit.Rule
@@ -47,8 +48,6 @@ class PatternTest : BaseTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    override fun getRule() = rule
-
     @Test
     @Throws(Exception::class)
     fun default() {
@@ -56,8 +55,8 @@ class PatternTest : BaseTest() {
         onView(withId(R.id.editText)).perform(
                 replaceText(NAMES),
                 toast("default"),
-                closeSoftKeyboard(),
-                delay())
+                closeSoftKeyboard())
+        onView(withId(R.id.progressBar)).perform(delay())
     }
 
     @Test
@@ -67,8 +66,8 @@ class PatternTest : BaseTest() {
         onView(withId(R.id.editText)).perform(
                 replaceText(NAMES),
                 toast("spanish"),
-                closeSoftKeyboard(),
-                delay())
+                closeSoftKeyboard())
+        onView(withId(R.id.progressBar)).perform(delay())
     }
 
     @Test
@@ -78,8 +77,8 @@ class PatternTest : BaseTest() {
         onView(withId(R.id.editText)).perform(
                 replaceText(NAMES),
                 toast("russian"),
-                closeSoftKeyboard(),
-                delay())
+                closeSoftKeyboard())
+        onView(withId(R.id.progressBar)).perform(delay())
     }
 
     fun toast(text: CharSequence) = object : ViewAction {

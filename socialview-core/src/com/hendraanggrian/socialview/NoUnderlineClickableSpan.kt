@@ -7,7 +7,7 @@ import android.text.style.ClickableSpan
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-internal abstract class ForegroundColorClickableSpan(@param:ColorInt private val color: Int) : ClickableSpan() {
+internal abstract class NoUnderlineClickableSpan(@ColorInt private val color: Int) : ClickableSpan() {
 
     override fun updateDrawState(ds: TextPaint) {
         ds.color = color

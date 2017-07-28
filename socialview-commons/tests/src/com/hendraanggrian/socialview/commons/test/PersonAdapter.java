@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.TextView;
 
-import com.hendraanggrian.socialview.commons.SocialAdapter;
+import com.hendraanggrian.widget.FilteredAdapter;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class PersonAdapter extends SocialAdapter<Person> {
+public class PersonAdapter extends FilteredAdapter<Person> {
 
     @NonNull private final Filter filter = new SocialFilter() {
         @Override

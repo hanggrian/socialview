@@ -10,7 +10,10 @@ import android.widget.TextView
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-class SocialViewHelper private constructor(override val view: TextView, attrs: AttributeSet? = null) : SocialView {
+class SocialViewHelper private constructor(
+        override val view: TextView,
+        attrs: AttributeSet? = null) :
+        SocialView {
 
     private val lastMovementMethod: MovementMethod? = view.movementMethod
     private val mTextWatcher = object : TextWatcher {
@@ -69,7 +72,7 @@ class SocialViewHelper private constructor(override val view: TextView, attrs: A
         override fun afterTextChanged(s: Editable?) {}
     }
 
-    private var enabledFlag: Int
+    private var flags: Int
     private var hashtagListener: ((SocialView, CharSequence) -> Unit)? = null
     private var mentionListener: ((SocialView, CharSequence) -> Unit)? = null
     private var hashtagWatcher: ((SocialView, CharSequence) -> Unit)? = null
@@ -79,32 +82,32 @@ class SocialViewHelper private constructor(override val view: TextView, attrs: A
     private var isMentionEditing = false
 
     override var isHashtagEnabled
-        get() = enabledFlag or SocialView.FLAG_HASHTAG == enabledFlag
+        get() = flags or SocialView.FLAG_HASHTAG == flags
         set(value) {
-            enabledFlag = if (value)
-                enabledFlag or SocialView.FLAG_HASHTAG
+            flags = if (value)
+                flags or SocialView.FLAG_HASHTAG
             else
-                enabledFlag and SocialView.FLAG_HASHTAG.inv()
+                flags and SocialView.FLAG_HASHTAG.inv()
             colorize()
         }
 
     override var isMentionEnabled
-        get() = enabledFlag or SocialView.FLAG_MENTION == enabledFlag
+        get() = flags or SocialView.FLAG_MENTION == flags
         set(value) {
-            enabledFlag = if (value)
-                enabledFlag or SocialView.FLAG_MENTION
+            flags = if (value)
+                flags or SocialView.FLAG_MENTION
             else
-                enabledFlag and SocialView.FLAG_MENTION.inv()
+                flags and SocialView.FLAG_MENTION.inv()
             colorize()
         }
 
     override var isHyperlinkEnabled
-        get() = enabledFlag or SocialView.FLAG_HYPERLINK == enabledFlag
+        get() = flags or SocialView.FLAG_HYPERLINK == flags
         set(value) {
-            enabledFlag = if (value)
-                enabledFlag or SocialView.FLAG_HYPERLINK
+            flags = if (value)
+                flags or SocialView.FLAG_HYPERLINK
             else
-                enabledFlag and SocialView.FLAG_HYPERLINK.inv()
+                flags and SocialView.FLAG_HYPERLINK.inv()
             colorize()
         }
 
@@ -132,8 +135,8 @@ class SocialViewHelper private constructor(override val view: TextView, attrs: A
     init {
         view.addTextChangedListener(mTextWatcher)
         view.setText(view.text, TextView.BufferType.SPANNABLE)
-        val a = view.context.obtainStyledAttributes(attrs, R.styleable.SocialView, 0, R.style.Widget_SocialView)
-        enabledFlag = a.getInteger(R.styleable.SocialView_socialEnabled, SocialView.FLAG_HASHTAG or SocialView.FLAG_MENTION or SocialView.FLAG_HYPERLINK)
+        val a = view.context.obtainStyledAttributes(attrs, R.styleable.SocialView, R.attr.socialViewStyle, R.style.Widget_SocialView)
+        flags = a.getInteger(R.styleable.SocialView_socialFlags, SocialView.FLAG_HASHTAG or SocialView.FLAG_MENTION or SocialView.FLAG_HYPERLINK)
         hashtagColor = a.getColorStateList(R.styleable.SocialView_hashtagColor).defaultColor
         mentionColor = a.getColorStateList(R.styleable.SocialView_mentionColor).defaultColor
         hyperlinkColor = a.getColorStateList(R.styleable.SocialView_hyperlinkColor).defaultColor

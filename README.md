@@ -5,11 +5,11 @@ Comes in 2 packages:
  * **core** - comes with `SocialTextView`, `SocialEditText` and `SocialViewImpl` to attach any TextView.
  * **commons** - extended core library with `SocialAutoCompleteTextView` to display suggestions as you type.
 
-![commons1][commons1]
+![demo][demo]
 
 Core
 ----
-![core1][core1] ![core2][core2] ![core3][core3]
+![demo_core1][demo_core1] ![demo_core2][demo_core2] ![demo_core3][demo_core3]
 
 Write `SocialTextView` or `SocialEditText` in xml.
 ```xml
@@ -17,7 +17,10 @@ Write `SocialTextView` or `SocialEditText` in xml.
     android:id="@+id/textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="#hashtag and @mention."/>
+    android:text="#hashtag and @mention."
+    app:socialEnabled="hashtag|mention"
+    app:hashtagColor="@color/blue"
+    app:mentionColor="@color/red"/>
 ```
 
 Modify its state and set listeners in java.
@@ -35,20 +38,14 @@ textView.setOnHashtagClickListener(new SocialView.OnSocialClickListener() {
 Any TextView or subclasses of TextView can be attached.
 ```java
 CustomTextView tv = ...;
-SocialView socialView = SocialViewImpl.attach(tv);
+SocialView socialView = SocialViewHelper.attach(tv);
 ```
 
-#### Attributes
-| Attributes       | Description                      | Default value/behavior        |
-|------------------|----------------------------------|-------------------------------|
-| `typeEnabled`    | flags to enable span coloring    | `hashtag\|mention\|hyperlink` |
-| `hashtagColor`   | color of hashtag items           | current theme's accent color  |
-| `mentionColor`   | color of mention items           | current theme's accent color  |
-| `hyperlinkColor` | color of hyperlink items         | current theme's accent color  |
+See [attrs.xml][attrs] for full list of available attributes.
 
 Commons
 -------
-![commons1][commons1] ![commons2][commons2] ![commons3][commons3]
+![demo_commons1][demo_commons1] ![demo_commons2][demo_commons2] ![demo_commons3][demo_commons3]
 
 Write `SocialAutoCompleteTextView` in xml.
 ```xml
@@ -56,7 +53,9 @@ Write `SocialAutoCompleteTextView` in xml.
     android:id="@+id/textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:hint="What's on your mind?"/>
+    android:hint="What's on your mind?"
+    app:socialEnabled="hyperlink"
+    app:hyperlinkColor="@color/green"/>
 ```
 
 To display suggestions, it is required to `setHashtagAdapter()` and `setMentionAdapter()`.
@@ -133,9 +132,9 @@ repositories {
 
 dependencies {
     // core only
-    compile 'com.hendraanggrian:socialview-core:0.15.2'
+    compile 'com.hendraanggrian:socialview-core:0.16.0'
     // core and commons
-    compile 'com.hendraanggrian:socialview-commons:0.15.2'
+    compile 'com.hendraanggrian:socialview-commons:0.16.0'
 }
 ```
 
@@ -155,9 +154,11 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
     
-[core1]: /art/core1.gif
-[core2]: /art/core2.gif
-[core3]: /art/core3.gif
-[commons1]: /art/commons1.gif
-[commons2]: /art/commons2.gif
-[commons3]: /art/commons3.gif
+[demo]: /art/demo.png
+[demo_core1]: /art/demo_core1.gif
+[demo_core2]: /art/demo_core2.gif
+[demo_core3]: /art/demo_core3.gif
+[demo_commons1]: /art/demo_commons1.gif
+[demo_commons2]: /art/demo_commons2.gif
+[demo_commons3]: /art/demo_commons3.gif
+[attrs]: https://github.com/HendraAnggrian/socialview/blob/master/socialview-core/res/values/attrs.xml
