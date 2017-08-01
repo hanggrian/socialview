@@ -16,7 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
-import com.hendraanggrian.kota.content.res.ResourcesKt;
+import com.hendraanggrian.kota.content.ResourcesKt;
 import com.hendraanggrian.socialview.SocialView;
 import com.hendraanggrian.socialview.commons.Hashtag;
 import com.hendraanggrian.socialview.commons.Mention;

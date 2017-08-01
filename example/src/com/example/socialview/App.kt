@@ -1,8 +1,8 @@
 package com.example.socialview
 
 import android.app.Application
+import com.hendraanggrian.picasso.getCache
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.getCache
 
 /**
  * @author Hendra Anggrian (com.hendraanggrian@gmail.com)

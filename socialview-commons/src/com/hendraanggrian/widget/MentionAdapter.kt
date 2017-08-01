@@ -9,14 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.hendraanggrian.kota.content.res.getDimensionPixelSize
+import com.hendraanggrian.kota.content.getDimensionPixelSize
 import com.hendraanggrian.kota.view.setVisibleBy
+import com.hendraanggrian.picasso.picasso
 import com.hendraanggrian.picasso.target.Targets
 import com.hendraanggrian.picasso.transformation.Transformations
 import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.socialview.commons.R
 import com.squareup.picasso.RequestCreator
-import com.squareup.picasso.getPicasso
 import java.io.File
 
 /**
@@ -44,15 +44,15 @@ class MentionAdapter @JvmOverloads constructor(context: Context, @DrawableRes pr
         getItem(position)?.let {
             val request: RequestCreator
             if (it.avatar == null) {
-                request = context.getPicasso().load(defaultAvatar)
+                request = context.picasso(defaultAvatar)
             } else if (it.avatar is Int) {
-                request = context.getPicasso().load(it.avatar)
+                request = context.picasso(it.avatar)
             } else if (it.avatar is String) {
-                request = context.getPicasso().load(it.avatar)
+                request = context.picasso(it.avatar)
             } else if (it.avatar is Uri) {
-                request = context.getPicasso().load(it.avatar)
+                request = context.picasso(it.avatar)
             } else if (it.avatar is File) {
-                request = context.getPicasso().load(it.avatar)
+                request = context.picasso(it.avatar)
             } else {
                 throw IllegalStateException("Unsupported avatar type. See Mention.kt for more.")
             }

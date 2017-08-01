@@ -2,8 +2,8 @@ package com.example.socialview;
 
 import android.app.Application;
 
+import com.hendraanggrian.picasso.PicassosKt;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.PicassosKt;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)

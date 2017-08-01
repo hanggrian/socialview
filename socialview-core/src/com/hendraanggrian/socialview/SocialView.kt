@@ -8,10 +8,10 @@ import android.text.style.ForegroundColorSpan
 import android.util.Patterns
 import android.view.View
 import android.widget.TextView
-import com.hendraanggrian.kota.content.res.getColor
-import com.hendraanggrian.kota.content.res.getColor2
+import com.hendraanggrian.kota.content.getColor
+import com.hendraanggrian.kota.content.getColor2
 import com.hendraanggrian.kota.text.putSpansAll
-import com.hendraanggrian.kota.text.removeSpans
+import com.hendraanggrian.kota.text.removeAllSpans
 import java.util.regex.Pattern
 
 /**
@@ -75,7 +75,7 @@ interface SocialView {
         val spannable = view.text
         check(spannable is Spannable, { "Attached text is not a Spannable, add TextView.BufferType.SPANNABLE when setting text to this TextView." })
         spannable as Spannable
-        spannable.removeSpans(*spannable.getSpans(0, spannable.length, CharacterStyle::class.java))
+        spannable.removeAllSpans(CharacterStyle::class.java)
         if (isHashtagEnabled) {
             getOnHashtagClickListener().let {
                 spannable.putSpansAll(HASHTAG_PATTERN, {
