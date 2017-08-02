@@ -1,3 +1,5 @@
+@file:JvmName("Hashtag")
+
 package com.hendraanggrian.socialview.commons
 
 /**
@@ -7,5 +9,4 @@ package com.hendraanggrian.socialview.commons
  */
 data class Hashtag @JvmOverloads constructor(
         val hashtag: String,
-        val count: Int? = null
-)
+        val count: Int? = null)

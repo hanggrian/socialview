@@ -1,3 +1,5 @@
+@file:JvmName("SocialAutoCompleteTextView")
+
 package com.hendraanggrian.widget
 
 import android.content.Context
@@ -15,7 +17,8 @@ import com.hendraanggrian.socialview.SocialViewHelper
 class SocialAutoCompleteTextView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
-        defStyleAttr: Int = android.support.v7.appcompat.R.attr.autoCompleteTextViewStyle) : AppCompatMultiAutoCompleteTextView(context, attrs, defStyleAttr), SocialView {
+        defStyleAttr: Int = android.support.v7.appcompat.R.attr.autoCompleteTextViewStyle) :
+        AppCompatMultiAutoCompleteTextView(context, attrs, defStyleAttr), SocialView {
 
     private val mTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -80,13 +83,12 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
             helper.hyperlinkColor = value
         }
 
-    override fun getOnHashtagClickListener(): ((SocialView, CharSequence) -> Unit)? = helper.getOnHashtagClickListener()
-    override fun getOnMentionClickListener(): ((SocialView, CharSequence) -> Unit)? = helper.getOnMentionClickListener()
     override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = helper.setOnHashtagClickListener(listener)
     override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = helper.setOnMentionClickListener(listener)
     override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = helper.setHashtagTextChangedListener(watcher)
     override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = helper.setMentionTextChangedListener(watcher)
 
+    override fun colorize() = helper.colorize()
     override fun detach() {
         helper.detach()
         removeTextChangedListener(mTextWatcher)

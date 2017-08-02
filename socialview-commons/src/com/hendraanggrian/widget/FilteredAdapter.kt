@@ -1,3 +1,5 @@
+@file:JvmName("FilteredAdapter")
+
 package com.hendraanggrian.widget
 
 import android.content.Context

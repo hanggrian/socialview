@@ -13,8 +13,8 @@ buildscript {
                     anko  : '0.10.1'
             ],
             support     : '26.0.0',
-            kota        : '0.3.0',
-            picassoUtils: '0.2.0',
+            kota        : '0.4.1',
+            picassoUtils: '0.2.1',
 
             // test
             runner      : '0.5',
@@ -22,7 +22,7 @@ buildscript {
             espresso    : '2.2.2',
             junit       : '4.12',
 
-            release     : '0.16.0'
+            release     : '0.16.1'
     ]
     repositories {
         jcenter()

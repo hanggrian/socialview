@@ -16,7 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
-import com.hendraanggrian.kota.content.ResourcesKt;
+import com.hendraanggrian.kota.content.Resources2;
 import com.hendraanggrian.socialview.SocialView;
 import com.hendraanggrian.socialview.commons.Hashtag;
 import com.hendraanggrian.socialview.commons.Mention;
@@ -45,15 +45,15 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        textView = (SocialAutoCompleteTextView) findViewById(R.id.textView);
+        toolbar = findViewById(R.id.toolbar);
+        textView = findViewById(R.id.textView);
         setSupportActionBar(toolbar);
 
         defaultHashtagAdapter = new HashtagAdapter(this);
         defaultHashtagAdapter.addAll(
                 new Hashtag(getString(R.string.hashtag1)),
-                new Hashtag(getString(R.string.hashtag2), ResourcesKt.getInteger(this, R.integer.hashtag2)),
-                new Hashtag(getString(R.string.hashtag3), ResourcesKt.getInteger(this, R.integer.hashtag3)));
+                new Hashtag(getString(R.string.hashtag2), Resources2.getInteger(this, R.integer.hashtag2)),
+                new Hashtag(getString(R.string.hashtag3), Resources2.getInteger(this, R.integer.hashtag3)));
 
         defaultMentionAdapter = new MentionAdapter(this);
         defaultMentionAdapter.addAll(

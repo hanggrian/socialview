@@ -2,7 +2,7 @@ package com.example.socialview;
 
 import android.app.Application;
 
-import com.hendraanggrian.picasso.PicassosKt;
+import com.hendraanggrian.picasso.Picassos;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -13,6 +13,6 @@ public class App2 extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        PicassosKt.getCache(Picasso.with(this)).clear();
+        Picassos.getCache(Picasso.with(this)).clear();
     }
 }

@@ -1,3 +1,5 @@
+@file:JvmName("HashtagAdapter")
+
 package com.hendraanggrian.widget
 
 import android.content.Context

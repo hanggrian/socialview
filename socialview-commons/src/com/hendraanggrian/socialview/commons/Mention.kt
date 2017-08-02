@@ -1,3 +1,5 @@
+@file:JvmName("Mention")
+
 package com.hendraanggrian.socialview.commons
 
 /**
@@ -8,5 +10,4 @@ package com.hendraanggrian.socialview.commons
 data class Mention @JvmOverloads constructor(
         val username: String,
         val displayname: String? = null,
-        val avatar: Any? = null
-)
+        val avatar: Any? = null)

@@ -1,3 +1,5 @@
+@file:JvmName("MentionAdapter")
+
 package com.hendraanggrian.widget
 
 import android.content.Context
