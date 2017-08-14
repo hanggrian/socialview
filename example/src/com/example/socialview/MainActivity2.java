@@ -16,10 +16,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
-import com.hendraanggrian.kota.content.Resources2;
+import com.hendraanggrian.common.content.Resources2;
+import com.hendraanggrian.socialview.Hashtag;
+import com.hendraanggrian.socialview.Mention;
 import com.hendraanggrian.socialview.SocialView;
-import com.hendraanggrian.socialview.commons.Hashtag;
-import com.hendraanggrian.socialview.commons.Mention;
 import com.hendraanggrian.widget.FilteredAdapter;
 import com.hendraanggrian.widget.HashtagAdapter;
 import com.hendraanggrian.widget.MentionAdapter;

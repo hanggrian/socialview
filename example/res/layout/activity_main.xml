@@ -24,6 +24,5 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:hint="What's on your mind?"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 </android.support.design.widget.CoordinatorLayout>

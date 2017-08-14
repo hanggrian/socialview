@@ -2,35 +2,33 @@
 
 package com.hendraanggrian.socialview
 
-import android.os.Parcel
-import android.support.annotation.ColorInt
+import android.content.res.ColorStateList
 import android.text.Editable
 import android.text.Spannable
 import android.text.TextPaint
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
-import android.text.method.MovementMethod
 import android.text.style.CharacterStyle
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
-import android.text.style.URLSpan
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
-import com.hendraanggrian.kota.text.putSpansAll
-import com.hendraanggrian.kota.text.removeAllSpans
+import com.hendraanggrian.common.content.getColorStateListNotNull
+import com.hendraanggrian.common.content.openTypedArray
+import com.hendraanggrian.common.text.putSpansAll
+import com.hendraanggrian.common.text.removeSpans
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-class SocialViewHelper private constructor(
-        override val view: TextView,
-        attrs: AttributeSet? = null) :
-        SocialView {
+class SocialViewImpl constructor(
+        val view: TextView,
+        attrs: AttributeSet? = null
+) : SocialView {
 
-    private val lastMovementMethod: MovementMethod? = view.movementMethod
     private val mTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int): Unit {
             if (count > 0 && start > 0) {
                 when (s[start - 1]) {
                     '#' -> {
@@ -45,15 +43,15 @@ class SocialViewHelper private constructor(
                         mHashtagEditing = false
                         mMentionEditing = false
                     } else if (mHashtagWatcher != null && mHashtagEditing) {
-                        mHashtagWatcher!!.invoke(this@SocialViewHelper, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start).toString())
+                        mHashtagWatcher!!.invoke(this@SocialViewImpl, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start).toString())
                     } else if (mMentionWatcher != null && mMentionEditing) {
-                        mMentionWatcher!!.invoke(this@SocialViewHelper, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start).toString())
+                        mMentionWatcher!!.invoke(this@SocialViewImpl, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start).toString())
                     }
                 }
             }
         }
 
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int): Unit {
             // triggered when text is added
             if (s.isEmpty()) return
             colorize()
@@ -74,27 +72,43 @@ class SocialViewHelper private constructor(
                         mHashtagEditing = false
                         mMentionEditing = false
                     } else if (mHashtagWatcher != null && mHashtagEditing) {
-                        mHashtagWatcher!!.invoke(this@SocialViewHelper, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count).toString())
+                        mHashtagWatcher!!.invoke(this@SocialViewImpl, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count).toString())
                     } else if (mMentionWatcher != null && mMentionEditing) {
-                        mMentionWatcher!!.invoke(this@SocialViewHelper, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count).toString())
+                        mMentionWatcher!!.invoke(this@SocialViewImpl, s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count).toString())
                     }
                 }
             }
         }
 
-        override fun afterTextChanged(s: Editable?) {}
+        override fun afterTextChanged(s: Editable?): Unit {}
     }
 
-    private var flags: Int
+    private var flags = Int.MIN_VALUE
+    private lateinit var mHashtagColor: ColorStateList
+    private lateinit var mMentionColor: ColorStateList
+    private lateinit var mHyperlinkColor: ColorStateList
     private var mHashtagListener: ((SocialView, CharSequence) -> Unit)? = null
     private var mMentionListener: ((SocialView, CharSequence) -> Unit)? = null
+    private var mHyperlinkListener: ((SocialView, CharSequence) -> Unit)? = null
     private var mHashtagWatcher: ((SocialView, CharSequence) -> Unit)? = null
     private var mMentionWatcher: ((SocialView, CharSequence) -> Unit)? = null
-    @ColorInt private var mHashtagColor: Int
-    @ColorInt private var mMentionColor: Int
-    @ColorInt private var mHyperlinkColor: Int
     private var mHashtagEditing = false
     private var mMentionEditing = false
+
+    init {
+        view.addTextChangedListener(mTextWatcher)
+        view.setText(view.text, TextView.BufferType.SPANNABLE)
+        view.context.openTypedArray(attrs, R.styleable.SocialView, R.attr.socialViewStyle, R.style.Widget_SocialView) {
+            flags = getInteger(R.styleable.SocialView_socialFlags, SocialView.FLAG_HASHTAG or SocialView.FLAG_MENTION or SocialView.FLAG_HYPERLINK)
+            mHashtagColor = getColorStateListNotNull(R.styleable.SocialView_hashtagColor)
+            mMentionColor = getColorStateListNotNull(R.styleable.SocialView_mentionColor)
+            mHyperlinkColor = getColorStateListNotNull(R.styleable.SocialView_hyperlinkColor)
+        }
+        colorize()
+    }
+
+    override fun getContext() = view.context!!
+    override fun getText() = view.text!!
 
     override var isHashtagEnabled
         get() = flags or SocialView.FLAG_HASHTAG == flags
@@ -147,95 +161,56 @@ class SocialViewHelper private constructor(
             colorize()
         }
 
-    init {
-        view.addTextChangedListener(mTextWatcher)
-        view.setText(view.text, TextView.BufferType.SPANNABLE)
-        val a = view.context.obtainStyledAttributes(attrs, R.styleable.SocialView, R.attr.socialViewStyle, R.style.Widget_SocialView)
-        flags = a.getInteger(R.styleable.SocialView_socialFlags, SocialView.FLAG_HASHTAG or SocialView.FLAG_MENTION or SocialView.FLAG_HYPERLINK)
-        mHashtagColor = a.getColorStateList(R.styleable.SocialView_hashtagColor).defaultColor
-        mMentionColor = a.getColorStateList(R.styleable.SocialView_mentionColor).defaultColor
-        mHyperlinkColor = a.getColorStateList(R.styleable.SocialView_hyperlinkColor).defaultColor
-        a.recycle()
-        colorize()
-    }
-
-    override fun colorize() {
+    override fun colorize(): Unit {
         val spannable = view.text
         check(spannable is Spannable, { "Attached text is not a Spannable, add TextView.BufferType.SPANNABLE when setting text to this TextView." })
         spannable as Spannable
-        spannable.removeAllSpans(CharacterStyle::class.java)
+        spannable.removeSpans(CharacterStyle::class.java)
         if (isHashtagEnabled) {
-            mHashtagListener.let {
-                spannable.putSpansAll(SocialView.HASHTAG_PATTERN, {
-                    if (it == null) {
-                        ForegroundColorSpan(hashtagColor)
-                    } else {
-                        object : ClickableSpan() {
-                            override fun onClick(widget: View) = it.invoke(this@SocialViewHelper, spannable.subSequence(spannable.getSpanStart(this) + 1, spannable.getSpanEnd(this)))
-                            override fun updateDrawState(ds: TextPaint) {
-                                ds.color = hashtagColor
-                            }
-                        }
-                    }
-                })
-            }
+            spannable.putSpansAll(SocialView.HASHTAG_PATTERN, {
+                mHashtagListener?.newClickableSpan(spannable, mHashtagColor) ?: ForegroundColorSpan(mHashtagColor.defaultColor)
+            })
         }
         if (isMentionEnabled) {
-            mMentionListener.let {
-                spannable.putSpansAll(SocialView.MENTION_PATTERN, {
-                    if (it == null) {
-                        ForegroundColorSpan(mentionColor)
-                    } else {
-                        object : ClickableSpan() {
-                            override fun onClick(widget: View) = it.invoke(this@SocialViewHelper, spannable.subSequence(spannable.getSpanStart(this) + 1, spannable.getSpanEnd(this)))
-                            override fun updateDrawState(ds: TextPaint) {
-                                ds.color = mentionColor
-                            }
-                        }
-                    }
-                })
-            }
+            spannable.putSpansAll(SocialView.MENTION_PATTERN, {
+                mMentionListener?.newClickableSpan(spannable, mMentionColor) ?: ForegroundColorSpan(mMentionColor.defaultColor)
+            })
         }
         if (isHyperlinkEnabled) {
             spannable.putSpansAll(SocialView.HYPERLINK_PATTERN, {
-                object : URLSpan(null as String?) {
-                    override fun writeToParcel(dest: Parcel, flags: Int) = dest.writeString(url)
-                    override fun getURL() = spannable.subSequence(spannable.getSpanStart(this), spannable.getSpanEnd(this)).toString()
+                mHyperlinkListener?.newClickableSpan(spannable, mHyperlinkColor, true) ?: object : ForegroundColorSpan(mMentionColor.defaultColor) {
                     override fun updateDrawState(ds: TextPaint) {
-                        ds.linkColor = hyperlinkColor
                         super.updateDrawState(ds)
+                        ds.isUnderlineText = true
                     }
                 }
             })
         }
     }
 
-    override fun detach() {
-        view.movementMethod = lastMovementMethod
-        view.removeTextChangedListener(mTextWatcher)
-    }
-
-    override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?) {
-        if (view.movementMethod == null || view.movementMethod !is LinkMovementMethod) {
-            view.movementMethod = LinkMovementMethod.getInstance()
-        }
+    override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit {
+        view.setLinkMovementMethodIfNotAlready()
         mHashtagListener = listener
         colorize()
     }
 
-    override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?) {
-        if (view.movementMethod == null || view.movementMethod !is LinkMovementMethod) {
-            view.movementMethod = LinkMovementMethod.getInstance()
-        }
+    override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit {
+        view.setLinkMovementMethodIfNotAlready()
         mMentionListener = listener
         colorize()
     }
 
-    override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) {
+    override fun setOnHyperlinkClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit {
+        view.setLinkMovementMethodIfNotAlready()
+        mHyperlinkListener = listener
+        colorize()
+    }
+
+    override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?): Unit {
         mHashtagWatcher = watcher
     }
 
-    override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) {
+    override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?): Unit {
         mMentionWatcher = watcher
     }
 
@@ -243,8 +218,21 @@ class SocialViewHelper private constructor(
 
     private fun indexOfPreviousNonLetterDigit(text: CharSequence, start: Int, end: Int): Int = (end downTo start + 1).firstOrNull { !Character.isLetterOrDigit(text[it]) } ?: start
 
-    companion object {
-        @JvmOverloads
-        fun attach(view: TextView, attrs: AttributeSet? = null): SocialView = SocialViewHelper(view, attrs)
+    private fun TextView.setLinkMovementMethodIfNotAlready() {
+        if (movementMethod == null || movementMethod !is LinkMovementMethod) {
+            movementMethod = LinkMovementMethod.getInstance()
+        }
+    }
+
+    private fun ((SocialView, CharSequence) -> Unit).newClickableSpan(
+            spannable: Spannable,
+            color: ColorStateList,
+            underline: Boolean = false
+    ): CharacterStyle = object : ClickableSpan() {
+        override fun onClick(widget: View) = invoke(this@SocialViewImpl, spannable.subSequence(spannable.getSpanStart(this), spannable.getSpanEnd(this)))
+        override fun updateDrawState(ds: TextPaint) {
+            ds.color = color.defaultColor
+            ds.isUnderlineText = underline
+        }
     }
 }

@@ -1,5 +1,3 @@
-@file:JvmName("HashtagAdapter")
-
 package com.hendraanggrian.widget
 
 import android.content.Context
@@ -8,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.hendraanggrian.kota.view.setVisibleBy
-import com.hendraanggrian.socialview.commons.Hashtag
+import com.hendraanggrian.common.view.setVisibleThen
+import com.hendraanggrian.socialview.Hashtag
 import com.hendraanggrian.socialview.commons.R
 
 /**
@@ -17,8 +15,10 @@ import com.hendraanggrian.socialview.commons.R
  *
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-class HashtagAdapter @JvmOverloads constructor(context: Context, @PluralsRes val countPlural: Int = R.plurals.posts) :
-        FilteredAdapter<Hashtag>(context, R.layout.socialview_layout_hashtag, R.id.socialview_hashtag) {
+class HashtagAdapter @JvmOverloads constructor(
+        context: Context,
+        @PluralsRes private val countPlural: Int = R.plurals.posts
+) : FilteredAdapter<Hashtag>(context, R.layout.socialview_layout_hashtag, R.id.socialview_hashtag) {
 
     private val filter = object : SocialFilter() {
         override fun convertResultToString(resultValue: Any) = (resultValue as Hashtag).hashtag
@@ -36,7 +36,7 @@ class HashtagAdapter @JvmOverloads constructor(context: Context, @PluralsRes val
         }
         getItem(position)?.let {
             holder.textViewHashtag.text = it.hashtag
-            if (holder.textViewCount.setVisibleBy(it.count != null)) {
+            holder.textViewCount.setVisibleThen(it.count != null) {
                 holder.textViewCount.text = context.resources.getQuantityString(countPlural, it.count!!, it.count)
             }
         }
@@ -45,8 +45,8 @@ class HashtagAdapter @JvmOverloads constructor(context: Context, @PluralsRes val
 
     override fun getFilter() = filter
 
-    private class ViewHolder(view: View) {
-        val textViewHashtag = view.findViewById<TextView>(R.id.socialview_hashtag)!!
-        val textViewCount = view.findViewById<TextView>(R.id.socialview_hashtag_count)!!
+    private class ViewHolder(itemView: View) {
+        val textViewHashtag = itemView.findViewById<TextView>(R.id.socialview_hashtag)!!
+        val textViewCount = itemView.findViewById<TextView>(R.id.socialview_hashtag_count)!!
     }
 }

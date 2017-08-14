@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview.core.test
+package com.hendraanggrian.socialview
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
@@ -6,7 +6,7 @@ import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.hendraanggrian.socialview.core.test.activity.CustomThemeActivity
+import com.hendraanggrian.socialview.activity.CustomThemeActivity
 import com.hendraanggrian.socialview.test.R
 import org.junit.Rule
 import org.junit.Test

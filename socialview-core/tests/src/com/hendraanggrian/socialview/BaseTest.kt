@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview.core.test
+package com.hendraanggrian.socialview
 
 import android.os.Build
 import android.os.CountDownTimer
@@ -20,7 +20,7 @@ abstract class BaseTest {
     protected fun delay(): ViewAction {
         return object : ViewAction {
             override fun getConstraints() = isAssignableFrom(ProgressBar::class.java)
-            override fun getDescription() = "delay for $DELAY_COUNTDOWN"
+            override fun getDescription() = "delay for ${DELAY_COUNTDOWN}"
             override fun perform(uiController: UiController, view: View) {
                 val progressBar = view as ProgressBar
                 progressBar.progress = 100

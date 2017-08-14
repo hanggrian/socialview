@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview.commons.test;
+package com.hendraanggrian.socialview;
 
 import android.support.annotation.NonNull;
 

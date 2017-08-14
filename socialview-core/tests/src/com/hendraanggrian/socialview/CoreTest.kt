@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview.core.test
+package com.hendraanggrian.socialview
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
@@ -6,7 +6,7 @@ import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.hendraanggrian.socialview.core.test.activity.InstrumentedActivity
+import com.hendraanggrian.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.test.R
 import org.jetbrains.anko.toast
 import org.junit.Rule
@@ -21,7 +21,7 @@ class CoreTest : BaseTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    //@Test
+    @Test
     @Throws(Exception::class)
     fun introduction() {
         onView(withId(R.id.editText)).perform(
@@ -30,7 +30,7 @@ class CoreTest : BaseTest() {
         onView(withId(R.id.progressBar)).perform(delay())
     }
 
-    //@Test
+    @Test
     @Throws(Exception::class)
     fun withoutMention() {
         rule.activity.editText.isMentionEnabled = false
@@ -40,7 +40,7 @@ class CoreTest : BaseTest() {
         onView(withId(R.id.progressBar)).perform(delay())
     }
 
-    //@Test
+    @Test
     @Throws(Exception::class)
     fun customColors() {
         rule.activity.editText.setHashtagColorRes(android.R.color.holo_red_light)

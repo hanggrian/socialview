@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview.core.test.activity
+package com.hendraanggrian.socialview.activity
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)

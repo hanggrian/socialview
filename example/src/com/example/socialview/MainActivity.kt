@@ -8,9 +8,9 @@ import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Filter
 import android.widget.TextView
-import com.hendraanggrian.kota.content.getInteger
-import com.hendraanggrian.socialview.commons.Hashtag
-import com.hendraanggrian.socialview.commons.Mention
+import com.hendraanggrian.common.content.getInteger
+import com.hendraanggrian.socialview.Hashtag
+import com.hendraanggrian.socialview.Mention
 import com.hendraanggrian.widget.FilteredAdapter
 import com.hendraanggrian.widget.HashtagAdapter
 import com.hendraanggrian.widget.MentionAdapter

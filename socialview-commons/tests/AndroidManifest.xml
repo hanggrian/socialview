@@ -1,13 +1,13 @@
 <manifest
-    package="com.hendraanggrian.socialview.commons.test"
+    package="com.hendraanggrian.socialview"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <uses-sdk
-        android:minSdkVersion="9"
-        android:targetSdkVersion="25"
+        android:minSdkVersion="14"
+        android:targetSdkVersion="26"
         tools:overrideLibrary="android.support.test, android.app, android.support.test.rule, android.support.test.espresso, android.support.test.espresso.idling"/>
 
     <application

@@ -1,25 +1,24 @@
-package com.hendraanggrian.socialview.core.test.activity
+package com.hendraanggrian.socialview
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.widget.ProgressBar
-import com.hendraanggrian.socialview.test.R
-import com.hendraanggrian.widget.SocialEditText
+import com.hendraanggrian.socialview.commons.test.R
+import com.hendraanggrian.widget.SocialAutoCompleteTextView
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-open class InstrumentedActivity : AppCompatActivity() {
+class InstrumentedActivity : AppCompatActivity() {
 
     lateinit var progressBar: ProgressBar
-    lateinit var editText: SocialEditText
+    lateinit var textView: SocialAutoCompleteTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_instrumented)
-        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
+        setSupportActionBar(findViewById(R.id.toolbar))
         progressBar = findViewById(R.id.progressBar)
-        editText = findViewById(R.id.editText)
+        textView = findViewById(R.id.textView)
     }
 }

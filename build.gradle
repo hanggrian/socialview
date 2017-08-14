@@ -13,8 +13,8 @@ buildscript {
                     anko  : '0.10.1'
             ],
             support     : '26.0.0',
-            kota        : '0.4.1',
-            picassoUtils: '0.2.1',
+            kota        : '0.7.0',
+            picassoUtils: '0.2.4',
 
             // test
             runner      : '0.5',
@@ -22,7 +22,7 @@ buildscript {
             espresso    : '2.2.2',
             junit       : '4.12',
 
-            release     : '0.16.1'
+            release     : '0.16.2'
     ]
     repositories {
         jcenter()
@@ -49,4 +49,11 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-//$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false
+/** QUICK LINT CHECK BEFORE UPLOAD
+ *
+ ./gradlew socialview-core:clean socialview-core:build
+ ./gradlew socialview-core:bintrayUpload -PdryRun=false -PbintrayUser=hendraanggrian -PbintrayKey=
+ *
+ ./gradlew socialview-commons:clean socialview-commons:build
+ ./gradlew socialview-commons:bintrayUpload -PdryRun=false -PbintrayUser=hendraanggrian -PbintrayKey=
+ */

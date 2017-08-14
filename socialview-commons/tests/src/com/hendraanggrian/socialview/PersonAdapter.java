@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview.commons.test;
+package com.hendraanggrian.socialview;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -24,7 +24,7 @@ public class PersonAdapter extends FilteredAdapter<Person> {
     };
 
     public PersonAdapter(@NonNull Context context) {
-        super(context, R.layout.item_person, R.id.textViewName);
+        super(context, com.hendraanggrian.socialview.commons.test.R.layout.item_person, com.hendraanggrian.socialview.commons.test.R.id.textViewName);
     }
 
     @NonNull
@@ -32,7 +32,7 @@ public class PersonAdapter extends FilteredAdapter<Person> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_person, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(com.hendraanggrian.socialview.commons.test.R.layout.item_person, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -55,7 +55,7 @@ public class PersonAdapter extends FilteredAdapter<Person> {
         @NonNull private final TextView textView;
 
         public ViewHolder(@NonNull View itemView) {
-            textView = (TextView) itemView.findViewById(R.id.textViewName);
+            textView = (TextView) itemView.findViewById(com.hendraanggrian.socialview.commons.test.R.id.textViewName);
         }
     }
 }

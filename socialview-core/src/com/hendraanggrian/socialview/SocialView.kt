@@ -1,80 +1,94 @@
-@file:JvmName("SocialView")
-
 package com.hendraanggrian.socialview
 
+import android.content.Context
+import android.content.res.ColorStateList
 import android.support.annotation.AttrRes
+import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
 import android.support.v4.util.PatternsCompat
-import android.widget.TextView
-import com.hendraanggrian.kota.content.getColor
-import com.hendraanggrian.kota.content.getColor2
+import com.hendraanggrian.common.content.getColor2
+import com.hendraanggrian.common.content.getColorStateList2
+import com.hendraanggrian.common.content.toColorStateList
 import java.util.regex.Pattern
 
 /**
  * Base methods of all socialview's widgets.
- * The logic, however, are calculated in [SocialViewHelper] while the widgets are just
- * passing these methods to the attacher.
+ * The logic, however, are calculated in [SocialViewImpl] while the widgets are just
+ * passing these methods to the [SocialViewHolder].
  *
  * @author Hendra Anggian (hendraanggrian@gmail.com)
- * @see SocialViewHelper
+ * @see SocialViewImpl
  */
 interface SocialView {
 
-    val view: TextView
+    fun getContext(): Context
+    fun getText(): CharSequence
 
     var isHashtagEnabled: Boolean
     var isMentionEnabled: Boolean
     var isHyperlinkEnabled: Boolean
 
-    var hashtagColor: Int
-    var mentionColor: Int
-    var hyperlinkColor: Int
+    var hashtagColor: ColorStateList
+    var mentionColor: ColorStateList
+    var hyperlinkColor: ColorStateList
 
-    val hashtags: List<String> get() = newList(isHashtagEnabled, HASHTAG_PATTERN)
-    val mentions: List<String> get() = newList(isMentionEnabled, MENTION_PATTERN)
-    val hyperlinks: List<String> get() = newList(isHyperlinkEnabled, HYPERLINK_PATTERN)
+    val hashtags: List<String> get() = HASHTAG_PATTERN.newList(isHashtagEnabled)
+    val mentions: List<String> get() = MENTION_PATTERN.newList(isMentionEnabled)
+    val hyperlinks: List<String> get() = HYPERLINK_PATTERN.newList(isHyperlinkEnabled)
 
-    fun setHashtagColorRes(@ColorRes id: Int) {
-        hashtagColor = view.context.getColor2(id)
+    fun setHashtagColor(@ColorInt color: Int): Unit {
+        hashtagColor = getContext().getColor2(color).toColorStateList()
     }
 
-    fun setMentionColorRes(@ColorRes id: Int) {
-        mentionColor = view.context.getColor2(id)
+    fun setMentionColor(@ColorInt color: Int): Unit {
+        mentionColor = getContext().getColor2(color).toColorStateList()
     }
 
-    fun setHyperlinkColorRes(@ColorRes id: Int) {
-        hyperlinkColor = view.context.getColor2(id)
+    fun setHyperlinkColor(@ColorInt color: Int): Unit {
+        hyperlinkColor = getContext().getColor2(color).toColorStateList()
     }
 
-    fun setHashtagColorAttr(@AttrRes id: Int) {
-        hashtagColor = view.context.theme.getColor(id, true)
+    fun setHashtagColorRes(@ColorRes id: Int): Unit {
+        hashtagColor = getContext().getColorStateList2(id)
     }
 
-    fun setMentionColorAttr(@AttrRes id: Int) {
-        mentionColor = view.context.theme.getColor(id, true)
+    fun setMentionColorRes(@ColorRes id: Int): Unit {
+        mentionColor = getContext().getColorStateList2(id)
     }
 
-    fun setHyperlinkColorAttr(@AttrRes id: Int) {
-        hyperlinkColor = view.context.theme.getColor(id, true)
+    fun setHyperlinkColorRes(@ColorRes id: Int): Unit {
+        hyperlinkColor = getContext().getColorStateList2(id)
     }
 
-    fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?)
-    fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?)
+    fun setHashtagColorAttr(@AttrRes id: Int): Unit {
+        hashtagColor = getContext().theme.getColorStateList2(id)
+    }
 
-    fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?)
-    fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?)
+    fun setMentionColorAttr(@AttrRes id: Int): Unit {
+        mentionColor = getContext().theme.getColorStateList2(id)
+    }
 
-    fun colorize()
-    fun detach()
+    fun setHyperlinkColorAttr(@AttrRes id: Int): Unit {
+        hyperlinkColor = getContext().theme.getColorStateList2(id)
+    }
 
-    private fun newList(condition: Boolean, pattern: Pattern): List<String> {
+    fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit
+    fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit
+    fun setOnHyperlinkClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit
+
+    fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?): Unit
+    fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?): Unit
+
+    fun colorize(): Unit
+
+    private fun Pattern.newList(condition: Boolean): List<String> {
         if (!condition) {
             return emptyList()
         }
         val list = ArrayList<String>()
-        val matcher = pattern.matcher(view.text)
+        val matcher = matcher(getText())
         while (matcher.find()) {
-            list.add(matcher.group(if (pattern != HYPERLINK_PATTERN) 1 /* remove hashtag and mention symbol */ else 0))
+            list.add(matcher.group(if (this !== HYPERLINK_PATTERN) 1 /* remove hashtag and mention symbol */ else 0))
         }
         return list
     }

@@ -1,5 +1,3 @@
-@file:JvmName("FilteredAdapter")
-
 package com.hendraanggrian.widget
 
 import android.content.Context
@@ -14,8 +12,11 @@ import kotlin.collections.ArrayList
  *
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-abstract class FilteredAdapter<T>(context: Context, resource: Int, textViewResourceId: Int) :
-        ArrayAdapter<T>(context, resource, textViewResourceId, ArrayList<T>()) {
+abstract class FilteredAdapter<T>(
+        context: Context,
+        resource: Int,
+        textViewResourceId: Int
+) : ArrayAdapter<T>(context, resource, textViewResourceId, ArrayList<T>()) {
 
     private val items: MutableList<T> = ArrayList()
     private val tempItems: MutableList<T> = ArrayList()
