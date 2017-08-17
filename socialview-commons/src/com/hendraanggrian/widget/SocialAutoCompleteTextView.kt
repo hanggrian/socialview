@@ -20,9 +20,9 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
 
     private var mImpl = SocialViewImpl(this, attrs)
     private val mTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int): Unit {}
-        override fun afterTextChanged(editable: Editable?): Unit {}
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int): Unit {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun afterTextChanged(editable: Editable?) {}
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             if (s.isNotEmpty() && start < s.length) {
                 when (s[start]) {
                     '#' -> if (adapter !== hashtagAdapter) {
@@ -35,14 +35,15 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
             }
         }
     }
-    private val mEnabledSymbols: CharArray get() = ArrayList<Char>().apply {
-        if (isHashtagEnabled) {
-            add('#')
-        }
-        if (isMentionEnabled) {
-            add('@')
-        }
-    }.toCharArray()
+    private val mEnabledSymbols: CharArray
+        get() = ArrayList<Char>().apply {
+            if (isHashtagEnabled) {
+                add('#')
+            }
+            if (isMentionEnabled) {
+                add('@')
+            }
+        }.toCharArray()
 
     var hashtagAdapter: ArrayAdapter<*>? = null
     var mentionAdapter: ArrayAdapter<*>? = null
@@ -87,19 +88,19 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
             mImpl.hyperlinkColor = value
         }
 
-    override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit = mImpl.setOnHashtagClickListener(listener)
-    override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit = mImpl.setOnMentionClickListener(listener)
-    override fun setOnHyperlinkClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit = mImpl.setOnHyperlinkClickListener(listener)
-    override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?): Unit = mImpl.setHashtagTextChangedListener(watcher)
-    override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?): Unit = mImpl.setMentionTextChangedListener(watcher)
+    override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = mImpl.setOnHashtagClickListener(listener)
+    override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = mImpl.setOnMentionClickListener(listener)
+    override fun setOnHyperlinkClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = mImpl.setOnHyperlinkClickListener(listener)
+    override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = mImpl.setHashtagTextChangedListener(watcher)
+    override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = mImpl.setMentionTextChangedListener(watcher)
 
-    override fun colorize(): Unit = mImpl.colorize()
+    override fun colorize() = mImpl.colorize()
 
     /**
      * While [MultiAutoCompleteTextView.CommaTokenizer] tracks only comma symbol,
      * [SymbolsTokenizer] can track multiple characters, in this instance, are hashtag and at symbol.
      */
-    class SymbolsTokenizer(val symbols: CharArray) : MultiAutoCompleteTextView.Tokenizer {
+    class SymbolsTokenizer(private val symbols: CharArray) : MultiAutoCompleteTextView.Tokenizer {
 
         override fun findTokenStart(text: CharSequence, cursor: Int): Int {
             var i = cursor

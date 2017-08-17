@@ -1,7 +1,9 @@
 package com.example.socialview
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.*
@@ -60,6 +62,10 @@ class MainActivity : AppCompatActivity() {
         textView.mentionAdapter = defaultMentionAdapter
         textView.setHashtagTextChangedListener { _, s -> Log.d("editing", s.toString()) }
         textView.setMentionTextChangedListener { _, s -> Log.d("editing", s.toString()) }
+
+        Handler().postDelayed({
+            textView.setHashtagColor(Color.BLACK)
+        }, 5000)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

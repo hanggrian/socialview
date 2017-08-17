@@ -28,7 +28,7 @@ class SocialViewImpl constructor(
 ) : SocialView {
 
     private val mTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int): Unit {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             if (count > 0 && start > 0) {
                 when (s[start - 1]) {
                     '#' -> {
@@ -51,7 +51,7 @@ class SocialViewImpl constructor(
             }
         }
 
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int): Unit {
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             // triggered when text is added
             if (s.isEmpty()) return
             colorize()
@@ -80,7 +80,7 @@ class SocialViewImpl constructor(
             }
         }
 
-        override fun afterTextChanged(s: Editable?): Unit {}
+        override fun afterTextChanged(s: Editable?) {}
     }
 
     private var flags = Int.MIN_VALUE
@@ -161,7 +161,7 @@ class SocialViewImpl constructor(
             colorize()
         }
 
-    override fun colorize(): Unit {
+    override fun colorize() {
         val spannable = view.text
         check(spannable is Spannable, { "Attached text is not a Spannable, add TextView.BufferType.SPANNABLE when setting text to this TextView." })
         spannable as Spannable
@@ -188,33 +188,33 @@ class SocialViewImpl constructor(
         }
     }
 
-    override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit {
+    override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?) {
         view.setLinkMovementMethodIfNotAlready()
         mHashtagListener = listener
         colorize()
     }
 
-    override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit {
+    override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?) {
         view.setLinkMovementMethodIfNotAlready()
         mMentionListener = listener
         colorize()
     }
 
-    override fun setOnHyperlinkClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit {
+    override fun setOnHyperlinkClickListener(listener: ((SocialView, CharSequence) -> Unit)?) {
         view.setLinkMovementMethodIfNotAlready()
         mHyperlinkListener = listener
         colorize()
     }
 
-    override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?): Unit {
+    override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) {
         mHashtagWatcher = watcher
     }
 
-    override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?): Unit {
+    override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) {
         mMentionWatcher = watcher
     }
 
-    private fun indexOfNextNonLetterDigit(text: CharSequence, start: Int): Int = (start + 1..text.length - 1).firstOrNull { !Character.isLetterOrDigit(text[it]) } ?: text.length
+    private fun indexOfNextNonLetterDigit(text: CharSequence, start: Int): Int = (start + 1 until text.length).firstOrNull { !Character.isLetterOrDigit(text[it]) } ?: text.length
 
     private fun indexOfPreviousNonLetterDigit(text: CharSequence, start: Int, end: Int): Int = (end downTo start + 1).firstOrNull { !Character.isLetterOrDigit(text[it]) } ?: start
 

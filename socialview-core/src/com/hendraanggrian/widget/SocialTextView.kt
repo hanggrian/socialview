@@ -48,11 +48,11 @@ class SocialTextView @JvmOverloads constructor(
             mImpl.hyperlinkColor = value
         }
 
-    override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit = mImpl.setOnHashtagClickListener(listener)
-    override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit = mImpl.setOnMentionClickListener(listener)
-    override fun setOnHyperlinkClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit = mImpl.setOnHyperlinkClickListener(listener)
-    override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?): Unit = mImpl.setHashtagTextChangedListener(watcher)
-    override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?): Unit = mImpl.setMentionTextChangedListener(watcher)
+    override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = mImpl.setOnHashtagClickListener(listener)
+    override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = mImpl.setOnMentionClickListener(listener)
+    override fun setOnHyperlinkClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = mImpl.setOnHyperlinkClickListener(listener)
+    override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = mImpl.setHashtagTextChangedListener(watcher)
+    override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = mImpl.setMentionTextChangedListener(watcher)
 
     override fun colorize() = mImpl.colorize()
 }

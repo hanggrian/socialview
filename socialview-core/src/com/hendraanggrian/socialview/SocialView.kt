@@ -6,22 +6,27 @@ import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
 import android.support.v4.util.PatternsCompat
-import com.hendraanggrian.common.content.getColor2
 import com.hendraanggrian.common.content.getColorStateList2
 import com.hendraanggrian.common.content.toColorStateList
 import java.util.regex.Pattern
 
 /**
  * Base methods of all socialview's widgets.
- * The logic, however, are calculated in [SocialViewImpl] while the widgets are just
- * passing these methods to the [SocialViewHolder].
+ * The logic, however, are calculated in [SocialViewImpl].
  *
  * @author Hendra Anggian (hendraanggrian@gmail.com)
  * @see SocialViewImpl
  */
 interface SocialView {
 
+    /**
+     * If extended in [android.view.View], this function is already implemented.
+     */
     fun getContext(): Context
+
+    /**
+     * If extended in [android.widget.TextView], this function is already implemented.
+     */
     fun getText(): CharSequence
 
     var isHashtagEnabled: Boolean
@@ -36,50 +41,50 @@ interface SocialView {
     val mentions: List<String> get() = MENTION_PATTERN.newList(isMentionEnabled)
     val hyperlinks: List<String> get() = HYPERLINK_PATTERN.newList(isHyperlinkEnabled)
 
-    fun setHashtagColor(@ColorInt color: Int): Unit {
-        hashtagColor = getContext().getColor2(color).toColorStateList()
+    fun setHashtagColor(@ColorInt color: Int) {
+        hashtagColor = color.toColorStateList()
     }
 
-    fun setMentionColor(@ColorInt color: Int): Unit {
-        mentionColor = getContext().getColor2(color).toColorStateList()
+    fun setMentionColor(@ColorInt color: Int) {
+        mentionColor = color.toColorStateList()
     }
 
-    fun setHyperlinkColor(@ColorInt color: Int): Unit {
-        hyperlinkColor = getContext().getColor2(color).toColorStateList()
+    fun setHyperlinkColor(@ColorInt color: Int) {
+        hyperlinkColor = color.toColorStateList()
     }
 
-    fun setHashtagColorRes(@ColorRes id: Int): Unit {
+    fun setHashtagColorRes(@ColorRes id: Int) {
         hashtagColor = getContext().getColorStateList2(id)
     }
 
-    fun setMentionColorRes(@ColorRes id: Int): Unit {
+    fun setMentionColorRes(@ColorRes id: Int) {
         mentionColor = getContext().getColorStateList2(id)
     }
 
-    fun setHyperlinkColorRes(@ColorRes id: Int): Unit {
+    fun setHyperlinkColorRes(@ColorRes id: Int) {
         hyperlinkColor = getContext().getColorStateList2(id)
     }
 
-    fun setHashtagColorAttr(@AttrRes id: Int): Unit {
+    fun setHashtagColorAttr(@AttrRes id: Int) {
         hashtagColor = getContext().theme.getColorStateList2(id)
     }
 
-    fun setMentionColorAttr(@AttrRes id: Int): Unit {
+    fun setMentionColorAttr(@AttrRes id: Int) {
         mentionColor = getContext().theme.getColorStateList2(id)
     }
 
-    fun setHyperlinkColorAttr(@AttrRes id: Int): Unit {
+    fun setHyperlinkColorAttr(@AttrRes id: Int) {
         hyperlinkColor = getContext().theme.getColorStateList2(id)
     }
 
-    fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit
-    fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit
-    fun setOnHyperlinkClickListener(listener: ((SocialView, CharSequence) -> Unit)?): Unit
+    fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?)
+    fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?)
+    fun setOnHyperlinkClickListener(listener: ((SocialView, CharSequence) -> Unit)?)
 
-    fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?): Unit
-    fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?): Unit
+    fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?)
+    fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?)
 
-    fun colorize(): Unit
+    fun colorize()
 
     private fun Pattern.newList(condition: Boolean): List<String> {
         if (!condition) {
