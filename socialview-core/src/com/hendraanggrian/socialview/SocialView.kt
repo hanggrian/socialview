@@ -2,31 +2,25 @@ package com.hendraanggrian.socialview
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.support.annotation.AttrRes
+import android.content.res.ColorStateList.valueOf
 import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
-import android.support.v4.util.PatternsCompat
-import com.hendraanggrian.common.content.getColorStateList2
-import com.hendraanggrian.common.content.toColorStateList
-import java.util.regex.Pattern
+import android.support.v4.content.ContextCompat.getColorStateList
+import android.support.v4.util.PatternsCompat.WEB_URL
+import kotlin.text.RegexOption.IGNORE_CASE
 
 /**
  * Base methods of all socialview's widgets.
  * The logic, however, are calculated in [SocialViewImpl].
  *
- * @author Hendra Anggian (hendraanggrian@gmail.com)
  * @see SocialViewImpl
  */
 interface SocialView {
 
-    /**
-     * If extended in [android.view.View], this function is already implemented.
-     */
+    /** Shall be shadowed when implemented in [android.view.View]. */
     fun getContext(): Context
 
-    /**
-     * If extended in [android.widget.TextView], this function is already implemented.
-     */
+    /** Shall be shadowed when implemented in [android.widget.TextView]. */
     fun getText(): CharSequence
 
     var isHashtagEnabled: Boolean
@@ -37,44 +31,32 @@ interface SocialView {
     var mentionColor: ColorStateList
     var hyperlinkColor: ColorStateList
 
-    val hashtags: List<String> get() = HASHTAG_PATTERN.newList(isHashtagEnabled)
-    val mentions: List<String> get() = MENTION_PATTERN.newList(isMentionEnabled)
-    val hyperlinks: List<String> get() = HYPERLINK_PATTERN.newList(isHyperlinkEnabled)
+    val hashtags: List<String> get() = if (!isHashtagEnabled) emptyList() else HASHTAG_PATTERN.newList
+    val mentions: List<String> get() = if (!isMentionEnabled) emptyList() else MENTION_PATTERN.newList
+    val hyperlinks: List<String> get() = if (!isHyperlinkEnabled) emptyList() else HYPERLINK_PATTERN.newList
 
     fun setHashtagColor(@ColorInt color: Int) {
-        hashtagColor = color.toColorStateList()
+        hashtagColor = valueOf(color)
     }
 
     fun setMentionColor(@ColorInt color: Int) {
-        mentionColor = color.toColorStateList()
+        mentionColor = valueOf(color)
     }
 
     fun setHyperlinkColor(@ColorInt color: Int) {
-        hyperlinkColor = color.toColorStateList()
+        hyperlinkColor = valueOf(color)
     }
 
     fun setHashtagColorRes(@ColorRes id: Int) {
-        hashtagColor = getContext().getColorStateList2(id)
+        hashtagColor = getColorStateList(getContext(), id)!!
     }
 
     fun setMentionColorRes(@ColorRes id: Int) {
-        mentionColor = getContext().getColorStateList2(id)
+        mentionColor = getColorStateList(getContext(), id)!!
     }
 
     fun setHyperlinkColorRes(@ColorRes id: Int) {
-        hyperlinkColor = getContext().getColorStateList2(id)
-    }
-
-    fun setHashtagColorAttr(@AttrRes id: Int) {
-        hashtagColor = getContext().theme.getColorStateList2(id)
-    }
-
-    fun setMentionColorAttr(@AttrRes id: Int) {
-        mentionColor = getContext().theme.getColorStateList2(id)
-    }
-
-    fun setHyperlinkColorAttr(@AttrRes id: Int) {
-        hyperlinkColor = getContext().theme.getColorStateList2(id)
+        hyperlinkColor = getColorStateList(getContext(), id)!!
     }
 
     fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?)
@@ -86,46 +68,38 @@ interface SocialView {
 
     fun colorize()
 
-    private fun Pattern.newList(condition: Boolean): List<String> {
-        if (!condition) {
-            return emptyList()
+    private val Regex.newList: List<String>
+        get() {
+            val list = ArrayList<String>()
+            val matcher = toPattern().matcher(getText())
+            while (matcher.find()) {
+                list.add(matcher.group(if (this !== HYPERLINK_PATTERN) 1 /* remove hashtag and mention symbol */ else 0))
+            }
+            return list
         }
-        val list = ArrayList<String>()
-        val matcher = matcher(getText())
-        while (matcher.find()) {
-            list.add(matcher.group(if (this !== HYPERLINK_PATTERN) 1 /* remove hashtag and mention symbol */ else 0))
-        }
-        return list
-    }
 
     companion object {
         internal const val FLAG_HASHTAG = 1
         internal const val FLAG_MENTION = 2
         internal const val FLAG_HYPERLINK = 4
 
-        internal var HASHTAG_PATTERN = Pattern.compile("#(\\w+)")
-        internal var MENTION_PATTERN = Pattern.compile("@(\\w+)")
-        internal var HYPERLINK_PATTERN = PatternsCompat.WEB_URL
+        internal var HASHTAG_PATTERN: Regex = "#(\\w+)".toRegex()
+        internal var MENTION_PATTERN: Regex = "@(\\w+)".toRegex()
+        internal var HYPERLINK_PATTERN: Regex = WEB_URL.toRegex()
 
-        /**
-         * Change current hashtag pattern.
-         */
+        /** Change current hashtag pattern. */
         fun setHashtagPattern(regex: String) {
-            HASHTAG_PATTERN = Pattern.compile(regex, Pattern.CASE_INSENSITIVE)
+            HASHTAG_PATTERN = regex.toRegex(IGNORE_CASE)
         }
 
-        /**
-         * Change current mention pattern.
-         */
+        /** Change current mention pattern. */
         fun setMentionPattern(regex: String) {
-            MENTION_PATTERN = Pattern.compile(regex, Pattern.CASE_INSENSITIVE)
+            MENTION_PATTERN = regex.toRegex(IGNORE_CASE)
         }
 
-        /**
-         * Change current hyperlink pattern.
-         */
+        /** Change current hyperlink pattern. */
         fun setHyperlinkPattern(regex: String) {
-            HYPERLINK_PATTERN = Pattern.compile(regex, Pattern.CASE_INSENSITIVE)
+            HYPERLINK_PATTERN = regex.toRegex(IGNORE_CASE)
         }
     }
 }

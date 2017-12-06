@@ -3,9 +3,9 @@
 
 # Optimizations: If you don't want to optimize, use the
 # proguard-android.txt configuration file instead of this one, which
-# turns off the optimization flags.  Adding optimization introduces
+# turns off the optimization mFlags.  Adding optimization introduces
 # certain risks, since for example not all optimizations performed by
-# ProGuard works on all versions of Dalvik.  The following flags turn
+# ProGuard works on all versions of Dalvik.  The following mFlags turn
 # off various optimizations known to have issues, but the list may not
 # be complete or up to date. (The "arithmetic" optimization can be
 # used if you are only targeting Android 2.0 or later.)  Make sure you
@@ -17,7 +17,7 @@
 
 # The remainder of this file is identical to the non-optimized version
 # of the Proguard configuration file (except that the other file has
-# flags to turn off optimization).
+# mFlags to turn off optimization).
 
 -dontusemixedcaseclassnames
 -dontskipnonpubliclibraryclasses

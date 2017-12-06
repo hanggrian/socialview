@@ -2,47 +2,40 @@ package com.hendraanggrian.widget
 
 import android.content.Context
 import android.support.v7.widget.AppCompatMultiAutoCompleteTextView
-import android.text.*
+import android.text.Editable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextUtils.copySpansFrom
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.widget.ArrayAdapter
 import android.widget.MultiAutoCompleteTextView
 import com.hendraanggrian.socialview.SocialView
 import com.hendraanggrian.socialview.SocialViewImpl
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 class SocialAutoCompleteTextView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = android.support.v7.appcompat.R.attr.autoCompleteTextViewStyle
 ) : AppCompatMultiAutoCompleteTextView(context, attrs, defStyleAttr), SocialView {
 
-    private var mImpl = SocialViewImpl(this, attrs)
+    private val mImpl: SocialView = SocialViewImpl(this, attrs)
     private val mTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun afterTextChanged(editable: Editable?) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             if (s.isNotEmpty() && start < s.length) {
                 when (s[start]) {
-                    '#' -> if (adapter !== hashtagAdapter) {
-                        setAdapter(hashtagAdapter)
-                    }
-                    '@' -> if (adapter !== mentionAdapter) {
-                        setAdapter(mentionAdapter)
-                    }
+                    '#' -> if (adapter !== hashtagAdapter) setAdapter(hashtagAdapter)
+                    '@' -> if (adapter !== mentionAdapter) setAdapter(mentionAdapter)
                 }
             }
         }
     }
     private val mEnabledSymbols: CharArray
         get() = ArrayList<Char>().apply {
-            if (isHashtagEnabled) {
-                add('#')
-            }
-            if (isMentionEnabled) {
-                add('@')
-            }
+            if (isHashtagEnabled) add('#')
+            if (isMentionEnabled) add('@')
         }.toCharArray()
 
     var hashtagAdapter: ArrayAdapter<*>? = null
@@ -104,41 +97,29 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
 
         override fun findTokenStart(text: CharSequence, cursor: Int): Int {
             var i = cursor
-            while (i > 0 && !symbols.contains(text[i - 1])) {
-                i--
-            }
-            while (i < cursor && text[i] == ' ') {
-                i++
-            }
+            while (i > 0 && !symbols.contains(text[i - 1])) i--
+            while (i < cursor && text[i] == ' ') i++
             return i
         }
 
         override fun findTokenEnd(text: CharSequence, cursor: Int): Int {
             var i = cursor
             val len = text.length
-            while (i < len) {
-                if (symbols.contains(text[i])) {
-                    return i
-                } else {
-                    i++
-                }
-            }
+            while (i < len) if (symbols.contains(text[i])) return i else i++
             return len
         }
 
         override fun terminateToken(text: CharSequence): CharSequence {
             var i = text.length
-            while (i > 0 && text[i - 1] == ' ') {
-                i--
-            }
-            if (i > 0 && symbols.contains(text[i - 1])) {
-                return text
-            } else if (text is Spanned) {
-                val sp = SpannableString(text.toString() + " ")
-                TextUtils.copySpansFrom(text, 0, text.length, Any::class.java, sp, 0)
-                return sp
-            } else {
-                return text.toString() + " "
+            while (i > 0 && text[i - 1] == ' ') i--
+            return when {
+                i > 0 && symbols.contains(text[i - 1]) -> text
+                text is Spanned -> {
+                    val sp = SpannableString(text.toString() + " ")
+                    copySpansFrom(text, 0, text.length, Any::class.java, sp, 0)
+                    sp
+                }
+                else -> text.toString() + " "
             }
         }
     }

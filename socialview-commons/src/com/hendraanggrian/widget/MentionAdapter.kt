@@ -19,11 +19,7 @@ import com.hendraanggrian.socialview.commons.R
 import com.squareup.picasso.RequestCreator
 import java.io.File
 
-/**
- * Default adapter for displaying mention in [SocialAutoCompleteTextView].
- *
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
+/** Default adapter for displaying mention in [SocialAutoCompleteTextView]. */
 class MentionAdapter @JvmOverloads constructor(
         context: Context,
         @DrawableRes private val defaultAvatar: Int = R.drawable.socialview_ic_mention_placeholder
@@ -44,19 +40,13 @@ class MentionAdapter @JvmOverloads constructor(
             holder = _convertView.tag as ViewHolder
         }
         getItem(position)?.let {
-            val request: RequestCreator
-            if (it.avatar == null) {
-                request = context.picasso(defaultAvatar)
-            } else if (it.avatar is Int) {
-                request = context.picasso(it.avatar)
-            } else if (it.avatar is String) {
-                request = context.picasso(it.avatar)
-            } else if (it.avatar is Uri) {
-                request = context.picasso(it.avatar)
-            } else if (it.avatar is File) {
-                request = context.picasso(it.avatar)
-            } else {
-                throw IllegalStateException("Unsupported avatar type. See Mention.kt for more.")
+            val request: RequestCreator = when {
+                it.avatar == null -> context.picasso(defaultAvatar)
+                it.avatar is Int -> context.picasso(it.avatar)
+                it.avatar is String -> context.picasso(it.avatar)
+                it.avatar is Uri -> context.picasso(it.avatar)
+                it.avatar is File -> context.picasso(it.avatar)
+                else -> throw IllegalStateException("Unsupported avatar type. See Mention.kt for more.")
             }
             request.error(defaultAvatar)
                     .transform(Transformations.circle())

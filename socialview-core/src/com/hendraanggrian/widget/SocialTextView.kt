@@ -6,16 +6,13 @@ import android.util.AttributeSet
 import com.hendraanggrian.socialview.SocialView
 import com.hendraanggrian.socialview.SocialViewImpl
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 class SocialTextView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = android.R.attr.textViewStyle
 ) : AppCompatTextView(context, attrs, defStyleAttr), SocialView {
 
-    private var mImpl = SocialViewImpl(this, attrs)
+    private val mImpl: SocialView = SocialViewImpl(this, attrs)
 
     override var isHashtagEnabled
         get() = mImpl.isHashtagEnabled

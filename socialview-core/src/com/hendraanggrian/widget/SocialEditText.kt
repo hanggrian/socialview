@@ -6,16 +6,13 @@ import android.util.AttributeSet
 import com.hendraanggrian.socialview.SocialView
 import com.hendraanggrian.socialview.SocialViewImpl
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 class SocialEditText @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = android.support.v7.appcompat.R.attr.editTextStyle
 ) : AppCompatEditText(context, attrs, defStyleAttr), SocialView {
 
-    private var mImpl = SocialViewImpl(this, attrs)
+    private val mImpl: SocialView = SocialViewImpl(this, attrs)
 
     override var isHashtagEnabled
         get() = mImpl.isHashtagEnabled
@@ -54,5 +51,5 @@ class SocialEditText @JvmOverloads constructor(
     override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = mImpl.setHashtagTextChangedListener(watcher)
     override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = mImpl.setMentionTextChangedListener(watcher)
 
-    override fun colorize(): Unit = mImpl.colorize()
+    override fun colorize() = mImpl.colorize()
 }
