@@ -3,9 +3,8 @@ package com.hendraanggrian.widget
 import android.content.Context
 import android.widget.ArrayAdapter
 import android.widget.Filter
-import java.util.*
+import java.util.Collections.addAll
 import java.util.Locale.US
-import kotlin.collections.ArrayList
 
 /**
  * An ArrayAdapter customized with Filter to display items.
@@ -20,9 +19,7 @@ abstract class FilteredAdapter<T>(
     private val items: MutableList<T> = ArrayList()
     private val tempItems: MutableList<T> = ArrayList()
 
-    override fun add(item: T?) {
-        add(item, true)
-    }
+    override fun add(item: T?) = add(item, true)
 
     override fun addAll(collection: Collection<T>) {
         super.addAll(collection)
@@ -32,7 +29,7 @@ abstract class FilteredAdapter<T>(
     @SafeVarargs
     override fun addAll(vararg items: T) {
         super.addAll(*items)
-        Collections.addAll(tempItems, *items)
+        addAll(tempItems, *items)
     }
 
     override fun remove(item: T?) {
@@ -40,9 +37,7 @@ abstract class FilteredAdapter<T>(
         tempItems.remove(item)
     }
 
-    override fun clear() {
-        clear(true)
-    }
+    override fun clear() = clear(true)
 
     private fun add(item: T?, affectTempItems: Boolean) {
         super.add(item)
@@ -57,11 +52,7 @@ abstract class FilteredAdapter<T>(
     abstract inner class SocialFilter : Filter() {
         override fun performFiltering(constraint: CharSequence?): Filter.FilterResults = if (constraint != null) {
             items.clear()
-            tempItems.forEach {
-                if (convertResultToString(it).toString().toLowerCase(US).contains(constraint.toString().toLowerCase(US))) {
-                    items.add(it)
-                }
-            }
+            tempItems.forEach { if (convertResultToString(it).toString().toLowerCase(US).contains(constraint.toString().toLowerCase(US))) items.add(it) }
             val filterResults = Filter.FilterResults()
             filterResults.values = items
             filterResults.count = items.size
@@ -76,9 +67,7 @@ abstract class FilteredAdapter<T>(
                 val filterList = results.values as ArrayList<T>
                 if (results.count > 0) {
                     clear(false)
-                    for (item in filterList) {
-                        add(item, false)
-                    }
+                    for (item in filterList) add(item, false)
                     notifyDataSetChanged()
                 }
             }

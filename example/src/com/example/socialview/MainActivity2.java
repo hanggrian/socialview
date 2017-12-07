@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +26,7 @@ import com.hendraanggrian.widget.SocialAutoCompleteTextView;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 
+import static kota.LogsKt.debug;
 import static kota.resources.ResourcesKt.getInt;
 
 public class MainActivity2 extends AppCompatActivity {
@@ -74,17 +74,17 @@ public class MainActivity2 extends AppCompatActivity {
         textView.setThreshold(1);
         textView.setHashtagAdapter(defaultHashtagAdapter);
         textView.setMentionAdapter(defaultMentionAdapter);
-        textView.setHashtagTextChangedListener(new Function2<SocialView, CharSequence, Unit>() {
+        textView.setHashtagTextChangedListener(new Function2<SocialView, String, Unit>() {
             @Override
-            public Unit invoke(SocialView socialView, CharSequence s) {
-                Log.d("editing", s.toString());
+            public Unit invoke(SocialView socialView, String s) {
+                debug("editing", s);
                 return null;
             }
         });
-        textView.setMentionTextChangedListener(new Function2<SocialView, CharSequence, Unit>() {
+        textView.setMentionTextChangedListener(new Function2<SocialView, String, Unit>() {
             @Override
-            public Unit invoke(SocialView socialView, CharSequence s) {
-                Log.d("editing", s.toString());
+            public Unit invoke(SocialView socialView, String s) {
+                debug("editing", s);
                 return null;
             }
         });

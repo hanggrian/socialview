@@ -1,6 +1,7 @@
 package com.hendraanggrian.widget
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.support.v7.widget.AppCompatEditText
 import android.util.AttributeSet
 import com.hendraanggrian.socialview.SocialView
@@ -14,42 +15,27 @@ class SocialEditText @JvmOverloads constructor(
 
     private val mImpl: SocialView = SocialViewImpl(this, attrs)
 
-    override var isHashtagEnabled
-        get() = mImpl.isHashtagEnabled
-        set(value) {
-            mImpl.isHashtagEnabled = value
-        }
-    override var isMentionEnabled
-        get() = mImpl.isMentionEnabled
-        set(value) {
-            mImpl.isMentionEnabled = value
-        }
-    override var isHyperlinkEnabled
-        get() = mImpl.isHyperlinkEnabled
-        set(value) {
-            mImpl.isHyperlinkEnabled = value
-        }
-    override var hashtagColor
-        get() = mImpl.hashtagColor
-        set(value) {
-            mImpl.hashtagColor = value
-        }
-    override var mentionColor
-        get() = mImpl.mentionColor
-        set(value) {
-            mImpl.mentionColor = value
-        }
-    override var hyperlinkColor
-        get() = mImpl.hyperlinkColor
-        set(value) {
-            mImpl.hyperlinkColor = value
-        }
+    override var isHashtagEnabled: Boolean = mImpl.isHashtagEnabled
 
-    override fun setOnHashtagClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = mImpl.setOnHashtagClickListener(listener)
-    override fun setOnMentionClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = mImpl.setOnMentionClickListener(listener)
-    override fun setOnHyperlinkClickListener(listener: ((SocialView, CharSequence) -> Unit)?) = mImpl.setOnHyperlinkClickListener(listener)
-    override fun setHashtagTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = mImpl.setHashtagTextChangedListener(watcher)
-    override fun setMentionTextChangedListener(watcher: ((SocialView, CharSequence) -> Unit)?) = mImpl.setMentionTextChangedListener(watcher)
+    override var isMentionEnabled: Boolean = mImpl.isMentionEnabled
+
+    override var isHyperlinkEnabled: Boolean = mImpl.isHyperlinkEnabled
+
+    override var hashtagColor: ColorStateList = mImpl.hashtagColor
+
+    override var mentionColor: ColorStateList = mImpl.mentionColor
+
+    override var hyperlinkColor: ColorStateList = mImpl.hyperlinkColor
+
+    override fun setOnHashtagClickListener(listener: ((view: SocialView, String) -> Unit)?) = mImpl.setOnHashtagClickListener(listener)
+
+    override fun setOnMentionClickListener(listener: ((view: SocialView, String) -> Unit)?) = mImpl.setOnMentionClickListener(listener)
+
+    override fun setOnHyperlinkClickListener(listener: ((view: SocialView, String) -> Unit)?) = mImpl.setOnHyperlinkClickListener(listener)
+
+    override fun setHashtagTextChangedListener(watcher: ((view: SocialView, String) -> Unit)?) = mImpl.setHashtagTextChangedListener(watcher)
+
+    override fun setMentionTextChangedListener(watcher: ((view: SocialView, String) -> Unit)?) = mImpl.setMentionTextChangedListener(watcher)
 
     override fun colorize() = mImpl.colorize()
 }

@@ -5,9 +5,12 @@ import android.support.annotation.PluralsRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
 import android.widget.TextView
 import com.hendraanggrian.socialview.Hashtag
 import com.hendraanggrian.socialview.commons.R
+import com.hendraanggrian.socialview.find
+import com.hendraanggrian.socialview.setVisibleThen
 
 /** Default adapter for displaying hashtag in [SocialAutoCompleteTextView]. */
 class HashtagAdapter @JvmOverloads constructor(
@@ -15,7 +18,7 @@ class HashtagAdapter @JvmOverloads constructor(
         @PluralsRes private val countPlural: Int = R.plurals.posts
 ) : FilteredAdapter<Hashtag>(context, R.layout.socialview_layout_hashtag, R.id.socialview_hashtag) {
 
-    private val filter = object : SocialFilter() {
+    private val filter: Filter = object : SocialFilter() {
         override fun convertResultToString(resultValue: Any) = (resultValue as Hashtag).hashtag
     }
 
@@ -38,7 +41,7 @@ class HashtagAdapter @JvmOverloads constructor(
         return _convertView
     }
 
-    override fun getFilter() = filter
+    override fun getFilter(): Filter = filter
 
     private class ViewHolder(itemView: View) {
         val textViewHashtag = itemView.find<TextView>(R.id.socialview_hashtag)

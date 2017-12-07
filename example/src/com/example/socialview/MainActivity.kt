@@ -1,11 +1,8 @@
 package com.example.socialview
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Filter
@@ -15,15 +12,18 @@ import com.hendraanggrian.socialview.Mention
 import com.hendraanggrian.widget.FilteredAdapter
 import com.hendraanggrian.widget.HashtagAdapter
 import com.hendraanggrian.widget.MentionAdapter
+import kota.debug
+import kota.find
+import kota.inflateMenu
 import kota.resources.getInt
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var defaultHashtagAdapter: ArrayAdapter<Hashtag>
-    lateinit var defaultMentionAdapter: ArrayAdapter<Mention>
-    lateinit var customHashtagAdapter: ArrayAdapter<Person>
-    lateinit var customMentionAdapter: ArrayAdapter<Person>
+    private lateinit var defaultHashtagAdapter: ArrayAdapter<Hashtag>
+    private lateinit var defaultMentionAdapter: ArrayAdapter<Mention>
+    private lateinit var customHashtagAdapter: ArrayAdapter<Person>
+    private lateinit var customMentionAdapter: ArrayAdapter<Person>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,16 +57,12 @@ class MainActivity : AppCompatActivity() {
         textView.threshold = 1
         textView.hashtagAdapter = defaultHashtagAdapter
         textView.mentionAdapter = defaultMentionAdapter
-        textView.setHashtagTextChangedListener { _, s -> Log.d("editing", s.toString()) }
-        textView.setMentionTextChangedListener { _, s -> Log.d("editing", s.toString()) }
-
-        Handler().postDelayed({
-            textView.setHashtagColor(Color.BLACK)
-        }, 5000)
+        textView.setHashtagTextChangedListener { _, s -> debug("editing", s) }
+        textView.setMentionTextChangedListener { _, s -> debug("editing", s) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.activity_main, menu)
+        inflateMenu(R.menu.activity_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -109,17 +105,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun getFilter(): Filter {
-            if (filter == null)
-                filter = object : SocialFilter() {
-                    override fun convertResultToString(resultValue: Any): CharSequence {
-                        return (resultValue as Person).name
-                    }
-                }
+            if (filter == null) filter = object : SocialFilter() {
+                override fun convertResultToString(resultValue: Any) = (resultValue as Person).name
+            }
             return filter as Filter
         }
 
         private class ViewHolder constructor(view: View) {
-            val textView = view.findViewById<TextView>(R.id.textViewName)!!
+            val textView = view.find<TextView>(R.id.textViewName)
         }
     }
 }

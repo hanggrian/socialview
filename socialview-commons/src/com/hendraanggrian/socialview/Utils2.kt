@@ -1,6 +1,6 @@
 @file:Suppress("NOTHING_TO_INLINE")
 
-package com.hendraanggrian.widget
+package com.hendraanggrian.socialview
 
 import android.support.annotation.IdRes
 import android.view.View
@@ -9,7 +9,7 @@ import android.view.View.VISIBLE
 
 /** Mini version of [kota][https://github.com/hendraanggrian/kota] */
 
-inline fun <reified T : View> View.find(@IdRes id: Int): T = findViewById<T>(id) as T
+internal inline fun <reified T : View> View.find(@IdRes id: Int): T = findViewById<T>(id) as T
 
 internal inline var View.isVisible: Boolean
     get() = visibility == VISIBLE

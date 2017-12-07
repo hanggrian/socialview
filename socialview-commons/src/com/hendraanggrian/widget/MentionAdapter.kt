@@ -7,6 +7,7 @@ import android.text.TextUtils.isEmpty
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
 import android.widget.ImageView
 import android.widget.TextView
 import com.hendraanggrian.picasso.Targets
@@ -14,7 +15,8 @@ import com.hendraanggrian.picasso.Transformations
 import com.hendraanggrian.picasso.picasso
 import com.hendraanggrian.socialview.Mention
 import com.hendraanggrian.socialview.commons.R
-import com.squareup.picasso.RequestCreator
+import com.hendraanggrian.socialview.find
+import com.hendraanggrian.socialview.setVisibleThen
 import java.io.File
 
 /** Default adapter for displaying mention in [SocialAutoCompleteTextView]. */
@@ -23,7 +25,7 @@ class MentionAdapter @JvmOverloads constructor(
         @DrawableRes private val defaultAvatar: Int = R.drawable.socialview_ic_mention_placeholder
 ) : FilteredAdapter<Mention>(context, R.layout.socialview_layout_mention, R.id.socialview_mention_username) {
 
-    private val filter = object : SocialFilter() {
+    private val filter: Filter = object : SocialFilter() {
         override fun convertResultToString(resultValue: Any) = (resultValue as Mention).username
     }
 
@@ -38,15 +40,14 @@ class MentionAdapter @JvmOverloads constructor(
             holder = _convertView.tag as ViewHolder
         }
         getItem(position)?.let {
-            val request: RequestCreator = when {
-                it.avatar == null -> context.picasso(defaultAvatar)
-                it.avatar is Int -> context.picasso(it.avatar)
-                it.avatar is String -> context.picasso(it.avatar)
-                it.avatar is Uri -> context.picasso(it.avatar)
-                it.avatar is File -> context.picasso(it.avatar)
+            when (it.avatar) {
+                null -> context.picasso(defaultAvatar)
+                is Int -> context.picasso(it.avatar)
+                is String -> context.picasso(it.avatar)
+                is Uri -> context.picasso(it.avatar)
+                is File -> context.picasso(it.avatar)
                 else -> throw IllegalStateException("Unsupported avatar type. See Mention.kt for more.")
-            }
-            request.error(defaultAvatar)
+            }.error(defaultAvatar)
                     .transform(Transformations.circle())
                     .into(Targets.progress(holder.imageView, context.resources.getDimensionPixelSize(R.dimen.socialview_mention_progress)))
             holder.textViewUsername.text = it.username
@@ -57,7 +58,7 @@ class MentionAdapter @JvmOverloads constructor(
         return _convertView
     }
 
-    override fun getFilter() = filter
+    override fun getFilter(): Filter = filter
 
     private class ViewHolder(itemView: View) {
         val imageView = itemView.find<ImageView>(R.id.socialview_mention_avatar)
