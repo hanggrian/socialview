@@ -11,9 +11,6 @@ import android.widget.TextView;
 
 import com.hendraanggrian.widget.FilteredAdapter;
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 public class PersonAdapter extends FilteredAdapter<Person> {
 
     @NonNull private final Filter filter = new SocialFilter() {

@@ -36,7 +36,7 @@ dependencies {
 
     testImplementation(junit(junitVersion))
 
-    androidTestImplementation("org.jetbrains.anko:anko-commons:$ankoVersion")
+    androidTestImplementation(hendraanggrian("kota", kotaVersion))
     androidTestImplementation(support("design", supportVersion))
     androidTestImplementation(support("runner", runnerVersion, "test"))
     androidTestImplementation(support("espresso-core", espressoVersion, "test", "espresso"))

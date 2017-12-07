@@ -39,6 +39,6 @@ android {
 dependencies {
     implementation(project(":socialview-commons"))
     implementation(kotlin("stdlib", kotlinVersion))
-    implementation("org.jetbrains.anko:anko-commons:$ankoVersion")
+    implementation(hendraanggrian("kota", kotaVersion))
     implementation(support("design", supportVersion))
 }

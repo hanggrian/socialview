@@ -37,6 +37,7 @@ dependencies {
 
     testImplementation(junit(junitVersion))
 
+    androidTestImplementation(hendraanggrian("kota", kotaVersion))
     androidTestImplementation(support("design", supportVersion))
     androidTestImplementation(support("runner", runnerVersion, "test"))
     androidTestImplementation(support("espresso-core", espressoVersion, "test", "espresso"))

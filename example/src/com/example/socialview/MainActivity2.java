@@ -16,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
-import com.hendraanggrian.common.content.Resources2;
 import com.hendraanggrian.socialview.Hashtag;
 import com.hendraanggrian.socialview.Mention;
 import com.hendraanggrian.socialview.SocialView;
@@ -28,9 +27,8 @@ import com.hendraanggrian.widget.SocialAutoCompleteTextView;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
+import static kota.resources.ResourcesKt.getInt;
+
 public class MainActivity2 extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -52,8 +50,8 @@ public class MainActivity2 extends AppCompatActivity {
         defaultHashtagAdapter = new HashtagAdapter(this);
         defaultHashtagAdapter.addAll(
                 new Hashtag(getString(R.string.hashtag1)),
-                new Hashtag(getString(R.string.hashtag2), Resources2.getInteger(this, R.integer.hashtag2)),
-                new Hashtag(getString(R.string.hashtag3), Resources2.getInteger(this, R.integer.hashtag3)));
+                new Hashtag(getString(R.string.hashtag2), getInt(this, R.integer.hashtag2)),
+                new Hashtag(getString(R.string.hashtag3), getInt(this, R.integer.hashtag3)));
 
         defaultMentionAdapter = new MentionAdapter(this);
         defaultMentionAdapter.addAll(

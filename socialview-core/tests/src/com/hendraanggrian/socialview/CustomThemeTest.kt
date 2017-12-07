@@ -4,6 +4,7 @@ import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.hendraanggrian.socialview.activity.CustomThemeActivity
@@ -12,10 +13,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 @RunWith(AndroidJUnit4::class)
+@LargeTest
 class CustomThemeTest : BaseTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(CustomThemeActivity::class.java)

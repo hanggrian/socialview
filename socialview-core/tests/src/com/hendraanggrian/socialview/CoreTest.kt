@@ -4,19 +4,18 @@ import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.hendraanggrian.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.test.R
-import org.jetbrains.anko.toast
+import kota.toast
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 @RunWith(AndroidJUnit4::class)
+@LargeTest
 class CoreTest : BaseTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)

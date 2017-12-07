@@ -10,17 +10,14 @@ import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Filter
 import android.widget.TextView
-import com.hendraanggrian.common.content.getInteger
 import com.hendraanggrian.socialview.Hashtag
 import com.hendraanggrian.socialview.Mention
 import com.hendraanggrian.widget.FilteredAdapter
 import com.hendraanggrian.widget.HashtagAdapter
 import com.hendraanggrian.widget.MentionAdapter
+import kota.resources.getInt
 import kotlinx.android.synthetic.main.activity_main.*
 
-/**
- * @author Hendra Anggrian (com.hendraanggrian@gmail.com)
- */
 class MainActivity : AppCompatActivity() {
 
     lateinit var defaultHashtagAdapter: ArrayAdapter<Hashtag>
@@ -36,8 +33,8 @@ class MainActivity : AppCompatActivity() {
         defaultHashtagAdapter = HashtagAdapter(this)
         defaultHashtagAdapter.addAll(
                 Hashtag(getString(R.string.hashtag1)),
-                Hashtag(getString(R.string.hashtag2), getInteger(R.integer.hashtag2)),
-                Hashtag(getString(R.string.hashtag3), getInteger(R.integer.hashtag3)))
+                Hashtag(getString(R.string.hashtag2), getInt(R.integer.hashtag2)),
+                Hashtag(getString(R.string.hashtag3), getInt(R.integer.hashtag3)))
 
         defaultMentionAdapter = MentionAdapter(this)
         defaultMentionAdapter.addAll(

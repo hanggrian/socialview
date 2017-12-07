@@ -3,17 +3,15 @@ package com.hendraanggrian.widget
 import android.content.Context
 import android.net.Uri
 import android.support.annotation.DrawableRes
+import android.text.TextUtils.isEmpty
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.hendraanggrian.common.content.getDimensionPixelSize
-import com.hendraanggrian.common.text.isNotNullOrEmpty
-import com.hendraanggrian.common.view.setVisibleThen
+import com.hendraanggrian.picasso.Targets
+import com.hendraanggrian.picasso.Transformations
 import com.hendraanggrian.picasso.picasso
-import com.hendraanggrian.picasso.target.Targets
-import com.hendraanggrian.picasso.transformation.Transformations
 import com.hendraanggrian.socialview.Mention
 import com.hendraanggrian.socialview.commons.R
 import com.squareup.picasso.RequestCreator
@@ -50,9 +48,9 @@ class MentionAdapter @JvmOverloads constructor(
             }
             request.error(defaultAvatar)
                     .transform(Transformations.circle())
-                    .into(Targets.progress(holder.imageView, context.getDimensionPixelSize(R.dimen.socialview_mention_progress)))
+                    .into(Targets.progress(holder.imageView, context.resources.getDimensionPixelSize(R.dimen.socialview_mention_progress)))
             holder.textViewUsername.text = it.username
-            holder.textViewDisplayname.setVisibleThen(it.displayname.isNotNullOrEmpty()) {
+            holder.textViewDisplayname.setVisibleThen(!isEmpty(it.displayname)) {
                 holder.textViewDisplayname.text = it.displayname
             }
         }
@@ -62,8 +60,8 @@ class MentionAdapter @JvmOverloads constructor(
     override fun getFilter() = filter
 
     private class ViewHolder(itemView: View) {
-        val imageView = itemView.findViewById<ImageView>(R.id.socialview_mention_avatar)!!
-        val textViewUsername = itemView.findViewById<TextView>(R.id.socialview_mention_username)!!
-        val textViewDisplayname = itemView.findViewById<TextView>(R.id.socialview_mention_displayname)!!
+        val imageView = itemView.find<ImageView>(R.id.socialview_mention_avatar)
+        val textViewUsername = itemView.find<TextView>(R.id.socialview_mention_username)
+        val textViewDisplayname = itemView.find<TextView>(R.id.socialview_mention_displayname)
     }
 }

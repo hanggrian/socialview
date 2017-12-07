@@ -2,20 +2,22 @@
 
 package com.hendraanggrian.socialview
 
+/** Mini version of [kota][https://github.com/hendraanggrian/kota] */
+
 import android.text.Spannable
 import android.text.Spanned
 import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 
 /** Get all spans that are instance of [type]. */
-inline fun <reified T> Spanned.getSpans(type: Class<T>): Array<out T> = getSpans(0, length, type)
+internal inline fun <reified T> Spanned.getSpans(type: Class<T>): Array<out T> = getSpans(0, length, type)
 
 /** Remove [spans] from this text. */
-inline fun Spannable.removeSpans(vararg spans: Any) {
+internal inline fun Spannable.removeSpans(vararg spans: Any) {
     for (span in spans) removeSpan(span)
 }
 
 @JvmOverloads
-inline fun Spannable.span(
+internal inline fun Spannable.span(
         regex: Regex,
         vararg spans: (s: String) -> Any,
         flags: Int = SPAN_EXCLUSIVE_EXCLUSIVE
@@ -30,7 +32,7 @@ inline fun Spannable.span(
 }
 
 @JvmOverloads
-inline fun Spannable.spanRange(
+internal inline fun Spannable.spanRange(
         start: Int,
         end: Int,
         vararg spans: (s: String) -> Any,

@@ -6,15 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.hendraanggrian.common.view.setVisibleThen
 import com.hendraanggrian.socialview.Hashtag
 import com.hendraanggrian.socialview.commons.R
 
-/**
- * Default adapter for displaying hashtag in [SocialAutoCompleteTextView].
- *
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
+/** Default adapter for displaying hashtag in [SocialAutoCompleteTextView]. */
 class HashtagAdapter @JvmOverloads constructor(
         context: Context,
         @PluralsRes private val countPlural: Int = R.plurals.posts
@@ -46,7 +41,7 @@ class HashtagAdapter @JvmOverloads constructor(
     override fun getFilter() = filter
 
     private class ViewHolder(itemView: View) {
-        val textViewHashtag = itemView.findViewById<TextView>(R.id.socialview_hashtag)!!
-        val textViewCount = itemView.findViewById<TextView>(R.id.socialview_hashtag_count)!!
+        val textViewHashtag = itemView.find<TextView>(R.id.socialview_hashtag)
+        val textViewCount = itemView.find<TextView>(R.id.socialview_hashtag_count)
     }
 }

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
@@ -30,10 +31,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFro
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 @RunWith(AndroidJUnit4.class)
+@LargeTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class InstrumentedTest {
 

@@ -5,10 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.ProgressBar
 import com.hendraanggrian.socialview.commons.test.R
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
+import kota.find
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 class InstrumentedActivity : AppCompatActivity() {
 
     lateinit var progressBar: ProgressBar
@@ -17,8 +15,8 @@ class InstrumentedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_instrumented)
-        setSupportActionBar(findViewById(R.id.toolbar))
-        progressBar = findViewById(R.id.progressBar)
-        textView = findViewById(R.id.textView)
+        setSupportActionBar(find(R.id.toolbar))
+        progressBar = find(R.id.progressBar)
+        textView = find(R.id.textView)
     }
 }

@@ -3,7 +3,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 const val bintrayUser = "hendraanggrian"
 const val bintrayGroup = "com.hendraanggrian"
 const val bintrayArtifact = "socialview"
-const val bintrayPublish = "0.16.3"
+const val bintrayPublish = "0.17"
 const val bintrayDesc = "Android TextView and EditText with hashtag, mention, and hyperlink support"
 const val bintrayWeb = "https://github.com/hendraanggrian/socialview"
 
@@ -12,9 +12,9 @@ const val targetSdk = 27
 const val buildTools = "27.0.1"
 
 const val kotlinVersion = "1.1.61"
-const val ankoVersion = "0.10.1"
+const val kotaVersion = "0.21"
 const val supportVersion = "27.0.1"
-const val picassoUtilsVersion = "0.2.4"
+const val picassoUtilsVersion = "0.3"
 
 const val junitVersion = "4.12"
 const val runnerVersion = "1.0.1"
