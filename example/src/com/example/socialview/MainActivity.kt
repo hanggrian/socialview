@@ -97,8 +97,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 holder = _convertView.tag as ViewHolder
             }
-            val model = getItem(position)
-            if (model != null) {
+            getItem(position)?.let { model ->
                 holder.textView.text = model.name
             }
             return _convertView

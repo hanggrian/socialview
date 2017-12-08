@@ -47,21 +47,21 @@ class MentionAdapter @JvmOverloads constructor(
                 is String -> context.picasso(mention.avatar)
                 is Uri -> context.picasso(mention.avatar)
                 is File -> context.picasso(mention.avatar)
-                else -> throw IllegalStateException("Unsupported avatar type. See Mention.kt for more.")
+                else -> error("Unsupported avatar type. See Mention.kt for more.")
             }.error(defaultAvatar)
                     .transform(Transformations.circle())
-                    .into(Targets.progress(holder.imageView, context.resources.getDimensionPixelSize(R.dimen.socialview_mention_progress)))
-            holder.textViewUsername.text = mention.username
-            holder.textViewDisplayname.setVisibleThen(!isEmpty(mention.displayname)) {
-                holder.textViewDisplayname.text = mention.displayname
+                    .into(Targets.progress(holder.avatarImageView, context.resources.getDimensionPixelSize(R.dimen.socialview_mention_progress_bar)))
+            holder.usernameTextView.text = mention.username
+            holder.displaynameTextView.setVisibleThen(!isEmpty(mention.displayname)) {
+                text = mention.displayname
             }
         }
         return _convertView
     }
 
     private class ViewHolder(itemView: View) {
-        val imageView = itemView.find<ImageView>(R.id.socialview_mention_avatar)
-        val textViewUsername = itemView.find<TextView>(R.id.socialview_mention_username)
-        val textViewDisplayname = itemView.find<TextView>(R.id.socialview_mention_displayname)
+        val avatarImageView = itemView.find<ImageView>(R.id.socialview_mention_avatar)
+        val usernameTextView = itemView.find<TextView>(R.id.socialview_mention_username)
+        val displaynameTextView = itemView.find<TextView>(R.id.socialview_mention_displayname)
     }
 }

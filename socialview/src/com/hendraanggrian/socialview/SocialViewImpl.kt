@@ -1,6 +1,5 @@
 package com.hendraanggrian.socialview
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.text.Editable
 import android.text.Spannable
@@ -11,12 +10,21 @@ import android.text.method.LinkMovementMethod.getInstance
 import android.text.style.CharacterStyle
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.text.style.URLSpan
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
 import android.widget.TextView.BufferType.SPANNABLE
+import com.hendraanggrian.socialview.SocialView.Companion.REGEX_HASHTAG
+import com.hendraanggrian.socialview.SocialView.Companion.REGEX_HYPERLINK
+import com.hendraanggrian.socialview.SocialView.Companion.REGEX_MENTION
 
-class SocialViewImpl(val view: TextView, attrs: AttributeSet?) : SocialView {
+/**
+ * Implementation of [SocialView] that is delegated to all socialview's widgets.
+ *
+ * @see SocialView
+ */
+class SocialViewImpl : SocialView {
 
     companion object {
         private const val FLAG_HASHTAG: Int = 1
@@ -76,10 +84,12 @@ class SocialViewImpl(val view: TextView, attrs: AttributeSet?) : SocialView {
         override fun afterTextChanged(s: Editable?) {}
     }
 
-    private var mFlags: Int
-    private var mHashtagColor: ColorStateList
-    private var mMentionColor: ColorStateList
-    private var mHyperlinkColor: ColorStateList
+    private lateinit var view: TextView
+    private var mFlags: Int = Int.MIN_VALUE
+    private lateinit var mHashtagColor: ColorStateList
+    private lateinit var mMentionColor: ColorStateList
+    private lateinit var mHyperlinkColor: ColorStateList
+
     private var mHashtagListener: ((SocialView, String) -> Unit)? = null
     private var mMentionListener: ((SocialView, String) -> Unit)? = null
     private var mHyperlinkListener: ((SocialView, String) -> Unit)? = null
@@ -88,7 +98,9 @@ class SocialViewImpl(val view: TextView, attrs: AttributeSet?) : SocialView {
     private var mHashtagEditing: Boolean = false
     private var mMentionEditing: Boolean = false
 
-    init {
+    /** A constructor replacement, since `this` ([TextView]) cannot be referenced in constructor. */
+    fun init(v: TextView, attrs: AttributeSet?) {
+        view = v
         view.addTextChangedListener(mTextWatcher)
         view.setText(view.text, SPANNABLE)
         val a = view.context.obtainStyledAttributes(attrs, R.styleable.SocialView, R.attr.socialViewStyle, R.style.Widget_SocialView)
@@ -99,10 +111,6 @@ class SocialViewImpl(val view: TextView, attrs: AttributeSet?) : SocialView {
         a.recycle()
         colorize()
     }
-
-    override fun getContext(): Context = view.context
-
-    override fun getText(): CharSequence = view.text
 
     override var isHashtagEnabled: Boolean
         get() = mFlags or FLAG_HASHTAG == mFlags
@@ -160,16 +168,16 @@ class SocialViewImpl(val view: TextView, attrs: AttributeSet?) : SocialView {
         check(spannable is Spannable, { "Attached text is not a Spannable, add TextView.BufferType.SPANNABLE when setting text to this TextView." })
         spannable as Spannable
         spannable.removeSpans(*spannable.getSpans(CharacterStyle::class.java))
-        if (isHashtagEnabled) spannable.span(SocialView.HASHTAG_PATTERN, {
-            mHashtagListener?.newClickableSpan(it, mHashtagColor) ?: ForegroundColorSpan(mHashtagColor.defaultColor)
+        if (isHashtagEnabled) spannable.span(REGEX_HASHTAG, { s ->
+            mHashtagListener?.newClickableSpan(s, mHashtagColor) ?: ForegroundColorSpan(mHashtagColor.defaultColor)
         })
-        if (isMentionEnabled) spannable.span(SocialView.MENTION_PATTERN, {
-            mMentionListener?.newClickableSpan(it, mMentionColor) ?: ForegroundColorSpan(mMentionColor.defaultColor)
+        if (isMentionEnabled) spannable.span(REGEX_MENTION, { s ->
+            mMentionListener?.newClickableSpan(s, mMentionColor) ?: ForegroundColorSpan(mMentionColor.defaultColor)
         })
-        if (isHyperlinkEnabled) spannable.span(SocialView.HYPERLINK_PATTERN, {
-            mHyperlinkListener?.newClickableSpan(it, mHyperlinkColor, true) ?: object : ForegroundColorSpan(mHyperlinkColor.defaultColor) {
+        if (isHyperlinkEnabled) spannable.span(REGEX_HYPERLINK, { s ->
+            mHyperlinkListener?.newClickableSpan(s, mHyperlinkColor, true) ?: object : URLSpan(s) {
                 override fun updateDrawState(ds: TextPaint) {
-                    super.updateDrawState(ds)
+                    ds.color = mHyperlinkColor.defaultColor
                     ds.isUnderlineText = true
                 }
             }
@@ -202,6 +210,12 @@ class SocialViewImpl(val view: TextView, attrs: AttributeSet?) : SocialView {
         mMentionWatcher = watcher
     }
 
+    override val hashtags: List<String> get() = if (!isHashtagEnabled) emptyList() else REGEX_HASHTAG.newList
+
+    override val mentions: List<String> get() = if (!isMentionEnabled) emptyList() else REGEX_MENTION.newList
+
+    override val hyperlinks: List<String> get() = if (!isHyperlinkEnabled) emptyList() else REGEX_HYPERLINK.newList
+
     private fun indexOfNextNonLetterDigit(text: CharSequence, start: Int): Int = (start + 1 until text.length).firstOrNull { !Character.isLetterOrDigit(text[it]) } ?: text.length
 
     private fun indexOfPreviousNonLetterDigit(text: CharSequence, start: Int, end: Int): Int = (end downTo start + 1).firstOrNull { !Character.isLetterOrDigit(text[it]) } ?: start
@@ -217,4 +231,12 @@ class SocialViewImpl(val view: TextView, attrs: AttributeSet?) : SocialView {
             ds.isUnderlineText = underline
         }
     }
+
+    private val Regex.newList: List<String>
+        get() {
+            val list = ArrayList<String>()
+            val matcher = toPattern().matcher(view.text)
+            while (matcher.find()) list.add(matcher.group(if (this !== REGEX_HYPERLINK) 1 /* remove hashtag and mention symbol */ else 0))
+            return list
+        }
 }

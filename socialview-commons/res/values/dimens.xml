@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="socialview_mention_progress">24dp</dimen>
+    <dimen name="socialview_mention_progress_bar">24dp</dimen>
 </resources>

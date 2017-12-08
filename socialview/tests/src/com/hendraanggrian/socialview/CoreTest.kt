@@ -1,5 +1,6 @@
 package com.hendraanggrian.socialview
 
+import android.graphics.Color.*
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import android.support.test.espresso.action.ViewActions.typeText
@@ -10,12 +11,15 @@ import android.support.test.runner.AndroidJUnit4
 import com.hendraanggrian.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.test.R
 import kota.toast
+import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.MethodSorters.JVM
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
+@FixMethodOrder(JVM)
 class CoreTest : BaseTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
@@ -42,9 +46,9 @@ class CoreTest : BaseTest() {
     @Test
     @Throws(Exception::class)
     fun customColors() {
-        rule.activity.editText.setHashtagColorRes(android.R.color.holo_red_light)
-        rule.activity.editText.setMentionColorRes(android.R.color.holo_green_light)
-        rule.activity.editText.setHyperlinkColorRes(android.R.color.holo_blue_light)
+        rule.activity.editText.setHashtagColor(RED)
+        rule.activity.editText.setMentionColor(GREEN)
+        rule.activity.editText.setHyperlinkColor(BLUE)
         onView(withId(R.id.editText)).perform(
                 typeText("Accent color of current app theme is used by default. But you can also have separate color for #hashtag, @mention, and http://hyperlink.com."),
                 closeSoftKeyboard())
@@ -54,9 +58,7 @@ class CoreTest : BaseTest() {
     @Test
     @Throws(Exception::class)
     fun clickable() {
-        rule.activity.editText.setOnHashtagClickListener { _, s ->
-            rule.activity.toast(s)
-        }
+        rule.activity.editText.setOnHashtagClickListener { _, s -> rule.activity.toast(s) }
         onView(withId(R.id.editText)).perform(
                 typeText("Oh, they are also #clickable!"),
                 closeSoftKeyboard())

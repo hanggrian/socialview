@@ -4,22 +4,9 @@ package com.hendraanggrian.socialview
 
 /** Mini version of [kota][https://github.com/hendraanggrian/kota] */
 
-import android.content.Context
-import android.support.annotation.AttrRes
-import android.support.annotation.ColorInt
 import android.text.Spannable
 import android.text.Spanned
 import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-
-@ColorInt
-@JvmOverloads
-internal inline fun Context.getColorAttr(@AttrRes attr: Int, defValue: Int = 0): Int = obtainStyledAttributes(null, intArrayOf(attr)).let {
-    try {
-        return it.getColor(0, defValue)
-    } finally {
-        it.recycle()
-    }
-}
 
 /** Get all spans that are instance of [type]. */
 internal inline fun <reified T> Spanned.getSpans(type: Class<T>): Array<out T> = getSpans(0, length, type)
@@ -32,7 +19,7 @@ internal inline fun Spannable.removeSpans(vararg spans: Any) {
 @JvmOverloads
 internal inline fun Spannable.span(
         regex: Regex,
-        vararg spans: (s: String) -> Any,
+        vararg spans: (String) -> Any,
         flags: Int = SPAN_EXCLUSIVE_EXCLUSIVE
 ): Spannable {
     val matcher = regex.toPattern().matcher(this)
@@ -48,7 +35,7 @@ internal inline fun Spannable.span(
 internal inline fun Spannable.spanRange(
         start: Int,
         end: Int,
-        vararg spans: (s: String) -> Any,
+        vararg spans: (String) -> Any,
         flags: Int = SPAN_EXCLUSIVE_EXCLUSIVE
 ): Spannable {
     for (span in spans) setSpan(span(substring(start, end)), start, end, flags)

@@ -14,12 +14,15 @@ import android.view.View
 import com.hendraanggrian.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.test.R
 import kota.toast
+import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.MethodSorters.JVM
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
+@FixMethodOrder(JVM)
 class PatternTest : BaseTest() {
 
     companion object {

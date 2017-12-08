@@ -1,12 +1,8 @@
 package com.hendraanggrian.socialview
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.ColorStateList.valueOf
-import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
-import android.support.v4.content.ContextCompat.getColorStateList
 import android.support.v4.util.PatternsCompat.WEB_URL
 import kotlin.text.RegexOption.IGNORE_CASE
 
@@ -17,12 +13,6 @@ import kotlin.text.RegexOption.IGNORE_CASE
  * @see SocialViewImpl
  */
 interface SocialView {
-
-    /** Shall be shadowed when implemented in [android.view.View]. */
-    fun getContext(): Context
-
-    /** Shall be shadowed when implemented in [android.widget.TextView]. */
-    fun getText(): CharSequence
 
     /** Determine whether this view should find and span hashtags. */
     var isHashtagEnabled: Boolean
@@ -57,36 +47,6 @@ interface SocialView {
         hyperlinkColor = valueOf(color)
     }
 
-    /** Set hashtag color from color resources. E.g.: `R.color.myColor`. */
-    fun setHashtagColorRes(@ColorRes resId: Int) {
-        hashtagColor = getColorStateList(getContext(), resId)!!
-    }
-
-    /** Set mention color from color resources. E.g.: `R.color.myColor`. */
-    fun setMentionColorRes(@ColorRes resId: Int) {
-        mentionColor = getColorStateList(getContext(), resId)!!
-    }
-
-    /** Set hyperlink color from color resources. E.g.: `R.color.myColor`. */
-    fun setHyperlinkColorRes(@ColorRes resId: Int) {
-        hyperlinkColor = getColorStateList(getContext(), resId)!!
-    }
-
-    /** Set hashtag color from color attribute. E.g.: `R.attr.colorPrimary`. */
-    fun setHashtagColorAttr(@AttrRes attrId: Int) {
-        hashtagColor = valueOf(getContext().getColorAttr(attrId))
-    }
-
-    /** Set mention color from color attribute. E.g.: `R.attr.colorPrimary`. */
-    fun setMentionColorAttr(@AttrRes attrId: Int) {
-        mentionColor = valueOf(getContext().getColorAttr(attrId))
-    }
-
-    /** Set hyperlink color from color attribute. E.g.: `R.attr.colorPrimary`. */
-    fun setHyperlinkColorAttr(@AttrRes attrId: Int) {
-        hyperlinkColor = valueOf(getContext().getColorAttr(attrId))
-    }
-
     /** Register a callback to be invoked when hashtag is clicked. */
     fun setOnHashtagClickListener(listener: ((view: SocialView, String) -> Unit)?)
 
@@ -106,42 +66,32 @@ interface SocialView {
     fun colorize()
 
     /** Obtain all hashtags in current text. */
-    val hashtags: List<String> get() = if (!isHashtagEnabled) emptyList() else HASHTAG_PATTERN.newList
+    val hashtags: List<String>
 
     /** Obtain all mentions in current text. */
-    val mentions: List<String> get() = if (!isMentionEnabled) emptyList() else MENTION_PATTERN.newList
+    val mentions: List<String>
 
     /** Obtain all hyperlinks in current text. */
-    val hyperlinks: List<String> get() = if (!isHyperlinkEnabled) emptyList() else HYPERLINK_PATTERN.newList
-
-    private val Regex.newList: List<String>
-        get() {
-            val list = ArrayList<String>()
-            val matcher = toPattern().matcher(getText())
-            while (matcher.find()) {
-                list.add(matcher.group(if (this !== HYPERLINK_PATTERN) 1 /* remove hashtag and mention symbol */ else 0))
-            }
-            return list
-        }
+    val hyperlinks: List<String>
 
     companion object {
-        internal var HASHTAG_PATTERN: Regex = "#(\\w+)".toRegex()
-        internal var MENTION_PATTERN: Regex = "@(\\w+)".toRegex()
-        internal var HYPERLINK_PATTERN: Regex = WEB_URL.toRegex()
+        internal var REGEX_HASHTAG: Regex = "#(\\w+)".toRegex()
+        internal var REGEX_MENTION: Regex = "@(\\w+)".toRegex()
+        internal var REGEX_HYPERLINK: Regex = WEB_URL.toRegex()
 
         /** Change current hashtag regex. */
         fun setHashtagRegex(regex: String) {
-            HASHTAG_PATTERN = regex.toRegex(IGNORE_CASE)
+            REGEX_HASHTAG = regex.toRegex(IGNORE_CASE)
         }
 
         /** Change current mention regex. */
         fun setMentionRegex(regex: String) {
-            MENTION_PATTERN = regex.toRegex(IGNORE_CASE)
+            REGEX_MENTION = regex.toRegex(IGNORE_CASE)
         }
 
         /** Change current hyperlink regex. */
         fun setHyperlinkRegex(regex: String) {
-            HYPERLINK_PATTERN = regex.toRegex(IGNORE_CASE)
+            REGEX_HYPERLINK = regex.toRegex(IGNORE_CASE)
         }
     }
 }

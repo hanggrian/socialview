@@ -34,16 +34,16 @@ class HashtagAdapter @JvmOverloads constructor(
             holder = _convertView.tag as ViewHolder
         }
         getItem(position)?.let { hashtag ->
-            holder.textViewHashtag.text = hashtag.hashtag
-            holder.textViewCount.setVisibleThen(hashtag.count != null) {
-                holder.textViewCount.text = context.resources.getQuantityString(countPlural, hashtag.count!!, hashtag.count)
+            holder.hashtagTextView.text = hashtag.hashtag
+            holder.countTextView.setVisibleThen(hashtag.count != null) {
+                text = context.resources.getQuantityString(countPlural, hashtag.count!!, hashtag.count)
             }
         }
         return _convertView
     }
 
     private class ViewHolder(itemView: View) {
-        val textViewHashtag = itemView.find<TextView>(R.id.socialview_hashtag)
-        val textViewCount = itemView.find<TextView>(R.id.socialview_hashtag_count)
+        val hashtagTextView = itemView.find<TextView>(R.id.socialview_hashtag)
+        val countTextView = itemView.find<TextView>(R.id.socialview_hashtag_count)
     }
 }

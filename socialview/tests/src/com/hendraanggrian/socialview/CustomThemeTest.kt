@@ -9,12 +9,15 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.hendraanggrian.socialview.activity.CustomThemeActivity
 import com.hendraanggrian.socialview.test.R
+import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.MethodSorters.JVM
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
+@FixMethodOrder(JVM)
 class CustomThemeTest : BaseTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(CustomThemeActivity::class.java)
