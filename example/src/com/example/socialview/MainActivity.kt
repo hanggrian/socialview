@@ -5,13 +5,12 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.ArrayAdapter
-import android.widget.Filter
 import android.widget.TextView
 import com.hendraanggrian.socialview.Hashtag
 import com.hendraanggrian.socialview.Mention
-import com.hendraanggrian.widget.FilteredAdapter
 import com.hendraanggrian.widget.HashtagAdapter
 import com.hendraanggrian.widget.MentionAdapter
+import com.hendraanggrian.widget.SocialAdapter
 import kota.debug
 import kota.find
 import kota.inflateMenu
@@ -57,8 +56,8 @@ class MainActivity : AppCompatActivity() {
         textView.threshold = 1
         textView.hashtagAdapter = defaultHashtagAdapter
         textView.mentionAdapter = defaultMentionAdapter
-        textView.setHashtagTextChangedListener { _, s -> debug("editing", s) }
-        textView.setMentionTextChangedListener { _, s -> debug("editing", s) }
+        textView.setHashtagTextChangedListener { _, s -> debug("hashtag", s) }
+        textView.setMentionTextChangedListener { _, s -> debug("mention", s) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -82,10 +81,11 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    data class Person constructor(val name: String)
+    data class Person(val name: String)
 
-    class PersonAdapter constructor(context: Context) : FilteredAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
-        private var filter: Filter? = null
+    class PersonAdapter(context: Context) : SocialAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
+
+        override fun Person.convertToString(): String = name
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val holder: ViewHolder
@@ -104,14 +104,7 @@ class MainActivity : AppCompatActivity() {
             return _convertView
         }
 
-        override fun getFilter(): Filter {
-            if (filter == null) filter = object : SocialFilter() {
-                override fun convertResultToString(resultValue: Any) = (resultValue as Person).name
-            }
-            return filter as Filter
-        }
-
-        private class ViewHolder constructor(view: View) {
+        private class ViewHolder(view: View) {
             val textView = view.find<TextView>(R.id.textViewName)
         }
     }

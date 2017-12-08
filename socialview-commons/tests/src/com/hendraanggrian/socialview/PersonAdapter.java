@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.TextView;
 
-import com.hendraanggrian.widget.FilteredAdapter;
+import com.hendraanggrian.widget.SocialAdapter;
 
-public class PersonAdapter extends FilteredAdapter<Person> {
+public class PersonAdapter extends SocialAdapter<Person> {
 
     @NonNull private final Filter filter = new SocialFilter() {
         @Override

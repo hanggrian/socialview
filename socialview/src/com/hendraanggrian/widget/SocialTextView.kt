@@ -15,17 +15,41 @@ class SocialTextView @JvmOverloads constructor(
 
     private val mImpl: SocialView = SocialViewImpl(this, attrs)
 
-    override var isHashtagEnabled: Boolean = mImpl.isHashtagEnabled
+    override var isHashtagEnabled: Boolean
+        get() = mImpl.isHashtagEnabled
+        set(enabled) {
+            mImpl.isHashtagEnabled = enabled
+        }
 
-    override var isMentionEnabled: Boolean = mImpl.isMentionEnabled
+    override var isMentionEnabled: Boolean
+        get() = mImpl.isMentionEnabled
+        set(enabled) {
+            mImpl.isMentionEnabled = enabled
+        }
 
-    override var isHyperlinkEnabled: Boolean = mImpl.isHyperlinkEnabled
+    override var isHyperlinkEnabled: Boolean
+        get() = mImpl.isHyperlinkEnabled
+        set(enabled) {
+            mImpl.isHyperlinkEnabled = enabled
+        }
 
-    override var hashtagColor: ColorStateList = mImpl.hashtagColor
+    override var hashtagColor: ColorStateList
+        get() = mImpl.hashtagColor
+        set(color) {
+            mImpl.hashtagColor = color
+        }
 
-    override var mentionColor: ColorStateList = mImpl.mentionColor
+    override var mentionColor: ColorStateList
+        get() = mImpl.mentionColor
+        set(color) {
+            mImpl.mentionColor = color
+        }
 
-    override var hyperlinkColor: ColorStateList = mImpl.hyperlinkColor
+    override var hyperlinkColor: ColorStateList
+        get() = mImpl.hyperlinkColor
+        set(color) {
+            mImpl.hyperlinkColor = color
+        }
 
     override fun setOnHashtagClickListener(listener: ((view: SocialView, String) -> Unit)?) = mImpl.setOnHashtagClickListener(listener)
 

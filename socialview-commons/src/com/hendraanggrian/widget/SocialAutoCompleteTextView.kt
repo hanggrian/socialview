@@ -66,11 +66,23 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
             setTokenizer(SymbolsTokenizer(mEnabledSymbols))
         }
 
-    override var hashtagColor: ColorStateList = mImpl.hashtagColor
+    override var hashtagColor: ColorStateList
+        get() = mImpl.hashtagColor
+        set(color) {
+            mImpl.hashtagColor = color
+        }
 
-    override var mentionColor: ColorStateList = mImpl.mentionColor
+    override var mentionColor: ColorStateList
+        get() = mImpl.mentionColor
+        set(color) {
+            mImpl.mentionColor = color
+        }
 
-    override var hyperlinkColor: ColorStateList = mImpl.hyperlinkColor
+    override var hyperlinkColor: ColorStateList
+        get() = mImpl.hyperlinkColor
+        set(color) {
+            mImpl.hyperlinkColor = color
+        }
 
     override fun setOnHashtagClickListener(listener: ((view: SocialView, String) -> Unit)?) = mImpl.setOnHashtagClickListener(listener)
 
@@ -110,11 +122,11 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
             return when {
                 i > 0 && symbols.contains(text[i - 1]) -> text
                 text is Spanned -> {
-                    val sp = SpannableString(text.toString() + " ")
+                    val sp = SpannableString("$text ")
                     copySpansFrom(text, 0, text.length, Any::class.java, sp, 0)
                     sp
                 }
-                else -> text.toString() + " "
+                else -> "$text "
             }
         }
     }

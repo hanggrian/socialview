@@ -6,6 +6,8 @@ data class Mention @JvmOverloads constructor(
         val displayname: String? = null,
         val avatar: Any? = null
 ) {
-    override fun equals(other: Any?) = other != null && other is Mention && other.username == username
-    override fun hashCode() = username.hashCode()
+
+    override fun equals(other: Any?): Boolean = other != null && other is Mention && other.username == username
+
+    override fun hashCode(): Int = username.hashCode()
 }

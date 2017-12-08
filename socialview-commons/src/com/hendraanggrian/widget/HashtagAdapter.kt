@@ -5,22 +5,23 @@ import android.support.annotation.PluralsRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
 import android.widget.TextView
 import com.hendraanggrian.socialview.Hashtag
 import com.hendraanggrian.socialview.commons.R
 import com.hendraanggrian.socialview.find
 import com.hendraanggrian.socialview.setVisibleThen
 
-/** Default adapter for displaying hashtag in [SocialAutoCompleteTextView]. */
+/**
+ * Default adapter for displaying hashtag in [SocialAutoCompleteTextView].
+ * Note that this adapter is completely optional, any adapter extending [android.widget.ArrayAdapter]
+ * can be attached to [SocialAutoCompleteTextView].
+ */
 class HashtagAdapter @JvmOverloads constructor(
         context: Context,
         @PluralsRes private val countPlural: Int = R.plurals.posts
-) : FilteredAdapter<Hashtag>(context, R.layout.socialview_layout_hashtag, R.id.socialview_hashtag) {
+) : SocialAdapter<Hashtag>(context, R.layout.socialview_layout_hashtag, R.id.socialview_hashtag) {
 
-    private val filter: Filter = object : SocialFilter() {
-        override fun convertResultToString(resultValue: Any) = (resultValue as Hashtag).hashtag
-    }
+    override fun Hashtag.convertToString(): String = hashtag
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val holder: ViewHolder
@@ -32,16 +33,14 @@ class HashtagAdapter @JvmOverloads constructor(
         } else {
             holder = _convertView.tag as ViewHolder
         }
-        getItem(position)?.let {
-            holder.textViewHashtag.text = it.hashtag
-            holder.textViewCount.setVisibleThen(it.count != null) {
-                holder.textViewCount.text = context.resources.getQuantityString(countPlural, it.count!!, it.count)
+        getItem(position)?.let { hashtag ->
+            holder.textViewHashtag.text = hashtag.hashtag
+            holder.textViewCount.setVisibleThen(hashtag.count != null) {
+                holder.textViewCount.text = context.resources.getQuantityString(countPlural, hashtag.count!!, hashtag.count)
             }
         }
         return _convertView
     }
-
-    override fun getFilter(): Filter = filter
 
     private class ViewHolder(itemView: View) {
         val textViewHashtag = itemView.find<TextView>(R.id.socialview_hashtag)

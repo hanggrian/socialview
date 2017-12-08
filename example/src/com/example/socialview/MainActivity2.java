@@ -12,20 +12,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.TextView;
 
 import com.hendraanggrian.socialview.Hashtag;
 import com.hendraanggrian.socialview.Mention;
 import com.hendraanggrian.socialview.SocialView;
-import com.hendraanggrian.widget.FilteredAdapter;
 import com.hendraanggrian.widget.HashtagAdapter;
 import com.hendraanggrian.widget.MentionAdapter;
+import com.hendraanggrian.widget.SocialAdapter;
 import com.hendraanggrian.widget.SocialAutoCompleteTextView;
+
+import org.jetbrains.annotations.NotNull;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 
+import static kota.ActivitiesKt.inflateMenu;
 import static kota.LogsKt.debug;
 import static kota.resources.ResourcesKt.getInt;
 
@@ -77,14 +79,14 @@ public class MainActivity2 extends AppCompatActivity {
         textView.setHashtagTextChangedListener(new Function2<SocialView, String, Unit>() {
             @Override
             public Unit invoke(SocialView socialView, String s) {
-                debug("editing", s);
+                debug("hashtag", s);
                 return null;
             }
         });
         textView.setMentionTextChangedListener(new Function2<SocialView, String, Unit>() {
             @Override
             public Unit invoke(SocialView socialView, String s) {
-                debug("editing", s);
+                debug("mention", s);
                 return null;
             }
         });
@@ -92,7 +94,7 @@ public class MainActivity2 extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+        inflateMenu(this, R.menu.activity_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -121,16 +123,16 @@ public class MainActivity2 extends AppCompatActivity {
         }
     }
 
-    private static class PersonAdapter extends FilteredAdapter<Person> {
-        final Filter filter = new SocialFilter() {
-            @Override
-            public CharSequence convertResultToString(Object resultValue) {
-                return ((Person) resultValue).name;
-            }
-        };
+    private static class PersonAdapter extends SocialAdapter<Person> {
 
         public PersonAdapter(Context context) {
             super(context, R.layout.item_person, R.id.textViewName);
+        }
+
+        @NotNull
+        @Override
+        public String convertToString(Person $receiver) {
+            return $receiver.name;
         }
 
         @NonNull
@@ -149,12 +151,6 @@ public class MainActivity2 extends AppCompatActivity {
                 holder.textView.setText(item.name);
             }
             return convertView;
-        }
-
-        @NonNull
-        @Override
-        public Filter getFilter() {
-            return filter;
         }
 
         private static class ViewHolder {

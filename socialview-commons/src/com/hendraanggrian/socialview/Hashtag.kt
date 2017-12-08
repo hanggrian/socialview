@@ -5,6 +5,8 @@ data class Hashtag @JvmOverloads constructor(
         val hashtag: String,
         val count: Int? = null
 ) {
-    override fun equals(other: Any?) = other != null && other is Hashtag && other.hashtag == hashtag
-    override fun hashCode() = hashtag.hashCode()
+
+    override fun equals(other: Any?): Boolean = other != null && other is Hashtag && other.hashtag == hashtag
+
+    override fun hashCode(): Int = hashtag.hashCode()
 }

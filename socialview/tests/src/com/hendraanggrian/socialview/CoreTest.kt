@@ -54,8 +54,8 @@ class CoreTest : BaseTest() {
     @Test
     @Throws(Exception::class)
     fun clickable() {
-        rule.activity.editText.setOnHashtagClickListener { _, charSequence ->
-            rule.activity.toast(charSequence.toString())
+        rule.activity.editText.setOnHashtagClickListener { _, s ->
+            rule.activity.toast(s)
         }
         onView(withId(R.id.editText)).perform(
                 typeText("Oh, they are also #clickable!"),

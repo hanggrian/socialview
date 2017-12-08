@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lint>
-    <!-- possible Kotlin bug -->
+    <!-- Rest assured all resources in this module are used. This is a possible Kotlin bug. -->
     <issue id="UnusedResources" severity="ignore"/>
 </lint>

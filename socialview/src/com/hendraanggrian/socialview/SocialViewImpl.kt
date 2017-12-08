@@ -167,7 +167,7 @@ class SocialViewImpl(val view: TextView, attrs: AttributeSet?) : SocialView {
             mMentionListener?.newClickableSpan(it, mMentionColor) ?: ForegroundColorSpan(mMentionColor.defaultColor)
         })
         if (isHyperlinkEnabled) spannable.span(SocialView.HYPERLINK_PATTERN, {
-            mHyperlinkListener?.newClickableSpan(it, mHyperlinkColor, true) ?: object : ForegroundColorSpan(mMentionColor.defaultColor) {
+            mHyperlinkListener?.newClickableSpan(it, mHyperlinkColor, true) ?: object : ForegroundColorSpan(mHyperlinkColor.defaultColor) {
                 override fun updateDrawState(ds: TextPaint) {
                     super.updateDrawState(ds)
                     ds.isUnderlineText = true
@@ -211,7 +211,7 @@ class SocialViewImpl(val view: TextView, attrs: AttributeSet?) : SocialView {
     }
 
     private fun ((SocialView, String) -> Unit).newClickableSpan(s: String, color: ColorStateList, underline: Boolean = false): CharacterStyle = object : ClickableSpan() {
-        override fun onClick(widget: View) = invoke(this@SocialViewImpl, s)
+        override fun onClick(widget: View) = invoke(this@SocialViewImpl, if (this@newClickableSpan !== mHyperlinkListener) s.substring(1) else s)
         override fun updateDrawState(ds: TextPaint) {
             ds.color = color.defaultColor
             ds.isUnderlineText = underline

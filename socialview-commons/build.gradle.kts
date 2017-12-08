@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    compile(project(":socialview-core"))
+    compile(project(":socialview"))
     compile(kotlin("stdlib", kotlinVersion))
     compile(hendraanggrian("picasso-utils", picassoUtilsVersion))
 
