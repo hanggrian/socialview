@@ -85,7 +85,7 @@ class SocialViewImpl : SocialView {
     }
 
     private lateinit var view: TextView
-    private var mFlags: Int = Int.MIN_VALUE
+    private var mFlags: Int = 0
     private lateinit var mHashtagColor: ColorStateList
     private lateinit var mMentionColor: ColorStateList
     private lateinit var mHyperlinkColor: ColorStateList

@@ -23,25 +23,22 @@ Write `SocialTextView` or `SocialEditText` in xml.
     app:mentionColor="@color/red"/>
 ```
 
-Modify its state and set listeners in java.
+See [attrs.xml][attrs] for full list of available attributes.
+
+Modify its state and set listeners programmatically.
 ```java
 textView.setMentionEnabled(false);
-textView.setHashtagColor(ContextCompat.getColor(this, R.color.red));
-textView.setOnHashtagClickListener(new SocialView.OnSocialClickListener() {
+textView.setHashtagColor(Color.RED);
+textView.setOnHashtagClickListener(new Function2<SocialView, String, Unit>() {
     @Override
-    public void(View v, String text) {
-        // TODO: do something
+    public Unit invoke(SocialView socialView, String s) {
+        // do something
+        return null;
     }
 });
 ```
 
-Any TextView or subclasses of TextView can be attached.
-```java
-CustomTextView tv = ...;
-SocialView socialView = SocialViewHelper.attach(tv);
-```
-
-See [attrs.xml][attrs] for full list of available attributes.
+Any TextView or subclasses of TextView can be made social, see [SocialTextView.kt][SocialTextView] for example.
 
 Commons
 -------
@@ -85,26 +82,20 @@ public class Person {
 
 // easier
 public class PersonAdapter extends SocialAdapter<Person> {
-    private Filter filter = new SocialFilter() {
-        @Override
-        public CharSequence convertResultToString(Object resultValue) {
-            return ((Person) resultValue).name;
-        }
-    };
     
     public PersonAdapter(@NonNull Context context) {
         super(context, R.layout.item_person, R.id.textview_person);
     }
+    
+    @Override
+    public String convertToString(Person $receiver) {
+        return $receiver.name;
+    }
 
+    @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         ...
     }
-    
-    public Filter getFilter() {
-        return filter;
-    }
-    
-    ...
 }
 
 // this works too
@@ -126,15 +117,13 @@ Download
 --------
 ```gradle
 repositories {
-    maven { url 'https://maven.google.com' }
+    google()
     jcenter()
 }
 
 dependencies {
-    // core only
-    compile 'com.hendraanggrian:socialview-core:0.16.3'
-    // core and commons
-    compile 'com.hendraanggrian:socialview-commons:0.16.3'
+    compile 'com.hendraanggrian:socialview-core:0.17'
+    compile 'com.hendraanggrian:socialview-commons:0.17' // optional
 }
 ```
 
@@ -161,4 +150,5 @@ License
 [demo_commons1]: /art/demo_commons1.gif
 [demo_commons2]: /art/demo_commons2.gif
 [demo_commons3]: /art/demo_commons3.gif
-[attrs]: https://github.com/HendraAnggrian/socialview/blob/master/socialview-core/res/values/attrs.xml
+[attrs]: https://github.com/HendraAnggrian/socialview/blob/master/socialview/res/values/attrs.xml
+[SocialTextView]: https://github.com/HendraAnggrian/socialview/blob/master/socialview/src/com/hendraanggrian/socialview/widget/SocialTextView.kt

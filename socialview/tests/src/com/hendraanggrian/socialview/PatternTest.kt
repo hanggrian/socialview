@@ -25,60 +25,37 @@ import org.junit.runners.MethodSorters.JVM
 @FixMethodOrder(JVM)
 class PatternTest : BaseTest() {
 
-    companion object {
-        const val NAMES = "@HendraAnggrian\n" +
-                "@jeffersonlicet\n" +
-                "@sfucko\n\n" +
-
-                // https://github.com/HendraAnggrian/socialview/issues/8
-                "@Mañana\n" +
-                "@CreaciónDivina\n" +
-                "@TúVendrás\n" +
-                "@CuatroArtículos\n" +
-                "@MásNadaQueda\n" +
-                "@SeFueÉste\n" +
-                "@ÉsteNoEra\n" +
-                "@Ñame\n\n" +
-
-                // https://github.com/HendraAnggrian/socialview/issues/13
-                "@Андрей\n" +
-                "@Владимир\n" +
-                "@Дмитрий\n" +
-                "@Вова\n" +
-                "@Саша"
-    }
+    val names = StringBuilder()
+            .appendln("@HendraAnggrian")
+            .appendln("@jeffersonlicet")
+            .appendln("@sfucko")
+            // https://github.com/HendraAnggrian/socialview/issues/8
+            .appendln()
+            .appendln("@Mañana")
+            .appendln("@CreaciónDivina")
+            .appendln("@TúVendrás")
+            .appendln("@CuatroArtículos")
+            .appendln("@MásNadaQueda")
+            .appendln("@SeFueÉste")
+            .appendln("@ÉsteNoEra")
+            .appendln("@Ñame")
+            // https://github.com/HendraAnggrian/socialview/issues/13
+            .appendln()
+            .appendln("@Андрей")
+            .appendln("@Владимир")
+            .appendln("@Дмитрий")
+            .appendln("@Вова")
+            .appendln("@Саша")
+            .toString()
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
     @Test
     @Throws(Exception::class)
     fun default() {
-        // SocialView.setMentionPattern(SocialView.PATTERN_DEFAULT)
         onView(withId(R.id.editText)).perform(
-                replaceText(NAMES),
+                replaceText(names),
                 toast("default"),
-                closeSoftKeyboard())
-        onView(withId(R.id.progressBar)).perform(delay())
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun spanish() {
-        // SocialView.setMentionPattern(SocialView.PATTERN_SPANISH)
-        onView(withId(R.id.editText)).perform(
-                replaceText(NAMES),
-                toast("spanish"),
-                closeSoftKeyboard())
-        onView(withId(R.id.progressBar)).perform(delay())
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun russian() {
-        // SocialView.setMentionPattern(SocialView.PATTERN_RUSSIAN)
-        onView(withId(R.id.editText)).perform(
-                replaceText(NAMES),
-                toast("russian"),
                 closeSoftKeyboard())
         onView(withId(R.id.progressBar)).perform(delay())
     }

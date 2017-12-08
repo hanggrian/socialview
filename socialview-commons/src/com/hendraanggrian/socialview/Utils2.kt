@@ -22,5 +22,5 @@ internal inline fun <V : View> V.setVisibleThen(
         block: V.() -> Unit
 ) {
     isVisible = visible
-    if (visibility == VISIBLE) block(this)
+    if (isVisible) block(this)
 }

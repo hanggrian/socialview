@@ -17,6 +17,7 @@ import android.view.View
 import com.hendraanggrian.widget.HashtagAdapter
 import com.hendraanggrian.widget.MentionAdapter
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
+import kota.isVisible
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
