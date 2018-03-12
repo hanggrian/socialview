@@ -26,27 +26,27 @@ import org.junit.runners.MethodSorters.JVM
 class PatternTest : BaseTest() {
 
     val names = StringBuilder()
-            .appendln("@HendraAnggrian")
-            .appendln("@jeffersonlicet")
-            .appendln("@sfucko")
-            // https://github.com/HendraAnggrian/socialview/issues/8
-            .appendln()
-            .appendln("@Mañana")
-            .appendln("@CreaciónDivina")
-            .appendln("@TúVendrás")
-            .appendln("@CuatroArtículos")
-            .appendln("@MásNadaQueda")
-            .appendln("@SeFueÉste")
-            .appendln("@ÉsteNoEra")
-            .appendln("@Ñame")
-            // https://github.com/HendraAnggrian/socialview/issues/13
-            .appendln()
-            .appendln("@Андрей")
-            .appendln("@Владимир")
-            .appendln("@Дмитрий")
-            .appendln("@Вова")
-            .appendln("@Саша")
-            .toString()
+        .appendln("@HendraAnggrian")
+        .appendln("@jeffersonlicet")
+        .appendln("@sfucko")
+        // https://github.com/HendraAnggrian/socialview/issues/8
+        .appendln()
+        .appendln("@Mañana")
+        .appendln("@CreaciónDivina")
+        .appendln("@TúVendrás")
+        .appendln("@CuatroArtículos")
+        .appendln("@MásNadaQueda")
+        .appendln("@SeFueÉste")
+        .appendln("@ÉsteNoEra")
+        .appendln("@Ñame")
+        // https://github.com/HendraAnggrian/socialview/issues/13
+        .appendln()
+        .appendln("@Андрей")
+        .appendln("@Владимир")
+        .appendln("@Дмитрий")
+        .appendln("@Вова")
+        .appendln("@Саша")
+        .toString()
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
@@ -54,9 +54,9 @@ class PatternTest : BaseTest() {
     @Throws(Exception::class)
     fun default() {
         onView(withId(R.id.editText)).perform(
-                replaceText(names),
-                toast("default"),
-                closeSoftKeyboard())
+            replaceText(names),
+            toast("default"),
+            closeSoftKeyboard())
         onView(withId(R.id.progressBar)).perform(delay())
     }
 

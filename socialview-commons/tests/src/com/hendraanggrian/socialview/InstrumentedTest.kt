@@ -34,16 +34,19 @@ class InstrumentedTest {
     @Test
     @Throws(Exception::class)
     fun hashtag() {
-        onView(ViewMatchers.withId(com.hendraanggrian.socialview.commons.test.R.id.textView)).perform(
+        onView(ViewMatchers.withId(com.hendraanggrian.socialview.commons.test.R.id.textView))
+            .perform(
                 object : ViewAction {
-                    override fun getConstraints() = isAssignableFrom(SocialAutoCompleteTextView::class.java)
+                    override fun getConstraints() =
+                        isAssignableFrom(SocialAutoCompleteTextView::class.java)
+
                     override fun getDescription() = SocialAutoCompleteTextView::class.java.name
                     override fun perform(uiController: UiController, view: View) {
                         val adapter = HashtagAdapter(view.context)
                         adapter.addAll(
-                                Hashtag("follow"),
-                                Hashtag("followme", 1000),
-                                Hashtag("followmeorillkillyou", 500))
+                            Hashtag("follow"),
+                            Hashtag("followme", 1000),
+                            Hashtag("followmeorillkillyou", 500))
                         (view as SocialAutoCompleteTextView).hashtagAdapter = adapter
                     }
                 },
@@ -55,16 +58,20 @@ class InstrumentedTest {
     @Test
     @Throws(Exception::class)
     fun mention() {
-        onView(ViewMatchers.withId(com.hendraanggrian.socialview.commons.test.R.id.textView)).perform(
+        onView(ViewMatchers.withId(com.hendraanggrian.socialview.commons.test.R.id.textView))
+            .perform(
                 object : ViewAction {
-                    override fun getConstraints() = isAssignableFrom(SocialAutoCompleteTextView::class.java)
+                    override fun getConstraints() =
+                        isAssignableFrom(SocialAutoCompleteTextView::class.java)
+
                     override fun getDescription() = SocialAutoCompleteTextView::class.java.name
                     override fun perform(uiController: UiController, view: View) {
                         val adapter = MentionAdapter(view.context)
                         adapter.addAll(
-                                Mention("dirtyhobo"),
-                                Mention("hobo", "Regular Hobo", android.R.drawable.ic_input_add),
-                                Mention("hendraanggrian", "Hendra Anggrian", "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"))
+                            Mention("dirtyhobo"),
+                            Mention("hobo", "Regular Hobo", android.R.drawable.ic_input_add),
+                            Mention("hendraanggrian", "Hendra Anggrian",
+                                "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"))
                         (view as SocialAutoCompleteTextView).mentionAdapter = adapter
                         view.threshold = 1
                     }
@@ -77,16 +84,19 @@ class InstrumentedTest {
     @Test
     @Throws(Exception::class)
     fun custom() {
-        onView(ViewMatchers.withId(com.hendraanggrian.socialview.commons.test.R.id.textView)).perform(
+        onView(ViewMatchers.withId(com.hendraanggrian.socialview.commons.test.R.id.textView))
+            .perform(
                 object : ViewAction {
-                    override fun getConstraints() = isAssignableFrom(SocialAutoCompleteTextView::class.java)
+                    override fun getConstraints() =
+                        isAssignableFrom(SocialAutoCompleteTextView::class.java)
+
                     override fun getDescription() = SocialAutoCompleteTextView::class.java.name
                     override fun perform(uiController: UiController, view: View) {
                         val adapter = PersonAdapter(view.context)
                         adapter.addAll(
-                                Person("dirtyhobo"),
-                                Person("hobo"),
-                                Person("hendraanggrian"))
+                            Person("dirtyhobo"),
+                            Person("hobo"),
+                            Person("hendraanggrian"))
                         (view as SocialAutoCompleteTextView).mentionAdapter = adapter
                         view.threshold = 1
                     }
@@ -104,8 +114,10 @@ class InstrumentedTest {
                 val progressBar = rule.activity.progressBar
                 object : CountDownTimer(DELAY_COUNTDOWN, 100) {
                     override fun onTick(millisUntilFinished: Long) = when {
-                        SDK_INT >= 24 -> progressBar.setProgress((progressBar.max * millisUntilFinished / DELAY_COUNTDOWN).toInt(), true)
-                        else -> progressBar.progress = (progressBar.max * millisUntilFinished / DELAY_COUNTDOWN).toInt()
+                        SDK_INT >= 24 -> progressBar.setProgress(
+                            (progressBar.max * millisUntilFinished / DELAY_COUNTDOWN).toInt(), true)
+                        else -> progressBar.progress =
+                            (progressBar.max * millisUntilFinished / DELAY_COUNTDOWN).toInt()
                     }
 
                     override fun onFinish() {
@@ -117,7 +129,7 @@ class InstrumentedTest {
         }
     }
 
-    companion object {
-        private val DELAY_COUNTDOWN: Long = 5000
+    private companion object {
+        const val DELAY_COUNTDOWN: Long = 5000
     }
 }

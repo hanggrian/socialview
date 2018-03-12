@@ -43,7 +43,7 @@ val ktlint by configurations.creating
 dependencies {
     compile(project(":socialview-core"))
     compile(kotlin("stdlib", kotlinVersion))
-    compile(hendraanggrian("picasso-utils", picassoUtilsVersion))
+    compile(hendraanggrian("pikasso", pikassoVersion))
 
     testImplementation(junit())
     androidTestImplementation(hendraanggrian("kota", kotaVersion))

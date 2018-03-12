@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:singleLine="true"
-            android:textAppearance="?textAppearanceLargePopupMenu" />
+            android:textAppearance="?textAppearanceLargePopupMenu"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/socialview_mention_username"

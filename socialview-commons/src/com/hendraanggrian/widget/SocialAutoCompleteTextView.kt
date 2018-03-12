@@ -17,13 +17,12 @@ import com.hendraanggrian.socialview.SocialViewImpl
  * [android.widget.MultiAutoCompleteTextView] with hashtag, mention, and hyperlink support.
  *
  * @see SocialView
- * @see SocialViewImpl
  */
 class SocialAutoCompleteTextView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = android.support.v7.appcompat.R.attr.autoCompleteTextViewStyle,
-        private val impl: SocialViewImpl = SocialViewImpl()
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = android.support.v7.appcompat.R.attr.autoCompleteTextViewStyle,
+    private val impl: SocialViewImpl = SocialViewImpl()
 ) : AppCompatMultiAutoCompleteTextView(context, attrs, defStyleAttr), SocialView by impl {
 
     private val mTextWatcher: TextWatcher = object : TextWatcher {
@@ -74,7 +73,8 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
 
     /**
      * While [MultiAutoCompleteTextView.CommaTokenizer] tracks only comma symbol,
-     * [SymbolsTokenizer] can track multiple characters, in this instance, are hashtag and at symbol.
+     * [SymbolsTokenizer] can track multiple characters, in this instance,
+     * are hashtag and at symbol.
      */
     class SymbolsTokenizer(private val symbols: CharArray) : MultiAutoCompleteTextView.Tokenizer {
 

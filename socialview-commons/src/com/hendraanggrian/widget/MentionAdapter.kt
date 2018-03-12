@@ -3,30 +3,31 @@ package com.hendraanggrian.widget
 import android.content.Context
 import android.net.Uri
 import android.support.annotation.DrawableRes
-import android.text.TextUtils.isEmpty
-import android.view.LayoutInflater
+import android.view.LayoutInflater.from
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.hendraanggrian.picasso.Targets
-import com.hendraanggrian.picasso.Transformations
-import com.hendraanggrian.picasso.picasso
+import com.hendraanggrian.pikasso.circle
+import com.hendraanggrian.pikasso.picasso
+import com.hendraanggrian.pikasso.toProgressTarget
 import com.hendraanggrian.socialview.Mention
 import com.hendraanggrian.socialview.commons.R
-import com.hendraanggrian.socialview.find
-import com.hendraanggrian.socialview.setVisibleThen
 import java.io.File
 
 /**
  * Default adapter for displaying mention in [SocialAutoCompleteTextView].
- * Note that this adapter is completely optional, any adapter extending [android.widget.ArrayAdapter]
- * can be attached to [SocialAutoCompleteTextView].
+ * Note that this adapter is completely optional, any adapter extending
+ * [android.widget.ArrayAdapter] can be attached to [SocialAutoCompleteTextView].
  */
 class MentionAdapter @JvmOverloads constructor(
-        context: Context,
-        @DrawableRes private val defaultAvatar: Int = R.drawable.socialview_ic_mention_placeholder
-) : SocialAdapter<Mention>(context, R.layout.socialview_layout_mention, R.id.socialview_mention_username) {
+    context: Context,
+    @DrawableRes private val defaultAvatar: Int = R.drawable.socialview_ic_mention_placeholder
+) : SocialAdapter<Mention>(
+    context,
+    R.layout.socialview_layout_mention,
+    R.id.socialview_mention_username
+) {
 
     override fun Mention.convertToString(): String = username
 
@@ -34,7 +35,7 @@ class MentionAdapter @JvmOverloads constructor(
         val holder: ViewHolder
         var _convertView = convertView
         if (_convertView == null) {
-            _convertView = LayoutInflater.from(context).inflate(R.layout.socialview_layout_mention, parent, false)
+            _convertView = from(context).inflate(R.layout.socialview_layout_mention, parent, false)
             holder = ViewHolder(_convertView!!)
             _convertView.tag = holder
         } else {
@@ -42,26 +43,28 @@ class MentionAdapter @JvmOverloads constructor(
         }
         getItem(position)?.let { mention ->
             when (mention.avatar) {
-                null -> context.picasso(defaultAvatar)
-                is Int -> context.picasso(mention.avatar)
-                is String -> context.picasso(mention.avatar)
-                is Uri -> context.picasso(mention.avatar)
-                is File -> context.picasso(mention.avatar)
+                null -> picasso.load(defaultAvatar)
+                is Int -> picasso.load(mention.avatar)
+                is String -> picasso.load(mention.avatar)
+                is Uri -> picasso.load(mention.avatar)
+                is File -> picasso.load(mention.avatar)
                 else -> error("Unsupported avatar type. See Mention.kt for more.")
             }.error(defaultAvatar)
-                    .transform(Transformations.circle())
-                    .into(Targets.progress(holder.avatarImageView, context.resources.getDimensionPixelSize(R.dimen.socialview_mention_progress_bar)))
-            holder.usernameTextView.text = mention.username
-            holder.displaynameTextView.setVisibleThen(!isEmpty(mention.displayname)) {
-                text = mention.displayname
+                .circle()
+                .into(holder.avatarView.toProgressTarget(
+                    context.resources.getDimensionPixelSize(
+                        R.dimen.socialview_mention_progress_bar)))
+            holder.usernameView.text = mention.username
+            if (!mention.displayname.isNullOrEmpty()) {
+                holder.displaynameView.text = mention.displayname
             }
         }
         return _convertView
     }
 
     private class ViewHolder(itemView: View) {
-        val avatarImageView = itemView.find<ImageView>(R.id.socialview_mention_avatar)
-        val usernameTextView = itemView.find<TextView>(R.id.socialview_mention_username)
-        val displaynameTextView = itemView.find<TextView>(R.id.socialview_mention_displayname)
+        val avatarView = itemView.findViewById<ImageView>(R.id.socialview_mention_avatar)
+        val usernameView = itemView.findViewById<TextView>(R.id.socialview_mention_username)
+        val displaynameView = itemView.findViewById<TextView>(R.id.socialview_mention_displayname)
     }
 }

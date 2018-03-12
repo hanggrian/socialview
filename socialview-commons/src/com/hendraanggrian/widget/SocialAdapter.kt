@@ -4,16 +4,16 @@ import android.content.Context
 import android.widget.ArrayAdapter
 import android.widget.Filter
 import java.util.Collections.addAll
-import java.util.Locale.US
 
 /**
  * An ArrayAdapter customized with filter to display items.
- * It is a direct parent of default [HashtagAdapter] and [MentionAdapter], which are optional adapters.
+ * It is a direct parent of default [HashtagAdapter] and [MentionAdapter],
+ * which are optional adapters.
  */
 abstract class SocialAdapter<T>(
-        context: Context,
-        resource: Int,
-        textViewResourceId: Int
+    context: Context,
+    resource: Int,
+    textViewResourceId: Int
 ) : ArrayAdapter<T>(context, resource, textViewResourceId, ArrayList<T>()) {
 
     private var mFilter: Filter? = null
@@ -24,8 +24,8 @@ abstract class SocialAdapter<T>(
 
     override fun getFilter(): Filter {
         if (mFilter == null) mFilter = object : SocialFilter() {
-            @Suppress("UNCHECKED_CAST")
-            override fun convertResultToString(resultValue: Any): CharSequence = (resultValue as T).convertToString()
+            override fun convertResultToString(resultValue: Any): CharSequence =
+                @Suppress("UNCHECKED_CAST") (resultValue as T).convertToString()
         }
         return mFilter!!
     }
@@ -60,15 +60,21 @@ abstract class SocialAdapter<T>(
     }
 
     private abstract inner class SocialFilter : Filter() {
-        override fun performFiltering(constraint: CharSequence?): Filter.FilterResults = if (constraint != null) {
-            mItems.clear()
-            mTempItems.forEach { if (convertResultToString(it).toString().toLowerCase(US).contains(constraint.toString().toLowerCase(US))) mItems.add(it) }
-            val filterResults = Filter.FilterResults()
-            filterResults.values = mItems
-            filterResults.count = mItems.size
-            filterResults
-        } else {
-            Filter.FilterResults()
+        override fun performFiltering(constraint: CharSequence?): Filter.FilterResults = when {
+            constraint != null -> {
+                mItems.clear()
+                mTempItems.forEach {
+                    if (convertResultToString(it)
+                            .toString()
+                            .toLowerCase()
+                            .contains(constraint.toString().toLowerCase())) mItems.add(it)
+                }
+                val filterResults = Filter.FilterResults()
+                filterResults.values = mItems
+                filterResults.count = mItems.size
+                filterResults
+            }
+            else -> Filter.FilterResults()
         }
 
         override fun publishResults(constraint: CharSequence?, results: Filter.FilterResults) {

@@ -10,13 +10,12 @@ import com.hendraanggrian.socialview.SocialViewImpl
  * [android.widget.TextView] with hashtag, mention, and hyperlink support.
  *
  * @see SocialView
- * @see SocialViewImpl
  */
 class SocialTextView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = android.R.attr.textViewStyle,
-        impl: SocialViewImpl = SocialViewImpl()
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = android.R.attr.textViewStyle,
+    impl: SocialViewImpl = SocialViewImpl()
 ) : AppCompatTextView(context, attrs, defStyleAttr), SocialView by impl {
 
     init {

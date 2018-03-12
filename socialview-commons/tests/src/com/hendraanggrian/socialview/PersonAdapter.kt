@@ -8,7 +8,11 @@ import android.widget.TextView
 import com.hendraanggrian.socialview.commons.test.R
 import com.hendraanggrian.widget.SocialAdapter
 
-class PersonAdapter(context: Context) : SocialAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
+class PersonAdapter(context: Context) : SocialAdapter<Person>(
+    context,
+    R.layout.item_person,
+    R.id.textViewName
+) {
 
     override fun Person.convertToString(): String = name
 

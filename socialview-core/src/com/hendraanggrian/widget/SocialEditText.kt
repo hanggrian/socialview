@@ -10,13 +10,12 @@ import com.hendraanggrian.socialview.SocialViewImpl
  * [android.widget.EditText] with hashtag, mention, and hyperlink support.
  *
  * @see SocialView
- * @see SocialViewImpl
  */
 class SocialEditText @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = android.support.v7.appcompat.R.attr.editTextStyle,
-        impl: SocialViewImpl = SocialViewImpl()
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = android.support.v7.appcompat.R.attr.editTextStyle,
+    impl: SocialViewImpl = SocialViewImpl()
 ) : AppCompatEditText(context, attrs, defStyleAttr), SocialView by impl {
 
     init {

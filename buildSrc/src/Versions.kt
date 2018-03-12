@@ -4,8 +4,8 @@ const val buildTools = "27.0.3"
 
 const val kotlinVersion = "1.2.30"
 const val kotaVersion = "0.21"
-const val supportVersion = "27.0.1"
-const val picassoUtilsVersion = "0.3"
+const val supportVersion = "27.1.0"
+const val pikassoVersion = "0.1"
 
 const val runnerVersion = "1.0.1"
 const val espressoVersion = "3.0.1"

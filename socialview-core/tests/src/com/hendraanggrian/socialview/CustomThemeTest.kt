@@ -26,8 +26,9 @@ class CustomThemeTest : BaseTest() {
     @Throws(Exception::class)
     fun introduction() {
         onView(withId(R.id.editText)).perform(
-                typeText("This is a standard TextView with #hashtag, @mention, and http://some.url support."),
-                closeSoftKeyboard())
+            typeText("This is a standard TextView with #hashtag, @mention, " +
+                "and http://some.url support."),
+            closeSoftKeyboard())
         onView(withId(R.id.progressBar)).perform(delay())
     }
 }

@@ -23,5 +23,6 @@
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:textAppearance="?textAppearancePopupMenuHeader" />
+        android:textAppearance="?textAppearancePopupMenuHeader"
+        android:visibility="gone" />
 </LinearLayout>
