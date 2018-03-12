@@ -1,4 +1,5 @@
 import org.gradle.kotlin.dsl.kotlin
+import org.gradle.kotlin.dsl.withType
 import org.gradle.language.base.plugins.LifecycleBasePlugin.*
 import org.jetbrains.dokka.gradle.DokkaTask
 
@@ -41,9 +42,8 @@ android {
 val ktlint by configurations.creating
 
 dependencies {
-    compile(project(":socialview-core"))
     compile(kotlin("stdlib", kotlinVersion))
-    compile(hendraanggrian("picasso-utils", picassoUtilsVersion))
+    compile(support("appcompat-v7", supportVersion))
 
     testImplementation(junit())
     androidTestImplementation(hendraanggrian("kota", kotaVersion))
@@ -84,7 +84,7 @@ tasks {
 publish {
     userOrg = releaseUser
     groupId = releaseGroup
-    artifactId = "$releaseArtifact-commons"
+    artifactId = "$releaseArtifact-core"
     publishVersion = releaseVersion
     desc = releaseDesc
     website = releaseWeb

@@ -1,2 +1,0 @@
-include ':socialview', ':socialview-commons'
-include ':example'

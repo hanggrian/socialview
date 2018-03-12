@@ -1,9 +1,9 @@
 import org.gradle.kotlin.dsl.kotlin
 
 plugins {
-    id("com.android.application")
+    `android-application`
     kotlin("android")
-    id("kotlin-android-extensions")
+    kotlin("android.extensions")
 }
 
 android {
@@ -42,6 +42,7 @@ android {
 dependencies {
     implementation(project(":socialview-commons"))
     implementation(kotlin("stdlib", kotlinVersion))
-    implementation(hendraanggrian("kota", kotaVersion))
+    
     implementation(support("design", supportVersion))
+    implementation(hendraanggrian("kota", kotaVersion))
 }

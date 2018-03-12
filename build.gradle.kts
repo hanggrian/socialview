@@ -1,12 +1,16 @@
+import java.nio.file.Files.delete
+
 buildscript {
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.0.1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-        classpath("com.novoda:bintray-release:0.7.0")
+        classpath(android())
+        classpath(kotlin("gradle-plugin", kotlinVersion))
+        classpath(dokka())
+        classpath(gitPublish())
+        classpath(bintrayRelease())
     }
 }
 
@@ -15,16 +19,20 @@ allprojects {
         google()
         jcenter()
     }
-    tasks.withType(Javadoc::class.java).all {
+    tasks.withType<Javadoc> {
         isEnabled = false
     }
 }
 
-task<Delete>("clean") {
-    delete(rootProject.buildDir)
+tasks {
+    "clean"(Delete::class) {
+        delete(buildDir)
+    }
+    "wrapper"(Wrapper::class) {
+        gradleVersion = "4.4.1"
+    }
 }
 
-/** QUICK LINT CHECK BEFORE UPLOAD
-./gradlew socialview:bintrayUpload -PdryRun=false -PbintrayUser=hendraanggrian -PbintrayKey=
-./gradlew socialview-commons:bintrayUpload -PdryRun=false -PbintrayUser=hendraanggrian -PbintrayKey=
+/** bintray upload snippet
+./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PdryRun=false -PbintrayKey=
  */
