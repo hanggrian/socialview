@@ -2,8 +2,14 @@ package com.hendraanggrian.socialview
 
 /** A data class of mention to be used with [com.hendraanggrian.widget.MentionAdapter]. */
 data class Mention @JvmOverloads constructor(
+
+    /** Unique id of this mention. */
     val username: String,
+
+    /** Optional display name, located above username. */
     val displayname: String? = null,
+
+    /** Optional avatar, may be Drawable, resources, or string url pointing to image. */
     val avatar: Any? = null
 ) {
 

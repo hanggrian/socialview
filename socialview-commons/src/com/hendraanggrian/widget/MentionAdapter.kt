@@ -50,7 +50,7 @@ class MentionAdapter @JvmOverloads constructor(
                 is String -> picasso.load(mention.avatar)
                 is Uri -> picasso.load(mention.avatar)
                 is File -> picasso.load(mention.avatar)
-                else -> error("Unsupported avatar type. See Mention.kt for more.")
+                else -> error("Unsupported avatar type")
             }.error(defaultAvatar)
                 .circle()
                 .into(holder.avatarView.toProgressTarget(

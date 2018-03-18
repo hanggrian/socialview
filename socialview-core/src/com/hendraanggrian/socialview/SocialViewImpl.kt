@@ -286,8 +286,7 @@ class SocialViewImpl : SocialView {
         const val FLAG_MENTION: Int = 2
         const val FLAG_HYPERLINK: Int = 4
 
-        @Suppress("NOTHING_TO_INLINE")
-        inline fun Spannable.span(
+        fun Spannable.span(
             regex: Regex,
             vararg spans: (String) -> Any,
             flags: Int = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE

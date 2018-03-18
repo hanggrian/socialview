@@ -1,6 +1,6 @@
 const val releaseUser = "hendraanggrian"
-const val releaseGroup = "com.hendraanggrian"
+const val releaseGroup = "com.$releaseUser"
 const val releaseArtifact = "socialview"
 const val releaseVersion = "0.17"
 const val releaseDesc = "Android TextView and EditText with hashtag, mention, and hyperlink support"
-const val releaseWeb = "https://github.com/hendraanggrian/socialview"
+const val releaseWeb = "https://github.com/$releaseUser/$releaseArtifact"
