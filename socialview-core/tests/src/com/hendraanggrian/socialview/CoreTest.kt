@@ -10,9 +10,10 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
+import android.widget.Toast.LENGTH_SHORT
+import android.widget.Toast.makeText
 import com.hendraanggrian.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.test.R
-import kota.toast
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,9 +24,7 @@ class CoreTest : BaseTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    @Test
-    @Throws(Exception::class)
-    fun introduction() {
+    @Test fun introduction() {
         onView(withId(R.id.editText)).perform(
             typeText("This is a standard TextView with #hashtag, @mention, " +
                 "and http://some.url support."),
@@ -33,9 +32,7 @@ class CoreTest : BaseTest() {
         onView(withId(R.id.progressBar)).perform(delay())
     }
 
-    @Test
-    @Throws(Exception::class)
-    fun withoutMention() {
+    @Test fun withoutMention() {
         rule.activity.editText.isMentionEnabled = false
         onView(withId(R.id.editText)).perform(
             typeText("You can disable @mention to only have #hashtag."),
@@ -43,9 +40,7 @@ class CoreTest : BaseTest() {
         onView(withId(R.id.progressBar)).perform(delay())
     }
 
-    @Test
-    @Throws(Exception::class)
-    fun customColors() {
+    @Test fun customColors() {
         rule.activity.editText.setHashtagColor(RED)
         rule.activity.editText.setMentionColor(GREEN)
         rule.activity.editText.setHyperlinkColor(BLUE)
@@ -57,10 +52,10 @@ class CoreTest : BaseTest() {
         onView(withId(R.id.progressBar)).perform(delay())
     }
 
-    @Test
-    @Throws(Exception::class)
-    fun clickable() {
-        rule.activity.editText.setOnHashtagClickListener { _, s -> rule.activity.toast(s) }
+    @Test fun clickable() {
+        rule.activity.editText.setOnHashtagClickListener { _, s ->
+            makeText(rule.activity, s, LENGTH_SHORT).show()
+        }
         onView(withId(R.id.editText)).perform(
             typeText("Oh, they are also #clickable!"),
             closeSoftKeyboard())

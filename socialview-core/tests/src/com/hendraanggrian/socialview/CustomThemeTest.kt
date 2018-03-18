@@ -22,9 +22,7 @@ class CustomThemeTest : BaseTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(CustomThemeActivity::class.java)
 
-    @Test
-    @Throws(Exception::class)
-    fun introduction() {
+    @Test fun introduction() {
         onView(withId(R.id.editText)).perform(
             typeText("This is a standard TextView with #hashtag, @mention, " +
                 "and http://some.url support."),

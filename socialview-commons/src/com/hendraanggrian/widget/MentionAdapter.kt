@@ -34,12 +34,14 @@ class MentionAdapter @JvmOverloads constructor(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val holder: ViewHolder
         var _convertView = convertView
-        if (_convertView == null) {
-            _convertView = from(context).inflate(R.layout.socialview_layout_mention, parent, false)
-            holder = ViewHolder(_convertView!!)
-            _convertView.tag = holder
-        } else {
-            holder = _convertView.tag as ViewHolder
+        when (_convertView) {
+            null -> {
+                _convertView = from(context)
+                    .inflate(R.layout.socialview_layout_mention, parent, false)
+                holder = ViewHolder(_convertView!!)
+                _convertView.tag = holder
+            }
+            else -> holder = _convertView.tag as ViewHolder
         }
         getItem(position)?.let { mention ->
             when (mention.avatar) {
@@ -63,8 +65,8 @@ class MentionAdapter @JvmOverloads constructor(
     }
 
     private class ViewHolder(itemView: View) {
-        val avatarView = itemView.findViewById<ImageView>(R.id.socialview_mention_avatar)
-        val usernameView = itemView.findViewById<TextView>(R.id.socialview_mention_username)
-        val displaynameView = itemView.findViewById<TextView>(R.id.socialview_mention_displayname)
+        val avatarView: ImageView = itemView.findViewById(R.id.socialview_mention_avatar)
+        val usernameView: TextView = itemView.findViewById(R.id.socialview_mention_username)
+        val displaynameView: TextView = itemView.findViewById(R.id.socialview_mention_displayname)
     }
 }

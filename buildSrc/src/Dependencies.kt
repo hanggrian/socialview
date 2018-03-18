@@ -10,7 +10,10 @@ fun DependencyHandler.support(module: String, version: String, vararg suffixes: 
         suffixes.forEach { append(".$it") }
     }}:$module:$version"
 
-fun DependencyHandler.hendraanggrian(module: String, version: String) = "com.hendraanggrian:$module:$version"
+fun DependencyHandler.androidKtx() = "androidx.core:core-ktx:$androidKtxVersion"
+
+fun DependencyHandler.hendraanggrian(module: String, version: String) =
+    "com.hendraanggrian:$module:$version"
 
 fun DependencyHandler.junit() = "junit:junit:$junitVersion"
 

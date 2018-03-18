@@ -11,9 +11,10 @@ import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
+import android.widget.Toast.LENGTH_SHORT
+import android.widget.Toast.makeText
 import com.hendraanggrian.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.test.R
-import kota.toast
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
@@ -25,7 +26,9 @@ import org.junit.runners.MethodSorters.JVM
 @FixMethodOrder(JVM)
 class PatternTest : BaseTest() {
 
-    val names = StringBuilder()
+    @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
+
+    private val names = StringBuilder()
         .appendln("@HendraAnggrian")
         .appendln("@jeffersonlicet")
         .appendln("@sfucko")
@@ -48,11 +51,7 @@ class PatternTest : BaseTest() {
         .appendln("@Саша")
         .toString()
 
-    @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
-
-    @Test
-    @Throws(Exception::class)
-    fun default() {
+    @Test fun default() {
         onView(withId(R.id.editText)).perform(
             replaceText(names),
             toast("default"),
@@ -60,11 +59,11 @@ class PatternTest : BaseTest() {
         onView(withId(R.id.progressBar)).perform(delay())
     }
 
-    fun toast(text: CharSequence) = object : ViewAction {
+    private fun toast(text: CharSequence) = object : ViewAction {
         override fun getDescription() = "toast($text)"
         override fun getConstraints() = isDisplayed()
         override fun perform(uiController: UiController?, view: View) {
-            view.context.toast(text)
+            makeText(view.context, text, LENGTH_SHORT).show()
         }
     }
 }

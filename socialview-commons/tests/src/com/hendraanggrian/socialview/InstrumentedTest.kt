@@ -14,10 +14,10 @@ import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
+import androidx.view.isVisible
 import com.hendraanggrian.widget.HashtagAdapter
 import com.hendraanggrian.widget.MentionAdapter
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
-import kota.isVisible
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
@@ -31,9 +31,7 @@ class InstrumentedTest {
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    @Test
-    @Throws(Exception::class)
-    fun hashtag() {
+    @Test fun hashtag() {
         onView(ViewMatchers.withId(com.hendraanggrian.socialview.commons.test.R.id.textView))
             .perform(
                 object : ViewAction {
@@ -55,9 +53,7 @@ class InstrumentedTest {
                 delay())
     }
 
-    @Test
-    @Throws(Exception::class)
-    fun mention() {
+    @Test fun mention() {
         onView(ViewMatchers.withId(com.hendraanggrian.socialview.commons.test.R.id.textView))
             .perform(
                 object : ViewAction {
@@ -81,9 +77,7 @@ class InstrumentedTest {
                 delay())
     }
 
-    @Test
-    @Throws(Exception::class)
-    fun custom() {
+    @Test fun custom() {
         onView(ViewMatchers.withId(com.hendraanggrian.socialview.commons.test.R.id.textView))
             .perform(
                 object : ViewAction {
@@ -106,26 +100,24 @@ class InstrumentedTest {
                 delay())
     }
 
-    fun delay(): ViewAction {
-        return object : ViewAction {
-            override fun getConstraints() = isDisplayed()
-            override fun getDescription() = "delay for $DELAY_COUNTDOWN"
-            override fun perform(uiController: UiController, view: View) {
-                val progressBar = rule.activity.progressBar
-                object : CountDownTimer(DELAY_COUNTDOWN, 100) {
-                    override fun onTick(millisUntilFinished: Long) = when {
-                        SDK_INT >= 24 -> progressBar.setProgress(
-                            (progressBar.max * millisUntilFinished / DELAY_COUNTDOWN).toInt(), true)
-                        else -> progressBar.progress =
-                            (progressBar.max * millisUntilFinished / DELAY_COUNTDOWN).toInt()
-                    }
+    private fun delay(): ViewAction = object : ViewAction {
+        override fun getConstraints() = isDisplayed()
+        override fun getDescription() = "delay for $DELAY_COUNTDOWN"
+        override fun perform(uiController: UiController, view: View) {
+            val progressBar = rule.activity.progressBar
+            object : CountDownTimer(DELAY_COUNTDOWN, 100) {
+                override fun onTick(millisUntilFinished: Long) = when {
+                    SDK_INT >= 24 -> progressBar.setProgress(
+                        (progressBar.max * millisUntilFinished / DELAY_COUNTDOWN).toInt(), true)
+                    else -> progressBar.progress =
+                        (progressBar.max * millisUntilFinished / DELAY_COUNTDOWN).toInt()
+                }
 
-                    override fun onFinish() {
-                        progressBar.isVisible = false
-                    }
-                }.start()
-                uiController.loopMainThreadForAtLeast(DELAY_COUNTDOWN)
-            }
+                override fun onFinish() {
+                    progressBar.isVisible = false
+                }
+            }.start()
+            uiController.loopMainThreadForAtLeast(DELAY_COUNTDOWN)
         }
     }
 

@@ -27,9 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 
-import static kota.ActivitiesKt.inflateMenu;
-import static kota.LogsKt.debug;
-import static kota.resources.ResourcesKt.getInt;
+import static android.util.Log.d;
 
 public class MainActivity2 extends AppCompatActivity {
 
@@ -52,8 +50,8 @@ public class MainActivity2 extends AppCompatActivity {
         defaultHashtagAdapter = new HashtagAdapter(this);
         defaultHashtagAdapter.addAll(
                 new Hashtag(getString(R.string.hashtag1)),
-                new Hashtag(getString(R.string.hashtag2), getInt(this, R.integer.hashtag2)),
-                new Hashtag(getString(R.string.hashtag3), getInt(this, R.integer.hashtag3)));
+                new Hashtag(getString(R.string.hashtag2), getResources().getInteger(R.integer.hashtag2)),
+                new Hashtag(getString(R.string.hashtag3), getResources().getInteger(R.integer.hashtag3)));
 
         defaultMentionAdapter = new MentionAdapter(this);
         defaultMentionAdapter.addAll(
@@ -79,14 +77,14 @@ public class MainActivity2 extends AppCompatActivity {
         textView.setHashtagTextChangedListener(new Function2<SocialView, String, Unit>() {
             @Override
             public Unit invoke(SocialView socialView, String s) {
-                debug("hashtag", s);
+                d("hashtag", s);
                 return null;
             }
         });
         textView.setMentionTextChangedListener(new Function2<SocialView, String, Unit>() {
             @Override
             public Unit invoke(SocialView socialView, String s) {
-                debug("mention", s);
+                d("mention", s);
                 return null;
             }
         });
@@ -94,7 +92,7 @@ public class MainActivity2 extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        inflateMenu(this, R.menu.activity_main, menu);
+        getMenuInflater().inflate(R.menu.activity_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -115,7 +113,7 @@ public class MainActivity2 extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private static class Person {
+    static class Person {
         final String name;
 
         Person(String name) {
@@ -123,9 +121,9 @@ public class MainActivity2 extends AppCompatActivity {
         }
     }
 
-    private static class PersonAdapter extends SocialAdapter<Person> {
+    static class PersonAdapter extends SocialAdapter<Person> {
 
-        public PersonAdapter(Context context) {
+        PersonAdapter(Context context) {
             super(context, R.layout.item_person, R.id.textViewName);
         }
 

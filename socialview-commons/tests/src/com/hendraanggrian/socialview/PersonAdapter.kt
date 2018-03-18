@@ -19,12 +19,13 @@ class PersonAdapter(context: Context) : SocialAdapter<Person>(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var _convertView = convertView
         val holder: ViewHolder
-        if (_convertView == null) {
-            _convertView = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
-            holder = ViewHolder(_convertView!!)
-            _convertView.tag = holder
-        } else {
-            holder = _convertView.tag as ViewHolder
+        when (_convertView) {
+            null -> {
+                _convertView = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
+                holder = ViewHolder(_convertView!!)
+                _convertView.tag = holder
+            }
+            else -> holder = _convertView.tag as ViewHolder
         }
         getItem(position)?.let { person ->
             holder.textView.text = person.name

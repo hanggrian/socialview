@@ -42,7 +42,6 @@ android {
 dependencies {
     implementation(project(":socialview-commons"))
     implementation(kotlin("stdlib", kotlinVersion))
-    
     implementation(support("design", supportVersion))
-    implementation(hendraanggrian("kota", kotaVersion))
+    implementation(androidKtx())
 }

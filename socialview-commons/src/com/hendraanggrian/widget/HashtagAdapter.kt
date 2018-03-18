@@ -28,12 +28,14 @@ class HashtagAdapter @JvmOverloads constructor(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val holder: ViewHolder
         var _convertView = convertView
-        if (_convertView == null) {
-            _convertView = from(context).inflate(R.layout.socialview_layout_hashtag, parent, false)
-            holder = ViewHolder(_convertView!!)
-            _convertView.tag = holder
-        } else {
-            holder = _convertView.tag as ViewHolder
+        when (_convertView) {
+            null -> {
+                _convertView = from(context)
+                    .inflate(R.layout.socialview_layout_hashtag, parent, false)
+                holder = ViewHolder(_convertView!!)
+                _convertView.tag = holder
+            }
+            else -> holder = _convertView.tag as ViewHolder
         }
         getItem(position)?.let { hashtag ->
             holder.hashtagView.text = hashtag.hashtag
@@ -45,7 +47,7 @@ class HashtagAdapter @JvmOverloads constructor(
     }
 
     private class ViewHolder(itemView: View) {
-        val hashtagView = itemView.findViewById<TextView>(R.id.socialview_hashtag)
-        val countView = itemView.findViewById<TextView>(R.id.socialview_hashtag_count)
+        val hashtagView: TextView = itemView.findViewById(R.id.socialview_hashtag)
+        val countView: TextView = itemView.findViewById(R.id.socialview_hashtag_count)
     }
 }

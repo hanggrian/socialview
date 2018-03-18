@@ -3,6 +3,7 @@ package com.example.socialview
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -15,10 +16,6 @@ import com.hendraanggrian.socialview.Mention
 import com.hendraanggrian.widget.HashtagAdapter
 import com.hendraanggrian.widget.MentionAdapter
 import com.hendraanggrian.widget.SocialAdapter
-import kota.debug
-import kota.find
-import kota.inflateMenu
-import kota.resources.getInt
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -36,8 +33,8 @@ class MainActivity : AppCompatActivity() {
         defaultHashtagAdapter = HashtagAdapter(this)
         defaultHashtagAdapter.addAll(
             Hashtag(getString(R.string.hashtag1)),
-            Hashtag(getString(R.string.hashtag2), getInt(R.integer.hashtag2)),
-            Hashtag(getString(R.string.hashtag3), getInt(R.integer.hashtag3)))
+            Hashtag(getString(R.string.hashtag2), resources.getInteger(R.integer.hashtag2)),
+            Hashtag(getString(R.string.hashtag3), resources.getInteger(R.integer.hashtag3)))
 
         defaultMentionAdapter = MentionAdapter(this)
         defaultMentionAdapter.addAll(
@@ -60,12 +57,12 @@ class MainActivity : AppCompatActivity() {
         textView.threshold = 1
         textView.hashtagAdapter = defaultHashtagAdapter
         textView.mentionAdapter = defaultMentionAdapter
-        textView.setHashtagTextChangedListener { _, s -> debug("hashtag", s) }
-        textView.setMentionTextChangedListener { _, s -> debug("mention", s) }
+        textView.setHashtagTextChangedListener { _, s -> d("hashtag", s) }
+        textView.setMentionTextChangedListener { _, s -> d("mention", s) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        inflateMenu(R.menu.activity_main, menu)
+        menuInflater.inflate(R.menu.activity_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -94,12 +91,13 @@ class MainActivity : AppCompatActivity() {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val holder: ViewHolder
             var _convertView = convertView
-            if (_convertView == null) {
-                _convertView = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
-                holder = ViewHolder(_convertView!!)
-                _convertView.tag = holder
-            } else {
-                holder = _convertView.tag as ViewHolder
+            when (_convertView) {
+                null -> {
+                    _convertView = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
+                    holder = ViewHolder(_convertView!!)
+                    _convertView.tag = holder
+                }
+                else -> holder = _convertView.tag as ViewHolder
             }
             getItem(position)?.let { model ->
                 holder.textView.text = model.name
@@ -108,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         private class ViewHolder(view: View) {
-            val textView = view.find<TextView>(R.id.textViewName)
+            val textView: TextView = view.findViewById(R.id.textViewName)
         }
     }
 }

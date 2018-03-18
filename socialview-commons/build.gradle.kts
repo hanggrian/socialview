@@ -46,7 +46,7 @@ dependencies {
     compile(hendraanggrian("pikasso", pikassoVersion))
 
     testImplementation(junit())
-    androidTestImplementation(hendraanggrian("kota", kotaVersion))
+    androidTestImplementation(androidKtx())
     androidTestImplementation(support("design", supportVersion))
     androidTestImplementation(support("runner", runnerVersion, "test"))
     androidTestImplementation(support("espresso-core", espressoVersion, "test", "espresso"))

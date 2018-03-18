@@ -16,62 +16,62 @@ abstract class SocialAdapter<T>(
     textViewResourceId: Int
 ) : ArrayAdapter<T>(context, resource, textViewResourceId, ArrayList<T>()) {
 
-    private var mFilter: Filter? = null
-    private val mItems: MutableList<T> = ArrayList()
-    private val mTempItems: MutableList<T> = ArrayList()
-
     abstract fun T.convertToString(): String
 
+    private var _filter: Filter? = null
+    private val _items: MutableList<T> = ArrayList()
+    private val _tempItems: MutableList<T> = ArrayList()
+
     override fun getFilter(): Filter {
-        if (mFilter == null) mFilter = object : SocialFilter() {
-            override fun convertResultToString(resultValue: Any): CharSequence =
-                @Suppress("UNCHECKED_CAST") (resultValue as T).convertToString()
-        }
-        return mFilter!!
+        if (_filter == null) _filter = SocialFilter()
+        return _filter!!
     }
 
     override fun add(item: T?) = add(item, true)
 
     override fun addAll(collection: Collection<T>) {
         super.addAll(collection)
-        mTempItems.addAll(collection)
+        _tempItems.addAll(collection)
     }
 
     override fun addAll(vararg items: T) {
         super.addAll(*items)
-        addAll(mTempItems, *items)
+        addAll(_tempItems, *items)
     }
 
     override fun remove(item: T?) {
         super.remove(item)
-        mTempItems.remove(item)
+        _tempItems.remove(item)
     }
 
     override fun clear() = clear(true)
 
     private fun add(item: T?, affectTempItems: Boolean) {
         super.add(item)
-        if (affectTempItems) mTempItems.add(item!!)
+        if (affectTempItems) _tempItems.add(item!!)
     }
 
     private fun clear(affectTempItems: Boolean) {
         super.clear()
-        if (affectTempItems) mTempItems.clear()
+        if (affectTempItems) _tempItems.clear()
     }
 
-    private abstract inner class SocialFilter : Filter() {
+    private inner class SocialFilter : Filter() {
+
         override fun performFiltering(constraint: CharSequence?): Filter.FilterResults = when {
             constraint != null -> {
-                mItems.clear()
-                mTempItems.forEach {
-                    if (convertResultToString(it)
+                _items.clear()
+                _tempItems
+                    .filter {
+                        convertResultToString(it)
                             .toString()
                             .toLowerCase()
-                            .contains(constraint.toString().toLowerCase())) mItems.add(it)
-                }
+                            .contains(constraint.toString().toLowerCase())
+                    }
+                    .forEach { _items.add(it) }
                 val filterResults = Filter.FilterResults()
-                filterResults.values = mItems
-                filterResults.count = mItems.size
+                filterResults.values = _items
+                filterResults.count = _items.size
                 filterResults
             }
             else -> Filter.FilterResults()
@@ -88,5 +88,8 @@ abstract class SocialAdapter<T>(
                 }
             }
         }
+
+        override fun convertResultToString(resultValue: Any?): CharSequence =
+            @Suppress("UNCHECKED_CAST") (resultValue as T).convertToString()
     }
 }

@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.ProgressBar
 import com.hendraanggrian.socialview.test.R
 import com.hendraanggrian.widget.SocialEditText
-import kota.find
 
 open class InstrumentedActivity : AppCompatActivity() {
 
@@ -15,8 +14,8 @@ open class InstrumentedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_instrumented)
-        setSupportActionBar(find(R.id.toolbar))
-        progressBar = find(R.id.progressBar)
-        editText = find(R.id.editText)
+        setSupportActionBar(findViewById(R.id.toolbar))
+        progressBar = findViewById(R.id.progressBar)
+        editText = findViewById(R.id.editText)
     }
 }

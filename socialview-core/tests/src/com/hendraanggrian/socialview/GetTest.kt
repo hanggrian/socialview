@@ -28,9 +28,7 @@ class GetTest : BaseTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    @Test
-    @Throws(Exception::class)
-    fun getHashtags() {
+    @Test fun getHashtags() {
         onView(withId(R.id.editText)).perform(
             typeText("Hi there #eitantest"),
             closeSoftKeyboard(),
@@ -46,9 +44,7 @@ class GetTest : BaseTest() {
             })
     }
 
-    @Test
-    @Throws(Exception::class)
-    fun getMentions() {
+    @Test fun getMentions() {
         onView(withId(R.id.editText)).perform(
             typeText("Hi there @eitantest"),
             closeSoftKeyboard(),
@@ -64,9 +60,7 @@ class GetTest : BaseTest() {
             })
     }
 
-    @Test
-    @Throws(Exception::class)
-    fun getHyperlinks() {
+    @Test fun getHyperlinks() {
         onView(withId(R.id.editText)).perform(
             typeText("Check out https://my.website.com"),
             closeSoftKeyboard(),

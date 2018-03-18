@@ -18,7 +18,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven("https://dl.bintray.com/hendraanggrian/maven") // remove when pikasso is approved
     }
     tasks.withType<Javadoc> {
         isEnabled = false
