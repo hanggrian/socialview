@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion(targetSdk)
-    buildToolsVersion(buildTools)
+    compileSdkVersion(SDK_TARGET)
+    buildToolsVersion(VERSION_BUILD_TOOLS)
     defaultConfig {
-        minSdkVersion(minSdk)
-        targetSdkVersion(targetSdk)
+        minSdkVersion(SDK_MIN)
+        targetSdkVersion(SDK_TARGET)
         applicationId = "com.example.socialview"
         versionCode = 1
         versionName = "1.0"
@@ -41,7 +41,7 @@ android {
 
 dependencies {
     implementation(project(":socialview-commons"))
-    implementation(kotlin("stdlib", kotlinVersion))
-    implementation(support("design", supportVersion))
+    implementation(kotlin("stdlib", VERSION_KOTLIN))
+    implementation(support("design", VERSION_SUPPORT))
     implementation(androidKtx())
 }

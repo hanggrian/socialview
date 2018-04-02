@@ -174,34 +174,6 @@ class SocialViewImpl : SocialView {
             colorize()
         }
 
-    override fun colorize() {
-        val spannable = _view.text
-        check(spannable is Spannable, {
-            "Attached text is not a Spannable," +
-                "add TextView.BufferType.SPANNABLE when setting text to this TextView."
-        })
-        spannable as Spannable
-        spannable.getSpans(0, spannable.length, CharacterStyle::class.java).forEach {
-            spannable.removeSpan(it)
-        }
-        if (isHashtagEnabled) spannable.span(REGEX_HASHTAG, { s ->
-            _hashtagListener?.newClickableSpan(s, _hashtagColor)
-                ?: ForegroundColorSpan(_hashtagColor.defaultColor)
-        })
-        if (isMentionEnabled) spannable.span(REGEX_MENTION, { s ->
-            _mentionListener?.newClickableSpan(s, _mentionColor)
-                ?: ForegroundColorSpan(_mentionColor.defaultColor)
-        })
-        if (isHyperlinkEnabled) spannable.span(REGEX_HYPERLINK, { s ->
-            _hyperlinkListener?.newClickableSpan(s, _hyperlinkColor, true) ?: object : URLSpan(s) {
-                override fun updateDrawState(ds: TextPaint) {
-                    ds.color = _hyperlinkColor.defaultColor
-                    ds.isUnderlineText = true
-                }
-            }
-        })
-    }
-
     override fun setOnHashtagClickListener(listener: ((view: SocialView, String) -> Unit)?) {
         _view.setLinkMovementMethodIfNotAlready()
         _hashtagListener = listener
@@ -229,13 +201,42 @@ class SocialViewImpl : SocialView {
     }
 
     override val hashtags: List<String>
-        get() = if (!isHashtagEnabled) emptyList() else REGEX_HASHTAG.newList
+        get() = if (!isHashtagEnabled) emptyList() else REGEX_HASHTAG.extract()
 
     override val mentions: List<String>
-        get() = if (!isMentionEnabled) emptyList() else REGEX_MENTION.newList
+        get() = if (!isMentionEnabled) emptyList() else REGEX_MENTION.extract()
 
     override val hyperlinks: List<String>
-        get() = if (!isHyperlinkEnabled) emptyList() else REGEX_HYPERLINK.newList
+        get() = if (!isHyperlinkEnabled) emptyList() else REGEX_HYPERLINK.extract()
+
+    /** Internal function to span text based on current configuration. */
+    private fun colorize() {
+        val spannable = _view.text
+        check(spannable is Spannable, {
+            "Attached text is not a Spannable," +
+                "add TextView.BufferType.SPANNABLE when setting text to this TextView."
+        })
+        spannable as Spannable
+        spannable.getSpans(0, spannable.length, CharacterStyle::class.java).forEach {
+            spannable.removeSpan(it)
+        }
+        if (isHashtagEnabled) spannable.span(REGEX_HASHTAG, { s ->
+            _hashtagListener?.newClickableSpan(s, _hashtagColor)
+                ?: ForegroundColorSpan(_hashtagColor.defaultColor)
+        })
+        if (isMentionEnabled) spannable.span(REGEX_MENTION, { s ->
+            _mentionListener?.newClickableSpan(s, _mentionColor)
+                ?: ForegroundColorSpan(_mentionColor.defaultColor)
+        })
+        if (isHyperlinkEnabled) spannable.span(REGEX_HYPERLINK, { s ->
+            _hyperlinkListener?.newClickableSpan(s, _hyperlinkColor, true) ?: object : URLSpan(s) {
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = _hyperlinkColor.defaultColor
+                    ds.isUnderlineText = true
+                }
+            }
+        })
+    }
 
     private fun indexOfNextNonLetterDigit(
         text: CharSequence,
@@ -270,21 +271,20 @@ class SocialViewImpl : SocialView {
         }
     }
 
-    private val Regex.newList: List<String>
-        get() {
-            val list = ArrayList<String>()
-            val matcher = toPattern().matcher(_view.text)
-            while (matcher.find()) list.add(matcher.group(when {
-                this !== REGEX_HYPERLINK -> 1 /* remove hashtag and mention symbol */
-                else -> 0
-            }))
-            return list
-        }
+    private fun Regex.extract(): List<String> {
+        val list = mutableListOf<String>()
+        val matcher = toPattern().matcher(_view.text)
+        while (matcher.find()) list += matcher.group(when {
+            this !== REGEX_HYPERLINK -> 1 /* remove hashtag and mention symbol */
+            else -> 0
+        })
+        return list
+    }
 
     private companion object {
-        const val FLAG_HASHTAG: Int = 1
-        const val FLAG_MENTION: Int = 2
-        const val FLAG_HYPERLINK: Int = 4
+        const val FLAG_HASHTAG = 1
+        const val FLAG_MENTION = 2
+        const val FLAG_HYPERLINK = 4
 
         fun Spannable.span(
             regex: Regex,

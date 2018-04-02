@@ -10,12 +10,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(targetSdk)
-    buildToolsVersion(buildTools)
+    compileSdkVersion(SDK_TARGET)
+    buildToolsVersion(VERSION_BUILD_TOOLS)
     defaultConfig {
-        minSdkVersion(minSdk)
-        targetSdkVersion(targetSdk)
-        versionName = releaseVersion
+        minSdkVersion(SDK_MIN)
+        targetSdkVersion(SDK_TARGET)
+        versionName = RELEASE_VERSION
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
@@ -42,14 +42,14 @@ val ktlint by configurations.creating
 
 dependencies {
     compile(project(":socialview-core"))
-    compile(kotlin("stdlib", kotlinVersion))
-    compile(hendraanggrian("pikasso", pikassoVersion))
+    compile(kotlin("stdlib", VERSION_KOTLIN))
+    compile(hendraanggrian("pikasso", VERSION_PIKASSO))
 
     testImplementation(junit())
     androidTestImplementation(androidKtx())
-    androidTestImplementation(support("design", supportVersion))
-    androidTestImplementation(support("runner", runnerVersion, "test"))
-    androidTestImplementation(support("espresso-core", espressoVersion, "test", "espresso"))
+    androidTestImplementation(support("design", VERSION_SUPPORT))
+    androidTestImplementation(support("runner", VERSION_RUNNER, "test"))
+    androidTestImplementation(support("espresso-core", VERSION_ESPRESSO, "test", "espresso"))
 
     ktlint(ktlint())
 }
@@ -82,10 +82,10 @@ tasks {
 }
 
 publish {
-    userOrg = releaseUser
-    groupId = releaseGroup
-    artifactId = "$releaseArtifact-commons"
-    publishVersion = releaseVersion
-    desc = releaseDesc
-    website = releaseWeb
+    userOrg = RELEASE_USER
+    groupId = RELEASE_GROUP
+    artifactId = "$RELEASE_ARTIFACT-commons"
+    publishVersion = RELEASE_VERSION
+    desc = RELEASE_DESC
+    website = RELEASE_WEBSITE
 }

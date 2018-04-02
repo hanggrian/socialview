@@ -5,7 +5,7 @@ plugins {
 }
 
 gitPublish {
-    repoUri = releaseWeb
+    repoUri = RELEASE_WEBSITE
     branch = "gh-pages"
     contents.from(
         "pages",

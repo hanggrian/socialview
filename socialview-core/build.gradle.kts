@@ -11,12 +11,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(targetSdk)
-    buildToolsVersion(buildTools)
+    compileSdkVersion(SDK_TARGET)
+    buildToolsVersion(VERSION_BUILD_TOOLS)
     defaultConfig {
-        minSdkVersion(minSdk)
-        targetSdkVersion(targetSdk)
-        versionName = releaseVersion
+        minSdkVersion(SDK_MIN)
+        targetSdkVersion(SDK_TARGET)
+        versionName = RELEASE_VERSION
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
@@ -42,14 +42,14 @@ android {
 val ktlint by configurations.creating
 
 dependencies {
-    compile(kotlin("stdlib", kotlinVersion))
-    compile(support("appcompat-v7", supportVersion))
+    compile(kotlin("stdlib", VERSION_KOTLIN))
+    compile(support("appcompat-v7", VERSION_SUPPORT))
 
     testImplementation(junit())
     androidTestImplementation(androidKtx())
-    androidTestImplementation(support("design", supportVersion))
-    androidTestImplementation(support("runner", runnerVersion, "test"))
-    androidTestImplementation(support("espresso-core", espressoVersion, "test", "espresso"))
+    androidTestImplementation(support("design", VERSION_SUPPORT))
+    androidTestImplementation(support("runner", VERSION_RUNNER, "test"))
+    androidTestImplementation(support("espresso-core", VERSION_ESPRESSO, "test", "espresso"))
 
     ktlint(ktlint())
 }
@@ -82,10 +82,10 @@ tasks {
 }
 
 publish {
-    userOrg = releaseUser
-    groupId = releaseGroup
-    artifactId = "$releaseArtifact-core"
-    publishVersion = releaseVersion
-    desc = releaseDesc
-    website = releaseWeb
+    userOrg = RELEASE_USER
+    groupId = RELEASE_GROUP
+    artifactId = "$RELEASE_ARTIFACT-core"
+    publishVersion = RELEASE_VERSION
+    desc = RELEASE_DESC
+    website = RELEASE_WEBSITE
 }

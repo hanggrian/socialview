@@ -62,9 +62,6 @@ interface SocialView {
     /** Register a text watcher to be invoked when mention is modified. */
     fun setMentionTextChangedListener(watcher: ((view: SocialView, String) -> Unit)?)
 
-    /** Internal function to span text based on current configuration. */
-    fun colorize()
-
     /** Obtain all hashtags in current text. */
     val hashtags: List<String>
 
