@@ -16,8 +16,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.hendraanggrian:socialview-core:0.17'
-    compile 'com.hendraanggrian:socialview-commons:0.17' // optional
+    compile 'com.hendraanggrian:socialview-core:0.18'
+    compile 'com.hendraanggrian:socialview-commons:0.18' // optional
 }
 ```
 
