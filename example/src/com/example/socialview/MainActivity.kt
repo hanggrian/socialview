@@ -11,9 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.hendraanggrian.socialview.Hashtag
-import com.hendraanggrian.socialview.Mention
+import com.hendraanggrian.widget.Hashtag
 import com.hendraanggrian.widget.HashtagAdapter
+import com.hendraanggrian.widget.Mention
 import com.hendraanggrian.widget.MentionAdapter
 import com.hendraanggrian.widget.SocialAdapter
 import kotlinx.android.synthetic.main.activity_main.*

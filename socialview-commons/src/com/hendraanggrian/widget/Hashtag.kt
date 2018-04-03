@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview
+package com.hendraanggrian.widget
 
 /** A data class of hashtag to be used with [com.hendraanggrian.widget.HashtagAdapter]. */
 data class Hashtag @JvmOverloads constructor(

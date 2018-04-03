@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview
+package com.hendraanggrian.widget
 
 /** A data class of mention to be used with [com.hendraanggrian.widget.MentionAdapter]. */
 data class Mention @JvmOverloads constructor(

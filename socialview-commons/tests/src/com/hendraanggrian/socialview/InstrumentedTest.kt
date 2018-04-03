@@ -1,5 +1,6 @@
 package com.hendraanggrian.socialview
 
+import android.R
 import android.os.Build.VERSION.SDK_INT
 import android.os.CountDownTimer
 import android.support.test.espresso.Espresso.onView
@@ -15,7 +16,9 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import androidx.view.isVisible
+import com.hendraanggrian.widget.Hashtag
 import com.hendraanggrian.widget.HashtagAdapter
+import com.hendraanggrian.widget.Mention
 import com.hendraanggrian.widget.MentionAdapter
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
 import org.junit.FixMethodOrder
@@ -65,7 +68,7 @@ class InstrumentedTest {
                         val adapter = MentionAdapter(view.context)
                         adapter.addAll(
                             Mention("dirtyhobo"),
-                            Mention("hobo", "Regular Hobo", android.R.drawable.ic_input_add),
+                            Mention("hobo", "Regular Hobo", R.drawable.ic_input_add),
                             Mention("hendraanggrian", "Hendra Anggrian",
                                 "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"))
                         (view as SocialAutoCompleteTextView).mentionAdapter = adapter

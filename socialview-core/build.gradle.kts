@@ -35,15 +35,15 @@ android {
         }
     }
     libraryVariants.all {
-        generateBuildConfig.enabled = false
+        generateBuildConfig?.enabled = false
     }
 }
 
 val ktlint by configurations.creating
 
 dependencies {
-    compile(kotlin("stdlib", VERSION_KOTLIN))
-    compile(support("appcompat-v7", VERSION_SUPPORT))
+    api(kotlin("stdlib", VERSION_KOTLIN))
+    implementation(support("appcompat-v7", VERSION_SUPPORT))
 
     testImplementation(junit())
     androidTestImplementation(androidKtx())

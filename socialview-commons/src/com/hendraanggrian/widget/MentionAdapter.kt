@@ -11,7 +11,6 @@ import android.widget.TextView
 import com.hendraanggrian.pikasso.circle
 import com.hendraanggrian.pikasso.picasso
 import com.hendraanggrian.pikasso.toProgressTarget
-import com.hendraanggrian.socialview.Mention
 import com.hendraanggrian.socialview.commons.R
 import java.io.File
 

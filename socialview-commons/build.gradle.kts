@@ -34,16 +34,17 @@ android {
         }
     }
     libraryVariants.all {
-        generateBuildConfig.enabled = false
+        generateBuildConfig?.enabled = false
     }
 }
 
 val ktlint by configurations.creating
 
 dependencies {
-    compile(project(":socialview-core"))
-    compile(kotlin("stdlib", VERSION_KOTLIN))
-    compile(hendraanggrian("pikasso", VERSION_PIKASSO))
+    api(project(":socialview-core"))
+    api(kotlin("stdlib", VERSION_KOTLIN))
+    implementation(support("appcompat-v7", VERSION_SUPPORT))
+    implementation(hendraanggrian("pikasso", VERSION_PIKASSO))
 
     testImplementation(junit())
     androidTestImplementation(androidKtx())

@@ -10,8 +10,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.widget.ArrayAdapter
 import android.widget.MultiAutoCompleteTextView
-import com.hendraanggrian.socialview.SocialView
-import com.hendraanggrian.socialview.SocialViewImpl
+import com.hendraanggrian.widget.internal.SocialViewImpl
 
 /**
  * [android.widget.MultiAutoCompleteTextView] with hashtag, mention, and hyperlink support.
@@ -21,11 +20,11 @@ import com.hendraanggrian.socialview.SocialViewImpl
 class SocialAutoCompleteTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = android.support.v7.appcompat.R.attr.autoCompleteTextViewStyle,
-    private val impl: SocialViewImpl = SocialViewImpl()
-) : AppCompatMultiAutoCompleteTextView(context, attrs, defStyleAttr), SocialView by impl {
+    defStyleAttr: Int = android.support.v7.appcompat.R.attr.autoCompleteTextViewStyle
+) : AppCompatMultiAutoCompleteTextView(context, attrs, defStyleAttr),
+    SocialView<MultiAutoCompleteTextView> by SocialViewImpl() {
 
-    private val mTextWatcher: TextWatcher = object : TextWatcher {
+    private val textWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun afterTextChanged(editable: Editable?) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -35,7 +34,7 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
             }
         }
     }
-    private val mEnabledSymbols: CharArray
+    private val enabledSymbols: CharArray
         get() = ArrayList<Char>().apply {
             if (isHashtagEnabled) add('#')
             if (isMentionEnabled) add('@')
@@ -45,31 +44,12 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
     var mentionAdapter: ArrayAdapter<*>? = null
 
     init {
-        impl.init(this, attrs)
-        addTextChangedListener(mTextWatcher)
-        setTokenizer(SymbolsTokenizer(mEnabledSymbols))
+        initialize(this, attrs)
+        addTextChangedListener(textWatcher)
+        setTokenizer(SymbolsTokenizer(enabledSymbols))
     }
 
-    override var isHashtagEnabled: Boolean
-        get() = impl.isHashtagEnabled
-        set(value) {
-            impl.isHashtagEnabled = value
-            setTokenizer(SymbolsTokenizer(mEnabledSymbols))
-        }
-
-    override var isMentionEnabled: Boolean
-        get() = impl.isMentionEnabled
-        set(value) {
-            impl.isMentionEnabled = value
-            setTokenizer(SymbolsTokenizer(mEnabledSymbols))
-        }
-
-    override var isHyperlinkEnabled: Boolean
-        get() = impl.isHyperlinkEnabled
-        set(value) {
-            impl.isHyperlinkEnabled = value
-            setTokenizer(SymbolsTokenizer(mEnabledSymbols))
-        }
+    override fun onFlagsChanged() = setTokenizer(SymbolsTokenizer(enabledSymbols))
 
     /**
      * While [MultiAutoCompleteTextView.CommaTokenizer] tracks only comma symbol,

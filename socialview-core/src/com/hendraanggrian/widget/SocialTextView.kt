@@ -3,8 +3,8 @@ package com.hendraanggrian.widget
 import android.content.Context
 import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
-import com.hendraanggrian.socialview.SocialView
-import com.hendraanggrian.socialview.SocialViewImpl
+import android.widget.TextView
+import com.hendraanggrian.widget.internal.SocialViewImpl
 
 /**
  * [android.widget.TextView] with hashtag, mention, and hyperlink support.
@@ -14,11 +14,10 @@ import com.hendraanggrian.socialview.SocialViewImpl
 class SocialTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = android.R.attr.textViewStyle,
-    impl: SocialViewImpl = SocialViewImpl()
-) : AppCompatTextView(context, attrs, defStyleAttr), SocialView by impl {
+    defStyleAttr: Int = android.R.attr.textViewStyle
+) : AppCompatTextView(context, attrs, defStyleAttr), SocialView<TextView> by SocialViewImpl() {
 
     init {
-        impl.init(this, attrs)
+        initialize(this, attrs)
     }
 }

@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview
+package com.hendraanggrian.widget.internal
 
 import android.content.res.ColorStateList
 import android.text.Editable
@@ -16,40 +16,43 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
 import android.widget.TextView.BufferType.SPANNABLE
-import com.hendraanggrian.socialview.SocialView.Companion.REGEX_HASHTAG
-import com.hendraanggrian.socialview.SocialView.Companion.REGEX_HYPERLINK
-import com.hendraanggrian.socialview.SocialView.Companion.REGEX_MENTION
+import com.hendraanggrian.socialview.R
+import com.hendraanggrian.widget.SocialView
+import com.hendraanggrian.widget.SocialView.Companion.REGEX_HASHTAG
+import com.hendraanggrian.widget.SocialView.Companion.REGEX_HYPERLINK
+import com.hendraanggrian.widget.SocialView.Companion.REGEX_MENTION
+import java.lang.Character.isLetterOrDigit
 
 /**
  * Implementation of [SocialView] that is delegated to all socialview's widgets.
  *
  * @see SocialView
  */
-class SocialViewImpl : SocialView {
+class SocialViewImpl<T : TextView> : SocialView<T> {
 
-    private val _textWatcher: TextWatcher = object : TextWatcher {
+    private val textWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             if (count > 0 && start > 0) when (s[start - 1]) {
                 '#' -> {
-                    _hashtagEditing = true
-                    _mentionEditing = false
+                    hashtagEditing = true
+                    mentionEditing = false
                 }
                 '@' -> {
-                    _hashtagEditing = false
-                    _mentionEditing = true
+                    hashtagEditing = false
+                    mentionEditing = true
                 }
                 else -> when {
-                    !Character.isLetterOrDigit(s[start - 1]) -> {
-                        _hashtagEditing = false
-                        _mentionEditing = false
+                    !isLetterOrDigit(s[start - 1]) -> {
+                        hashtagEditing = false
+                        mentionEditing = false
                     }
-                    _hashtagWatcher != null && _hashtagEditing ->
-                        _hashtagWatcher!!(
-                            this@SocialViewImpl,
+                    hashtagWatcher != null && hashtagEditing ->
+                        hashtagWatcher!!(
+                            view,
                             s.substring(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start))
-                    _mentionWatcher != null && _mentionEditing ->
-                        _mentionWatcher!!(
-                            this@SocialViewImpl,
+                    mentionWatcher != null && mentionEditing ->
+                        mentionWatcher!!(
+                            view,
                             s.substring(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start))
                 }
             }
@@ -63,26 +66,26 @@ class SocialViewImpl : SocialView {
                 if (start + count - 1 < 0) return
                 when (s[start + count - 1]) {
                     '#' -> {
-                        _hashtagEditing = true
-                        _mentionEditing = false
+                        hashtagEditing = true
+                        mentionEditing = false
                     }
                     '@' -> {
-                        _hashtagEditing = false
-                        _mentionEditing = true
+                        hashtagEditing = false
+                        mentionEditing = true
                     }
                     else -> when {
-                        !Character.isLetterOrDigit(s[start]) -> {
-                            _hashtagEditing = false
-                            _mentionEditing = false
+                        !isLetterOrDigit(s[start]) -> {
+                            hashtagEditing = false
+                            mentionEditing = false
                         }
-                        _hashtagWatcher != null && _hashtagEditing ->
-                            _hashtagWatcher!!(
-                                this@SocialViewImpl,
+                        hashtagWatcher != null && hashtagEditing ->
+                            hashtagWatcher!!(
+                                view,
                                 s.substring(
                                     indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count))
-                        _mentionWatcher != null && _mentionEditing ->
-                            _mentionWatcher!!(
-                                this@SocialViewImpl,
+                        mentionWatcher != null && mentionEditing ->
+                            mentionWatcher!!(
+                                view,
                                 s.substring(
                                     indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count))
                     }
@@ -93,28 +96,26 @@ class SocialViewImpl : SocialView {
         override fun afterTextChanged(s: Editable?) {}
     }
 
-    private lateinit var _view: TextView
-    private var _flags: Int = 0
+    private lateinit var view: T
+    private var flags = 0
     private lateinit var _hashtagColor: ColorStateList
     private lateinit var _mentionColor: ColorStateList
     private lateinit var _hyperlinkColor: ColorStateList
+    private var hashtagListener: ((T, String) -> Unit)? = null
+    private var mentionListener: ((T, String) -> Unit)? = null
+    private var hyperlinkListener: ((T, String) -> Unit)? = null
+    private var hashtagWatcher: ((T, String) -> Unit)? = null
+    private var mentionWatcher: ((T, String) -> Unit)? = null
+    private var hashtagEditing: Boolean = false
+    private var mentionEditing: Boolean = false
 
-    private var _hashtagListener: ((SocialView, String) -> Unit)? = null
-    private var _mentionListener: ((SocialView, String) -> Unit)? = null
-    private var _hyperlinkListener: ((SocialView, String) -> Unit)? = null
-    private var _hashtagWatcher: ((SocialView, String) -> Unit)? = null
-    private var _mentionWatcher: ((SocialView, String) -> Unit)? = null
-    private var _hashtagEditing: Boolean = false
-    private var _mentionEditing: Boolean = false
-
-    /** A constructor replacement, since `this` ([TextView]) cannot be referenced in constructor. */
-    fun init(v: TextView, attrs: AttributeSet?) {
-        _view = v
-        _view.addTextChangedListener(_textWatcher)
-        _view.setText(_view.text, SPANNABLE)
-        val a = _view.context.obtainStyledAttributes(attrs, R.styleable.SocialView,
+    override fun initialize(view: T, attrs: AttributeSet?) {
+        this.view = view
+        this.view.addTextChangedListener(textWatcher)
+        this.view.setText(this.view.text, SPANNABLE)
+        val a = this.view.context.obtainStyledAttributes(attrs, R.styleable.SocialView,
             R.attr.socialViewStyle, R.style.Widget_SocialView)
-        _flags = a.getInteger(R.styleable.SocialView_socialFlags,
+        flags = a.getInteger(R.styleable.SocialView_socialFlags,
             FLAG_HASHTAG or FLAG_MENTION or FLAG_HYPERLINK)
         _hashtagColor = a.getColorStateList(R.styleable.SocialView_hashtagColor)
         _mentionColor = a.getColorStateList(R.styleable.SocialView_mentionColor)
@@ -124,33 +125,42 @@ class SocialViewImpl : SocialView {
     }
 
     override var isHashtagEnabled: Boolean
-        get() = _flags or FLAG_HASHTAG == _flags
-        set(enabled) {
-            _flags = when {
-                enabled -> _flags or FLAG_HASHTAG
-                else -> _flags and FLAG_HASHTAG.inv()
+        get() = flags or FLAG_HASHTAG == flags
+        set(value) {
+            if (value != isHashtagEnabled) {
+                flags = when {
+                    value -> flags or FLAG_HASHTAG
+                    else -> flags and FLAG_HASHTAG.inv()
+                }
+                colorize()
+                onFlagsChanged()
             }
-            colorize()
         }
 
     override var isMentionEnabled: Boolean
-        get() = _flags or FLAG_MENTION == _flags
-        set(enabled) {
-            _flags = when {
-                enabled -> _flags or FLAG_MENTION
-                else -> _flags and FLAG_MENTION.inv()
+        get() = flags or FLAG_MENTION == flags
+        set(value) {
+            if (value != isMentionEnabled) {
+                flags = when {
+                    value -> flags or FLAG_MENTION
+                    else -> flags and FLAG_MENTION.inv()
+                }
+                colorize()
+                onFlagsChanged()
             }
-            colorize()
         }
 
     override var isHyperlinkEnabled: Boolean
-        get() = _flags or FLAG_HYPERLINK == _flags
-        set(enabled) {
-            _flags = when {
-                enabled -> _flags or FLAG_HYPERLINK
-                else -> _flags and FLAG_HYPERLINK.inv()
+        get() = flags or FLAG_HYPERLINK == flags
+        set(value) {
+            if (value != isHyperlinkEnabled) {
+                flags = when {
+                    value -> flags or FLAG_HYPERLINK
+                    else -> flags and FLAG_HYPERLINK.inv()
+                }
+                colorize()
+                onFlagsChanged()
             }
-            colorize()
         }
 
     override var hashtagColor: ColorStateList
@@ -174,30 +184,30 @@ class SocialViewImpl : SocialView {
             colorize()
         }
 
-    override fun setOnHashtagClickListener(listener: ((view: SocialView, String) -> Unit)?) {
-        _view.setLinkMovementMethodIfNotAlready()
-        _hashtagListener = listener
+    override fun setOnHashtagClickListener(listener: ((view: T, String) -> Unit)?) {
+        view.setLinkMovementMethodIfNotAlready()
+        hashtagListener = listener
         colorize()
     }
 
-    override fun setOnMentionClickListener(listener: ((view: SocialView, String) -> Unit)?) {
-        _view.setLinkMovementMethodIfNotAlready()
-        _mentionListener = listener
+    override fun setOnMentionClickListener(listener: ((view: T, String) -> Unit)?) {
+        view.setLinkMovementMethodIfNotAlready()
+        mentionListener = listener
         colorize()
     }
 
-    override fun setOnHyperlinkClickListener(listener: ((view: SocialView, String) -> Unit)?) {
-        _view.setLinkMovementMethodIfNotAlready()
-        _hyperlinkListener = listener
+    override fun setOnHyperlinkClickListener(listener: ((view: T, String) -> Unit)?) {
+        view.setLinkMovementMethodIfNotAlready()
+        hyperlinkListener = listener
         colorize()
     }
 
-    override fun setHashtagTextChangedListener(watcher: ((view: SocialView, String) -> Unit)?) {
-        _hashtagWatcher = watcher
+    override fun setHashtagTextChangedListener(watcher: ((view: T, String) -> Unit)?) {
+        hashtagWatcher = watcher
     }
 
-    override fun setMentionTextChangedListener(watcher: ((view: SocialView, String) -> Unit)?) {
-        _mentionWatcher = watcher
+    override fun setMentionTextChangedListener(watcher: ((view: T, String) -> Unit)?) {
+        mentionWatcher = watcher
     }
 
     override val hashtags: List<String>
@@ -211,7 +221,7 @@ class SocialViewImpl : SocialView {
 
     /** Internal function to span text based on current configuration. */
     private fun colorize() {
-        val spannable = _view.text
+        val spannable = view.text
         check(spannable is Spannable, {
             "Attached text is not a Spannable," +
                 "add TextView.BufferType.SPANNABLE when setting text to this TextView."
@@ -221,15 +231,15 @@ class SocialViewImpl : SocialView {
             spannable.removeSpan(it)
         }
         if (isHashtagEnabled) spannable.span(REGEX_HASHTAG, { s ->
-            _hashtagListener?.newClickableSpan(s, _hashtagColor)
+            hashtagListener?.newClickableSpan(s, _hashtagColor)
                 ?: ForegroundColorSpan(_hashtagColor.defaultColor)
         })
         if (isMentionEnabled) spannable.span(REGEX_MENTION, { s ->
-            _mentionListener?.newClickableSpan(s, _mentionColor)
+            mentionListener?.newClickableSpan(s, _mentionColor)
                 ?: ForegroundColorSpan(_mentionColor.defaultColor)
         })
         if (isHyperlinkEnabled) spannable.span(REGEX_HYPERLINK, { s ->
-            _hyperlinkListener?.newClickableSpan(s, _hyperlinkColor, true) ?: object : URLSpan(s) {
+            hyperlinkListener?.newClickableSpan(s, _hyperlinkColor, true) ?: object : URLSpan(s) {
                 override fun updateDrawState(ds: TextPaint) {
                     ds.color = _hyperlinkColor.defaultColor
                     ds.isUnderlineText = true
@@ -241,27 +251,27 @@ class SocialViewImpl : SocialView {
     private fun indexOfNextNonLetterDigit(
         text: CharSequence,
         start: Int
-    ): Int = (start + 1 until text.length).firstOrNull { !Character.isLetterOrDigit(text[it]) }
+    ): Int = (start + 1 until text.length).firstOrNull { !isLetterOrDigit(text[it]) }
         ?: text.length
 
     private fun indexOfPreviousNonLetterDigit(
         text: CharSequence,
         start: Int,
         end: Int
-    ): Int = (end downTo start + 1).firstOrNull { !Character.isLetterOrDigit(text[it]) } ?: start
+    ): Int = (end downTo start + 1).firstOrNull { !isLetterOrDigit(text[it]) } ?: start
 
     private fun TextView.setLinkMovementMethodIfNotAlready() {
         if (movementMethod == null || movementMethod !is LinkMovementMethod)
             movementMethod = getInstance()
     }
 
-    private fun ((SocialView, String) -> Unit).newClickableSpan(
+    private fun ((T, String) -> Unit).newClickableSpan(
         s: String,
         color: ColorStateList,
         underline: Boolean = false
     ): CharacterStyle = object : ClickableSpan() {
-        override fun onClick(widget: View) = invoke(this@SocialViewImpl, when {
-            this@newClickableSpan !== _hyperlinkListener -> s.substring(1)
+        override fun onClick(widget: View) = invoke(view, when {
+            this@newClickableSpan !== hyperlinkListener -> s.substring(1)
             else -> s
         })
 
@@ -273,7 +283,7 @@ class SocialViewImpl : SocialView {
 
     private fun Regex.extract(): List<String> {
         val list = mutableListOf<String>()
-        val matcher = toPattern().matcher(_view.text)
+        val matcher = toPattern().matcher(view.text)
         while (matcher.find()) list += matcher.group(when {
             this !== REGEX_HYPERLINK -> 1 /* remove hashtag and mention symbol */
             else -> 0

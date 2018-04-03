@@ -6,7 +6,6 @@ import android.view.LayoutInflater.from
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.hendraanggrian.socialview.Hashtag
 import com.hendraanggrian.socialview.commons.R
 
 /**

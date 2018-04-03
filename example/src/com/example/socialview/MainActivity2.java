@@ -12,11 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
-import com.hendraanggrian.socialview.Hashtag;
-import com.hendraanggrian.socialview.Mention;
-import com.hendraanggrian.socialview.SocialView;
+import com.hendraanggrian.widget.Hashtag;
+import com.hendraanggrian.widget.Mention;
 import com.hendraanggrian.widget.HashtagAdapter;
 import com.hendraanggrian.widget.MentionAdapter;
 import com.hendraanggrian.widget.SocialAdapter;
@@ -74,16 +74,16 @@ public class MainActivity2 extends AppCompatActivity {
         textView.setThreshold(1);
         textView.setHashtagAdapter(defaultHashtagAdapter);
         textView.setMentionAdapter(defaultMentionAdapter);
-        textView.setHashtagTextChangedListener(new Function2<SocialView, String, Unit>() {
+        textView.setHashtagTextChangedListener(new Function2<MultiAutoCompleteTextView, String, Unit>() {
             @Override
-            public Unit invoke(SocialView socialView, String s) {
+            public Unit invoke(MultiAutoCompleteTextView multiAutoCompleteTextView, String s) {
                 d("hashtag", s);
                 return null;
             }
         });
-        textView.setMentionTextChangedListener(new Function2<SocialView, String, Unit>() {
+        textView.setMentionTextChangedListener(new Function2<MultiAutoCompleteTextView, String, Unit>() {
             @Override
-            public Unit invoke(SocialView socialView, String s) {
+            public Unit invoke(MultiAutoCompleteTextView multiAutoCompleteTextView, String s) {
                 d("mention", s);
                 return null;
             }

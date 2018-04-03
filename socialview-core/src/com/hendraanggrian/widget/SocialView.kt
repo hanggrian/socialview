@@ -1,9 +1,12 @@
-package com.hendraanggrian.socialview
+package com.hendraanggrian.widget
 
 import android.content.res.ColorStateList
 import android.content.res.ColorStateList.valueOf
 import android.support.annotation.ColorInt
 import android.support.v4.util.PatternsCompat.WEB_URL
+import android.util.AttributeSet
+import android.widget.TextView
+import com.hendraanggrian.widget.internal.SocialViewImpl
 import kotlin.text.RegexOption.IGNORE_CASE
 
 /**
@@ -12,7 +15,16 @@ import kotlin.text.RegexOption.IGNORE_CASE
  *
  * @see SocialViewImpl
  */
-interface SocialView {
+interface SocialView<T : TextView> {
+
+    /**
+     * Internal function to initialize [TextView] with [SocialView].
+     * To be called immediately upon view creation.
+     *
+     * @param view target [TextView].
+     * @param attrs from `View`'s constructor.
+     */
+    fun initialize(view: T, attrs: AttributeSet?)
 
     /** Determine whether this view should find and span hashtags. */
     var isHashtagEnabled: Boolean
@@ -48,19 +60,19 @@ interface SocialView {
     }
 
     /** Register a callback to be invoked when hashtag is clicked. */
-    fun setOnHashtagClickListener(listener: ((view: SocialView, String) -> Unit)?)
+    fun setOnHashtagClickListener(listener: ((view: T, String) -> Unit)?)
 
     /** Register a callback to be invoked when mention is clicked. */
-    fun setOnMentionClickListener(listener: ((view: SocialView, String) -> Unit)?)
+    fun setOnMentionClickListener(listener: ((view: T, String) -> Unit)?)
 
     /** Register a callback to be invoked when hyperlink is clicked. */
-    fun setOnHyperlinkClickListener(listener: ((view: SocialView, String) -> Unit)?)
+    fun setOnHyperlinkClickListener(listener: ((view: T, String) -> Unit)?)
 
     /** Register a text watcher to be invoked when hashtag is modified. */
-    fun setHashtagTextChangedListener(watcher: ((view: SocialView, String) -> Unit)?)
+    fun setHashtagTextChangedListener(watcher: ((view: T, String) -> Unit)?)
 
     /** Register a text watcher to be invoked when mention is modified. */
-    fun setMentionTextChangedListener(watcher: ((view: SocialView, String) -> Unit)?)
+    fun setMentionTextChangedListener(watcher: ((view: T, String) -> Unit)?)
 
     /** Obtain all hashtags in current text. */
     val hashtags: List<String>
@@ -70,6 +82,10 @@ interface SocialView {
 
     /** Obtain all hyperlinks in current text. */
     val hyperlinks: List<String>
+
+    /** Internal function to notify `SocialView` components that flags has changed. */
+    fun onFlagsChanged() {
+    }
 
     companion object {
         internal var REGEX_HASHTAG: Regex = "#(\\w+)".toRegex()
