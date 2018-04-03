@@ -7,9 +7,9 @@ import android.support.test.espresso.ViewAction
 import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.view.View
 import android.widget.ProgressBar
-import androidx.view.isVisible
+import androidx.core.view.isVisible
 
-abstract class BaseTest {
+abstract class AbstractTest {
 
     protected fun delay(): ViewAction = object : ViewAction {
         override fun getConstraints() = isAssignableFrom(ProgressBar::class.java)
@@ -17,13 +17,14 @@ abstract class BaseTest {
         override fun perform(uiController: UiController, view: View) {
             val progressBar = view as ProgressBar
             progressBar.progress = 100
-            progressBar.visibility = View.VISIBLE
+            progressBar.isVisible = true
             object : CountDownTimer(DELAY_COUNTDOWN, 100) {
-                override fun onTick(millisUntilFinished: Long) = when {
-                    SDK_INT >= 24 -> progressBar.setProgress(
-                        (progressBar.max * millisUntilFinished / DELAY_COUNTDOWN).toInt(), true)
-                    else -> progressBar.progress =
-                        (progressBar.max * millisUntilFinished / DELAY_COUNTDOWN).toInt()
+                override fun onTick(millisUntilFinished: Long) = (progressBar.max *
+                    millisUntilFinished / DELAY_COUNTDOWN).toInt().let { progress ->
+                    when {
+                        SDK_INT >= 24 -> progressBar.setProgress(progress, true)
+                        else -> progressBar.progress = progress
+                    }
                 }
 
                 override fun onFinish() {

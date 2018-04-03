@@ -18,4 +18,6 @@ data class Mention @JvmOverloads constructor(
         other.username == username
 
     override fun hashCode(): Int = username.hashCode()
+
+    override fun toString(): String = username
 }

@@ -1,6 +1,5 @@
-package com.hendraanggrian.socialview
+package com.hendraanggrian.socialview.commons
 
-import android.R
 import android.os.Build.VERSION.SDK_INT
 import android.os.CountDownTimer
 import android.support.test.espresso.Espresso.onView
@@ -8,14 +7,16 @@ import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
 import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import android.support.test.espresso.action.ViewActions.typeText
-import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
-import androidx.view.isVisible
+import androidx.core.view.isVisible
+import com.hendraanggrian.socialview.commons.activity.InstrumentedActivity
+import com.hendraanggrian.socialview.commons.test.R
 import com.hendraanggrian.widget.Hashtag
 import com.hendraanggrian.widget.HashtagAdapter
 import com.hendraanggrian.widget.Mention
@@ -35,7 +36,7 @@ class InstrumentedTest {
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
     @Test fun hashtag() {
-        onView(ViewMatchers.withId(com.hendraanggrian.socialview.commons.test.R.id.textView))
+        onView(withId(R.id.textView))
             .perform(
                 object : ViewAction {
                     override fun getConstraints() =
@@ -57,7 +58,7 @@ class InstrumentedTest {
     }
 
     @Test fun mention() {
-        onView(ViewMatchers.withId(com.hendraanggrian.socialview.commons.test.R.id.textView))
+        onView(withId(R.id.textView))
             .perform(
                 object : ViewAction {
                     override fun getConstraints() =
@@ -81,7 +82,7 @@ class InstrumentedTest {
     }
 
     @Test fun custom() {
-        onView(ViewMatchers.withId(com.hendraanggrian.socialview.commons.test.R.id.textView))
+        onView(withId(R.id.textView))
             .perform(
                 object : ViewAction {
                     override fun getConstraints() =
@@ -109,11 +110,12 @@ class InstrumentedTest {
         override fun perform(uiController: UiController, view: View) {
             val progressBar = rule.activity.progressBar
             object : CountDownTimer(DELAY_COUNTDOWN, 100) {
-                override fun onTick(millisUntilFinished: Long) = when {
-                    SDK_INT >= 24 -> progressBar.setProgress(
-                        (progressBar.max * millisUntilFinished / DELAY_COUNTDOWN).toInt(), true)
-                    else -> progressBar.progress =
-                        (progressBar.max * millisUntilFinished / DELAY_COUNTDOWN).toInt()
+                override fun onTick(millisUntilFinished: Long) = (progressBar.max *
+                    millisUntilFinished / DELAY_COUNTDOWN).toInt().let { progress ->
+                    when {
+                        SDK_INT >= 24 -> progressBar.setProgress(progress, true)
+                        else -> progressBar.progress = progress
+                    }
                 }
 
                 override fun onFinish() {

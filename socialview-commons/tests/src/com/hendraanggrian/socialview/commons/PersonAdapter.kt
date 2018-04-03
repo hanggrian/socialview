@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview
+package com.hendraanggrian.socialview.commons
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -14,23 +14,19 @@ class PersonAdapter(context: Context) : SocialAdapter<Person>(
     R.id.textViewName
 ) {
 
-    override fun Person.convertToString(): String = name
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var _convertView = convertView
+        var view = convertView
         val holder: ViewHolder
-        when (_convertView) {
+        when (view) {
             null -> {
-                _convertView = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
-                holder = ViewHolder(_convertView!!)
-                _convertView.tag = holder
+                view = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
+                holder = ViewHolder(view!!)
+                view.tag = holder
             }
-            else -> holder = _convertView.tag as ViewHolder
+            else -> holder = view.tag as ViewHolder
         }
-        getItem(position)?.let { person ->
-            holder.textView.text = person.name
-        }
-        return _convertView
+        getItem(position)?.let { person -> holder.textView.text = person.name }
+        return view
     }
 
     private class ViewHolder(itemView: View) {

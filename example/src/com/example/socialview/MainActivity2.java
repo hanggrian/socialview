@@ -16,13 +16,11 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.hendraanggrian.widget.Hashtag;
-import com.hendraanggrian.widget.Mention;
 import com.hendraanggrian.widget.HashtagAdapter;
+import com.hendraanggrian.widget.Mention;
 import com.hendraanggrian.widget.MentionAdapter;
 import com.hendraanggrian.widget.SocialAdapter;
 import com.hendraanggrian.widget.SocialAutoCompleteTextView;
-
-import org.jetbrains.annotations.NotNull;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
@@ -127,12 +125,6 @@ public class MainActivity2 extends AppCompatActivity {
             super(context, R.layout.item_person, R.id.textViewName);
         }
 
-        @NotNull
-        @Override
-        public String convertToString(Person $receiver) {
-            return $receiver.name;
-        }
-
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -145,9 +137,7 @@ public class MainActivity2 extends AppCompatActivity {
                 holder = (ViewHolder) convertView.getTag();
             }
             Person item = getItem(position);
-            if (item != null) {
-                holder.textView.setText(item.name);
-            }
+            if (item != null) holder.textView.setText(item.name);
             return convertView;
         }
 

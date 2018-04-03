@@ -7,6 +7,20 @@ Comes in 2 packages:
 
 ![demo][demo]
 
+Download
+--------
+```gradle
+repositories {
+    google()
+    jcenter()
+}
+
+dependencies {
+    compile 'com.hendraanggrian:socialview-core:0.17'
+    compile 'com.hendraanggrian:socialview-commons:0.17' // optional
+}
+```
+
 Core
 ----
 ![demo_core1][demo_core1] ![demo_core2][demo_core2] ![demo_core3][demo_core3]
@@ -111,20 +125,6 @@ ArrayAdapter<Person> adapter = new PersonAdapter(getContext());
 adapter.add(personA);
 adapter.add(personB);
 textView.setMentionAdapter(adapter);
-```
-
-Download
---------
-```gradle
-repositories {
-    google()
-    jcenter()
-}
-
-dependencies {
-    compile 'com.hendraanggrian:socialview-core:0.17'
-    compile 'com.hendraanggrian:socialview-commons:0.17' // optional
-}
 ```
 
 License

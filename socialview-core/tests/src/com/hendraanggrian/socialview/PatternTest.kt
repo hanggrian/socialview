@@ -11,8 +11,7 @@ import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
-import android.widget.Toast.LENGTH_SHORT
-import android.widget.Toast.makeText
+import androidx.core.widget.toast
 import com.hendraanggrian.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.test.R
 import org.junit.FixMethodOrder
@@ -24,7 +23,7 @@ import org.junit.runners.MethodSorters.JVM
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 @FixMethodOrder(JVM)
-class PatternTest : BaseTest() {
+class PatternTest : AbstractTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
@@ -63,7 +62,7 @@ class PatternTest : BaseTest() {
         override fun getDescription() = "toast($text)"
         override fun getConstraints() = isDisplayed()
         override fun perform(uiController: UiController?, view: View) {
-            makeText(view.context, text, LENGTH_SHORT).show()
+            view.context.toast(text)
         }
     }
 }

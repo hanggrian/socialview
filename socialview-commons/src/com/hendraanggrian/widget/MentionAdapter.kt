@@ -28,19 +28,16 @@ class MentionAdapter @JvmOverloads constructor(
     R.id.socialview_mention_username
 ) {
 
-    override fun Mention.convertToString(): String = username
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val holder: ViewHolder
-        var _convertView = convertView
-        when (_convertView) {
+        var view = convertView
+        when (view) {
             null -> {
-                _convertView = from(context)
-                    .inflate(R.layout.socialview_layout_mention, parent, false)
-                holder = ViewHolder(_convertView!!)
-                _convertView.tag = holder
+                view = from(context).inflate(R.layout.socialview_layout_mention, parent, false)
+                holder = ViewHolder(view!!)
+                view.tag = holder
             }
-            else -> holder = _convertView.tag as ViewHolder
+            else -> holder = view.tag as ViewHolder
         }
         getItem(position)?.let { mention ->
             when (mention.avatar) {
@@ -60,7 +57,7 @@ class MentionAdapter @JvmOverloads constructor(
                 holder.displaynameView.text = mention.displayname
             }
         }
-        return _convertView
+        return view
     }
 
     private class ViewHolder(itemView: View) {

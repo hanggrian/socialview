@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.hendraanggrian.socialview">
+    package="com.hendraanggrian.socialview.commons">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,6 +12,6 @@
 
     <application android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <uses-library android:name="android.test.runner" />
-        <activity android:name=".InstrumentedActivity" />
+        <activity android:name=".activity.InstrumentedActivity" />
     </application>
 </manifest>

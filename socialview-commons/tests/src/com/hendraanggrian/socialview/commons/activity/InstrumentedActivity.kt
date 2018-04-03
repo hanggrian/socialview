@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview
+package com.hendraanggrian.socialview.commons.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

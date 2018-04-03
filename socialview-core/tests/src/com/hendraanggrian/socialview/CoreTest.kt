@@ -10,8 +10,7 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import android.widget.Toast.LENGTH_SHORT
-import android.widget.Toast.makeText
+import androidx.core.widget.toast
 import com.hendraanggrian.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.test.R
 import org.junit.Rule
@@ -20,7 +19,7 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class CoreTest : BaseTest() {
+class CoreTest : AbstractTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
@@ -53,9 +52,7 @@ class CoreTest : BaseTest() {
     }
 
     @Test fun clickable() {
-        rule.activity.editText.setOnHashtagClickListener { _, s ->
-            makeText(rule.activity, s, LENGTH_SHORT).show()
-        }
+        rule.activity.editText.setOnHashtagClickListener { _, s -> rule.activity.toast(s) }
         onView(withId(R.id.editText)).perform(
             typeText("Oh, they are also #clickable!"),
             closeSoftKeyboard())

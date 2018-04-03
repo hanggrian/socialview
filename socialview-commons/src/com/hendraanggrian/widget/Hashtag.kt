@@ -15,4 +15,6 @@ data class Hashtag @JvmOverloads constructor(
         other.hashtag == hashtag
 
     override fun hashCode(): Int = hashtag.hashCode()
+
+    override fun toString(): String = hashtag
 }

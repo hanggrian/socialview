@@ -24,7 +24,7 @@ import org.junit.runners.MethodSorters.JVM
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 @FixMethodOrder(JVM)
-class GetTest : BaseTest() {
+class GetTest : AbstractTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 

@@ -18,7 +18,7 @@ import org.junit.runners.MethodSorters.JVM
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 @FixMethodOrder(JVM)
-class CustomThemeTest : BaseTest() {
+class CustomThemeTest : AbstractTest() {
 
     @Rule @JvmField var rule = ActivityTestRule(CustomThemeActivity::class.java)
 

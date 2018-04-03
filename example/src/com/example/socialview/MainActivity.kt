@@ -86,23 +86,19 @@ class MainActivity : AppCompatActivity() {
 
     class PersonAdapter(context: Context) : SocialAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
 
-        override fun Person.convertToString(): String = name
-
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val holder: ViewHolder
-            var _convertView = convertView
-            when (_convertView) {
+            var view = convertView
+            when (view) {
                 null -> {
-                    _convertView = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
-                    holder = ViewHolder(_convertView!!)
-                    _convertView.tag = holder
+                    view = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
+                    holder = ViewHolder(view!!)
+                    view.tag = holder
                 }
-                else -> holder = _convertView.tag as ViewHolder
+                else -> holder = view.tag as ViewHolder
             }
-            getItem(position)?.let { model ->
-                holder.textView.text = model.name
-            }
-            return _convertView
+            getItem(position)?.let { model -> holder.textView.text = model.name }
+            return view
         }
 
         private class ViewHolder(view: View) {
