@@ -1,5 +1,5 @@
 $dokka.format:html
 $dokka.linkExtension:html
 
-com.hendraanggrian.socialview
 com.hendraanggrian.widget
+com.hendraanggrian.widget.internal
