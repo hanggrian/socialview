@@ -55,7 +55,6 @@ abstract class SocialAdapter<T>(
     }
 
     private inner class SocialFilter : Filter() {
-
         override fun performFiltering(s: CharSequence?): FilterResults = when (s) {
             null -> FilterResults()
             else -> {

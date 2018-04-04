@@ -2,7 +2,6 @@ package com.hendraanggrian.widget
 
 import android.content.res.ColorStateList
 import android.content.res.ColorStateList.valueOf
-import android.support.annotation.ColorInt
 import android.support.v4.util.PatternsCompat.WEB_URL
 import android.util.AttributeSet
 import android.widget.TextView
@@ -17,6 +16,8 @@ import kotlin.text.RegexOption.IGNORE_CASE
  */
 interface SocialView<T : TextView> {
 
+    var flags: Int
+
     /**
      * Internal function to initialize [TextView] with [SocialView].
      * To be called immediately upon view creation.
@@ -27,37 +28,52 @@ interface SocialView<T : TextView> {
     fun initialize(view: T, attrs: AttributeSet?)
 
     /** Determine whether this view should find and span hashtags. */
-    var isHashtagEnabled: Boolean
+    fun isHashtagEnabled(): Boolean = FLAG_HASHTAG.isPresent()
+
+    /** Enable or disable hashtag spanning, if not already. */
+    fun setHashtagEnabled(enabled: Boolean) = FLAG_HASHTAG.modify(enabled, isHashtagEnabled())
 
     /** Determine whether this view should find and span mentions. */
-    var isMentionEnabled: Boolean
+    fun isMentionEnabled(): Boolean = FLAG_MENTION.isPresent()
+
+    /** Enable or disable mention spanning, if not already. */
+    fun setMentionEnabled(enabled: Boolean) = FLAG_MENTION.modify(enabled, isMentionEnabled())
 
     /** Determine whether this view should find and span hyperlinks. */
-    var isHyperlinkEnabled: Boolean
+    fun isHyperlinkEnabled(): Boolean = FLAG_HYPERLINK.isPresent()
+
+    /** Enable or disable hyperlink spanning, if not already. */
+    fun setHyperlinkEnabled(enabled: Boolean) = FLAG_HYPERLINK.modify(enabled, isHyperlinkEnabled())
 
     /** Color of hashtag spans. Default is color accent of current app theme. */
-    var hashtagColor: ColorStateList
+    var hashtagColorStateList: ColorStateList
 
     /** Color of mention spans. Default is color accent of current app theme. */
-    var mentionColor: ColorStateList
+    var mentionColorStateList: ColorStateList
 
     /** Color of hyperlink spans. Default is color accent of current app theme. */
-    var hyperlinkColor: ColorStateList
+    var hyperlinkColorStateList: ColorStateList
 
-    /** Set hashtag color from color integer. */
-    fun setHashtagColor(@ColorInt color: Int) {
-        hashtagColor = valueOf(color)
-    }
+    /** Get and set hashtag color from color integer. */
+    var hashtagColor: Int
+        get() = hashtagColorStateList.defaultColor
+        set(value) {
+            hashtagColorStateList = valueOf(value)
+        }
 
-    /** Set mention color from color integer. */
-    fun setMentionColor(@ColorInt color: Int) {
-        mentionColor = valueOf(color)
-    }
+    /** Get and set mention color from color integer. */
+    var mentionColor: Int
+        get() = mentionColorStateList.defaultColor
+        set(value) {
+            mentionColorStateList = valueOf(value)
+        }
 
-    /** Set hyperlink color from color integer. */
-    fun setHyperlinkColor(@ColorInt color: Int) {
-        hyperlinkColor = valueOf(color)
-    }
+    /** Get and set hashtag color from color integer. */
+    var hyperlinkColor: Int
+        get() = hyperlinkColorStateList.defaultColor
+        set(value) {
+            hyperlinkColorStateList = valueOf(value)
+        }
 
     /** Register a callback to be invoked when hashtag is clicked. */
     fun setOnHashtagClickListener(listener: ((view: T, String) -> Unit)?)
@@ -83,11 +99,28 @@ interface SocialView<T : TextView> {
     /** Obtain all hyperlinks in current text. */
     val hyperlinks: List<String>
 
-    /** Internal function to notify `SocialView` components that flags has changed. */
-    fun onFlagsChanged() {
+    /** Internal method to span the text based on current configuration. */
+    fun colorize()
+
+    @Suppress("NOTHING_TO_INLINE")
+    private inline fun Int.isPresent() = flags or this == flags
+
+    @Suppress("NOTHING_TO_INLINE")
+    private inline fun Int.modify(enabled: Boolean, initialState: Boolean) {
+        if (enabled != initialState) {
+            flags = when {
+                enabled -> flags or this
+                else -> flags and inv()
+            }
+            colorize()
+        }
     }
 
     companion object {
+        internal const val FLAG_HASHTAG = 1
+        internal const val FLAG_MENTION = 2
+        internal const val FLAG_HYPERLINK = 4
+
         internal var REGEX_HASHTAG: Regex = "#(\\w+)".toRegex()
         internal var REGEX_MENTION: Regex = "@(\\w+)".toRegex()
         internal var REGEX_HYPERLINK: Regex = WEB_URL.toRegex()

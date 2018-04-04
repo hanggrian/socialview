@@ -18,6 +18,9 @@ import android.widget.TextView
 import android.widget.TextView.BufferType.SPANNABLE
 import com.hendraanggrian.socialview.R
 import com.hendraanggrian.widget.SocialView
+import com.hendraanggrian.widget.SocialView.Companion.FLAG_HASHTAG
+import com.hendraanggrian.widget.SocialView.Companion.FLAG_HYPERLINK
+import com.hendraanggrian.widget.SocialView.Companion.FLAG_MENTION
 import com.hendraanggrian.widget.SocialView.Companion.REGEX_HASHTAG
 import com.hendraanggrian.widget.SocialView.Companion.REGEX_HYPERLINK
 import com.hendraanggrian.widget.SocialView.Companion.REGEX_MENTION
@@ -97,7 +100,6 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
     }
 
     private lateinit var view: T
-    private var flags = 0
     private lateinit var _hashtagColor: ColorStateList
     private lateinit var _mentionColor: ColorStateList
     private lateinit var _hyperlinkColor: ColorStateList
@@ -108,6 +110,8 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
     private var mentionWatcher: ((T, String) -> Unit)? = null
     private var hashtagEditing: Boolean = false
     private var mentionEditing: Boolean = false
+
+    override var flags = 0
 
     override fun initialize(view: T, attrs: AttributeSet?) {
         this.view = view
@@ -124,60 +128,21 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
         colorize()
     }
 
-    override var isHashtagEnabled: Boolean
-        get() = flags or FLAG_HASHTAG == flags
-        set(value) {
-            if (value != isHashtagEnabled) {
-                flags = when {
-                    value -> flags or FLAG_HASHTAG
-                    else -> flags and FLAG_HASHTAG.inv()
-                }
-                colorize()
-                onFlagsChanged()
-            }
-        }
-
-    override var isMentionEnabled: Boolean
-        get() = flags or FLAG_MENTION == flags
-        set(value) {
-            if (value != isMentionEnabled) {
-                flags = when {
-                    value -> flags or FLAG_MENTION
-                    else -> flags and FLAG_MENTION.inv()
-                }
-                colorize()
-                onFlagsChanged()
-            }
-        }
-
-    override var isHyperlinkEnabled: Boolean
-        get() = flags or FLAG_HYPERLINK == flags
-        set(value) {
-            if (value != isHyperlinkEnabled) {
-                flags = when {
-                    value -> flags or FLAG_HYPERLINK
-                    else -> flags and FLAG_HYPERLINK.inv()
-                }
-                colorize()
-                onFlagsChanged()
-            }
-        }
-
-    override var hashtagColor: ColorStateList
+    override var hashtagColorStateList: ColorStateList
         get() = _hashtagColor
         set(colorStateList) {
             _hashtagColor = colorStateList
             colorize()
         }
 
-    override var mentionColor: ColorStateList
+    override var mentionColorStateList: ColorStateList
         get() = _mentionColor
         set(colorStateList) {
             _mentionColor = colorStateList
             colorize()
         }
 
-    override var hyperlinkColor: ColorStateList
+    override var hyperlinkColorStateList: ColorStateList
         get() = _hyperlinkColor
         set(colorStateList) {
             _hyperlinkColor = colorStateList
@@ -211,16 +176,16 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
     }
 
     override val hashtags: List<String>
-        get() = if (!isHashtagEnabled) emptyList() else REGEX_HASHTAG.extract()
+        get() = if (!isHashtagEnabled()) emptyList() else REGEX_HASHTAG.extract()
 
     override val mentions: List<String>
-        get() = if (!isMentionEnabled) emptyList() else REGEX_MENTION.extract()
+        get() = if (!isMentionEnabled()) emptyList() else REGEX_MENTION.extract()
 
     override val hyperlinks: List<String>
-        get() = if (!isHyperlinkEnabled) emptyList() else REGEX_HYPERLINK.extract()
+        get() = if (!isHyperlinkEnabled()) emptyList() else REGEX_HYPERLINK.extract()
 
     /** Internal function to span text based on current configuration. */
-    private fun colorize() {
+    override fun colorize() {
         val spannable = view.text
         check(spannable is Spannable, {
             "Attached text is not a Spannable," +
@@ -230,15 +195,15 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
         spannable.getSpans(0, spannable.length, CharacterStyle::class.java).forEach {
             spannable.removeSpan(it)
         }
-        if (isHashtagEnabled) spannable.span(REGEX_HASHTAG, { s ->
+        if (isHashtagEnabled()) spannable.span(REGEX_HASHTAG, { s ->
             hashtagListener?.newClickableSpan(s, _hashtagColor)
                 ?: ForegroundColorSpan(_hashtagColor.defaultColor)
         })
-        if (isMentionEnabled) spannable.span(REGEX_MENTION, { s ->
+        if (isMentionEnabled()) spannable.span(REGEX_MENTION, { s ->
             mentionListener?.newClickableSpan(s, _mentionColor)
                 ?: ForegroundColorSpan(_mentionColor.defaultColor)
         })
-        if (isHyperlinkEnabled) spannable.span(REGEX_HYPERLINK, { s ->
+        if (isHyperlinkEnabled()) spannable.span(REGEX_HYPERLINK, { s ->
             hyperlinkListener?.newClickableSpan(s, _hyperlinkColor, true) ?: object : URLSpan(s) {
                 override fun updateDrawState(ds: TextPaint) {
                     ds.color = _hyperlinkColor.defaultColor
@@ -292,10 +257,6 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
     }
 
     private companion object {
-        const val FLAG_HASHTAG = 1
-        const val FLAG_MENTION = 2
-        const val FLAG_HYPERLINK = 4
-
         fun Spannable.span(
             regex: Regex,
             vararg spans: (String) -> Any,

@@ -79,9 +79,9 @@ class MainActivity : AppCompatActivity() {
                     textView.mentionAdapter = defaultMentionAdapter
                 }
             }
-            R.id.enableHashtagItem -> textView.isHashtagEnabled = item.isChecked
-            R.id.enableMentionItem -> textView.isMentionEnabled = item.isChecked
-            R.id.enableHyperlinkItem -> textView.isHyperlinkEnabled = item.isChecked
+            R.id.enableHashtagItem -> textView.setHashtagEnabled(item.isChecked)
+            R.id.enableMentionItem -> textView.setMentionEnabled(item.isChecked)
+            R.id.enableHyperlinkItem -> textView.setHyperlinkEnabled(item.isChecked)
         }
         return super.onOptionsItemSelected(item)
     }

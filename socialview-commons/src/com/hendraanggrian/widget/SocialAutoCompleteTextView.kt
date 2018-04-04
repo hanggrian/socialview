@@ -34,11 +34,7 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
             }
         }
     }
-    private val enabledSymbols: CharArray
-        get() = mutableListOf<Char>().also {
-            if (isHashtagEnabled) it += '#'
-            if (isMentionEnabled) it += '@'
-        }.toCharArray()
+    private val enabledSymbols = mutableSetOf<Char>()
 
     var hashtagAdapter: ArrayAdapter<*>? = null
     var mentionAdapter: ArrayAdapter<*>? = null
@@ -46,18 +42,35 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
     init {
         initialize(this, attrs)
         addTextChangedListener(textWatcher)
+        if (isHashtagEnabled()) enabledSymbols += '#'
+        if (isMentionEnabled()) enabledSymbols += '@'
         setTokenizer(SymbolsTokenizer(enabledSymbols))
     }
 
-    override fun onFlagsChanged() = setTokenizer(SymbolsTokenizer(enabledSymbols))
+    override fun setHashtagEnabled(enabled: Boolean) {
+        super.setHashtagEnabled(enabled)
+        enableSymbol('#', enabled)
+        setTokenizer(SymbolsTokenizer(enabledSymbols))
+    }
+
+    override fun setMentionEnabled(enabled: Boolean) {
+        super.setMentionEnabled(enabled)
+        enableSymbol('@', enabled)
+        setTokenizer(SymbolsTokenizer(enabledSymbols))
+    }
+
+    @Suppress("NOTHING_TO_INLINE")
+    private inline fun enableSymbol(symbol: Char, enable: Boolean) = when {
+        enable -> enabledSymbols += symbol
+        else -> enabledSymbols -= symbol
+    }
 
     /**
      * While [MultiAutoCompleteTextView.CommaTokenizer] tracks only comma symbol,
      * [SymbolsTokenizer] can track multiple characters, in this instance,
      * are hashtag and at symbol.
      */
-    class SymbolsTokenizer(private val symbols: CharArray) : MultiAutoCompleteTextView.Tokenizer {
-
+    class SymbolsTokenizer(private val symbols: Set<Char>) : MultiAutoCompleteTextView.Tokenizer {
         override fun findTokenStart(text: CharSequence, cursor: Int): Int {
             var i = cursor
             while (i > 0 && !symbols.contains(text[i - 1])) i--
