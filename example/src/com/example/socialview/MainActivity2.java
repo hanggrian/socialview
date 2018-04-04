@@ -96,16 +96,25 @@ public class MainActivity2 extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getTitle().toString()) {
-            case "Default":
-                textView.setHashtagAdapter(customHashtagAdapter);
-                textView.setMentionAdapter(customMentionAdapter);
-                item.setTitle("Custom");
+        item.setChecked(!item.isChecked());
+        switch (item.getItemId()) {
+            case R.id.customAdapterItem:
+                if (!item.isChecked()) {
+                    textView.setHashtagAdapter(defaultHashtagAdapter);
+                    textView.setMentionAdapter(defaultMentionAdapter);
+                } else {
+                    textView.setHashtagAdapter(customHashtagAdapter);
+                    textView.setMentionAdapter(customMentionAdapter);
+                }
                 break;
-            case "Custom":
-                textView.setHashtagAdapter(defaultHashtagAdapter);
-                textView.setMentionAdapter(defaultMentionAdapter);
-                item.setTitle("Default");
+            case R.id.enableHashtagItem:
+                textView.setHashtagEnabled(item.isChecked());
+                break;
+            case R.id.enableMentionItem:
+                textView.setMentionEnabled(item.isChecked());
+                break;
+            case R.id.enableHyperlinkItem:
+                textView.setHyperlinkEnabled(item.isChecked());
                 break;
         }
         return super.onOptionsItemSelected(item);

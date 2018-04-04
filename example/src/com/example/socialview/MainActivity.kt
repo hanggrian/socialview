@@ -67,17 +67,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.title) {
-            "Default" -> {
-                textView.hashtagAdapter = customHashtagAdapter
-                textView.mentionAdapter = customMentionAdapter
-                item.title = "Custom"
+        item.isChecked = !item.isChecked
+        when (item.itemId) {
+            R.id.customAdapterItem -> when (item.isChecked) {
+                false -> {
+                    textView.hashtagAdapter = customHashtagAdapter
+                    textView.mentionAdapter = customMentionAdapter
+                }
+                else -> {
+                    textView.hashtagAdapter = defaultHashtagAdapter
+                    textView.mentionAdapter = defaultMentionAdapter
+                }
             }
-            "Custom" -> {
-                textView.hashtagAdapter = defaultHashtagAdapter
-                textView.mentionAdapter = defaultMentionAdapter
-                item.title = "Default"
-            }
+            R.id.enableHashtagItem -> textView.isHashtagEnabled = item.isChecked
+            R.id.enableMentionItem -> textView.isMentionEnabled = item.isChecked
+            R.id.enableHyperlinkItem -> textView.isHyperlinkEnabled = item.isChecked
         }
         return super.onOptionsItemSelected(item)
     }

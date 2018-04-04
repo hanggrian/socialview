@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">socialview</string>
 
+    <string name="custom_adapter">Custom adapter</string>
+    <string name="hashtag">Hashtag</string>
+    <string name="mention">Mention</string>
+    <string name="hyperlink">Hyperlink</string>
+
     <string name="hashtag1">follow</string>
     <string name="hashtag2">followme</string>
     <string name="hashtag3">followmeorillkillyou</string>

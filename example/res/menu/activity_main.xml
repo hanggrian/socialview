@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/itemAdapter"
-        android:title="Default"
-        app:showAsAction="always"/>
+        android:id="@+id/customAdapterItem"
+        android:checkable="true"
+        android:title="@string/custom_adapter"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/enableHashtagItem"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/hashtag"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/enableMentionItem"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/mention"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/enableHyperlinkItem"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/hyperlink"
+        app:showAsAction="never" />
 </menu>

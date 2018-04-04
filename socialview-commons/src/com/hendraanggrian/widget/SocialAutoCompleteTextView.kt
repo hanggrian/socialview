@@ -35,9 +35,9 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
         }
     }
     private val enabledSymbols: CharArray
-        get() = mutableListOf<Char>().apply {
-            if (isHashtagEnabled) add('#')
-            if (isMentionEnabled) add('@')
+        get() = mutableListOf<Char>().also {
+            if (isHashtagEnabled) it += '#'
+            if (isMentionEnabled) it += '@'
         }.toCharArray()
 
     var hashtagAdapter: ArrayAdapter<*>? = null
