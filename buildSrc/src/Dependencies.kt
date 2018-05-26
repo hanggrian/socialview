@@ -1,12 +1,14 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.plugin.use.PluginDependenciesSpec
 
+const val GROUP_SUPPORT = "com.android.support"
+
 fun DependencyHandler.android() = "com.android.tools.build:gradle:$VERSION_ANDROID_PLUGIN"
 inline val PluginDependenciesSpec.`android-library` get() = id("com.android.library")
 inline val PluginDependenciesSpec.`android-application` get() = id("com.android.application")
 
 fun DependencyHandler.support(module: String, version: String, vararg suffixes: String) =
-    "${StringBuilder("com.android.support").apply {
+    "${StringBuilder(GROUP_SUPPORT).apply {
         suffixes.forEach { append(".$it") }
     }}:$module:$version"
 

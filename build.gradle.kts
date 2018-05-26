@@ -1,5 +1,3 @@
-import java.nio.file.Files.delete
-
 buildscript {
     repositories {
         google()

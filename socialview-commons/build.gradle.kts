@@ -44,7 +44,9 @@ dependencies {
     api(project(":socialview-core"))
     api(kotlin("stdlib", VERSION_KOTLIN))
     implementation(support("appcompat-v7", VERSION_SUPPORT))
-    implementation(hendraanggrian("pikasso", VERSION_PIKASSO))
+    implementation(hendraanggrian("pikasso", VERSION_PIKASSO)) {
+        exclude(GROUP_SUPPORT)
+    }
 
     testImplementation(junit())
     androidTestImplementation(androidKtx())
