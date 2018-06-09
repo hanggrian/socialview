@@ -1,11 +1,15 @@
 socialview
 ==========
+[![Download](https://api.bintray.com/packages/hendraanggrian/maven/socialview-core/images/download.svg) ](https://bintray.com/hendraanggrian/maven/socialview-core/_latestVersion)
+[![Build Status](https://travis-ci.org/hendraanggrian/socialview.svg)](https://travis-ci.org/hendraanggrian/socialview)
+[![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
+
+![demo][demo]
+
 Android TextView and EditText with hashtag, mention, and hyperlink support.
 Comes in 2 packages:
  * **core** - comes with `SocialTextView`, `SocialEditText` and `SocialViewImpl` to attach any TextView.
  * **commons** - extended core library with `SocialAutoCompleteTextView` to display suggestions as you type.
-
-![demo][demo]
 
 Download
 --------
