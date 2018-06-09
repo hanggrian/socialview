@@ -48,8 +48,9 @@ dependencies {
     testImplementation(junit())
     androidTestImplementation(androidKtx())
     androidTestImplementation(support("design", VERSION_SUPPORT))
-    androidTestImplementation(support("runner", VERSION_RUNNER, "test"))
     androidTestImplementation(support("espresso-core", VERSION_ESPRESSO, "test", "espresso"))
+    androidTestImplementation(support("runner", VERSION_RUNNER, "test"))
+    androidTestImplementation(support("rules", VERSION_RULES, "test"))
 
     ktlint(ktlint())
 }

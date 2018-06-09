@@ -8,8 +8,9 @@ const val VERSION_KOTLIN = "1.2.41"
 const val VERSION_SUPPORT = "27.1.1"
 const val VERSION_PIKASSO = "0.2"
 
-const val VERSION_RUNNER = "1.0.2"
 const val VERSION_ESPRESSO = "3.0.2"
+const val VERSION_RUNNER = "1.0.2"
+const val VERSION_RULES = "1.0.2"
 
 internal const val VERSION_ANDROID_PLUGIN = "3.1.0"
 internal const val VERSION_ANDROID_KTX = "0.3"
