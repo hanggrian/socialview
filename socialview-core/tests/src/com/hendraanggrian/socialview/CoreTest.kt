@@ -10,9 +10,9 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import androidx.core.widget.toast
 import com.hendraanggrian.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.test.R
+import org.jetbrains.anko.toast
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

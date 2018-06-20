@@ -46,7 +46,7 @@ dependencies {
     implementation(support("appcompat-v7", VERSION_SUPPORT))
 
     testImplementation(junit())
-    androidTestImplementation(androidKtx())
+    androidTestImplementation(anko())
     androidTestImplementation(support("design", VERSION_SUPPORT))
     androidTestImplementation(support("espresso-core", VERSION_ESPRESSO, "test", "espresso"))
     androidTestImplementation(support("runner", VERSION_RUNNER, "test"))

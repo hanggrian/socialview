@@ -12,14 +12,15 @@ fun DependencyHandler.support(module: String, version: String, vararg suffixes: 
         suffixes.forEach { append(".$it") }
     }}:$module:$version"
 
-fun DependencyHandler.androidKtx() = "androidx.core:core-ktx:$VERSION_ANDROID_KTX"
-
 fun DependencyHandler.hendraanggrian(module: String, version: String) =
     "com.hendraanggrian:$module:$version"
 
 fun DependencyHandler.junit() = "junit:junit:$VERSION_JUNIT"
 
 fun DependencyHandler.ktlint() = "com.github.shyiko:ktlint:$VERSION_KTLINT"
+
+fun DependencyHandler.anko(module: String? = null) = "org.jetbrains.anko:${module?.let { "anko-$it" }
+    ?: "anko"}:$VERSION_ANKO"
 
 fun DependencyHandler.dokka() = "org.jetbrains.dokka:dokka-android-gradle-plugin:$VERSION_DOKKA"
 inline val PluginDependenciesSpec.dokka get() = id("org.jetbrains.dokka-android")

@@ -11,13 +11,13 @@ import com.hendraanggrian.widget.internal.SocialViewImpl
  *
  * @see SocialView
  */
-class SocialEditText @JvmOverloads constructor(
+open class SocialEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = android.support.v7.appcompat.R.attr.editTextStyle
 ) : AppCompatEditText(context, attrs, defStyleAttr), SocialView<EditText> by SocialViewImpl() {
 
     init {
-        initialize(this, attrs)
+        @Suppress("LeakingThis") setup(attrs)
     }
 }

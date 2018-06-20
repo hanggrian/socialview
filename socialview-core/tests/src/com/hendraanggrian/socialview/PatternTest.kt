@@ -11,9 +11,9 @@ import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
-import androidx.core.widget.toast
 import com.hendraanggrian.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.test.R
+import org.jetbrains.anko.toast
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test

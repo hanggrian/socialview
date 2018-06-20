@@ -17,7 +17,8 @@ import com.hendraanggrian.widget.internal.SocialViewImpl
  *
  * @see SocialView
  */
-class SocialAutoCompleteTextView @JvmOverloads constructor(
+@Suppress("LeakingThis")
+open class SocialAutoCompleteTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = android.support.v7.appcompat.R.attr.autoCompleteTextViewStyle
@@ -40,7 +41,7 @@ class SocialAutoCompleteTextView @JvmOverloads constructor(
     var mentionAdapter: ArrayAdapter<*>? = null
 
     init {
-        initialize(this, attrs)
+        setup(attrs)
         addTextChangedListener(textWatcher)
         if (isHashtagEnabled()) enabledSymbols += '#'
         if (isMentionEnabled()) enabledSymbols += '@'

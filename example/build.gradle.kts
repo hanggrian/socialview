@@ -43,5 +43,5 @@ dependencies {
     implementation(project(":socialview-commons"))
     implementation(kotlin("stdlib", VERSION_KOTLIN))
     implementation(support("design", VERSION_SUPPORT))
-    implementation(androidKtx())
+    implementation(anko())
 }

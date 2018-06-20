@@ -22,10 +22,9 @@ interface SocialView<T : TextView> {
      * Internal function to initialize [TextView] with [SocialView].
      * To be called immediately upon view creation.
      *
-     * @param view target [TextView].
-     * @param attrs from `View`'s constructor.
+     * @param attrs from view's constructor.
      */
-    fun initialize(view: T, attrs: AttributeSet?)
+    fun T.setup(attrs: AttributeSet?)
 
     /** Determine whether this view should find and span hashtags. */
     fun isHashtagEnabled(): Boolean = FLAG_HASHTAG.isPresent()

@@ -113,11 +113,11 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
 
     override var flags = 0
 
-    override fun initialize(view: T, attrs: AttributeSet?) {
-        this.view = view
-        this.view.addTextChangedListener(textWatcher)
-        this.view.setText(this.view.text, SPANNABLE)
-        val a = this.view.context.obtainStyledAttributes(attrs, R.styleable.SocialView,
+    override fun T.setup(attrs: AttributeSet?) {
+        view = this
+        view.addTextChangedListener(textWatcher)
+        view.setText(view.text, SPANNABLE)
+        val a = view.context.obtainStyledAttributes(attrs, R.styleable.SocialView,
             R.attr.socialViewStyle, R.style.Widget_SocialView)
         flags = a.getInteger(R.styleable.SocialView_socialFlags,
             FLAG_HASHTAG or FLAG_MENTION or FLAG_HYPERLINK)
@@ -187,10 +187,10 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
     /** Internal function to span text based on current configuration. */
     override fun colorize() {
         val spannable = view.text
-        check(spannable is Spannable, {
+        check(spannable is Spannable) {
             "Attached text is not a Spannable," +
                 "add TextView.BufferType.SPANNABLE when setting text to this TextView."
-        })
+        }
         spannable as Spannable
         spannable.getSpans(0, spannable.length, CharacterStyle::class.java).forEach {
             spannable.removeSpan(it)
