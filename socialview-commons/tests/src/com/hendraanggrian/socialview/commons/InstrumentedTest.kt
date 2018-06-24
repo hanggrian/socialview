@@ -69,7 +69,7 @@ class InstrumentedTest {
                         val adapter = MentionAdapter(view.context)
                         adapter.addAll(
                             Mention("dirtyhobo"),
-                            Mention("hobo", "Regular Hobo", R.drawable.ic_input_add),
+                            Mention("hobo", "Regular Hobo", android.R.drawable.ic_input_add),
                             Mention("hendraanggrian", "Hendra Anggrian",
                                 "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"))
                         (view as SocialAutoCompleteTextView).mentionAdapter = adapter
