@@ -40,9 +40,9 @@ class CoreTest : AbstractTest() {
     }
 
     @Test fun customColors() {
-        rule.activity.editText.setHashtagColor(RED)
-        rule.activity.editText.setMentionColor(GREEN)
-        rule.activity.editText.setHyperlinkColor(BLUE)
+        rule.activity.editText.hashtagColor = RED
+        rule.activity.editText.mentionColor = GREEN
+        rule.activity.editText.hyperlinkColor = BLUE
         onView(withId(R.id.editText)).perform(
             typeText("Accent color of current app theme is used by default. " +
                 "But you can also have separate color for #hashtag, @mention, " +

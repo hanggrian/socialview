@@ -8,7 +8,7 @@ plugins {
 
 android {
     compileSdkVersion(SDK_TARGET)
-    buildToolsVersion(VERSION_BUILD_TOOLS)
+    buildToolsVersion(BUILD_TOOLS)
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":socialview-commons"))
+    implementation(project(":$RELEASE_ARTIFACT-commons"))
     implementation(kotlin("stdlib", VERSION_KOTLIN))
     implementation(support("design", VERSION_SUPPORT))
     implementation(anko())

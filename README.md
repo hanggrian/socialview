@@ -20,8 +20,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.hendraanggrian:socialview-core:0.18'
-    compile 'com.hendraanggrian:socialview-commons:0.18' // optional
+    compile "com.hendraanggrian:socialview-core:$version"
+    compile "com.hendraanggrian:socialview-commons:$version" // optional
 }
 ```
 

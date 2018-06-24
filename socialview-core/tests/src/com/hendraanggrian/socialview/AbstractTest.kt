@@ -6,8 +6,9 @@ import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
 import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ProgressBar
-import androidx.core.view.isVisible
 
 abstract class AbstractTest {
 
@@ -17,7 +18,7 @@ abstract class AbstractTest {
         override fun perform(uiController: UiController, view: View) {
             val progressBar = view as ProgressBar
             progressBar.progress = 100
-            progressBar.isVisible = true
+            progressBar.visibility = VISIBLE
             object : CountDownTimer(DELAY_COUNTDOWN, 100) {
                 override fun onTick(millisUntilFinished: Long) = (progressBar.max *
                     millisUntilFinished / DELAY_COUNTDOWN).toInt().let { progress ->
@@ -28,7 +29,7 @@ abstract class AbstractTest {
                 }
 
                 override fun onFinish() {
-                    progressBar.isVisible = false
+                    progressBar.visibility = GONE
                 }
             }.start()
             uiController.loopMainThreadForAtLeast(DELAY_COUNTDOWN)

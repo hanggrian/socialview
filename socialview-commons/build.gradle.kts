@@ -11,7 +11,7 @@ plugins {
 
 android {
     compileSdkVersion(SDK_TARGET)
-    buildToolsVersion(VERSION_BUILD_TOOLS)
+    buildToolsVersion(BUILD_TOOLS)
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
@@ -41,12 +41,10 @@ android {
 val ktlint by configurations.creating
 
 dependencies {
-    api(project(":socialview-core"))
+    api(project(":$RELEASE_ARTIFACT-core"))
     api(kotlin("stdlib", VERSION_KOTLIN))
     implementation(support("appcompat-v7", VERSION_SUPPORT))
-    implementation(hendraanggrian("pikasso", VERSION_PIKASSO)) {
-        exclude(GROUP_SUPPORT)
-    }
+    implementation(pikasso("transformations"))
 
     testImplementation(junit())
     androidTestImplementation(anko())

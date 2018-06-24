@@ -12,8 +12,7 @@ fun DependencyHandler.support(module: String, version: String, vararg suffixes: 
         suffixes.forEach { append(".$it") }
     }}:$module:$version"
 
-fun DependencyHandler.hendraanggrian(module: String, version: String) =
-    "com.hendraanggrian:$module:$version"
+fun DependencyHandler.pikasso(module: String) = "com.hendraanggrian.pikasso:pikasso-$module:$VERSION_PIKASSO"
 
 fun DependencyHandler.junit() = "junit:junit:$VERSION_JUNIT"
 

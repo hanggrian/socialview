@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">socialview</string>
 
+    <string name="whats_on_your_mind">What\'s on your mind?</string>
+
     <string name="custom_adapter">Custom adapter</string>
     <string name="hashtag">Hashtag</string>
     <string name="mention">Mention</string>

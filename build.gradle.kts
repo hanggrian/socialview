@@ -16,6 +16,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven("https://dl.bintray.com/hendraanggrian/pikasso") // temporary
     }
     tasks.withType<Javadoc> {
         isEnabled = false

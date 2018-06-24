@@ -14,7 +14,7 @@ import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
-import androidx.core.view.isVisible
+import android.view.View.GONE
 import com.hendraanggrian.socialview.commons.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.commons.test.R
 import com.hendraanggrian.widget.Hashtag
@@ -119,7 +119,7 @@ class InstrumentedTest {
                 }
 
                 override fun onFinish() {
-                    progressBar.isVisible = false
+                    progressBar.visibility = GONE
                 }
             }.start()
             uiController.loopMainThreadForAtLeast(DELAY_COUNTDOWN)

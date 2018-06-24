@@ -5,12 +5,14 @@ import android.net.Uri
 import android.support.annotation.DrawableRes
 import android.view.LayoutInflater.from
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
-import com.hendraanggrian.pikasso.circle
+import com.hendraanggrian.pikasso.into
 import com.hendraanggrian.pikasso.picasso
-import com.hendraanggrian.pikasso.toProgressTarget
+import com.hendraanggrian.pikasso.transformations.circle
 import com.hendraanggrian.socialview.commons.R
 import java.io.File
 
@@ -49,9 +51,14 @@ class MentionAdapter @JvmOverloads constructor(
                 else -> error("Unsupported avatar type")
             }.error(defaultAvatar)
                 .circle()
-                .into(holder.avatarView.toProgressTarget(
-                    context.resources.getDimensionPixelSize(
-                        R.dimen.socialview_mention_progress_bar)))
+                .into(holder.avatarView) {
+                    onSuccess {
+                        holder.loadingView.visibility = GONE
+                    }
+                    onError {
+                        holder.loadingView.visibility = GONE
+                    }
+                }
             holder.usernameView.text = mention.username
             if (!mention.displayname.isNullOrEmpty()) {
                 holder.displaynameView.text = mention.displayname
@@ -62,6 +69,7 @@ class MentionAdapter @JvmOverloads constructor(
 
     private class ViewHolder(itemView: View) {
         val avatarView: ImageView = itemView.findViewById(R.id.socialview_mention_avatar)
+        val loadingView: ProgressBar = itemView.findViewById(R.id.socialview_mention_loading)
         val usernameView: TextView = itemView.findViewById(R.id.socialview_mention_username)
         val displaynameView: TextView = itemView.findViewById(R.id.socialview_mention_displayname)
     }
