@@ -32,7 +32,7 @@ class CoreTest : AbstractTest() {
     }
 
     @Test fun withoutMention() {
-        rule.activity.editText.isMentionEnabled = false
+        rule.activity.editText.setMentionEnabled(false)
         onView(withId(R.id.editText)).perform(
             typeText("You can disable @mention to only have #hashtag."),
             closeSoftKeyboard())

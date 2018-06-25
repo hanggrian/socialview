@@ -105,7 +105,7 @@ interface SocialView<T : TextView> {
     private inline fun Int.isPresent() = flags or this == flags
 
     @Suppress("NOTHING_TO_INLINE")
-    private inline fun Int.modify(enabled: Boolean, initialState: Boolean) {
+    private fun Int.modify(enabled: Boolean, initialState: Boolean) {
         if (enabled != initialState) {
             flags = when {
                 enabled -> flags or this
