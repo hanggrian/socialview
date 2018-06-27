@@ -12,9 +12,9 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        applicationId = "com.example.socialview"
+        applicationId = "com.example.$RELEASE_ARTIFACT"
         versionCode = 1
-        versionName = "1.0"
+        versionName = RELEASE_VERSION
     }
     sourceSets {
         getByName("main") {

@@ -41,10 +41,10 @@ android {
 val ktlint by configurations.creating
 
 dependencies {
-    api(project(":$RELEASE_ARTIFACT-core"))
+    api(project(":$RELEASE_ARTIFACT"))
     api(kotlin("stdlib", VERSION_KOTLIN))
     implementation(support("appcompat-v7", VERSION_SUPPORT))
-    implementation(pikasso("transformations"))
+    implementation(hendraanggrian("pikasso", VERSION_PIKASSO, "transformations"))
 
     testImplementation(junit())
     androidTestImplementation(anko())
@@ -84,6 +84,8 @@ tasks {
 }
 
 publish {
+    repoName = RELEASE_ARTIFACT
+
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP
     artifactId = "$RELEASE_ARTIFACT-commons"

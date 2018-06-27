@@ -1,18 +1,94 @@
 import org.gradle.kotlin.dsl.kotlin
+import org.gradle.kotlin.dsl.withType
+import org.gradle.language.base.plugins.LifecycleBasePlugin.*
+import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
-    `git-publish`
+    `android-library`
+    kotlin("android")
+    dokka
+    `bintray-release`
 }
 
-gitPublish {
-    repoUri = RELEASE_WEBSITE
-    branch = "gh-pages"
-    contents.from(
-        "pages",
-        "../$RELEASE_ARTIFACT-core/build/docs",
-        "../$RELEASE_ARTIFACT-commons/build/docs")
+android {
+    compileSdkVersion(SDK_TARGET)
+    buildToolsVersion(BUILD_TOOLS)
+    defaultConfig {
+        minSdkVersion(SDK_MIN)
+        targetSdkVersion(SDK_TARGET)
+        versionName = RELEASE_VERSION
+        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+    }
+    sourceSets {
+        getByName("main") {
+            manifest.srcFile("AndroidManifest.xml")
+            java.srcDirs("src")
+            res.srcDir("res")
+            resources.srcDir("src")
+        }
+        getByName("androidTest") {
+            setRoot("tests")
+            manifest.srcFile("tests/AndroidManifest.xml")
+            java.srcDir("tests/src")
+            res.srcDir("tests/res")
+            resources.srcDir("tests/src")
+        }
+    }
+    libraryVariants.all {
+        generateBuildConfig?.enabled = false
+    }
 }
 
-tasks["gitPublishCopy"].dependsOn(
-    ":$RELEASE_ARTIFACT-core:dokka",
-    ":$RELEASE_ARTIFACT-commons:dokka")
+val ktlint by configurations.creating
+
+dependencies {
+    api(kotlin("stdlib", VERSION_KOTLIN))
+    implementation(support("appcompat-v7", VERSION_SUPPORT))
+
+    testImplementation(junit())
+    androidTestImplementation(anko())
+    androidTestImplementation(support("design", VERSION_SUPPORT))
+    androidTestImplementation(support("espresso-core", VERSION_ESPRESSO, "test", "espresso"))
+    androidTestImplementation(support("runner", VERSION_RUNNER, "test"))
+    androidTestImplementation(support("rules", VERSION_RULES, "test"))
+
+    ktlint(ktlint())
+}
+
+tasks {
+    "ktlint"(JavaExec::class) {
+        get("check").dependsOn(this)
+        group = VERIFICATION_GROUP
+        inputs.dir("src")
+        outputs.dir("src")
+        description = "Check Kotlin code style."
+        classpath = ktlint
+        main = "com.github.shyiko.ktlint.Main"
+        args("--android", "src/**/*.kt")
+    }
+    "ktlintFormat"(JavaExec::class) {
+        group = "formatting"
+        inputs.dir("src")
+        outputs.dir("src")
+        description = "Fix Kotlin code style deviations."
+        classpath = ktlint
+        main = "com.github.shyiko.ktlint.Main"
+        args("--android", "-F", "src/**/*.kt")
+    }
+
+    withType<DokkaTask> {
+        outputDirectory = "$buildDir/docs"
+        doFirst { file(outputDirectory).deleteRecursively() }
+    }
+}
+
+publish {
+    repoName = RELEASE_ARTIFACT
+
+    userOrg = RELEASE_USER
+    groupId = RELEASE_GROUP
+    artifactId = RELEASE_ARTIFACT
+    publishVersion = RELEASE_VERSION
+    desc = RELEASE_DESC
+    website = RELEASE_WEBSITE
+}

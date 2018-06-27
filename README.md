@@ -1,6 +1,6 @@
 socialview
 ==========
-[![Download](https://api.bintray.com/packages/hendraanggrian/maven/socialview-core/images/download.svg) ](https://bintray.com/hendraanggrian/maven/socialview-core/_latestVersion)
+[![Download](https://api.bintray.com/packages/hendraanggrian/socialview/socialview/images/download.svg) ](https://bintray.com/hendraanggrian/socialview/socialview/_latestVersion)
 [![Build Status](https://travis-ci.org/hendraanggrian/socialview.svg)](https://travis-ci.org/hendraanggrian/socialview)
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
@@ -20,8 +20,8 @@ repositories {
 }
 
 dependencies {
-    compile "com.hendraanggrian:socialview-core:$version"
-    compile "com.hendraanggrian:socialview-commons:$version" // optional
+    compile "com.hendraanggrian.socialview:socialview:$version"
+    compile "com.hendraanggrian.socialview:socialview-commons:$version"
 }
 ```
 

@@ -3,6 +3,12 @@ import org.gradle.plugin.use.PluginDependenciesSpec
 
 const val GROUP_SUPPORT = "com.android.support"
 
+fun DependencyHandler.hendraanggrian(
+    module: String,
+    version: String,
+    submodule: String? = null
+) = "com.hendraanggrian.$module:${submodule?.let { "$module-$it" } ?: module}:$version"
+
 fun DependencyHandler.android() = "com.android.tools.build:gradle:$VERSION_ANDROID_PLUGIN"
 inline val PluginDependenciesSpec.`android-library` get() = id("com.android.library")
 inline val PluginDependenciesSpec.`android-application` get() = id("com.android.application")
@@ -11,8 +17,6 @@ fun DependencyHandler.support(module: String, version: String, vararg suffixes: 
     "${StringBuilder(GROUP_SUPPORT).apply {
         suffixes.forEach { append(".$it") }
     }}:$module:$version"
-
-fun DependencyHandler.pikasso(module: String) = "com.hendraanggrian.pikasso:pikasso-$module:$VERSION_PIKASSO"
 
 fun DependencyHandler.junit() = "junit:junit:$VERSION_JUNIT"
 

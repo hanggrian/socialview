@@ -1,5 +1,6 @@
-include(":socialview")
-include(":socialview-core")
-include(":socialview-commons")
+include(":$RELEASE_ARTIFACT")
+include(":$RELEASE_ARTIFACT-commons")
+
+include(":pages")
 
 include(":example")
