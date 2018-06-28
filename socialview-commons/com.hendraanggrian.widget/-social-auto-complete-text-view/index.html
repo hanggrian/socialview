@@ -8,7 +8,7 @@
 <a href="../../index.html">socialview-commons</a>&nbsp;/&nbsp;<a href="../index.html">com.hendraanggrian.widget</a>&nbsp;/&nbsp;<a href="./index.html">SocialAutoCompleteTextView</a><br/>
 <br/>
 <h1>SocialAutoCompleteTextView</h1>
-<code><span class="keyword">class </span><span class="identifier">SocialAutoCompleteTextView</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatMultiAutoCompleteTextView</span><span class="symbol">, </span><span class="identifier">SocialView</span><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/android/widget/MultiAutoCompleteTextView.html"><span class="identifier">MultiAutoCompleteTextView</span></a><span class="symbol">&gt;</span></code>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">SocialAutoCompleteTextView</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatMultiAutoCompleteTextView</span><span class="symbol">, </span><span class="identifier">SocialView</span><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/android/widget/MultiAutoCompleteTextView.html"><span class="identifier">MultiAutoCompleteTextView</span></a><span class="symbol">&gt;</span></code>
 <p><a href="https://developer.android.com/reference/android/widget/MultiAutoCompleteTextView.html">android.widget.MultiAutoCompleteTextView</a> with hashtag, mention, and hyperlink support.</p>
 <p><strong>See Also</strong><br/>
 <p><a href="#">SocialView</a></p>
@@ -67,10 +67,17 @@ are hashtag and at symbol.</p>
 <tbody>
 <tr>
 <td>
-<p><a href="on-flags-changed.html">onFlagsChanged</a></p>
+<p><a href="set-hashtag-enabled.html">setHashtagEnabled</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">onFlagsChanged</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setHashtagEnabled</span><span class="symbol">(</span><span class="identifier" id="com.hendraanggrian.widget.SocialAutoCompleteTextView$setHashtagEnabled(kotlin.Boolean)/enabled">enabled</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-mention-enabled.html">setMentionEnabled</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setMentionEnabled</span><span class="symbol">(</span><span class="identifier" id="com.hendraanggrian.widget.SocialAutoCompleteTextView$setMentionEnabled(kotlin.Boolean)/enabled">enabled</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
 </tbody>
 </table>
