@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.hendraanggrian.socialview.commons.test.R
-import com.hendraanggrian.widget.SocialAdapter
+import com.hendraanggrian.appcompat.widget.SocialAdapter
 
 class PersonAdapter(context: Context) : SocialAdapter<Person>(
     context,

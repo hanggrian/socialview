@@ -13,7 +13,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import com.hendraanggrian.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.socialview.test.R
-import com.hendraanggrian.widget.SocialEditText
+import com.hendraanggrian.appcompat.widget.SocialEditText
 import org.junit.Assert.assertEquals
 import org.junit.FixMethodOrder
 import org.junit.Rule

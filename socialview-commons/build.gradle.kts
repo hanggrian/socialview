@@ -3,7 +3,7 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin.*
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
-    `android-library`
+    android("library")
     kotlin("android")
     dokka
     `bintray-release`
@@ -16,7 +16,7 @@ android {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
         versionName = RELEASE_VERSION
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
         getByName("main") {
@@ -33,6 +33,9 @@ android {
             resources.srcDir("tests/src")
         }
     }
+    lintOptions {
+        isCheckTestSources = true
+    }
     libraryVariants.all {
         generateBuildConfig?.enabled = false
     }
@@ -43,15 +46,14 @@ val ktlint by configurations.creating
 dependencies {
     api(project(":$RELEASE_ARTIFACT"))
     api(kotlin("stdlib", VERSION_KOTLIN))
-    implementation(support("appcompat-v7", VERSION_SUPPORT))
-    implementation(hendraanggrian("pikasso", VERSION_PIKASSO, "transformations"))
+    implementation(androidx("appcompat"))
+    implementation(hendraanggrian("pikasso", "pikasso-transformations", VERSION_PIKASSO))
 
     testImplementation(junit())
-    androidTestImplementation(anko())
-    androidTestImplementation(support("design", VERSION_SUPPORT))
-    androidTestImplementation(support("espresso-core", VERSION_ESPRESSO, "test", "espresso"))
-    androidTestImplementation(support("runner", VERSION_RUNNER, "test"))
-    androidTestImplementation(support("rules", VERSION_RULES, "test"))
+    androidTestImplementation(material())
+    androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
+    androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))
+    androidTestImplementation(androidx("test", "rules", VERSION_RULES))
 
     ktlint(ktlint())
 }
@@ -84,7 +86,10 @@ tasks {
 }
 
 publish {
-    repoName = RELEASE_ARTIFACT
+    bintrayUser = BINTRAY_USER
+    bintrayKey = BINTRAY_KEY
+    dryRun = false
+    repoName = RELEASE_REPO
 
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP

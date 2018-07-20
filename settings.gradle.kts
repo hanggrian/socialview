@@ -3,4 +3,4 @@ include(":$RELEASE_ARTIFACT-commons")
 
 include(":pages")
 
-include(":example")
+include(":demo")

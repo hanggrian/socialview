@@ -30,7 +30,3 @@ tasks {
         gradleVersion = VERSION_GRADLE
     }
 }
-
-/** bintray upload snippet
-./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PdryRun=false -PbintrayKey=
- */

@@ -36,7 +36,7 @@
         android:padding="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.hendraanggrian.widget.SocialAutoCompleteTextView
+        <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

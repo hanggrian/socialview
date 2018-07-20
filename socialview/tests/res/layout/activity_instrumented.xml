@@ -30,7 +30,7 @@
         </FrameLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <com.hendraanggrian.widget.SocialEditText
+    <com.hendraanggrian.appcompat.widget.SocialEditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ProgressBar
 import com.hendraanggrian.socialview.commons.test.R
-import com.hendraanggrian.widget.SocialAutoCompleteTextView
+import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
 
 class InstrumentedActivity : AppCompatActivity() {
 

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ProgressBar
 import com.hendraanggrian.socialview.test.R
-import com.hendraanggrian.widget.SocialEditText
+import com.hendraanggrian.appcompat.widget.SocialEditText
 
 open class InstrumentedActivity : AppCompatActivity() {
 

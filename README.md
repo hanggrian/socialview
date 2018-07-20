@@ -1,8 +1,9 @@
 socialview
 ==========
-[![Download](https://api.bintray.com/packages/hendraanggrian/socialview/socialview/images/download.svg) ](https://bintray.com/hendraanggrian/socialview/socialview/_latestVersion)
-[![Build Status](https://travis-ci.org/hendraanggrian/socialview.svg)](https://travis-ci.org/hendraanggrian/socialview)
-[![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
+[![bintray](https://img.shields.io/badge/bintray-appcompat-brightgreen.svg)](https://bintray.com/hendraanggrian/appcompat)
+[![download](https://api.bintray.com/packages/hendraanggrian/appcompat/socialview/images/download.svg) ](https://bintray.com/hendraanggrian/appcompat/socialview/_latestVersion)
+[![build](https://travis-ci.org/hendraanggrian/socialview.svg)](https://travis-ci.org/hendraanggrian/socialview)
+[![license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ![demo][demo]
 
@@ -31,7 +32,7 @@ Core
 
 Write `SocialTextView` or `SocialEditText` in xml.
 ```xml
-<com.hendraanggrian.widget.SocialTextView
+<com.hendraanggrian.appcompat.widget.SocialTextView
     android:id="@+id/textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -64,7 +65,7 @@ Commons
 
 Write `SocialAutoCompleteTextView` in xml.
 ```xml
-<com.hendraanggrian.widget.SocialAutoCompleteTextView
+<com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
     android:id="@+id/textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
