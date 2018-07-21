@@ -1,31 +1,33 @@
-package com.hendraanggrian.socialview
+package com.hendraanggrian.appcompat.socialview
 
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
-import android.support.test.espresso.action.ViewActions.replaceText
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.filters.LargeTest
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
 import android.view.View
-import com.hendraanggrian.socialview.activity.InstrumentedActivity
-import com.hendraanggrian.socialview.test.R
-import org.jetbrains.anko.toast
+import android.widget.Toast
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
+import androidx.test.espresso.action.ViewActions.replaceText
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.filters.LargeTest
+import androidx.test.rule.ActivityTestRule
+import androidx.test.runner.AndroidJUnit4
+import com.hendraanggrian.appcompat.socialview.activity.InstrumentedActivity
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters.JVM
+import com.hendraanggrian.appcompat.socialview.test.R
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 @FixMethodOrder(JVM)
 class PatternTest : AbstractTest() {
 
-    @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
+    @Rule
+    @JvmField
+    var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
     private val names = StringBuilder()
         .appendln("@HendraAnggrian")
@@ -50,11 +52,13 @@ class PatternTest : AbstractTest() {
         .appendln("@Саша")
         .toString()
 
-    @Test fun default() {
+    @Test
+    fun default() {
         onView(withId(R.id.editText)).perform(
             replaceText(names),
             toast("default"),
-            closeSoftKeyboard())
+            closeSoftKeyboard()
+        )
         onView(withId(R.id.progressBar)).perform(delay())
     }
 
@@ -62,7 +66,7 @@ class PatternTest : AbstractTest() {
         override fun getDescription() = "toast($text)"
         override fun getConstraints() = isDisplayed()
         override fun perform(uiController: UiController?, view: View) {
-            view.context.toast(text)
+            Toast.makeText(view.context, text, Toast.LENGTH_SHORT).show()
         }
     }
 }

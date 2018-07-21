@@ -1,9 +1,9 @@
-package com.hendraanggrian.socialview.commons.activity
+package com.hendraanggrian.appcompat.socialview.commons.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.ProgressBar
-import com.hendraanggrian.socialview.commons.test.R
+import androidx.appcompat.app.AppCompatActivity
+import com.hendraanggrian.appcompat.socialview.commons.test.R
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
 
 class InstrumentedActivity : AppCompatActivity() {

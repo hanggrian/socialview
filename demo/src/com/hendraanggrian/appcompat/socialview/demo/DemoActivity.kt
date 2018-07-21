@@ -54,7 +54,7 @@ class DemoActivity : AppCompatActivity() {
             Person(getString(R.string.mention2_username)),
             Person(getString(R.string.mention3_username)))
 
-        textView.threshold = 1
+        textView.threshold = 0
         textView.hashtagAdapter = defaultHashtagAdapter
         textView.mentionAdapter = defaultMentionAdapter
         textView.setHashtagTextChangedListener { _, s -> d("hashtag", s) }
@@ -62,7 +62,7 @@ class DemoActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.activity_main, menu)
+        menuInflater.inflate(R.menu.activity_demo, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

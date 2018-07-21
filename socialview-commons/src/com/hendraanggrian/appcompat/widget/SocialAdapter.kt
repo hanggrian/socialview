@@ -20,11 +20,6 @@ abstract class SocialAdapter<T>(
     private val items: MutableList<T> = mutableListOf()
     private val tempItems: MutableList<T> = mutableListOf()
 
-    override fun getFilter(): Filter {
-        if (filter == null) filter = SocialFilter()
-        return filter!!
-    }
-
     override fun add(item: T?) = add(item, true)
 
     override fun addAll(collection: Collection<T>) {
@@ -54,35 +49,41 @@ abstract class SocialAdapter<T>(
         if (affectTempItems) tempItems.clear()
     }
 
-    private inner class SocialFilter : Filter() {
-        override fun performFiltering(s: CharSequence?): FilterResults = when (s) {
-            null -> FilterResults()
-            else -> {
-                items.clear()
-                items += tempItems
-                    .filter {
-                        convertResultToString(it)
-                            .toString()
-                            .toLowerCase()
-                            .contains(s.toString().toLowerCase())
+    override fun getFilter(): Filter {
+        if (filter == null) {
+            filter = object : Filter() {
+                override fun performFiltering(s: CharSequence?): FilterResults = when (s) {
+                    null -> FilterResults()
+                    else -> {
+                        items.clear()
+                        items += tempItems
+                            .filter {
+                                convertResultToString(it)
+                                    .toString()
+                                    .toLowerCase()
+                                    .contains(s.toString().toLowerCase())
+                            }
+                        FilterResults().apply {
+                            values = items
+                            count = items.size
+                        }
                     }
-                FilterResults().apply {
-                    values = items
-                    count = items.size
                 }
+
+                override fun publishResults(s: CharSequence?, results: FilterResults) {
+                    @Suppress("UNCHECKED_CAST") (results.values as? ArrayList<T>)?.let {
+                        if (results.count > 0) {
+                            clear(false)
+                            it.forEach { add(it, false) }
+                            notifyDataSetChanged()
+                        }
+                    }
+                }
+
+                override fun convertResultToString(resultValue: Any?): CharSequence = resultValue
+                    .toString()
             }
         }
-
-        override fun publishResults(s: CharSequence?, results: FilterResults) {
-            @Suppress("UNCHECKED_CAST") (results.values as? ArrayList<T>)?.let {
-                if (results.count > 0) {
-                    clear(false)
-                    it.forEach { add(it, false) }
-                    notifyDataSetChanged()
-                }
-            }
-        }
-
-        override fun convertResultToString(resultValue: Any?): CharSequence = resultValue.toString()
+        return filter!!
     }
 }

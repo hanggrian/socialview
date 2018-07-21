@@ -69,7 +69,7 @@ public class DemoActivity2 extends AppCompatActivity {
                 new Person(getString(R.string.mention2_username)),
                 new Person(getString(R.string.mention3_username)));
 
-        textView.setThreshold(1);
+        textView.setThreshold(0);
         textView.setHashtagAdapter(defaultHashtagAdapter);
         textView.setMentionAdapter(defaultMentionAdapter);
         textView.setHashtagTextChangedListener(new Function2<MultiAutoCompleteTextView, String, Unit>() {
@@ -90,7 +90,7 @@ public class DemoActivity2 extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+        getMenuInflater().inflate(R.menu.activity_demo, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

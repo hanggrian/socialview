@@ -1,10 +1,10 @@
-package com.hendraanggrian.socialview.activity
+package com.hendraanggrian.appcompat.socialview.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.ProgressBar
-import com.hendraanggrian.socialview.test.R
+import androidx.appcompat.app.AppCompatActivity
 import com.hendraanggrian.appcompat.widget.SocialEditText
+import com.hendraanggrian.appcompat.socialview.test.R
 
 open class InstrumentedActivity : AppCompatActivity() {
 

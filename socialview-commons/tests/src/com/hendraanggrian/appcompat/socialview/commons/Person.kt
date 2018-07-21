@@ -1,4 +1,4 @@
-package com.hendraanggrian.socialview.commons
+package com.hendraanggrian.appcompat.socialview.commons
 
 data class Person(val name: String) {
 

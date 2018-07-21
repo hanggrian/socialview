@@ -93,7 +93,7 @@ To customize hashtag or mention adapter, create a custom adapter using customize
 ```java
 public class Person {
     public final String name;
-    
+
     public Person(String name) {
         this.name = name;
     }
@@ -101,11 +101,11 @@ public class Person {
 
 // easier
 public class PersonAdapter extends SocialAdapter<Person> {
-    
+
     public PersonAdapter(@NonNull Context context) {
         super(context, R.layout.item_person, R.id.textview_person);
     }
-    
+
     @Override
     public String convertToString(Person $receiver) {
         return $receiver.name;
@@ -147,7 +147,7 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-    
+
 [demo]: /art/demo.png
 [demo_core1]: /art/demo_core1.gif
 [demo_core2]: /art/demo_core2.gif

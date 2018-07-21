@@ -1,11 +1,11 @@
-package com.hendraanggrian.socialview.commons
+package com.hendraanggrian.appcompat.socialview.commons
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.hendraanggrian.socialview.commons.test.R
+import com.hendraanggrian.appcompat.socialview.commons.test.R
 import com.hendraanggrian.appcompat.widget.SocialAdapter
 
 class PersonAdapter(context: Context) : SocialAdapter<Person>(

@@ -1,18 +1,17 @@
-package com.hendraanggrian.socialview
+package com.hendraanggrian.appcompat.socialview
 
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
-import android.support.test.espresso.action.ViewActions.typeText
-import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.filters.LargeTest
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
 import android.view.View
-import com.hendraanggrian.socialview.activity.InstrumentedActivity
-import com.hendraanggrian.socialview.test.R
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
+import androidx.test.espresso.action.ViewActions.typeText
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.filters.LargeTest
+import androidx.test.rule.ActivityTestRule
+import androidx.test.runner.AndroidJUnit4
+import com.hendraanggrian.appcompat.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.appcompat.widget.SocialEditText
 import org.junit.Assert.assertEquals
 import org.junit.FixMethodOrder
@@ -20,6 +19,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters.JVM
+import com.hendraanggrian.appcompat.socialview.test.R
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
