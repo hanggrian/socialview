@@ -1,0 +1,6 @@
+$dokka.format:html
+$dokka.linkExtension:html
+
+com.hendraanggrian.appcompat.socialview
+com.hendraanggrian.appcompat.socialview.internal
+com.hendraanggrian.appcompat.widget
