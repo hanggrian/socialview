@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:completionThreshold="0"
         android:hint="@string/whats_on_your_mind"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:ignore="PrivateResource" />

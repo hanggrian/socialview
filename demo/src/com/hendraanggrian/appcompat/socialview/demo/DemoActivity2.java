@@ -11,11 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
-import com.hendraanggrian.appcompat.widget.Hashtag;
-import com.hendraanggrian.appcompat.widget.HashtagAdapter;
-import com.hendraanggrian.appcompat.widget.Mention;
-import com.hendraanggrian.appcompat.widget.MentionAdapter;
-import com.hendraanggrian.appcompat.widget.SocialAdapter;
+import com.hendraanggrian.appcompat.socialview.Hashtag;
+import com.hendraanggrian.appcompat.socialview.Mention;
+import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter;
+import com.hendraanggrian.appcompat.widget.MentionArrayAdapter;
+import com.hendraanggrian.appcompat.widget.SuggestionArrayAdapter;
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView;
 
 import androidx.annotation.NonNull;
@@ -45,13 +45,13 @@ public class DemoActivity2 extends AppCompatActivity {
         textView = findViewById(R.id.textView);
         setSupportActionBar(toolbar);
 
-        defaultHashtagAdapter = new HashtagAdapter(this);
+        defaultHashtagAdapter = new HashtagArrayAdapter(this);
         defaultHashtagAdapter.addAll(
                 new Hashtag(getString(R.string.hashtag1)),
                 new Hashtag(getString(R.string.hashtag2), getResources().getInteger(R.integer.hashtag2)),
                 new Hashtag(getString(R.string.hashtag3), getResources().getInteger(R.integer.hashtag3)));
 
-        defaultMentionAdapter = new MentionAdapter(this);
+        defaultMentionAdapter = new MentionArrayAdapter(this);
         defaultMentionAdapter.addAll(
                 new Mention(getString(R.string.mention1_username)),
                 new Mention(getString(R.string.mention2_username), getString(R.string.mention2_displayname), android.R.drawable.sym_action_email),
@@ -69,7 +69,6 @@ public class DemoActivity2 extends AppCompatActivity {
                 new Person(getString(R.string.mention2_username)),
                 new Person(getString(R.string.mention3_username)));
 
-        textView.setThreshold(0);
         textView.setHashtagAdapter(defaultHashtagAdapter);
         textView.setMentionAdapter(defaultMentionAdapter);
         textView.setHashtagTextChangedListener(new Function2<MultiAutoCompleteTextView, String, Unit>() {
@@ -128,7 +127,7 @@ public class DemoActivity2 extends AppCompatActivity {
         }
     }
 
-    static class PersonAdapter extends SocialAdapter<Person> {
+    static class PersonAdapter extends SuggestionArrayAdapter<Person> {
 
         PersonAdapter(Context context) {
             super(context, R.layout.item_person, R.id.textViewName);

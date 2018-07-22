@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:gravity="center_vertical"
+    style="?android:attr/dropDownItemStyle"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/socialview_hashtag"
+        style="?android:attr/dropDownItemStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textAppearance="?textAppearanceLargePopupMenu"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/socialview_hashtag_count"
+        style="?android:attr/dropDownItemStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textAppearance="?textAppearancePopupMenuHeader"
+        android:visibility="gone" />
+</LinearLayout>

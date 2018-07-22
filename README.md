@@ -1,8 +1,8 @@
 socialview
 ==========
 [![bintray](https://img.shields.io/badge/bintray-appcompat-brightgreen.svg)](https://bintray.com/hendraanggrian/appcompat)
-[![download](https://api.bintray.com/packages/hendraanggrian/appcompat/socialview/images/download.svg) ](https://bintray.com/hendraanggrian/appcompat/socialview/_latestVersion)
-[![build](https://travis-ci.org/hendraanggrian/socialview.svg)](https://travis-ci.org/hendraanggrian/socialview)
+[![download](https://api.bintray.com/packages/hendraanggrian/appcompat/socialview-core/images/download.svg) ](https://bintray.com/hendraanggrian/appcompat/socialview-core/_latestVersion)
+[![build](https://travis-ci.com/hendraanggrian/socialview.svg)](https://travis-ci.com/hendraanggrian/socialview)
 [![license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ![demo][demo]
@@ -10,7 +10,7 @@ socialview
 Android TextView and EditText with hashtag, mention, and hyperlink support.
 Comes in 2 packages:
  * **core** - comes with `SocialTextView`, `SocialEditText` and `SocialViewImpl` to attach any TextView.
- * **commons** - extended core library with `SocialAutoCompleteTextView` to display suggestions as you type.
+ * **suggestions** - extended core library with `SocialAutoCompleteTextView` to display suggestions as you type.
 
 Download
 --------
@@ -21,8 +21,8 @@ repositories {
 }
 
 dependencies {
-    compile "com.hendraanggrian.socialview:socialview:$version"
-    compile "com.hendraanggrian.socialview:socialview-commons:$version"
+    compile "com.hendraanggrian.appcompat:socialview-core:$version"
+    compile "com.hendraanggrian.appcompat:socialview-suggestions:$version"
 }
 ```
 
@@ -37,7 +37,7 @@ Write `SocialTextView` or `SocialEditText` in xml.
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="#hashtag and @mention."
-    app:socialEnabled="hashtag|mention"
+    app:social="hashtag|mention"
     app:hashtagColor="@color/blue"
     app:mentionColor="@color/red"/>
 ```
@@ -59,8 +59,8 @@ textView.setOnHashtagClickListener(new Function2<SocialView, String, Unit>() {
 
 Any TextView or subclasses of TextView can be made social, see [SocialTextView.kt][SocialTextView] for example.
 
-Commons
--------
+Suggestions
+-----------
 ![demo_commons1][demo_commons1] ![demo_commons2][demo_commons2] ![demo_commons3][demo_commons3]
 
 Write `SocialAutoCompleteTextView` in xml.
@@ -70,7 +70,7 @@ Write `SocialAutoCompleteTextView` in xml.
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="What's on your mind?"
-    app:socialEnabled="hyperlink"
+    app:social="hyperlink"
     app:hyperlinkColor="@color/green"/>
 ```
 

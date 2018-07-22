@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <public name="socialViewStyle" type="attr" />
+
+    <public name="social" type="attr" />
+    <public name="hashtagColor" type="attr" />
+    <public name="mentionColor" type="attr" />
+    <public name="hyperlinkColor" type="attr" />
+</resources>

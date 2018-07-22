@@ -11,11 +11,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.hendraanggrian.appcompat.widget.Hashtag
-import com.hendraanggrian.appcompat.widget.HashtagAdapter
-import com.hendraanggrian.appcompat.widget.Mention
-import com.hendraanggrian.appcompat.widget.MentionAdapter
-import com.hendraanggrian.appcompat.widget.SocialAdapter
+import com.hendraanggrian.appcompat.socialview.Hashtag
+import com.hendraanggrian.appcompat.socialview.Mention
+import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter
+import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
+import com.hendraanggrian.appcompat.widget.SuggestionArrayAdapter
 import kotlinx.android.synthetic.main.activity_demo.*
 
 class DemoActivity : AppCompatActivity() {
@@ -30,13 +30,13 @@ class DemoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_demo)
         setSupportActionBar(toolbar)
 
-        defaultHashtagAdapter = HashtagAdapter(this)
+        defaultHashtagAdapter = HashtagArrayAdapter(this)
         defaultHashtagAdapter.addAll(
             Hashtag(getString(R.string.hashtag1)),
             Hashtag(getString(R.string.hashtag2), resources.getInteger(R.integer.hashtag2)),
             Hashtag(getString(R.string.hashtag3), resources.getInteger(R.integer.hashtag3)))
 
-        defaultMentionAdapter = MentionAdapter(this)
+        defaultMentionAdapter = MentionArrayAdapter(this)
         defaultMentionAdapter.addAll(
             Mention(getString(R.string.mention1_username)),
             Mention(getString(R.string.mention2_username), getString(R.string.mention2_displayname), android.R.drawable.sym_action_email),
@@ -54,7 +54,6 @@ class DemoActivity : AppCompatActivity() {
             Person(getString(R.string.mention2_username)),
             Person(getString(R.string.mention3_username)))
 
-        textView.threshold = 0
         textView.hashtagAdapter = defaultHashtagAdapter
         textView.mentionAdapter = defaultMentionAdapter
         textView.setHashtagTextChangedListener { _, s -> d("hashtag", s) }
@@ -88,7 +87,7 @@ class DemoActivity : AppCompatActivity() {
 
     data class Person(val name: String)
 
-    class PersonAdapter(context: Context) : SocialAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
+    class PersonAdapter(context: Context) : SuggestionArrayAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val holder: ViewHolder

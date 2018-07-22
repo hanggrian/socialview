@@ -9,10 +9,10 @@ gitPublish {
     branch = "gh-pages"
     contents.from(
         "src",
-        "../$RELEASE_ARTIFACT/build/docs",
-        "../$RELEASE_ARTIFACT-commons/build/docs")
+        "../$RELEASE_ARTIFACT-core/build/docs",
+        "../$RELEASE_ARTIFACT-suggestions/build/docs")
 }
 
 tasks["gitPublishCopy"].dependsOn(
-    ":$RELEASE_ARTIFACT:dokka",
-    ":$RELEASE_ARTIFACT-commons:dokka")
+    ":$RELEASE_ARTIFACT-core:dokka",
+    ":$RELEASE_ARTIFACT-suggestions:dokka")
