@@ -1,5 +1,5 @@
 include(":$RELEASE_ARTIFACT-core")
-include(":$RELEASE_ARTIFACT-suggestions")
+include(":$RELEASE_ARTIFACT-commons")
 
 include(":pages")
 

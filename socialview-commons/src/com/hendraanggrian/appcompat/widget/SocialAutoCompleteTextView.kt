@@ -12,8 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.MultiAutoCompleteTextView
 import androidx.annotation.IntRange
 import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView
-import com.hendraanggrian.appcompat.socialview.SocialView
-import com.hendraanggrian.appcompat.socialview.internal.SocialViewImpl
+import com.hendraanggrian.appcompat.internal.SocialViewImpl
 
 /**
  * [android.widget.MultiAutoCompleteTextView] with hashtag, mention, and hyperlink support.
@@ -28,15 +27,14 @@ open class SocialAutoCompleteTextView @JvmOverloads constructor(
 ) : AppCompatMultiAutoCompleteTextView(context, attrs, defStyleAttr), TextWatcher,
     SocialView<MultiAutoCompleteTextView> by SocialViewImpl() {
 
-    private var isNoThreshold: Boolean
     private val enabledSymbols = mutableSetOf<Char>()
+    private var isNoThreshold: Boolean = threshold <= 0
 
     var hashtagAdapter: ArrayAdapter<*>? = null
     var mentionAdapter: ArrayAdapter<*>? = null
 
     init {
         setup(attrs)
-        isNoThreshold = threshold <= 0
         addTextChangedListener(this)
         if (isHashtagEnabled()) {
             enabledSymbols += '#'

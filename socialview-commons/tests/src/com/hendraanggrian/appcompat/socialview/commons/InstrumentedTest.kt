@@ -1,4 +1,4 @@
-package com.hendraanggrian.appcompat.socialview.suggestions
+package com.hendraanggrian.appcompat.socialview.commons
 
 import android.os.Build.VERSION.SDK_INT
 import android.os.CountDownTimer
@@ -17,8 +17,8 @@ import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.hendraanggrian.appcompat.socialview.Hashtag
 import com.hendraanggrian.appcompat.socialview.Mention
-import com.hendraanggrian.appcompat.socialview.suggestions.activity.InstrumentedActivity
-import com.hendraanggrian.appcompat.socialview.suggestions.test.R
+import com.hendraanggrian.appcompat.socialview.commons.activity.InstrumentedActivity
+import com.hendraanggrian.appcompat.socialview.commons.test.R
 import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView

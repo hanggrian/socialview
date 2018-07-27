@@ -1,4 +1,4 @@
-package com.hendraanggrian.appcompat.socialview.internal
+package com.hendraanggrian.appcompat.internal
 
 import android.content.res.ColorStateList
 import android.text.Editable
@@ -16,13 +16,13 @@ import android.view.View
 import android.widget.TextView
 import android.widget.TextView.BufferType.SPANNABLE
 import com.hendraanggrian.appcompat.socialview.R
-import com.hendraanggrian.appcompat.socialview.SocialView
-import com.hendraanggrian.appcompat.socialview.SocialView.Companion.FLAG_HASHTAG
-import com.hendraanggrian.appcompat.socialview.SocialView.Companion.FLAG_HYPERLINK
-import com.hendraanggrian.appcompat.socialview.SocialView.Companion.FLAG_MENTION
-import com.hendraanggrian.appcompat.socialview.SocialView.Companion.REGEX_HASHTAG
-import com.hendraanggrian.appcompat.socialview.SocialView.Companion.REGEX_HYPERLINK
-import com.hendraanggrian.appcompat.socialview.SocialView.Companion.REGEX_MENTION
+import com.hendraanggrian.appcompat.widget.SocialView
+import com.hendraanggrian.appcompat.widget.SocialView.Companion.FLAG_HASHTAG
+import com.hendraanggrian.appcompat.widget.SocialView.Companion.FLAG_HYPERLINK
+import com.hendraanggrian.appcompat.widget.SocialView.Companion.FLAG_MENTION
+import com.hendraanggrian.appcompat.widget.SocialView.Companion.REGEX_HASHTAG
+import com.hendraanggrian.appcompat.widget.SocialView.Companion.REGEX_HYPERLINK
+import com.hendraanggrian.appcompat.widget.SocialView.Companion.REGEX_MENTION
 import java.lang.Character.isLetterOrDigit
 
 /**

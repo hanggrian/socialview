@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.hendraanggrian.appcompat.socialview.Hashtagable
-import com.hendraanggrian.appcompat.socialview.suggestions.R
+import com.hendraanggrian.appcompat.socialview.commons.R
 
 /**
  * Default adapter for displaying hashtag in [SocialAutoCompleteTextView].

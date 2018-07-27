@@ -4,8 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
-import com.hendraanggrian.appcompat.socialview.SocialView
-import com.hendraanggrian.appcompat.socialview.internal.SocialViewImpl
+import com.hendraanggrian.appcompat.internal.SocialViewImpl
 
 /**
  * [android.widget.TextView] with hashtag, mention, and hyperlink support.

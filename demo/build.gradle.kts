@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":$RELEASE_ARTIFACT-suggestions"))
+    implementation(project(":$RELEASE_ARTIFACT-commons"))
     implementation(kotlin("stdlib", VERSION_KOTLIN))
     implementation(material())
 }

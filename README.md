@@ -1,4 +1,4 @@
-socialview
+SocialView
 ==========
 [![bintray](https://img.shields.io/badge/bintray-appcompat-brightgreen.svg)](https://bintray.com/hendraanggrian/appcompat)
 [![download](https://api.bintray.com/packages/hendraanggrian/appcompat/socialview-core/images/download.svg)](https://bintray.com/hendraanggrian/appcompat/socialview-core/_latestVersion)
@@ -10,7 +10,7 @@ socialview
 Android TextView and EditText with hashtag, mention, and hyperlink support.
 Comes in 2 packages:
  * **core** - comes with `SocialTextView`, `SocialEditText` and `SocialViewImpl` to attach any TextView.
- * **suggestions** - extended core library with `SocialAutoCompleteTextView` to display suggestions as you type.
+ * **commons** - extended core library with `SocialAutoCompleteTextView` to display suggestions as you type.
 
 Download
 --------
@@ -22,7 +22,7 @@ repositories {
 
 dependencies {
     compile "com.hendraanggrian.appcompat:socialview-core:$version"
-    compile "com.hendraanggrian.appcompat:socialview-suggestions:$version"
+    compile "com.hendraanggrian.appcompat:socialview-commons:$version"
 }
 ```
 
@@ -59,8 +59,8 @@ textView.setOnHashtagClickListener(new Function2<SocialView, String, Unit>() {
 
 Any TextView or subclasses of TextView can be made social, see [SocialTextView.kt][SocialTextView] for example.
 
-Suggestions
------------
+Commons
+-------
 ![demo_commons1][demo_commons1] ![demo_commons2][demo_commons2] ![demo_commons3][demo_commons3]
 
 Write `SocialAutoCompleteTextView` in xml.

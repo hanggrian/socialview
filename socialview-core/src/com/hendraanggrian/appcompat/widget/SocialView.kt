@@ -1,4 +1,4 @@
-package com.hendraanggrian.appcompat.socialview
+package com.hendraanggrian.appcompat.widget
 
 import android.content.res.ColorStateList
 import android.content.res.ColorStateList.valueOf

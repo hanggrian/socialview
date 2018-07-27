@@ -1,11 +1,11 @@
-package com.hendraanggrian.appcompat.socialview.suggestions
+package com.hendraanggrian.appcompat.socialview.commons
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.hendraanggrian.appcompat.socialview.suggestions.test.R
+import com.hendraanggrian.appcompat.socialview.commons.test.R
 import com.hendraanggrian.appcompat.widget.SuggestionArrayAdapter
 
 class PersonAdapter(context: Context) : SuggestionArrayAdapter<Person>(

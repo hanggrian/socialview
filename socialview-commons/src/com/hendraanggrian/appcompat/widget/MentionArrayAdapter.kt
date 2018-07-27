@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.hendraanggrian.appcompat.socialview.Mentionable
-import com.hendraanggrian.appcompat.socialview.suggestions.R
+import com.hendraanggrian.appcompat.socialview.commons.R
 import com.hendraanggrian.pikasso.into
 import com.hendraanggrian.pikasso.picasso
 import com.hendraanggrian.pikasso.transformations.circle
