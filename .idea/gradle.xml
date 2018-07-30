@@ -11,8 +11,8 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/demo" />
             <option value="$PROJECT_DIR$/pages" />
+            <option value="$PROJECT_DIR$/socialview" />
             <option value="$PROJECT_DIR$/socialview-commons" />
-            <option value="$PROJECT_DIR$/socialview-core" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -1,7 +1,7 @@
 SocialView
 ==========
 [![bintray](https://img.shields.io/badge/bintray-appcompat-brightgreen.svg)](https://bintray.com/hendraanggrian/appcompat)
-[![download](https://api.bintray.com/packages/hendraanggrian/appcompat/socialview-core/images/download.svg)](https://bintray.com/hendraanggrian/appcompat/socialview-core/_latestVersion)
+[![download](https://api.bintray.com/packages/hendraanggrian/appcompat/socialview/images/download.svg)](https://bintray.com/hendraanggrian/appcompat/socialview/_latestVersion)
 [![build](https://travis-ci.com/hendraanggrian/socialview.svg)](https://travis-ci.com/hendraanggrian/socialview)
 [![license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.hendraanggrian.appcompat:socialview-core:$version"
+    compile "com.hendraanggrian.appcompat:socialview:$version"
     compile "com.hendraanggrian.appcompat:socialview-commons:$version"
 }
 ```

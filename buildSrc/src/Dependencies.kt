@@ -1,8 +1,6 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.plugin.use.PluginDependenciesSpec
 
-const val GROUP_SUPPORT = "com.android.support"
-
 fun DependencyHandler.android() = "com.android.tools.build:gradle:$VERSION_ANDROID_PLUGIN"
 fun PluginDependenciesSpec.android(submodule: String) = id("com.android.$submodule")
 

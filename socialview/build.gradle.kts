@@ -92,7 +92,7 @@ publish {
 
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP
-    artifactId = "$RELEASE_ARTIFACT-core"
+    artifactId = RELEASE_ARTIFACT
     publishVersion = RELEASE_VERSION
     desc = RELEASE_DESC
     website = RELEASE_WEBSITE

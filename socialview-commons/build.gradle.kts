@@ -44,7 +44,7 @@ android {
 val ktlint by configurations.creating
 
 dependencies {
-    api(project(":$RELEASE_ARTIFACT-core"))
+    api(project(":$RELEASE_ARTIFACT"))
     api(kotlin("stdlib", VERSION_KOTLIN))
     implementation(androidx("appcompat"))
     implementation(hendraanggrian("pikasso", "pikasso-transformations", VERSION_PIKASSO))
