@@ -32,7 +32,7 @@ import java.lang.Character.isLetterOrDigit
  */
 class SocialViewImpl<T : TextView> : SocialView<T> {
 
-    private val textWatcher: TextWatcher = object : TextWatcher {
+    private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             if (count > 0 && start > 0) {
                 when (s[start - 1]) {
