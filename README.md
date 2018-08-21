@@ -1,4 +1,4 @@
-SocialView
+socialview
 ==========
 [![bintray](https://img.shields.io/badge/bintray-appcompat-brightgreen.svg)](https://bintray.com/hendraanggrian/appcompat)
 [![download](https://api.bintray.com/packages/hendraanggrian/appcompat/socialview/images/download.svg)](https://bintray.com/hendraanggrian/appcompat/socialview/_latestVersion)
@@ -62,6 +62,8 @@ Any TextView or subclasses of TextView can be made social, see [SocialTextView.k
 Commons
 -------
 ![demo_commons1][demo_commons1] ![demo_commons2][demo_commons2] ![demo_commons3][demo_commons3]
+
+> NOTE: Custom adapters are experimental, see demo for example.
 
 Write `SocialAutoCompleteTextView` in xml.
 ```xml
