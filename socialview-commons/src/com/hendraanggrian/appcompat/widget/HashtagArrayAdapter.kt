@@ -36,10 +36,12 @@ class HashtagArrayAdapter<T : Hashtagable> @JvmOverloads constructor(
         }
         getItem(position)?.let { hashtag ->
             holder.hashtagView.text = hashtag.hashtag
-            hashtag.count?.let {
-                holder.countView.text = context.resources.getQuantityString(countPlural, it, it)
+            if (hashtag.count != null) {
+                holder.countView.visibility = View.VISIBLE
+                holder.countView.text = context.resources.getQuantityString(countPlural, hashtag.count, hashtag.count)
+            } else {
+                holder.countView.visibility = View.GONE
             }
-            older.countView.visibility = if (hashtag.count != null) View.VISIBLE else View.GONE
         }
         return view
     }
