@@ -49,6 +49,8 @@ abstract class SuggestionArrayAdapter<T>(
         if (affectTempItems) tempItems.clear()
     }
 
+    open fun convertToString(it: T): CharSequence = it.toString()
+    
     override fun getFilter(): Filter {
         if (filter == null) {
             filter = object : Filter() {
@@ -80,8 +82,8 @@ abstract class SuggestionArrayAdapter<T>(
                     }
                 }
 
-                override fun convertResultToString(resultValue: Any?): CharSequence = resultValue
-                    .toString()
+                override fun convertResultToString(resultValue: Any?): CharSequence =
+                        @Suppress("UNCHECKED_CAST") convertToString(resultValue as T)
             }
         }
         return filter!!
