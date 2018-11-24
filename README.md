@@ -21,8 +21,8 @@ repositories {
 }
 
 dependencies {
-    compile "com.hendraanggrian.appcompat:socialview:$version"
-    compile "com.hendraanggrian.appcompat:socialview-commons:$version"
+    implementation "com.hendraanggrian.appcompat:socialview:$version"
+    implementation "com.hendraanggrian.appcompat:socialview-commons:$version"
 }
 ```
 
