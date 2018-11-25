@@ -1,11 +1,11 @@
 package com.hendraanggrian.appcompat.widget
 
 import android.content.Context
-import android.support.annotation.PluralsRes
 import android.view.LayoutInflater.from
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.PluralsRes
 import com.hendraanggrian.appcompat.socialview.Hashtagable
 import com.hendraanggrian.appcompat.socialview.commons.R
 
@@ -38,7 +38,8 @@ class HashtagArrayAdapter<T : Hashtagable> @JvmOverloads constructor(
             holder.hashtagView.text = hashtag.hashtag
             if (hashtag.count != null) {
                 holder.countView.visibility = View.VISIBLE
-                holder.countView.text = context.resources.getQuantityString(countPlural, hashtag.count, hashtag.count)
+                holder.countView.text =
+                    context.resources.getQuantityString(countPlural, hashtag.count!!, hashtag.count)
             } else {
                 holder.countView.visibility = View.GONE
             }

@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.kotlin
-
 plugins {
     android("application")
     kotlin("android")

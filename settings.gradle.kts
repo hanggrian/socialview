@@ -1,6 +1,6 @@
-include(":$RELEASE_ARTIFACT")
-include(":$RELEASE_ARTIFACT-commons")
+include(RELEASE_ARTIFACT)
+include("$RELEASE_ARTIFACT-commons")
 
-include(":pages")
+include("website")
 
-include(":demo")
+include("demo")

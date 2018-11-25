@@ -50,7 +50,7 @@ abstract class SuggestionArrayAdapter<T>(
     }
 
     open fun convertToString(it: T): CharSequence = it.toString()
-    
+
     override fun getFilter(): Filter {
         if (filter == null) {
             filter = object : Filter() {
@@ -83,7 +83,7 @@ abstract class SuggestionArrayAdapter<T>(
                 }
 
                 override fun convertResultToString(resultValue: Any?): CharSequence =
-                        @Suppress("UNCHECKED_CAST") convertToString(resultValue as T)
+                    @Suppress("UNCHECKED_CAST") convertToString(resultValue as T)
             }
         }
         return filter!!

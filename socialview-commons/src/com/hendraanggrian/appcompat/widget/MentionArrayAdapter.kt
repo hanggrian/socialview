@@ -2,7 +2,6 @@ package com.hendraanggrian.appcompat.widget
 
 import android.content.Context
 import android.net.Uri
-import android.support.annotation.DrawableRes
 import android.view.LayoutInflater.from
 import android.view.View
 import android.view.View.GONE
@@ -10,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import com.hendraanggrian.appcompat.socialview.Mentionable
 import com.hendraanggrian.appcompat.socialview.commons.R
 import com.hendraanggrian.pikasso.into
