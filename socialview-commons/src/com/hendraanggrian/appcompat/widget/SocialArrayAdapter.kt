@@ -10,7 +10,7 @@ import java.util.Collections.addAll
  * It is a direct parent of default [HashtagArrayAdapter] and [MentionArrayAdapter],
  * which are optional adapters.
  */
-abstract class SuggestionArrayAdapter<T>(
+abstract class SocialArrayAdapter<T>(
     context: Context,
     resource: Int,
     textViewResourceId: Int

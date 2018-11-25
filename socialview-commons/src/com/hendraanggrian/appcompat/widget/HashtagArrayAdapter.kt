@@ -17,7 +17,7 @@ import com.hendraanggrian.appcompat.socialview.commons.R
 class HashtagArrayAdapter<T : Hashtagable> @JvmOverloads constructor(
     context: Context,
     @PluralsRes private val countPlural: Int = R.plurals.posts
-) : SuggestionArrayAdapter<T>(
+) : SocialArrayAdapter<T>(
     context,
     R.layout.socialview_layout_hashtag,
     R.id.socialview_hashtag

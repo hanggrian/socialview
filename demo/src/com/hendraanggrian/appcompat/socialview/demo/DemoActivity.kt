@@ -15,7 +15,7 @@ import com.hendraanggrian.appcompat.socialview.Hashtag
 import com.hendraanggrian.appcompat.socialview.Mention
 import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
-import com.hendraanggrian.appcompat.widget.SuggestionArrayAdapter
+import com.hendraanggrian.appcompat.widget.SocialArrayAdapter
 import kotlinx.android.synthetic.main.activity_demo.*
 
 class DemoActivity : AppCompatActivity() {
@@ -87,7 +87,7 @@ class DemoActivity : AppCompatActivity() {
 
     data class Person(val name: String)
 
-    class PersonAdapter(context: Context) : SuggestionArrayAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
+    class PersonAdapter(context: Context) : SocialArrayAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val holder: ViewHolder

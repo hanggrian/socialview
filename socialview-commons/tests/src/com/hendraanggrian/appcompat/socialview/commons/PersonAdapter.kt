@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.hendraanggrian.appcompat.socialview.commons.test.R
-import com.hendraanggrian.appcompat.widget.SuggestionArrayAdapter
+import com.hendraanggrian.appcompat.widget.SocialArrayAdapter
 
-class PersonAdapter(context: Context) : SuggestionArrayAdapter<Person>(
+class PersonAdapter(context: Context) : SocialArrayAdapter<Person>(
     context,
     R.layout.item_person,
     R.id.textViewName

@@ -25,7 +25,7 @@ import java.io.File
 class MentionArrayAdapter<T : Mentionable> @JvmOverloads constructor(
     context: Context,
     @DrawableRes private val defaultAvatar: Int = R.drawable.socialview_ic_mention_placeholder
-) : SuggestionArrayAdapter<T>(
+) : SocialArrayAdapter<T>(
     context,
     R.layout.socialview_layout_mention,
     R.id.socialview_mention_username

@@ -15,7 +15,7 @@ import com.hendraanggrian.appcompat.socialview.Hashtag;
 import com.hendraanggrian.appcompat.socialview.Mention;
 import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter;
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter;
-import com.hendraanggrian.appcompat.widget.SuggestionArrayAdapter;
+import com.hendraanggrian.appcompat.widget.SocialArrayAdapter;
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView;
 
 import androidx.annotation.NonNull;
@@ -127,7 +127,7 @@ public class DemoActivity2 extends AppCompatActivity {
         }
     }
 
-    static class PersonAdapter extends SuggestionArrayAdapter<Person> {
+    static class PersonAdapter extends SocialArrayAdapter<Person> {
 
         PersonAdapter(Context context) {
             super(context, R.layout.item_person, R.id.textViewName);
