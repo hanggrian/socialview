@@ -52,14 +52,14 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
                         hashtagWatcher != null && hashtagEditing ->
                             hashtagWatcher!!(
                                 view, s.substring(
-                                indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start
-                            )
+                                    indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start
+                                )
                             )
                         mentionWatcher != null && mentionEditing ->
                             mentionWatcher!!(
                                 view, s.substring(
-                                indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start
-                            )
+                                    indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start
+                                )
                             )
                     }
                 }
@@ -145,7 +145,7 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
         colorize()
     }
 
-    override var hashtagColorStateList: ColorStateList
+    override var hashtagColors: ColorStateList
         get() = _hashtagColor
         set(colorStateList) {
             _hashtagColor = colorStateList
@@ -159,7 +159,7 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
             colorize()
         }
 
-    override var hyperlinkColorStateList: ColorStateList
+    override var hyperlinkColors: ColorStateList
         get() = _hyperlinkColor
         set(colorStateList) {
             _hyperlinkColor = colorStateList
@@ -217,7 +217,6 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
             "Attached text is not a Spannable," +
                 "add TextView.BufferType.SPANNABLE when setting text to this TextView."
         }
-        spannable as Spannable
         spannable.getSpans(0, spannable.length, CharacterStyle::class.java).forEach {
             spannable.removeSpan(it)
         }
@@ -264,9 +263,9 @@ class SocialViewImpl<T : TextView> : SocialView<T> {
     ): CharacterStyle = object : ClickableSpan() {
         override fun onClick(widget: View) = invoke(
             view, when {
-            this@newClickableSpan !== hyperlinkListener -> s.substring(1)
-            else -> s
-        }
+                this@newClickableSpan !== hyperlinkListener -> s.substring(1)
+                else -> s
+            }
         )
 
         override fun updateDrawState(ds: TextPaint) {

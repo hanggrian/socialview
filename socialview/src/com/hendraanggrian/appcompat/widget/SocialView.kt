@@ -44,19 +44,19 @@ interface SocialView<T : TextView> {
     fun setHyperlinkEnabled(enabled: Boolean) = FLAG_HYPERLINK.modify(enabled, isHyperlinkEnabled())
 
     /** Color of hashtag spans. Default is color accent of current app theme. */
-    var hashtagColorStateList: ColorStateList
+    var hashtagColors: ColorStateList
 
     /** Color of mention spans. Default is color accent of current app theme. */
     var mentionColorStateList: ColorStateList
 
     /** Color of hyperlink spans. Default is color accent of current app theme. */
-    var hyperlinkColorStateList: ColorStateList
+    var hyperlinkColors: ColorStateList
 
     /** Get and set hashtag color from color integer. */
     var hashtagColor: Int
-        get() = hashtagColorStateList.defaultColor
+        get() = hashtagColors.defaultColor
         set(value) {
-            hashtagColorStateList = valueOf(value)
+            hashtagColors = valueOf(value)
         }
 
     /** Get and set mention color from color integer. */
@@ -66,11 +66,11 @@ interface SocialView<T : TextView> {
             mentionColorStateList = valueOf(value)
         }
 
-    /** Get and set hashtag color from color integer. */
+    /** Get and set hyperlink color from color integer. */
     var hyperlinkColor: Int
-        get() = hyperlinkColorStateList.defaultColor
+        get() = hyperlinkColors.defaultColor
         set(value) {
-            hyperlinkColorStateList = valueOf(value)
+            hyperlinkColors = valueOf(value)
         }
 
     /** Register a callback to be invoked when hashtag is clicked. */
