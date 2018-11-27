@@ -3,4 +3,4 @@ include("$RELEASE_ARTIFACT-commons")
 
 include("website")
 
-include("demo")
+// include("demo")

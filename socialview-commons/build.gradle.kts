@@ -41,11 +41,11 @@ val ktlint by configurations.creating
 
 dependencies {
     api(project(":$RELEASE_ARTIFACT"))
-    api(kotlin("stdlib", VERSION_KOTLIN))
     implementation(androidx("appcompat"))
-    implementation(hendraanggrian("pikasso", "pikasso-transformations", VERSION_PIKASSO))
+    implementation(picasso())
 
     testImplementation(junit())
+    androidTestImplementation(kotlin("stdlib", VERSION_KOTLIN))
     androidTestImplementation(material())
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
     androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))

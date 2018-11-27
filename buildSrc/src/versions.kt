@@ -11,8 +11,7 @@ const val VERSION_ESPRESSO = "3.1.0"
 const val VERSION_RUNNER = "1.1.0"
 const val VERSION_RULES = "1.1.0"
 
-const val VERSION_PIKASSO = "0.2"
-
+internal const val VERSION_PICASSO = "2.71828"
 internal const val VERSION_TRUTH = "0.42"
 internal const val VERSION_JUNIT = "4.12"
 internal const val VERSION_KTLINT = "0.29.0"

@@ -29,7 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.arch.core.util.Function;
 
-public class SocialViewImpl implements SocialView {
+public final class SocialViewImpl implements SocialView {
 
     private int flags;
     private final TextView view;
