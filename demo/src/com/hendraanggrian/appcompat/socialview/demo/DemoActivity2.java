@@ -2,13 +2,13 @@ package com.hendraanggrian.appcompat.socialview.demo;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.hendraanggrian.appcompat.socialview.Hashtag;
@@ -17,15 +17,12 @@ import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter;
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter;
 import com.hendraanggrian.appcompat.widget.SocialArrayAdapter;
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView;
+import com.hendraanggrian.appcompat.widget.SocialView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function2;
-
-import static android.util.Log.d;
 
 public class DemoActivity2 extends AppCompatActivity {
 
@@ -45,44 +42,42 @@ public class DemoActivity2 extends AppCompatActivity {
         textView = findViewById(R.id.textView);
         setSupportActionBar(toolbar);
 
-        defaultHashtagAdapter = new HashtagArrayAdapter(this);
+        defaultHashtagAdapter = new HashtagArrayAdapter<>(this);
         defaultHashtagAdapter.addAll(
-                new Hashtag(getString(R.string.hashtag1)),
-                new Hashtag(getString(R.string.hashtag2), getResources().getInteger(R.integer.hashtag2)),
-                new Hashtag(getString(R.string.hashtag3), getResources().getInteger(R.integer.hashtag3)));
+            new Hashtag(getString(R.string.hashtag1)),
+            new Hashtag(getString(R.string.hashtag2), getResources().getInteger(R.integer.hashtag2)),
+            new Hashtag(getString(R.string.hashtag3), getResources().getInteger(R.integer.hashtag3)));
 
-        defaultMentionAdapter = new MentionArrayAdapter(this);
+        defaultMentionAdapter = new MentionArrayAdapter<>(this);
         defaultMentionAdapter.addAll(
-                new Mention(getString(R.string.mention1_username)),
-                new Mention(getString(R.string.mention2_username), getString(R.string.mention2_displayname), android.R.drawable.sym_action_email),
-                new Mention(getString(R.string.mention3_username), getString(R.string.mention3_displayname), "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"));
+            new Mention(getString(R.string.mention1_username)),
+            new Mention(getString(R.string.mention2_username), getString(R.string.mention2_displayname), android.R.drawable.sym_action_email),
+            new Mention(getString(R.string.mention3_username), getString(R.string.mention3_displayname), "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4"));
 
         customHashtagAdapter = new PersonAdapter(this);
         customHashtagAdapter.addAll(
-                new Person(getString(R.string.hashtag1)),
-                new Person(getString(R.string.hashtag2)),
-                new Person(getString(R.string.hashtag3)));
+            new Person(getString(R.string.hashtag1)),
+            new Person(getString(R.string.hashtag2)),
+            new Person(getString(R.string.hashtag3)));
 
         customMentionAdapter = new PersonAdapter(this);
         customMentionAdapter.addAll(
-                new Person(getString(R.string.mention1_username)),
-                new Person(getString(R.string.mention2_username)),
-                new Person(getString(R.string.mention3_username)));
+            new Person(getString(R.string.mention1_username)),
+            new Person(getString(R.string.mention2_username)),
+            new Person(getString(R.string.mention3_username)));
 
         textView.setHashtagAdapter(defaultHashtagAdapter);
         textView.setMentionAdapter(defaultMentionAdapter);
-        textView.setHashtagTextChangedListener(new Function2<MultiAutoCompleteTextView, String, Unit>() {
+        textView.setHashtagTextChangedListener(new SocialView.OnChangedListener() {
             @Override
-            public Unit invoke(MultiAutoCompleteTextView multiAutoCompleteTextView, String s) {
-                d("hashtag", s);
-                return null;
+            public void onChanged(@NonNull SocialView view, @NonNull CharSequence text) {
+                Log.d("hashtag", text.toString());
             }
         });
-        textView.setMentionTextChangedListener(new Function2<MultiAutoCompleteTextView, String, Unit>() {
+        textView.setOnMentionClickListener(new SocialView.OnClickListener() {
             @Override
-            public Unit invoke(MultiAutoCompleteTextView multiAutoCompleteTextView, String s) {
-                d("mention", s);
-                return null;
+            public void onClick(@NonNull SocialView view, @NonNull CharSequence text) {
+                Log.d("mention", text.toString());
             }
         });
     }
