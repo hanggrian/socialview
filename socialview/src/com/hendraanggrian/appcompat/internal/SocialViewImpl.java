@@ -252,21 +252,21 @@ public final class SocialViewImpl implements SocialView {
 
     @Override
     public void setOnHashtagClickListener(@Nullable OnClickListener listener) {
-        setLinkMovementMethodIfNotAlready();
+        ensureMovementMethod();
         hashtagClickListener = listener;
         colorize();
     }
 
     @Override
     public void setOnMentionClickListener(@Nullable OnClickListener listener) {
-        setLinkMovementMethodIfNotAlready();
+        ensureMovementMethod();
         mentionClickListener = listener;
         colorize();
     }
 
     @Override
     public void setOnHyperlinkClickListener(@Nullable OnClickListener listener) {
-        setLinkMovementMethodIfNotAlready();
+        ensureMovementMethod();
         hyperlinkClickListener = listener;
         colorize();
     }
@@ -314,7 +314,7 @@ public final class SocialViewImpl implements SocialView {
                     @Override
                     public Object apply(CharSequence input) {
                         return hashtagClickListener != null
-                            ? newClickableSpan(hashtagClickListener, text, hashtagColors, false)
+                            ? new SocialSpan(hashtagClickListener, input, hashtagColors)
                             : new ForegroundColorSpan(hashtagColors.getDefaultColor());
                     }
                 }
@@ -328,7 +328,7 @@ public final class SocialViewImpl implements SocialView {
                     @Override
                     public Object apply(CharSequence input) {
                         return mentionClickListener != null
-                            ? newClickableSpan(mentionClickListener, text, mentionColors, false)
+                            ? new SocialSpan(mentionClickListener, input, mentionColors)
                             : new ForegroundColorSpan(mentionColors.getDefaultColor());
                     }
                 }
@@ -342,7 +342,7 @@ public final class SocialViewImpl implements SocialView {
                     @Override
                     public Object apply(CharSequence input) {
                         return hyperlinkClickListener != null
-                            ? newClickableSpan(hyperlinkClickListener, text, hyperlinkColors, true)
+                            ? new SocialSpan(hyperlinkClickListener, input, hyperlinkColors)
                             : new URLSpan(text.toString()) {
                             @Override
                             public void updateDrawState(@NonNull TextPaint ds) {
@@ -356,7 +356,7 @@ public final class SocialViewImpl implements SocialView {
         }
     }
 
-    private void setLinkMovementMethodIfNotAlready() {
+    private void ensureMovementMethod() {
         final MovementMethod method = view.getMovementMethod();
         if (!(method instanceof LinkMovementMethod)) {
             view.setMovementMethod(LinkMovementMethod.getInstance());
@@ -367,33 +367,11 @@ public final class SocialViewImpl implements SocialView {
         final List<String> list = new ArrayList<>();
         final Matcher matcher = pattern.matcher(view.getText());
         while (matcher.find()) {
-            list.add(matcher.group(pattern != PATTERN_HYPERLINK ? 0 : 1));
+            list.add(matcher.group(pattern != PATTERN_HYPERLINK
+                ? 1 // remove hashtag and mention symbol
+                : 0));
         }
         return list;
-    }
-
-    private CharacterStyle newClickableSpan(
-        final OnClickListener listener,
-        final CharSequence text,
-        final ColorStateList colors,
-        final boolean underline
-    ) {
-        return new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View widget) {
-                listener.onClick(
-                    SocialViewImpl.this,
-                    listener != hyperlinkClickListener ? text
-                        .subSequence(1, text.length() - 1) : text
-                );
-            }
-
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                ds.setColor(colors.getDefaultColor());
-                ds.setUnderlineText(underline);
-            }
-        };
     }
 
     private static int indexOfNextNonLetterDigit(CharSequence text, int start) {
@@ -429,6 +407,34 @@ public final class SocialViewImpl implements SocialView {
                 end,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             );
+        }
+    }
+
+    private class SocialSpan extends ClickableSpan {
+        private final OnClickListener listener;
+        private final CharSequence text;
+        private final ColorStateList colors;
+
+        SocialSpan(OnClickListener listener, CharSequence text, ColorStateList colors) {
+            this.listener = listener;
+            this.text = text;
+            this.colors = colors;
+        }
+
+        @Override
+        public void onClick(@NonNull View widget) {
+            listener.onClick(
+                SocialViewImpl.this,
+                listener == hyperlinkClickListener // TEST
+                    ? text.subSequence(1, text.length())
+                    : text
+            );
+        }
+
+        @Override
+        public void updateDrawState(@NonNull TextPaint ds) {
+            ds.setColor(colors.getDefaultColor());
+            ds.setUnderlineText(listener == hyperlinkClickListener);
         }
     }
 }

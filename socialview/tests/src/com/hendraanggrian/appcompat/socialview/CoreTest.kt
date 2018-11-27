@@ -1,6 +1,8 @@
 package com.hendraanggrian.appcompat.socialview
 
-import android.graphics.Color.*
+import android.graphics.Color.BLUE
+import android.graphics.Color.GREEN
+import android.graphics.Color.RED
 import android.widget.Toast
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
@@ -10,10 +12,10 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.hendraanggrian.appcompat.socialview.activity.InstrumentedActivity
+import com.hendraanggrian.appcompat.socialview.test.R
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import com.hendraanggrian.appcompat.socialview.test.R
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
@@ -37,7 +39,7 @@ class CoreTest : AbstractTest() {
 
     @Test
     fun withoutMention() {
-        rule.activity.editText.setMentionEnabled(false)
+        rule.activity.editText.isMentionEnabled = false
         onView(withId(R.id.editText)).perform(
             typeText("You can disable @mention to only have #hashtag."),
             closeSoftKeyboard()

@@ -74,7 +74,7 @@ public abstract class SocialArrayAdapter<T> extends ArrayAdapter<T> {
                         return new FilterResults();
                     } else {
                         items.clear();
-                        for (T item : tempItems) {
+                        for (final T item : tempItems) {
                             if (convertResultToString(item)
                                 .toString()
                                 .toLowerCase(Locale.getDefault())
@@ -94,7 +94,7 @@ public abstract class SocialArrayAdapter<T> extends ArrayAdapter<T> {
                     final List<T> list = (List<T>) results;
                     if (results.count > 0) {
                         clear(false);
-                        for (T object : list) {
+                        for (final T object : list) {
                             add(object, false);
                         }
                         notifyDataSetChanged();
