@@ -52,7 +52,7 @@ public class DemoActivity2 extends AppCompatActivity {
         defaultMentionAdapter.addAll(
             new Mention(getString(R.string.mention1_username)),
             new Mention(getString(R.string.mention2_username), getString(R.string.mention2_displayname), android.R.drawable.sym_action_email),
-            new Mention(getString(R.string.mention3_username), getString(R.string.mention3_displayname), "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"));
+            new Mention(getString(R.string.mention3_username), getString(R.string.mention3_displayname), "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4"));
 
         customHashtagAdapter = new PersonAdapter(this);
         customHashtagAdapter.addAll(

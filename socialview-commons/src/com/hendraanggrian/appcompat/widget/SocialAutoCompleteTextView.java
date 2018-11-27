@@ -367,7 +367,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
                     TextUtils.copySpansFrom((Spanned) text, 0, text.length(), Object.class, sp, 0);
                     return sp;
                 } else {
-                    return "$text ";
+                    return text + " ";
                 }
             }
         }

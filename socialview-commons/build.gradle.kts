@@ -1,7 +1,6 @@
 plugins {
     android("library")
     kotlin("android")
-    dokka
     `bintray-release`
 }
 
@@ -37,8 +36,6 @@ android {
     }
 }
 
-val ktlint by configurations.creating
-
 dependencies {
     api(project(":$RELEASE_ARTIFACT"))
     implementation(androidx("appcompat"))
@@ -50,37 +47,6 @@ dependencies {
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
     androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))
     androidTestImplementation(androidx("test", "rules", VERSION_RULES))
-
-    ktlint(ktlint())
-}
-
-tasks {
-    register("ktlint", JavaExec::class) {
-        group = LifecycleBasePlugin.VERIFICATION_GROUP
-        inputs.dir("src")
-        outputs.dir("src")
-        description = "Check Kotlin code style."
-        classpath = ktlint
-        main = "com.github.shyiko.ktlint.Main"
-        args("--android", "src/**/*.kt")
-    }
-    "check" {
-        dependsOn("ktlint")
-    }
-    register("ktlintFormat", JavaExec::class) {
-        group = "formatting"
-        inputs.dir("src")
-        outputs.dir("src")
-        description = "Fix Kotlin code style deviations."
-        classpath = ktlint
-        main = "com.github.shyiko.ktlint.Main"
-        args("--android", "-F", "src/**/*.kt")
-    }
-
-    "dokka"(org.jetbrains.dokka.gradle.DokkaTask::class) {
-        outputDirectory = "$buildDir/docs"
-        doFirst { file(outputDirectory).deleteRecursively() }
-    }
 }
 
 publish {

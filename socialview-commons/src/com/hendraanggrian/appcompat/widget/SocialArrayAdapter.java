@@ -91,13 +91,15 @@ public abstract class SocialArrayAdapter<T> extends ArrayAdapter<T> {
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
-                    final List<T> list = (List<T>) results;
-                    if (results.count > 0) {
-                        clear(false);
-                        for (final T object : list) {
-                            add(object, false);
+                    if (results instanceof List) {
+                        final List<T> list = (List<T>) results;
+                        if (results.count > 0) {
+                            clear(false);
+                            for (final T object : list) {
+                                add(object, false);
+                            }
+                            notifyDataSetChanged();
                         }
-                        notifyDataSetChanged();
                     }
                 }
 

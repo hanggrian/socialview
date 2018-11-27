@@ -48,7 +48,7 @@ class DemoActivity : AppCompatActivity() {
             Mention(
                 getString(R.string.mention3_username),
                 getString(R.string.mention3_displayname),
-                "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"
+                "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4"
             )
         )
 

@@ -22,15 +22,12 @@ import com.hendraanggrian.appcompat.socialview.commons.test.R
 import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
-import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.MethodSorters.JVM
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-@FixMethodOrder(JVM)
 class InstrumentedTest {
 
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
@@ -71,7 +68,7 @@ class InstrumentedTest {
                             Mention("dirtyhobo"),
                             Mention("hobo", "Regular Hobo", android.R.drawable.ic_btn_speak_now),
                             Mention("hendraanggrian", "Hendra Anggrian",
-                                "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"))
+                                "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4"))
                         (view as SocialAutoCompleteTextView).mentionAdapter = adapter
                         view.threshold = 1
                     }

@@ -22,12 +22,12 @@ import com.hendraanggrian.appcompat.widget.SocialView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.arch.core.util.Function;
 
 public final class SocialViewImpl implements SocialView {
 
@@ -310,11 +310,11 @@ public final class SocialViewImpl implements SocialView {
             span(
                 PATTERN_HASHTAG,
                 spannable,
-                new Function<CharSequence, Object>() {
+                new Callable<Object>() {
                     @Override
-                    public Object apply(CharSequence input) {
+                    public Object call() {
                         return hashtagClickListener != null
-                            ? new SocialSpan(hashtagClickListener, input, hashtagColors)
+                            ? new SocialSpan(hashtagClickListener, hashtagColors)
                             : new ForegroundColorSpan(hashtagColors.getDefaultColor());
                     }
                 }
@@ -324,11 +324,11 @@ public final class SocialViewImpl implements SocialView {
             span(
                 PATTERN_MENTION,
                 spannable,
-                new Function<CharSequence, Object>() {
+                new Callable<Object>() {
                     @Override
-                    public Object apply(CharSequence input) {
+                    public Object call() {
                         return mentionClickListener != null
-                            ? new SocialSpan(mentionClickListener, input, mentionColors)
+                            ? new SocialSpan(mentionClickListener, mentionColors)
                             : new ForegroundColorSpan(mentionColors.getDefaultColor());
                     }
                 }
@@ -338,11 +338,11 @@ public final class SocialViewImpl implements SocialView {
             span(
                 PATTERN_HYPERLINK,
                 spannable,
-                new Function<CharSequence, Object>() {
+                new Callable<Object>() {
                     @Override
-                    public Object apply(CharSequence input) {
+                    public Object call() {
                         return hyperlinkClickListener != null
-                            ? new SocialSpan(hyperlinkClickListener, input, hyperlinkColors)
+                            ? new SocialSpan(hyperlinkClickListener, hyperlinkColors)
                             : new URLSpan(text.toString()) {
                             @Override
                             public void updateDrawState(@NonNull TextPaint ds) {
@@ -395,29 +395,32 @@ public final class SocialViewImpl implements SocialView {
     private static void span(
         Pattern pattern,
         Spannable spannable,
-        Function<CharSequence, Object> spanFunction
+        Callable<Object> spanCallable
     ) {
         final Matcher matcher = pattern.matcher(spannable);
         while (matcher.find()) {
             final int start = matcher.start();
             final int end = matcher.end();
-            spannable.setSpan(
-                spanFunction.apply(spannable.subSequence(start, end)),
-                start,
-                end,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            );
+            final Object span;
+            try {
+                span = spanCallable.call();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            spannable.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            if (span instanceof SocialSpan) {
+                ((SocialSpan) span).text = spannable.subSequence(start, end);
+            }
         }
     }
 
     private class SocialSpan extends ClickableSpan {
         private final OnClickListener listener;
-        private final CharSequence text;
         private final ColorStateList colors;
+        private CharSequence text;
 
-        SocialSpan(OnClickListener listener, CharSequence text, ColorStateList colors) {
+        SocialSpan(OnClickListener listener, ColorStateList colors) {
             this.listener = listener;
-            this.text = text;
             this.colors = colors;
         }
 
@@ -425,7 +428,7 @@ public final class SocialViewImpl implements SocialView {
         public void onClick(@NonNull View widget) {
             listener.onClick(
                 SocialViewImpl.this,
-                listener == hyperlinkClickListener // TEST
+                listener != hyperlinkClickListener
                     ? text.subSequence(1, text.length())
                     : text
             );
