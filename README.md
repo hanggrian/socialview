@@ -1,10 +1,10 @@
-socialview
-==========
 [![bintray](https://img.shields.io/badge/bintray-appcompat-brightgreen.svg)](https://bintray.com/hendraanggrian/appcompat)
 [![download](https://api.bintray.com/packages/hendraanggrian/appcompat/socialview/images/download.svg)](https://bintray.com/hendraanggrian/appcompat/socialview/_latestVersion)
 [![build](https://travis-ci.com/hendraanggrian/socialview.svg)](https://travis-ci.com/hendraanggrian/socialview)
 [![license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
+socialview
+==========
 ![demo][demo]
 
 Android TextView and EditText with hashtag, mention, and hyperlink support.
