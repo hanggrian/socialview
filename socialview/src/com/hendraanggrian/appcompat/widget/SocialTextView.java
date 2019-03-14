@@ -199,7 +199,7 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
      */
     @Override
     public void setOnHyperlinkClickListener(@Nullable SocialView.OnClickListener listener) {
-        impl.setOnHashtagClickListener(listener);
+        impl.setOnHyperlinkClickListener(listener);
     }
 
     /**
