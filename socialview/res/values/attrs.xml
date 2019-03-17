@@ -8,7 +8,7 @@
 
         <!-- Determine whether each feature should be turned on/off.
              Default is all true. -->
-        <attr name="social">
+        <attr name="socialFlags">
             <flag name="hashtag" value="1" />
             <flag name="mention" value="2" />
             <flag name="hyperlink" value="4" />

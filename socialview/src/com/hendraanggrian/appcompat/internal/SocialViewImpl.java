@@ -17,6 +17,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.hendraanggrian.appcompat.socialview.R;
 import com.hendraanggrian.appcompat.widget.SocialView;
 
@@ -25,9 +28,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 public final class SocialViewImpl implements SocialView {
 
@@ -132,7 +132,7 @@ public final class SocialViewImpl implements SocialView {
             R.style.Widget_SocialView
         );
         flags = a.getInteger(
-            R.styleable.SocialView_social,
+            R.styleable.SocialView_socialFlags,
             FLAG_HASHTAG | FLAG_MENTION | FLAG_HYPERLINK
         );
         hashtagColors = a.getColorStateList(R.styleable.SocialView_hashtagColor);

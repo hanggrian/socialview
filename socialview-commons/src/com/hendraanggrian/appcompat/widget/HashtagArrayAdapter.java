@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.hendraanggrian.appcompat.socialview.Hashtagable;
-import com.hendraanggrian.appcompat.socialview.commons.R;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.PluralsRes;
+
+import com.hendraanggrian.appcompat.socialview.Hashtagable;
+import com.hendraanggrian.appcompat.socialview.commons.R;
 
 /**
  * Default adapter for displaying hashtag in {@link SocialAutoCompleteTextView}.
@@ -45,7 +45,7 @@ public class HashtagArrayAdapter<T extends Hashtagable> extends SocialArrayAdapt
         }
         final T item = getItem(position);
         if (item != null) {
-            holder.hashtagView.setText(item.getHashtag());
+            holder.hashtagView.setText(item.getId());
 
             if (item.getCount() > 0) {
                 holder.countView.setVisibility(View.VISIBLE);

@@ -16,6 +16,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.hendraanggrian.appcompat.socialview.Mentionable;
 import com.hendraanggrian.appcompat.socialview.commons.R;
 import com.squareup.picasso.Callback;
@@ -24,10 +28,6 @@ import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
 
 import java.io.File;
-
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 /**
  * Default adapter for displaying mention in {@link SocialAutoCompleteTextView}.
@@ -66,6 +66,9 @@ public class MentionArrayAdapter<T extends Mentionable> extends SocialArrayAdapt
             final CharSequence displayname = item.getDisplayname();
             if (!TextUtils.isEmpty(displayname)) {
                 holder.displaynameView.setText(displayname);
+                holder.displaynameView.setVisibility(View.VISIBLE);
+            } else {
+                holder.displaynameView.setVisibility(View.GONE);
             }
 
             final Object avatar = item.getAvatar();

@@ -37,7 +37,7 @@ Write `SocialTextView` or `SocialEditText` in xml.
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="#hashtag and @mention."
-    app:social="hashtag|mention"
+    app:socialFlags="hashtag|mention"
     app:hashtagColor="@color/blue"
     app:mentionColor="@color/red"/>
 ```
@@ -72,7 +72,7 @@ Write `SocialAutoCompleteTextView` in xml.
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="What's on your mind?"
-    app:social="hyperlink"
+    app:socialFlags="hyperlink"
     app:hyperlinkColor="@color/green"/>
 ```
 

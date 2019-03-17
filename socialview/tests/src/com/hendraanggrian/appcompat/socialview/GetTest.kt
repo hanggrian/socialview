@@ -14,10 +14,10 @@ import androidx.test.runner.AndroidJUnit4
 import com.hendraanggrian.appcompat.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.appcompat.socialview.test.R
 import com.hendraanggrian.appcompat.widget.SocialEditText
-import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest

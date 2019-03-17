@@ -4,11 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * A data class of hashtag to be used with {@link com.hendraanggrian.widget.HashtagAdapter}.
+ * Simple optional hashtag data class, use when there is no custom mention class.
  */
 public class Hashtag implements Hashtagable {
 
-    private final CharSequence hashtag;
+    private final CharSequence id;
     private final int count;
 
     public Hashtag(@NonNull CharSequence hashtag) {
@@ -16,24 +16,24 @@ public class Hashtag implements Hashtagable {
     }
 
     public Hashtag(@NonNull CharSequence hashtag, int count) {
-        this.hashtag = hashtag;
+        this.id = hashtag;
         this.count = count;
     }
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        return obj instanceof Hashtag && ((Hashtag) obj).hashtag == hashtag;
+        return obj instanceof Hashtag && ((Hashtag) obj).id == id;
     }
 
     @Override
     public int hashCode() {
-        return hashtag.hashCode();
+        return id.hashCode();
     }
 
     @NonNull
     @Override
     public String toString() {
-        return hashtag.toString();
+        return id.toString();
     }
 
     /**
@@ -41,8 +41,8 @@ public class Hashtag implements Hashtagable {
      */
     @NonNull
     @Override
-    public CharSequence getHashtag() {
-        return hashtag;
+    public CharSequence getId() {
+        return id;
     }
 
     /**

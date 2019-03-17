@@ -3,6 +3,9 @@ package com.hendraanggrian.appcompat.socialview;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * Abstract mention to be used with {@link com.hendraanggrian.appcompat.widget.MentionArrayAdapter}.
+ */
 public interface Mentionable {
 
     /**

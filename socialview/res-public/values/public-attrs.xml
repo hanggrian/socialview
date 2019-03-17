@@ -2,7 +2,7 @@
 <resources>
     <public name="socialViewStyle" type="attr" />
 
-    <public name="social" type="attr" />
+    <public name="socialFlags" type="attr" />
     <public name="hashtagColor" type="attr" />
     <public name="mentionColor" type="attr" />
     <public name="hyperlinkColor" type="attr" />

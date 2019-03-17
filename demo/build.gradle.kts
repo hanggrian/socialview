@@ -40,5 +40,6 @@ android {
 dependencies {
     implementation(project(":$RELEASE_ARTIFACT-commons"))
     implementation(kotlin("stdlib", VERSION_KOTLIN))
+    implementation(androidx("core", "core-ktx"))
     implementation(material())
 }

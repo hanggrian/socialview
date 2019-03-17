@@ -11,15 +11,15 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView;
+
 import com.hendraanggrian.appcompat.internal.SocialViewImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView;
 
 /**
  * {@link android.widget.MultiAutoCompleteTextView} with hashtag, mention, and hyperlink support.
@@ -307,11 +307,12 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     }
 
     /**
-     * While {@link android.widget.MultiAutoCompleteTextView.CommaTokenizer} tracks only comma symbol,
+     * While `CommaTokenizer` tracks only comma symbol,
      * `CharTokenizer` can track multiple characters, in this instance, are hashtag and at symbol.
+     *
+     * @see android.widget.MultiAutoCompleteTextView.CommaTokenizer
      */
     private class CharTokenizer implements Tokenizer {
-
         private final Collection<Character> chars = new ArrayList<>();
 
         CharTokenizer() {
@@ -326,12 +327,14 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
         @Override
         public int findTokenStart(CharSequence text, int cursor) {
             int i = cursor;
+
             while (i > 0 && !chars.contains(text.charAt(i - 1))) {
                 i--;
             }
             while (i < cursor && text.charAt(i) == ' ') {
                 i++;
             }
+
             // imperfect fix for dropdown still showing without symbol found
             if (i == 0 && isPopupShowing()) {
                 dismissDropDown();
@@ -342,7 +345,8 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
         @Override
         public int findTokenEnd(CharSequence text, int cursor) {
             int i = cursor;
-            final int len = text.length();
+            int len = text.length();
+
             while (i < len) {
                 if (chars.contains(text.charAt(i))) {
                     return i;
@@ -350,15 +354,18 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
                     i++;
                 }
             }
+
             return len;
         }
 
         @Override
         public CharSequence terminateToken(CharSequence text) {
             int i = text.length();
+
             while (i > 0 && text.charAt(i - 1) == ' ') {
                 i--;
             }
+
             if (i > 0 && chars.contains(text.charAt(i - 1))) {
                 return text;
             } else {

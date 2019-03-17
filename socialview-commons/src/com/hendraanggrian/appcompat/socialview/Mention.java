@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * A data class of mention to be used with {@link com.hendraanggrian.widget.MentionAdapter}.
+ * Simple optional mention data class, use when there is no custom mention class.
  */
 public class Mention implements Mentionable {
 

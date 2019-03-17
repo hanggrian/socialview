@@ -39,8 +39,8 @@ android {
 dependencies {
     implementation(androidx("appcompat"))
 
-    testImplementation(junit())
     androidTestImplementation(kotlin("stdlib", VERSION_KOTLIN))
+    androidTestImplementation(kotlin("test-junit", VERSION_KOTLIN))
     androidTestImplementation(material())
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
     androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))

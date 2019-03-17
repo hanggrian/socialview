@@ -1,8 +1,12 @@
 package com.hendraanggrian.appcompat.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,18 +14,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 /**
- * An ArrayAdapter customized with filter to display items.
+ * An {@link ArrayAdapter} customized with filter to display items.
  * It is a direct parent of default {@link HashtagArrayAdapter} and {@link MentionArrayAdapter},
  * which are optional adapters.
  */
 public abstract class SocialArrayAdapter<T> extends ArrayAdapter<T> {
 
     private Filter filter;
-    private final List<T> items = new ArrayList<>();
     private final List<T> tempItems = new ArrayList<>();
 
     public SocialArrayAdapter(@NonNull Context context, int resource, int textViewResourceId) {
@@ -30,7 +30,8 @@ public abstract class SocialArrayAdapter<T> extends ArrayAdapter<T> {
 
     @Override
     public void add(@Nullable T object) {
-        add(object, true);
+        super.add(object);
+        tempItems.add(object);
     }
 
     @Override
@@ -54,7 +55,8 @@ public abstract class SocialArrayAdapter<T> extends ArrayAdapter<T> {
 
     @Override
     public void clear() {
-        clear(true);
+        super.clear();
+        tempItems.clear();
     }
 
     @NonNull
@@ -64,65 +66,52 @@ public abstract class SocialArrayAdapter<T> extends ArrayAdapter<T> {
 
     @NonNull
     @Override
-    @SuppressWarnings("unchecked")
     public Filter getFilter() {
         if (filter == null) {
-            filter = new Filter() {
-                @Override
-                protected FilterResults performFiltering(CharSequence constraint) {
-                    if (constraint == null) {
-                        return new FilterResults();
-                    } else {
-                        items.clear();
-                        for (final T item : tempItems) {
-                            if (convertResultToString(item)
-                                .toString()
-                                .toLowerCase(Locale.getDefault())
-                                .contains(constraint.toString().toLowerCase(Locale.getDefault()))) {
-                                items.add(item);
-                            }
-                        }
-                        final FilterResults results = new FilterResults();
-                        results.values = items;
-                        results.count = items.size();
-                        return results;
-                    }
-                }
-
-                @Override
-                protected void publishResults(CharSequence constraint, FilterResults results) {
-                    if (results instanceof List) {
-                        final List<T> list = (List<T>) results;
-                        if (results.count > 0) {
-                            clear(false);
-                            for (final T object : list) {
-                                add(object, false);
-                            }
-                            notifyDataSetChanged();
-                        }
-                    }
-                }
-
-                @Override
-                public CharSequence convertResultToString(Object resultValue) {
-                    return convertToString((T) resultValue);
-                }
-            };
+            filter = new SocialFilter();
         }
         return filter;
     }
 
-    private void add(T object, boolean affectTempItems) {
-        super.add(object);
-        if (affectTempItems) {
-            tempItems.add(object);
+    @SuppressWarnings("unchecked")
+    private class SocialFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            final FilterResults results = new FilterResults();
+            if (TextUtils.isEmpty(constraint)) {
+                return results;
+            }
+            final List<T> filteredItems = new ArrayList<>();
+            for (final T item : tempItems) {
+                if (convertResultToString(item)
+                    .toString()
+                    .toLowerCase(Locale.getDefault())
+                    .contains(constraint.toString().toLowerCase(Locale.getDefault()))) {
+                    filteredItems.add(item);
+                }
+            }
+            results.values = filteredItems;
+            results.count = filteredItems.size();
+            return results;
         }
-    }
 
-    private void clear(boolean affectTempItems) {
-        super.clear();
-        if (affectTempItems) {
-            tempItems.clear();
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            if (results.values instanceof List) {
+                final List<T> list = (List<T>) results.values;
+                if (results.count > 0) {
+                    SocialArrayAdapter.super.clear();
+                    for (final T object : list) {
+                        SocialArrayAdapter.super.add(object);
+                    }
+                    notifyDataSetChanged();
+                }
+            }
+        }
+
+        @Override
+        public CharSequence convertResultToString(Object resultValue) {
+            return convertToString((T) resultValue);
         }
     }
 }
