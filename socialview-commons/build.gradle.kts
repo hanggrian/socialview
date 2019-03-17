@@ -32,7 +32,9 @@ android {
         isCheckTestSources = true
     }
     libraryVariants.all {
-        generateBuildConfig?.enabled = false
+        generateBuildConfigProvider?.invoke {
+            enabled = false
+        }
     }
 }
 
