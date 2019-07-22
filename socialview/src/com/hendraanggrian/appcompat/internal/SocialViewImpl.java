@@ -304,7 +304,15 @@ public final class SocialViewImpl implements SocialView {
         }
         final Spannable spannable = (Spannable) text;
         for (final Object span : spannable.getSpans(0, text.length(), CharacterStyle.class)) {
-            spannable.removeSpan(span);
+            try {
+                spannable.removeSpan(span);
+            } catch (IndexOutOfBoundsException e) {
+                /*
+                swallow exception, some devices (mostly Samsung OS 9) throws exception when trying to
+                cut text using option menu (cut, copy, select all options)
+                 */
+                e.printStackTrace();
+            }
         }
         if (isHashtagEnabled()) {
             span(
@@ -404,13 +412,20 @@ public final class SocialViewImpl implements SocialView {
             final Object span;
             try {
                 span = spanCallable.call();
+                spannable.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                if (span instanceof SocialSpan) {
+                    ((SocialSpan) span).text = spannable.subSequence(start, end);
+                }
+            } catch (IndexOutOfBoundsException e) {
+                /*
+                swallow exception, some devices (mostly Samsung OS 9) throws exception when trying to
+                cut text using option menu (cut, copy, select all options)
+                 */
+                e.printStackTrace();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            spannable.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            if (span instanceof SocialSpan) {
-                ((SocialSpan) span).text = spannable.subSequence(start, end);
-            }
+
         }
     }
 
