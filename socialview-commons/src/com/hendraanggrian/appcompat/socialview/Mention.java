@@ -68,4 +68,5 @@ public class Mention implements Mentionable {
     public Object getAvatar() {
         return avatar;
     }
+    
 }
