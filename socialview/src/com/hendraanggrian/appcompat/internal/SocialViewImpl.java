@@ -303,9 +303,9 @@ public final class SocialViewImpl implements SocialView {
                 "add TextView.BufferType.SPANNABLE when setting text to this TextView.");
         }
         final Spannable spannable = (Spannable) text;
-        for (final Object span : spannable.getSpans(0, text.length(), CharacterStyle.class)) {
-            spannable.removeSpan(span);
-        }
+//         for (final Object span : spannable.getSpans(0, text.length(), CharacterStyle.class)) {
+//             spannable.removeSpan(span);
+//         }
         if (isHashtagEnabled()) {
             span(
                 PATTERN_HASHTAG,
