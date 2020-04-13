@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
  * Simple optional mention data class, use when there is no custom mention class.
  */
 public class Mention implements Mentionable {
-
     private final CharSequence username;
     private final CharSequence displayname;
     private final Object avatar;

@@ -19,7 +19,6 @@ import com.hendraanggrian.appcompat.widget.SocialArrayAdapter
 import kotlinx.android.synthetic.main.activity_demo.*
 
 class DemoActivity : AppCompatActivity() {
-
     private lateinit var defaultHashtagAdapter: ArrayAdapter<Hashtag>
     private lateinit var defaultMentionAdapter: ArrayAdapter<Mention>
     private lateinit var customHashtagAdapter: ArrayAdapter<Person>

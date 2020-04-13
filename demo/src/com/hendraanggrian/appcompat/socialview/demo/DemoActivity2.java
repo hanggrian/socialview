@@ -11,6 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.hendraanggrian.appcompat.socialview.Hashtag;
 import com.hendraanggrian.appcompat.socialview.Mention;
 import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter;
@@ -19,13 +24,7 @@ import com.hendraanggrian.appcompat.widget.SocialArrayAdapter;
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView;
 import com.hendraanggrian.appcompat.widget.SocialView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 public class DemoActivity2 extends AppCompatActivity {
-
     private Toolbar toolbar;
     private SocialAutoCompleteTextView textView;
 

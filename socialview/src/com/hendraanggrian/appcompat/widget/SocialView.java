@@ -1,144 +1,216 @@
 package com.hendraanggrian.appcompat.widget;
 
 import android.content.res.ColorStateList;
-
-import java.util.List;
-import java.util.regex.Pattern;
+import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.util.PatternsCompat;
 
+import com.hendraanggrian.appcompat.internal.SocialViewHelper;
+
+import java.util.List;
+
+/**
+ * Base interface of all social widgets, which usually derived from {@link android.widget.TextView}.
+ * Out of the box, there are {@link SocialTextView}, {@link SocialEditText}, and {@code SocialAutoCompleteTextView}.
+ * It can also be implemented in any {@link android.view.View}
+ * using {@link SocialViewHelper}.
+ */
 public interface SocialView {
 
-    int FLAG_HASHTAG = 1;
-    int FLAG_MENTION = 2;
-    int FLAG_HYPERLINK = 4;
-
-    Pattern PATTERN_HASHTAG = Pattern.compile("#(\\w+)");
-    Pattern PATTERN_MENTION = Pattern.compile("@(\\w+)");
-    Pattern PATTERN_HYPERLINK = PatternsCompat.WEB_URL;
-
     /**
-     * Determine whether this view should find and span hashtags.
+     * Returns true if <b>hashtags</b> in this view are spanned.
      */
     boolean isHashtagEnabled();
 
     /**
-     * Enable or disable hashtag spanning, if not already.
-     */
-    void setHashtagEnabled(boolean enabled);
-
-    /**
-     * Determine whether this view should find and span mentions.
+     * Returns true if <b>mentions</b> in this view are spanned.
      */
     boolean isMentionEnabled();
 
     /**
-     * Enable or disable mention spanning, if not already.
-     */
-    void setMentionEnabled(boolean enabled);
-
-    /**
-     * Determine whether this view should find and span hyperlinks.
+     * Returns true if <b>hyperlinks</b> in this view are spanned.
      */
     boolean isHyperlinkEnabled();
 
     /**
-     * Enable or disable hyperlink spanning, if not already.
+     * Determine whether this view should span <b>hashtags</b>.
+     *
+     * @param enabled True when spanning should be enabled.
+     */
+    void setHashtagEnabled(boolean enabled);
+
+    /**
+     * Determine whether this view should span <b>mentions</b>.
+     *
+     * @param enabled True when spanning should be enabled.
+     */
+    void setMentionEnabled(boolean enabled);
+
+    /**
+     * Determine whether this view should span <b>hyperlinks</b>.
+     *
+     * @param enabled True when spanning should be enabled.
      */
     void setHyperlinkEnabled(boolean enabled);
 
     /**
-     * Color of hashtag spans. Default is color accent of current app theme.
+     * Returns color instance of <b>hashtags</b>, default is color accent of current app theme.
      */
+    @NonNull
     ColorStateList getHashtagColors();
 
+    /**
+     * Returns color instance of <b>mentions</b>, default is color accent of current app theme.
+     */
+    @NonNull
+    ColorStateList getMentionColors();
+
+    /**
+     * Returns color instance of <b>hyperlinks</b>, default is color accent of current app theme.
+     */
+    @NonNull
+    ColorStateList getHyperlinkColors();
+
+    /**
+     * Sets <b>hashtags</b> color instance.
+     *
+     * @param colors Colors state list instance.
+     */
     void setHashtagColors(@NonNull ColorStateList colors);
 
     /**
-     * Color of mention spans. Default is color accent of current app theme.
+     * Sets <b>mentions</b> color instance.
+     *
+     * @param colors Colors state list instance.
      */
-    ColorStateList getMentionColors();
-
     void setMentionColors(@NonNull ColorStateList colors);
 
     /**
-     * Color of hyperlink spans. Default is color accent of current app theme.
+     * Sets <b>hyperlinks</b> color instance.
+     *
+     * @param colors Colors state list instance.
      */
-    ColorStateList getHyperlinkColors();
-
     void setHyperlinkColors(@NonNull ColorStateList colors);
 
     /**
-     * Get and set hashtag color from color integer.
+     * Returns color integer of <b>hashtags</b>, default is color accent of current app theme.
      */
+    @ColorInt
     int getHashtagColor();
 
+    /**
+     * Returns color integer of <b>mentions</b>, default is color accent of current app theme.
+     */
+    @ColorInt
+    int getMentionColor();
+
+    /**
+     * Returns color integer of <b>hyperlinks</b>, default is color accent of current app theme.
+     */
+    @ColorInt
+    int getHyperlinkColor();
+
+    /**
+     * Sets <b>hashtags</b> color integer.
+     *
+     * @param color Color integer.
+     */
     void setHashtagColor(@ColorInt int color);
 
     /**
-     * Get and set mention color from color integer.
+     * Sets <b>mentions</b> color integer.
+     *
+     * @param color Color integer.
      */
-    int getMentionColor();
-
     void setMentionColor(@ColorInt int color);
 
     /**
-     * Get and set hyperlink color from color integer.
+     * Sets <b>hyperlinks</b> color integer.
+     *
+     * @param color Color integer.
      */
-    int getHyperlinkColor();
-
     void setHyperlinkColor(@ColorInt int color);
 
     /**
-     * Register a callback to be invoked when hashtag is clicked.
+     * Registers a callback to be invoked when a <b>hashtag</b> is clicked.
+     *
+     * @param listener The callback that will run.
      */
     void setOnHashtagClickListener(@Nullable OnClickListener listener);
 
     /**
-     * Register a callback to be invoked when mention is clicked.
+     * Registers a callback to be invoked when a <b>mention</b> is clicked.
+     *
+     * @param listener The callback that will run.
      */
     void setOnMentionClickListener(@Nullable OnClickListener listener);
 
     /**
-     * Register a callback to be invoked when hyperlink is clicked.
+     * Registers a callback to be invoked when a <b>hyperlink</b> is clicked.
+     *
+     * @param listener The callback that will run.
      */
     void setOnHyperlinkClickListener(@Nullable OnClickListener listener);
 
     /**
-     * Register a text watcher to be invoked when hashtag is modified.
+     * Registers a text watcher to be invoked when a <b>hashtag</b> is modified.
+     *
+     * @param listener The callback that will run.
      */
     void setHashtagTextChangedListener(@Nullable OnChangedListener listener);
 
     /**
-     * Register a text watcher to be invoked when mention is modified.
+     * Registers a text watcher to be invoked when a <b>mention</b> is modified.
+     *
+     * @param listener The callback that will run.
      */
     void setMentionTextChangedListener(@Nullable OnChangedListener listener);
 
     /**
-     * Obtain all hashtags in current text.
+     * Returns list of all <b>hashtags</b> found in {@link TextView#getText()}.
      */
+    @NonNull
     List<String> getHashtags();
 
     /**
-     * Obtain all mentions in current text.
+     * Returns list of all <b>mentions</b> found in {@link TextView#getText()}.
      */
+    @NonNull
     List<String> getMentions();
 
     /**
-     * Obtain all hyperlinks in current text.
+     * Returns list of all <b>hyperlinks</b> found in {@link TextView#getText()}.
      */
+    @NonNull
     List<String> getHyperlinks();
 
+    /**
+     * Interface definition for a callback to be invoked when a <b>hashtag</b>,
+     * <b>mention</b>, or <b>hyperlink</b> is clicked.
+     */
     interface OnClickListener {
-
+        /**
+         * Called when a text has been clicked.
+         *
+         * @param view The view that the texts belong to.
+         * @param text The text that was clicked.
+         */
         void onClick(@NonNull SocialView view, @NonNull CharSequence text);
     }
 
+    /**
+     * Interface definition for a callback to be invoked when a <b>hashtag</b>,
+     * <b>mention</b>, or <b>hyperlink</b> is modified.
+     */
     interface OnChangedListener {
-
+        /**
+         * Called when a text has been modified.
+         *
+         * @param view The view that the texts belong to.
+         * @param text The text that was modified.
+         */
         void onChanged(@NonNull SocialView view, @NonNull CharSequence text);
     }
 }

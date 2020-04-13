@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
  * Simple optional hashtag data class, use when there is no custom mention class.
  */
 public class Hashtag implements Hashtagable {
-
     private final CharSequence id;
     private final int count;
 

@@ -19,7 +19,6 @@ import com.hendraanggrian.appcompat.socialview.commons.R;
  * {@link android.widget.ArrayAdapter} can be attached to {@link SocialAutoCompleteTextView}.
  */
 public class HashtagArrayAdapter<T extends Hashtagable> extends SocialArrayAdapter<T> {
-
     private final int countPluralRes;
 
     public HashtagArrayAdapter(@NonNull Context context) {

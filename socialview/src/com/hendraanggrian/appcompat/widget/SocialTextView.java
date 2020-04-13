@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.util.AttributeSet;
 
-import com.hendraanggrian.appcompat.internal.SocialViewImpl;
-
-import java.util.List;
-
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+
+import com.hendraanggrian.appcompat.internal.SocialViewHelper;
+
+import java.util.List;
 
 /**
  * {@link android.widget.TextView} with hashtag, mention, and hyperlink support.
@@ -18,7 +19,6 @@ import androidx.appcompat.widget.AppCompatTextView;
  * @see SocialView
  */
 public class SocialTextView extends AppCompatTextView implements SocialView {
-
     private final SocialView impl;
 
     public SocialTextView(Context context) {
@@ -31,7 +31,7 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
 
     public SocialTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        impl = new SocialViewImpl(this, attrs);
+        impl = new SocialViewHelper(this, attrs);
     }
 
     /**
@@ -46,24 +46,8 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
      * {@inheritDoc}
      */
     @Override
-    public void setHashtagEnabled(boolean enabled) {
-        impl.setHashtagEnabled(enabled);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public boolean isMentionEnabled() {
         return impl.isMentionEnabled();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setMentionEnabled(boolean enabled) {
-        impl.setMentionEnabled(enabled);
     }
 
     /**
@@ -78,6 +62,22 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
      * {@inheritDoc}
      */
     @Override
+    public void setHashtagEnabled(boolean enabled) {
+        impl.setHashtagEnabled(enabled);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMentionEnabled(boolean enabled) {
+        impl.setMentionEnabled(enabled);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setHyperlinkEnabled(boolean enabled) {
         impl.setHyperlinkEnabled(enabled);
     }
@@ -85,9 +85,28 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
     /**
      * {@inheritDoc}
      */
+    @NonNull
     @Override
     public ColorStateList getHashtagColors() {
         return impl.getHashtagColors();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @NonNull
+    @Override
+    public ColorStateList getMentionColors() {
+        return impl.getMentionColors();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @NonNull
+    @Override
+    public ColorStateList getHyperlinkColors() {
+        return impl.getHyperlinkColors();
     }
 
     /**
@@ -102,24 +121,8 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
      * {@inheritDoc}
      */
     @Override
-    public ColorStateList getMentionColors() {
-        return impl.getMentionColors();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setMentionColors(@NonNull ColorStateList colors) {
         impl.setMentionColors(colors);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ColorStateList getHyperlinkColors() {
-        return impl.getHyperlinkColors();
     }
 
     /**
@@ -133,22 +136,16 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
     /**
      * {@inheritDoc}
      */
+    @ColorInt
     @Override
     public int getHashtagColor() {
-        return impl.getHyperlinkColor();
+        return impl.getHashtagColor();
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void setHashtagColor(int color) {
-        impl.setHyperlinkColor(color);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
+    @ColorInt
     @Override
     public int getMentionColor() {
         return impl.getMentionColor();
@@ -157,17 +154,26 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
     /**
      * {@inheritDoc}
      */
+    @ColorInt
     @Override
-    public void setMentionColor(int color) {
-        impl.setMentionColor(color);
+    public int getHyperlinkColor() {
+        return impl.getHyperlinkColor();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getHyperlinkColor() {
-        return impl.getHyperlinkColor();
+    public void setHashtagColor(int color) {
+        impl.setHashtagColor(color);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMentionColor(int color) {
+        impl.setMentionColor(color);
     }
 
     /**
@@ -221,6 +227,7 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
     /**
      * {@inheritDoc}
      */
+    @NonNull
     @Override
     public List<String> getHashtags() {
         return impl.getHashtags();
@@ -229,6 +236,7 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
     /**
      * {@inheritDoc}
      */
+    @NonNull
     @Override
     public List<String> getMentions() {
         return impl.getMentions();
@@ -237,6 +245,7 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
     /**
      * {@inheritDoc}
      */
+    @NonNull
     @Override
     public List<String> getHyperlinks() {
         return impl.getHyperlinks();

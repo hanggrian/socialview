@@ -20,7 +20,6 @@ import java.util.Locale;
  * which are optional adapters.
  */
 public abstract class SocialArrayAdapter<T> extends ArrayAdapter<T> {
-
     private Filter filter;
     private final List<T> tempItems = new ArrayList<>();
 

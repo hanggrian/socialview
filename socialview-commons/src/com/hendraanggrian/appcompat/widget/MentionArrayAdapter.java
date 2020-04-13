@@ -35,7 +35,6 @@ import java.io.File;
  * {@link android.widget.ArrayAdapter} can be attached to {@link SocialAutoCompleteTextView}.
  */
 public class MentionArrayAdapter<T extends Mentionable> extends SocialArrayAdapter<T> {
-
     private final int defaultAvatar;
 
     public MentionArrayAdapter(@NonNull Context context) {
@@ -118,7 +117,6 @@ public class MentionArrayAdapter<T extends Mentionable> extends SocialArrayAdapt
     }
 
     private static class CropCircleTransformation implements Transformation {
-
         @Override
         public Bitmap transform(Bitmap source) {
             final int size = Math.min(source.getWidth(), source.getHeight());

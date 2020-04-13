@@ -1,3 +1,4 @@
-include(RELEASE_ARTIFACT)
-include("$RELEASE_ARTIFACT-commons")
+include("socialview")
+include("socialview-commons")
+
 include("demo")

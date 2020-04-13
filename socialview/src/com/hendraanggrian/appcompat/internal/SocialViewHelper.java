@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.PatternsCompat;
 
 import com.hendraanggrian.appcompat.socialview.R;
 import com.hendraanggrian.appcompat.widget.SocialView;
@@ -29,7 +30,14 @@ import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class SocialViewImpl implements SocialView {
+public final class SocialViewHelper implements SocialView {
+    private static final int FLAG_HASHTAG = 1;
+    private static final int FLAG_MENTION = 2;
+    private static final int FLAG_HYPERLINK = 4;
+
+    private final Pattern PATTERN_HASHTAG = Pattern.compile("#(\\w+)");
+    private final Pattern PATTERN_MENTION = Pattern.compile("@(\\w+)");
+    private final Pattern PATTERN_HYPERLINK = PatternsCompat.WEB_URL;
 
     private int flags;
     private final TextView view;
@@ -64,11 +72,11 @@ public final class SocialViewImpl implements SocialView {
                             hashtagEditing = false;
                             mentionEditing = false;
                         } else if (hashtagChangedListener != null && hashtagEditing) {
-                            hashtagChangedListener.onChanged(SocialViewImpl.this, s.subSequence(
+                            hashtagChangedListener.onChanged(SocialViewHelper.this, s.subSequence(
                                 indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start
                             ));
                         } else if (mentionChangedListener != null && mentionEditing) {
-                            mentionChangedListener.onChanged(SocialViewImpl.this, s.subSequence(
+                            mentionChangedListener.onChanged(SocialViewHelper.this, s.subSequence(
                                 indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start
                             ));
                         }
@@ -103,11 +111,11 @@ public final class SocialViewImpl implements SocialView {
                             hashtagEditing = false;
                             mentionEditing = false;
                         } else if (hashtagChangedListener != null && hashtagEditing) {
-                            hashtagChangedListener.onChanged(SocialViewImpl.this, s.subSequence(
+                            hashtagChangedListener.onChanged(SocialViewHelper.this, s.subSequence(
                                 indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count
                             ));
                         } else if (mentionChangedListener != null && mentionEditing) {
-                            mentionChangedListener.onChanged(SocialViewImpl.this, s.subSequence(
+                            mentionChangedListener.onChanged(SocialViewHelper.this, s.subSequence(
                                 indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count
                             ));
                         }
@@ -121,7 +129,7 @@ public final class SocialViewImpl implements SocialView {
         }
     };
 
-    public SocialViewImpl(@NonNull TextView textView, @Nullable AttributeSet attrs) {
+    public SocialViewHelper(@NonNull TextView textView, @Nullable AttributeSet attrs) {
         view = textView;
         view.addTextChangedListener(textWatcher);
         view.setText(view.getText(), TextView.BufferType.SPANNABLE);
@@ -187,6 +195,7 @@ public final class SocialViewImpl implements SocialView {
         }
     }
 
+    @NonNull
     @Override
     public ColorStateList getHashtagColors() {
         return hashtagColors;
@@ -198,6 +207,7 @@ public final class SocialViewImpl implements SocialView {
         colorize();
     }
 
+    @NonNull
     @Override
     public ColorStateList getMentionColors() {
         return mentionColors;
@@ -209,6 +219,7 @@ public final class SocialViewImpl implements SocialView {
         colorize();
     }
 
+    @NonNull
     @Override
     public ColorStateList getHyperlinkColors() {
         return hyperlinkColors;
@@ -281,16 +292,19 @@ public final class SocialViewImpl implements SocialView {
         mentionChangedListener = listener;
     }
 
+    @NonNull
     @Override
     public List<String> getHashtags() {
         return extract(PATTERN_HASHTAG);
     }
 
+    @NonNull
     @Override
     public List<String> getMentions() {
         return extract(PATTERN_MENTION);
     }
 
+    @NonNull
     @Override
     public List<String> getHyperlinks() {
         return extract(PATTERN_HYPERLINK);
@@ -427,7 +441,7 @@ public final class SocialViewImpl implements SocialView {
         @Override
         public void onClick(@NonNull View widget) {
             listener.onClick(
-                SocialViewImpl.this,
+                SocialViewHelper.this,
                 listener != hyperlinkClickListener
                     ? text.subSequence(1, text.length())
                     : text
