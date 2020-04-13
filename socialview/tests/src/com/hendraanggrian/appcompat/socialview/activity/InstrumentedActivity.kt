@@ -7,7 +7,6 @@ import com.hendraanggrian.appcompat.socialview.test.R
 import com.hendraanggrian.appcompat.widget.SocialEditText
 
 open class InstrumentedActivity : AppCompatActivity() {
-
     lateinit var progressBar: ProgressBar
     lateinit var editText: SocialEditText
 

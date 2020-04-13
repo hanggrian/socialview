@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.hendraanggrian.appcompat.socialview.Hashtag
-import com.hendraanggrian.appcompat.socialview.Mention
+import com.hendraanggrian.appcompat.widget.Hashtag
+import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import com.hendraanggrian.appcompat.widget.SocialArrayAdapter
@@ -32,8 +32,14 @@ class DemoActivity : AppCompatActivity() {
         defaultHashtagAdapter = HashtagArrayAdapter(this)
         defaultHashtagAdapter.addAll(
             Hashtag(getString(R.string.hashtag1)),
-            Hashtag(getString(R.string.hashtag2), resources.getInteger(R.integer.hashtag2)),
-            Hashtag(getString(R.string.hashtag3), resources.getInteger(R.integer.hashtag3))
+            Hashtag(
+                getString(R.string.hashtag2),
+                resources.getInteger(R.integer.hashtag2)
+            ),
+            Hashtag(
+                getString(R.string.hashtag3),
+                resources.getInteger(R.integer.hashtag3)
+            )
         )
 
         defaultMentionAdapter = MentionArrayAdapter(this)

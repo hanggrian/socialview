@@ -20,7 +20,6 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.hendraanggrian.appcompat.socialview.Mentionable;
 import com.hendraanggrian.appcompat.socialview.commons.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;

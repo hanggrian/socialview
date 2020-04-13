@@ -9,9 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 
-import com.hendraanggrian.appcompat.internal.SocialViewHelper;
-
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * {@link android.widget.EditText} with hashtag, mention, and hyperlink support.
@@ -19,7 +18,7 @@ import java.util.List;
  * @see SocialView
  */
 public class SocialEditText extends AppCompatEditText implements SocialView {
-    private final SocialView impl;
+    private final SocialViewHelper helper;
 
     public SocialEditText(Context context) {
         this(context, null);
@@ -31,7 +30,31 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
 
     public SocialEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        impl = new SocialViewHelper(this, attrs);
+        helper = new SocialViewHelper(this, attrs);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setHashtagPattern(@Nullable Pattern pattern) {
+        helper.setHashtagPattern(pattern);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMentionPattern(@Nullable Pattern pattern) {
+        helper.setMentionPattern(pattern);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setHyperlinkPattern(@Nullable Pattern pattern) {
+        helper.setHyperlinkPattern(pattern);
     }
 
     /**
@@ -39,7 +62,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public boolean isHashtagEnabled() {
-        return impl.isHashtagEnabled();
+        return helper.isHashtagEnabled();
     }
 
     /**
@@ -47,7 +70,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public boolean isMentionEnabled() {
-        return impl.isMentionEnabled();
+        return helper.isMentionEnabled();
     }
 
     /**
@@ -55,7 +78,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public boolean isHyperlinkEnabled() {
-        return impl.isHyperlinkEnabled();
+        return helper.isHyperlinkEnabled();
     }
 
     /**
@@ -63,7 +86,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setHashtagEnabled(boolean enabled) {
-        impl.setHashtagEnabled(enabled);
+        helper.setHashtagEnabled(enabled);
     }
 
     /**
@@ -71,7 +94,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setMentionEnabled(boolean enabled) {
-        impl.setMentionEnabled(enabled);
+        helper.setMentionEnabled(enabled);
     }
 
     /**
@@ -79,7 +102,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setHyperlinkEnabled(boolean enabled) {
-        impl.setHyperlinkEnabled(enabled);
+        helper.setHyperlinkEnabled(enabled);
     }
 
     /**
@@ -88,7 +111,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
     @NonNull
     @Override
     public ColorStateList getHashtagColors() {
-        return impl.getHashtagColors();
+        return helper.getHashtagColors();
     }
 
     /**
@@ -97,7 +120,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
     @NonNull
     @Override
     public ColorStateList getMentionColors() {
-        return impl.getMentionColors();
+        return helper.getMentionColors();
     }
 
     /**
@@ -106,7 +129,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
     @NonNull
     @Override
     public ColorStateList getHyperlinkColors() {
-        return impl.getHyperlinkColors();
+        return helper.getHyperlinkColors();
     }
 
     /**
@@ -114,7 +137,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setHashtagColors(@NonNull ColorStateList colors) {
-        impl.setHashtagColors(colors);
+        helper.setHashtagColors(colors);
     }
 
     /**
@@ -122,7 +145,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setMentionColors(@NonNull ColorStateList colors) {
-        impl.setMentionColors(colors);
+        helper.setMentionColors(colors);
     }
 
     /**
@@ -130,7 +153,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setHyperlinkColors(@NonNull ColorStateList colors) {
-        impl.setHyperlinkColors(colors);
+        helper.setHyperlinkColors(colors);
     }
 
     /**
@@ -139,7 +162,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
     @ColorInt
     @Override
     public int getHashtagColor() {
-        return impl.getHashtagColor();
+        return helper.getHashtagColor();
     }
 
     /**
@@ -148,7 +171,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
     @ColorInt
     @Override
     public int getMentionColor() {
-        return impl.getMentionColor();
+        return helper.getMentionColor();
     }
 
     /**
@@ -157,7 +180,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
     @ColorInt
     @Override
     public int getHyperlinkColor() {
-        return impl.getHyperlinkColor();
+        return helper.getHyperlinkColor();
     }
 
     /**
@@ -165,7 +188,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setHashtagColor(int color) {
-        impl.setHashtagColor(color);
+        helper.setHashtagColor(color);
     }
 
     /**
@@ -173,7 +196,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setMentionColor(int color) {
-        impl.setMentionColor(color);
+        helper.setMentionColor(color);
     }
 
     /**
@@ -181,7 +204,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setHyperlinkColor(int color) {
-        impl.setHyperlinkColor(color);
+        helper.setHyperlinkColor(color);
     }
 
     /**
@@ -189,7 +212,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setOnHashtagClickListener(@Nullable SocialView.OnClickListener listener) {
-        impl.setOnHashtagClickListener(listener);
+        helper.setOnHashtagClickListener(listener);
     }
 
     /**
@@ -197,7 +220,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setOnMentionClickListener(@Nullable SocialView.OnClickListener listener) {
-        impl.setOnMentionClickListener(listener);
+        helper.setOnMentionClickListener(listener);
     }
 
     /**
@@ -205,7 +228,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setOnHyperlinkClickListener(@Nullable SocialView.OnClickListener listener) {
-        impl.setOnHyperlinkClickListener(listener);
+        helper.setOnHyperlinkClickListener(listener);
     }
 
     /**
@@ -213,7 +236,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setHashtagTextChangedListener(@Nullable OnChangedListener listener) {
-        impl.setHashtagTextChangedListener(listener);
+        helper.setHashtagTextChangedListener(listener);
     }
 
     /**
@@ -221,7 +244,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      */
     @Override
     public void setMentionTextChangedListener(@Nullable OnChangedListener listener) {
-        impl.setMentionTextChangedListener(listener);
+        helper.setMentionTextChangedListener(listener);
     }
 
     /**
@@ -230,7 +253,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
     @NonNull
     @Override
     public List<String> getHashtags() {
-        return impl.getHashtags();
+        return helper.getHashtags();
     }
 
     /**
@@ -239,7 +262,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
     @NonNull
     @Override
     public List<String> getMentions() {
-        return impl.getMentions();
+        return helper.getMentions();
     }
 
     /**
@@ -248,6 +271,6 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
     @NonNull
     @Override
     public List<String> getHyperlinks() {
-        return impl.getHyperlinks();
+        return helper.getHyperlinks();
     }
 }

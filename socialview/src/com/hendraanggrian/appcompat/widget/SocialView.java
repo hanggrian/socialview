@@ -6,10 +6,10 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.hendraanggrian.appcompat.internal.SocialViewHelper;
+import androidx.core.util.PatternsCompat;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Base interface of all social widgets, which usually derived from {@link android.widget.TextView}.
@@ -20,9 +20,33 @@ import java.util.List;
 public interface SocialView {
 
     /**
+     * Modify regex that are responsible for finding <b>hashtags</b>.
+     * By default, the pattern are {@code #(\w+)}.
+     *
+     * @param pattern custom regex. When null, default pattern will be used.
+     */
+    void setHashtagPattern(@Nullable Pattern pattern);
+
+    /**
+     * Modify regex that are responsible for finding <b>hashtags</b>.
+     * By default, the pattern are {@code @(\w+)}.
+     *
+     * @param pattern custom regex. When null, default pattern will be used.
+     */
+    void setMentionPattern(@Nullable Pattern pattern);
+
+    /**
+     * Modify regex that are responsible for finding <b>hashtags</b>.
+     * By default, the pattern are {@link PatternsCompat#WEB_URL}.
+     *
+     * @param pattern custom regex. When null, default pattern will be used.
+     */
+    void setHyperlinkPattern(@Nullable Pattern pattern);
+
+    /**
      * Returns true if <b>hashtags</b> in this view are spanned.
      */
-    boolean isHashtagEnabled();
+    boolean  isHashtagEnabled();
 
     /**
      * Returns true if <b>mentions</b> in this view are spanned.
@@ -57,18 +81,21 @@ public interface SocialView {
 
     /**
      * Returns color instance of <b>hashtags</b>, default is color accent of current app theme.
+     * Will still return corresponding color even when {@link #isHashtagEnabled()} is false.
      */
     @NonNull
     ColorStateList getHashtagColors();
 
     /**
      * Returns color instance of <b>mentions</b>, default is color accent of current app theme.
+     * Will still return corresponding color even when {@link #isMentionEnabled()} ()} is false.
      */
     @NonNull
     ColorStateList getMentionColors();
 
     /**
      * Returns color instance of <b>hyperlinks</b>, default is color accent of current app theme.
+     * Will still return corresponding color even when {@link #isHyperlinkEnabled()} ()} is false.
      */
     @NonNull
     ColorStateList getHyperlinkColors();
@@ -95,19 +122,25 @@ public interface SocialView {
     void setHyperlinkColors(@NonNull ColorStateList colors);
 
     /**
-     * Returns color integer of <b>hashtags</b>, default is color accent of current app theme.
+     * Returns color integer of <b>hashtags</b>.
+     *
+     * @see #getHashtagColors()
      */
     @ColorInt
     int getHashtagColor();
 
     /**
-     * Returns color integer of <b>mentions</b>, default is color accent of current app theme.
+     * Returns color integer of <b>mentions</b>.
+     *
+     * @see #getMentionColors()
      */
     @ColorInt
     int getMentionColor();
 
     /**
-     * Returns color integer of <b>hyperlinks</b>, default is color accent of current app theme.
+     * Returns color integer of <b>hyperlinks</b>.
+     *
+     * @see #getHyperlinkColors()
      */
     @ColorInt
     int getHyperlinkColor();
@@ -116,6 +149,7 @@ public interface SocialView {
      * Sets <b>hashtags</b> color integer.
      *
      * @param color Color integer.
+     * @see #setHashtagColors(ColorStateList)
      */
     void setHashtagColor(@ColorInt int color);
 
@@ -123,6 +157,7 @@ public interface SocialView {
      * Sets <b>mentions</b> color integer.
      *
      * @param color Color integer.
+     * @see #setMentionColors(ColorStateList)
      */
     void setMentionColor(@ColorInt int color);
 
@@ -130,6 +165,7 @@ public interface SocialView {
      * Sets <b>hyperlinks</b> color integer.
      *
      * @param color Color integer.
+     * @see #setHyperlinkColors(ColorStateList)
      */
     void setHyperlinkColor(@ColorInt int color);
 

@@ -1,4 +1,4 @@
-package com.hendraanggrian.appcompat.internal;
+package com.hendraanggrian.appcompat.widget;
 
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -22,7 +22,6 @@ import androidx.annotation.Nullable;
 import androidx.core.util.PatternsCompat;
 
 import com.hendraanggrian.appcompat.socialview.R;
-import com.hendraanggrian.appcompat.widget.SocialView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +29,23 @@ import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Utility class to help implement {@link SocialView} on any {@link TextView}-based class.
+ */
 public final class SocialViewHelper implements SocialView {
     private static final int FLAG_HASHTAG = 1;
     private static final int FLAG_MENTION = 2;
     private static final int FLAG_HYPERLINK = 4;
 
-    private final Pattern PATTERN_HASHTAG = Pattern.compile("#(\\w+)");
-    private final Pattern PATTERN_MENTION = Pattern.compile("@(\\w+)");
-    private final Pattern PATTERN_HYPERLINK = PatternsCompat.WEB_URL;
+    private static final Pattern PATTERN_HASHTAG = Pattern.compile("#(\\w+)");
+    private static final Pattern PATTERN_MENTION = Pattern.compile("@(\\w+)");
+    private static final Pattern PATTERN_HYPERLINK = PatternsCompat.WEB_URL;
 
     private int flags;
+    private Pattern hashtagPattern = PATTERN_HASHTAG;
+    private Pattern mentionPattern = PATTERN_MENTION;
+    private Pattern hyperlinkPattern = PATTERN_HYPERLINK;
+
     private final TextView view;
     private ColorStateList hashtagColors;
     private ColorStateList mentionColors;
@@ -134,20 +140,29 @@ public final class SocialViewHelper implements SocialView {
         view.addTextChangedListener(textWatcher);
         view.setText(view.getText(), TextView.BufferType.SPANNABLE);
         final TypedArray a = view.getContext().obtainStyledAttributes(
-            attrs,
-            R.styleable.SocialView,
-            R.attr.socialViewStyle,
-            R.style.Widget_SocialView
+            attrs, R.styleable.SocialView, R.attr.socialViewStyle, R.style.Widget_SocialView
         );
-        flags = a.getInteger(
-            R.styleable.SocialView_socialFlags,
-            FLAG_HASHTAG | FLAG_MENTION | FLAG_HYPERLINK
-        );
+        flags = a.getInteger(R.styleable.SocialView_socialFlags, FLAG_HASHTAG | FLAG_MENTION | FLAG_HYPERLINK);
         hashtagColors = a.getColorStateList(R.styleable.SocialView_hashtagColor);
         mentionColors = a.getColorStateList(R.styleable.SocialView_mentionColor);
         hyperlinkColors = a.getColorStateList(R.styleable.SocialView_hyperlinkColor);
         a.recycle();
         colorize();
+    }
+
+    @Override
+    public void setHashtagPattern(@Nullable Pattern pattern) {
+        hashtagPattern = pattern != null ? pattern : PATTERN_HASHTAG;
+    }
+
+    @Override
+    public void setMentionPattern(@Nullable Pattern pattern) {
+        mentionPattern = pattern != null ? pattern : PATTERN_MENTION;
+    }
+
+    @Override
+    public void setHyperlinkPattern(@Nullable Pattern pattern) {
+        hyperlinkPattern = pattern != null ? pattern : PATTERN_HYPERLINK;
     }
 
     @Override
@@ -158,9 +173,7 @@ public final class SocialViewHelper implements SocialView {
     @Override
     public void setHashtagEnabled(boolean enabled) {
         if (enabled != isHashtagEnabled()) {
-            flags = enabled
-                ? flags | FLAG_HASHTAG
-                : flags & (~FLAG_HASHTAG);
+            flags = enabled ? flags | FLAG_HASHTAG : flags & (~FLAG_HASHTAG);
             colorize();
         }
     }
@@ -173,9 +186,7 @@ public final class SocialViewHelper implements SocialView {
     @Override
     public void setMentionEnabled(boolean enabled) {
         if (enabled != isMentionEnabled()) {
-            flags = enabled
-                ? flags | FLAG_MENTION
-                : flags & (~FLAG_MENTION);
+            flags = enabled ? flags | FLAG_MENTION : flags & (~FLAG_MENTION);
             colorize();
         }
     }
@@ -188,9 +199,7 @@ public final class SocialViewHelper implements SocialView {
     @Override
     public void setHyperlinkEnabled(boolean enabled) {
         if (enabled != isHyperlinkEnabled()) {
-            flags = enabled
-                ? flags | FLAG_HYPERLINK
-                : flags & (~FLAG_HYPERLINK);
+            flags = enabled ? flags | FLAG_HYPERLINK : flags & (~FLAG_HYPERLINK);
             colorize();
         }
     }
@@ -295,19 +304,19 @@ public final class SocialViewHelper implements SocialView {
     @NonNull
     @Override
     public List<String> getHashtags() {
-        return extract(PATTERN_HASHTAG);
+        return extract(hashtagPattern);
     }
 
     @NonNull
     @Override
     public List<String> getMentions() {
-        return extract(PATTERN_MENTION);
+        return extract(mentionPattern);
     }
 
     @NonNull
     @Override
     public List<String> getHyperlinks() {
-        return extract(PATTERN_HYPERLINK);
+        return extract(hyperlinkPattern);
     }
 
     private void colorize() {
@@ -321,10 +330,7 @@ public final class SocialViewHelper implements SocialView {
             spannable.removeSpan(span);
         }
         if (isHashtagEnabled()) {
-            span(
-                PATTERN_HASHTAG,
-                spannable,
-                new Callable<Object>() {
+            span(hashtagPattern, spannable, new Callable<Object>() {
                     @Override
                     public Object call() {
                         return hashtagClickListener != null
@@ -335,10 +341,7 @@ public final class SocialViewHelper implements SocialView {
             );
         }
         if (isMentionEnabled()) {
-            span(
-                PATTERN_MENTION,
-                spannable,
-                new Callable<Object>() {
+            span(mentionPattern, spannable, new Callable<Object>() {
                     @Override
                     public Object call() {
                         return mentionClickListener != null
@@ -349,10 +352,7 @@ public final class SocialViewHelper implements SocialView {
             );
         }
         if (isHyperlinkEnabled()) {
-            span(
-                PATTERN_HYPERLINK,
-                spannable,
-                new Callable<Object>() {
+            span(hyperlinkPattern, spannable, new Callable<Object>() {
                     @Override
                     public Object call() {
                         return hyperlinkClickListener != null
@@ -381,7 +381,7 @@ public final class SocialViewHelper implements SocialView {
         final List<String> list = new ArrayList<>();
         final Matcher matcher = pattern.matcher(view.getText());
         while (matcher.find()) {
-            list.add(matcher.group(pattern != PATTERN_HYPERLINK
+            list.add(matcher.group(pattern != hyperlinkPattern
                 ? 1 // remove hashtag and mention symbol
                 : 0));
         }
@@ -406,11 +406,7 @@ public final class SocialViewHelper implements SocialView {
         return start;
     }
 
-    private static void span(
-        Pattern pattern,
-        Spannable spannable,
-        Callable<Object> spanCallable
-    ) {
+    private static void span(Pattern pattern, Spannable spannable, Callable<Object> spanCallable) {
         final Matcher matcher = pattern.matcher(spannable);
         while (matcher.find()) {
             final int start = matcher.start();
@@ -440,11 +436,9 @@ public final class SocialViewHelper implements SocialView {
 
         @Override
         public void onClick(@NonNull View widget) {
-            listener.onClick(
-                SocialViewHelper.this,
-                listener != hyperlinkClickListener
-                    ? text.subSequence(1, text.length())
-                    : text
+            listener.onClick(SocialViewHelper.this, listener != hyperlinkClickListener
+                ? text.subSequence(1, text.length())
+                : text
             );
         }
 

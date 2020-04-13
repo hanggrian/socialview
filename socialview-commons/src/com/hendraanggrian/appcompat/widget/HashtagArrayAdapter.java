@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.PluralsRes;
 
-import com.hendraanggrian.appcompat.socialview.Hashtagable;
 import com.hendraanggrian.appcompat.socialview.commons.R;
 
 /**

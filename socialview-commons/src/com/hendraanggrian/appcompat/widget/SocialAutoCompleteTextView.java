@@ -16,11 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView;
 
-import com.hendraanggrian.appcompat.internal.SocialViewHelper;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * {@link android.widget.MultiAutoCompleteTextView} with hashtag, mention, and hyperlink support.
@@ -28,7 +27,7 @@ import java.util.List;
  * @see SocialView
  */
 public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextView implements SocialView {
-    private final SocialView impl;
+    private final SocialViewHelper helper;
 
     // TODO: should check for symbols closest to cursor, not s[start]
     @SuppressWarnings("FieldCanBeLocal")
@@ -73,7 +72,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
 
     public SocialAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        impl = new SocialViewHelper(this, attrs);
+        helper = new SocialViewHelper(this, attrs);
         addTextChangedListener(textWatcher);
         setTokenizer(new CharTokenizer());
     }
@@ -100,8 +99,32 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      * {@inheritDoc}
      */
     @Override
+    public void setHashtagPattern(@Nullable Pattern pattern) {
+        helper.setHashtagPattern(pattern);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMentionPattern(@Nullable Pattern pattern) {
+        helper.setMentionPattern(pattern);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setHyperlinkPattern(@Nullable Pattern pattern) {
+        helper.setHyperlinkPattern(pattern);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isHashtagEnabled() {
-        return impl.isHashtagEnabled();
+        return helper.isHashtagEnabled();
     }
 
     /**
@@ -109,7 +132,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public boolean isMentionEnabled() {
-        return impl.isMentionEnabled();
+        return helper.isMentionEnabled();
     }
 
     /**
@@ -117,7 +140,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public boolean isHyperlinkEnabled() {
-        return impl.isHyperlinkEnabled();
+        return helper.isHyperlinkEnabled();
     }
 
     /**
@@ -125,7 +148,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setHashtagEnabled(boolean enabled) {
-        impl.setHashtagEnabled(enabled);
+        helper.setHashtagEnabled(enabled);
         setTokenizer(new CharTokenizer());
     }
 
@@ -134,7 +157,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setMentionEnabled(boolean enabled) {
-        impl.setMentionEnabled(enabled);
+        helper.setMentionEnabled(enabled);
         setTokenizer(new CharTokenizer());
     }
 
@@ -143,7 +166,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setHyperlinkEnabled(boolean enabled) {
-        impl.setHyperlinkEnabled(enabled);
+        helper.setHyperlinkEnabled(enabled);
     }
 
     /**
@@ -152,7 +175,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     @NonNull
     @Override
     public ColorStateList getHashtagColors() {
-        return impl.getHashtagColors();
+        return helper.getHashtagColors();
     }
 
     /**
@@ -161,7 +184,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     @NonNull
     @Override
     public ColorStateList getMentionColors() {
-        return impl.getMentionColors();
+        return helper.getMentionColors();
     }
 
     /**
@@ -170,7 +193,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     @NonNull
     @Override
     public ColorStateList getHyperlinkColors() {
-        return impl.getHyperlinkColors();
+        return helper.getHyperlinkColors();
     }
 
     /**
@@ -178,7 +201,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setHashtagColors(@NonNull ColorStateList colors) {
-        impl.setHashtagColors(colors);
+        helper.setHashtagColors(colors);
     }
 
     /**
@@ -186,7 +209,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setMentionColors(@NonNull ColorStateList colors) {
-        impl.setMentionColors(colors);
+        helper.setMentionColors(colors);
     }
 
     /**
@@ -194,7 +217,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setHyperlinkColors(@NonNull ColorStateList colors) {
-        impl.setHyperlinkColors(colors);
+        helper.setHyperlinkColors(colors);
     }
 
     /**
@@ -203,7 +226,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     @ColorInt
     @Override
     public int getHashtagColor() {
-        return impl.getHashtagColor();
+        return helper.getHashtagColor();
     }
 
     /**
@@ -212,7 +235,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     @ColorInt
     @Override
     public int getMentionColor() {
-        return impl.getMentionColor();
+        return helper.getMentionColor();
     }
 
     /**
@@ -221,7 +244,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     @ColorInt
     @Override
     public int getHyperlinkColor() {
-        return impl.getHyperlinkColor();
+        return helper.getHyperlinkColor();
     }
 
     /**
@@ -229,7 +252,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setHashtagColor(int color) {
-        impl.setHashtagColor(color);
+        helper.setHashtagColor(color);
     }
 
     /**
@@ -237,7 +260,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setMentionColor(int color) {
-        impl.setMentionColor(color);
+        helper.setMentionColor(color);
     }
 
     /**
@@ -245,7 +268,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setHyperlinkColor(int color) {
-        impl.setHyperlinkColor(color);
+        helper.setHyperlinkColor(color);
     }
 
     /**
@@ -253,7 +276,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setOnHashtagClickListener(@Nullable SocialView.OnClickListener listener) {
-        impl.setOnHashtagClickListener(listener);
+        helper.setOnHashtagClickListener(listener);
     }
 
     /**
@@ -261,7 +284,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setOnMentionClickListener(@Nullable SocialView.OnClickListener listener) {
-        impl.setOnMentionClickListener(listener);
+        helper.setOnMentionClickListener(listener);
     }
 
     /**
@@ -269,7 +292,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setOnHyperlinkClickListener(@Nullable SocialView.OnClickListener listener) {
-        impl.setOnHyperlinkClickListener(listener);
+        helper.setOnHyperlinkClickListener(listener);
     }
 
     /**
@@ -277,7 +300,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setHashtagTextChangedListener(@Nullable OnChangedListener listener) {
-        impl.setHashtagTextChangedListener(listener);
+        helper.setHashtagTextChangedListener(listener);
     }
 
     /**
@@ -285,7 +308,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
      */
     @Override
     public void setMentionTextChangedListener(@Nullable OnChangedListener listener) {
-        impl.setMentionTextChangedListener(listener);
+        helper.setMentionTextChangedListener(listener);
     }
 
     /**
@@ -294,7 +317,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     @NonNull
     @Override
     public List<String> getHashtags() {
-        return impl.getHashtags();
+        return helper.getHashtags();
     }
 
     /**
@@ -303,7 +326,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     @NonNull
     @Override
     public List<String> getMentions() {
-        return impl.getMentions();
+        return helper.getMentions();
     }
 
     /**
@@ -312,7 +335,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     @NonNull
     @Override
     public List<String> getHyperlinks() {
-        return impl.getHyperlinks();
+        return helper.getHyperlinks();
     }
 
     /**

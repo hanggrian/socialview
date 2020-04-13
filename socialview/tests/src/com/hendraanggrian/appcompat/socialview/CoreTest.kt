@@ -21,9 +21,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class CoreTest : AbstractTest() {
 
-    @Rule
-    @JvmField
-    var rule = ActivityTestRule(InstrumentedActivity::class.java)
+    @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
     @Test
     fun introduction() {

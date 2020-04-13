@@ -1,4 +1,4 @@
-package com.hendraanggrian.appcompat.socialview;
+package com.hendraanggrian.appcompat.widget;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

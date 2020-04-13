@@ -15,8 +15,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import com.hendraanggrian.appcompat.socialview.Hashtag
-import com.hendraanggrian.appcompat.socialview.Mention
+import com.hendraanggrian.appcompat.widget.Hashtag
+import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.socialview.commons.activity.InstrumentedActivity
 import com.hendraanggrian.appcompat.socialview.commons.test.R
 import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter
@@ -45,7 +45,8 @@ class InstrumentedTest {
                         adapter.addAll(
                             Hashtag("follow"),
                             Hashtag("followme", 1000),
-                            Hashtag("followmeorillkillyou", 500))
+                            Hashtag("followmeorillkillyou", 500)
+                        )
                         (view as SocialAutoCompleteTextView).hashtagAdapter = adapter
                     }
                 },
@@ -66,9 +67,16 @@ class InstrumentedTest {
                         val adapter = MentionArrayAdapter<Mention>(view.context)
                         adapter.addAll(
                             Mention("dirtyhobo"),
-                            Mention("hobo", "Regular Hobo", android.R.drawable.ic_btn_speak_now),
-                            Mention("hendraanggrian", "Hendra Anggrian",
-                                "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4"))
+                            Mention(
+                                "hobo",
+                                "Regular Hobo",
+                                android.R.drawable.ic_btn_speak_now
+                            ),
+                            Mention(
+                                "hendraanggrian", "Hendra Anggrian",
+                                "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4"
+                            )
+                        )
                         (view as SocialAutoCompleteTextView).mentionAdapter = adapter
                         view.threshold = 1
                     }

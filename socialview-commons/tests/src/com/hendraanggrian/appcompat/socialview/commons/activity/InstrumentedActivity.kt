@@ -7,7 +7,6 @@ import com.hendraanggrian.appcompat.socialview.commons.test.R
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
 
 class InstrumentedActivity : AppCompatActivity() {
-
     lateinit var progressBar: ProgressBar
     lateinit var textView: SocialAutoCompleteTextView
 

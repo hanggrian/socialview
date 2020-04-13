@@ -22,9 +22,7 @@ import org.junit.runner.RunWith
 @LargeTest
 class PatternTest : AbstractTest() {
 
-    @Rule
-    @JvmField
-    var rule = ActivityTestRule(InstrumentedActivity::class.java)
+    @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
     private val names = StringBuilder()
         .appendln("@HendraAnggrian")
@@ -49,8 +47,7 @@ class PatternTest : AbstractTest() {
         .appendln("@Саша")
         .toString()
 
-    @Test
-    fun default() {
+    @Test fun default() {
         onView(withId(R.id.editText)).perform(
             replaceText(names),
             toast("default"),
