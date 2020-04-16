@@ -1,4 +1,4 @@
-package com.hendraanggrian.appcompat.socialview.demo;
+package com.example.socialview;
 
 import android.content.Context;
 import android.os.Bundle;

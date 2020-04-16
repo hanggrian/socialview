@@ -98,6 +98,33 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     /**
      * {@inheritDoc}
      */
+    @NonNull
+    @Override
+    public Pattern getHashtagPattern() {
+        return helper.getHashtagPattern();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @NonNull
+    @Override
+    public Pattern getMentionPattern() {
+        return helper.getMentionPattern();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @NonNull
+    @Override
+    public Pattern getHyperlinkPattern() {
+        return helper.getHyperlinkPattern();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setHashtagPattern(@Nullable Pattern pattern) {
         helper.setHashtagPattern(pattern);

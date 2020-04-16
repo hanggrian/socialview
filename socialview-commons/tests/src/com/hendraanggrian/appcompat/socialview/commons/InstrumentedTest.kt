@@ -12,33 +12,30 @@ import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
-import com.hendraanggrian.appcompat.widget.Hashtag
-import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.socialview.commons.activity.InstrumentedActivity
 import com.hendraanggrian.appcompat.socialview.commons.test.R
+import com.hendraanggrian.appcompat.widget.Hashtag
 import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter
+import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
 import org.junit.Rule
-import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.Test
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class InstrumentedTest {
-
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
     @Test fun hashtag() {
         onView(withId(R.id.textView))
             .perform(
                 object : ViewAction {
-                    override fun getConstraints() =
-                        isAssignableFrom(SocialAutoCompleteTextView::class.java)
-
+                    override fun getConstraints() = isAssignableFrom(SocialAutoCompleteTextView::class.java)
                     override fun getDescription() = SocialAutoCompleteTextView::class.java.name
                     override fun perform(uiController: UiController, view: View) {
                         val adapter = HashtagArrayAdapter<Hashtag>(view.context)
@@ -52,16 +49,15 @@ class InstrumentedTest {
                 },
                 typeText("Suggestions can popup with SocialAutoCompleteTextView, like #foll"),
                 closeSoftKeyboard(),
-                delay())
+                delay()
+            )
     }
 
     @Test fun mention() {
         onView(withId(R.id.textView))
             .perform(
                 object : ViewAction {
-                    override fun getConstraints() =
-                        isAssignableFrom(SocialAutoCompleteTextView::class.java)
-
+                    override fun getConstraints() = isAssignableFrom(SocialAutoCompleteTextView::class.java)
                     override fun getDescription() = SocialAutoCompleteTextView::class.java.name
                     override fun perform(uiController: UiController, view: View) {
                         val adapter = MentionArrayAdapter<Mention>(view.context)
@@ -83,30 +79,31 @@ class InstrumentedTest {
                 },
                 typeText("Mention someone with avatar picture from local file or network, like @h"),
                 closeSoftKeyboard(),
-                delay())
+                delay()
+            )
     }
 
     @Test fun custom() {
         onView(withId(R.id.textView))
             .perform(
                 object : ViewAction {
-                    override fun getConstraints() =
-                        isAssignableFrom(SocialAutoCompleteTextView::class.java)
-
+                    override fun getConstraints() = isAssignableFrom(SocialAutoCompleteTextView::class.java)
                     override fun getDescription() = SocialAutoCompleteTextView::class.java.name
                     override fun perform(uiController: UiController, view: View) {
                         val adapter = PersonAdapter(view.context)
                         adapter.addAll(
                             Person("dirtyhobo"),
                             Person("hobo"),
-                            Person("hendraanggrian"))
+                            Person("hendraanggrian")
+                        )
                         (view as SocialAutoCompleteTextView).mentionAdapter = adapter
                         view.threshold = 1
                     }
                 },
                 typeText("Customize your adapter, like @h"),
                 closeSoftKeyboard(),
-                delay())
+                delay()
+            )
     }
 
     private fun delay(): ViewAction = object : ViewAction {

@@ -9,7 +9,7 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        applicationId = "$RELEASE_GROUP.$RELEASE_ARTIFACT.demo"
+        applicationId = "com.example.$RELEASE_ARTIFACT"
         versionCode = 1
         versionName = RELEASE_VERSION
     }

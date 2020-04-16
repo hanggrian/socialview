@@ -8,21 +8,20 @@ import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
 import com.hendraanggrian.appcompat.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.appcompat.socialview.test.R
 import com.hendraanggrian.appcompat.widget.SocialEditText
 import org.junit.Rule
-import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class GetTest : AbstractTest() {
-
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
     @Test fun getHashtags() {

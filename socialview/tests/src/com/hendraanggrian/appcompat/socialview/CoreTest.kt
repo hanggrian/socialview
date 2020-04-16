@@ -8,23 +8,21 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
 import com.hendraanggrian.appcompat.socialview.activity.InstrumentedActivity
 import com.hendraanggrian.appcompat.socialview.test.R
 import org.junit.Rule
-import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.Test
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class CoreTest : AbstractTest() {
-
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    @Test
-    fun introduction() {
+    @Test fun introduction() {
         onView(withId(R.id.editText)).perform(
             typeText(
                 "This is a standard TextView with #hashtag, @mention, " +
@@ -35,8 +33,7 @@ class CoreTest : AbstractTest() {
         onView(withId(R.id.progressBar)).perform(delay())
     }
 
-    @Test
-    fun withoutMention() {
+    @Test fun withoutMention() {
         rule.activity.editText.isMentionEnabled = false
         onView(withId(R.id.editText)).perform(
             typeText("You can disable @mention to only have #hashtag."),
@@ -45,8 +42,7 @@ class CoreTest : AbstractTest() {
         onView(withId(R.id.progressBar)).perform(delay())
     }
 
-    @Test
-    fun customColors() {
+    @Test fun customColors() {
         rule.activity.editText.hashtagColor = RED
         rule.activity.editText.mentionColor = GREEN
         rule.activity.editText.hyperlinkColor = BLUE
@@ -61,8 +57,7 @@ class CoreTest : AbstractTest() {
         onView(withId(R.id.progressBar)).perform(delay())
     }
 
-    @Test
-    fun clickable() {
+    @Test fun clickable() {
         rule.activity.editText.setOnHashtagClickListener { _, s ->
             Toast.makeText(rule.activity, s, Toast.LENGTH_SHORT).show()
         }
