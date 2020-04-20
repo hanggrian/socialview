@@ -314,21 +314,21 @@ public final class SocialViewHelper implements SocialView {
 
     @Override
     public void setOnHashtagClickListener(@Nullable OnClickListener listener) {
-        updateMovementMethod(listener);
+        ensureMovementMethod(listener);
         hashtagClickListener = listener;
         recolorize();
     }
 
     @Override
     public void setOnMentionClickListener(@Nullable OnClickListener listener) {
-        updateMovementMethod(listener);
+        ensureMovementMethod(listener);
         mentionClickListener = listener;
         recolorize();
     }
 
     @Override
     public void setOnHyperlinkClickListener(@Nullable OnClickListener listener) {
-        updateMovementMethod(listener);
+        ensureMovementMethod(listener);
         hyperlinkClickListener = listener;
         recolorize();
     }
@@ -361,7 +361,7 @@ public final class SocialViewHelper implements SocialView {
         return listOf(view.getText(), getHyperlinkPattern(), true);
     }
 
-    private void updateMovementMethod(Object listener) {
+    private void ensureMovementMethod(Object listener) {
         if (listener == null) {
             view.setMovementMethod(initialMovementMethod);
         } else if (!(view.getMovementMethod() instanceof LinkMovementMethod)) {
