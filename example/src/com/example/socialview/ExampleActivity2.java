@@ -17,14 +17,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.hendraanggrian.appcompat.widget.Hashtag;
-import com.hendraanggrian.appcompat.widget.Mention;
 import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter;
+import com.hendraanggrian.appcompat.widget.Mention;
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter;
 import com.hendraanggrian.appcompat.widget.SocialArrayAdapter;
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView;
 import com.hendraanggrian.appcompat.widget.SocialView;
 
-public class DemoActivity2 extends AppCompatActivity {
+public class ExampleActivity2 extends AppCompatActivity {
+
+    private static final String HASHTAG1 = "follow";
+    private static final String HASHTAG2 = "followme";
+    private static final String HASHTAG3 = "followmeorillkillyou";
+    private static final int HASHTAG2_COUNT = 1000;
+    private static final int HASHTAG3_COUNT = 500;
+    private static final String MENTION1_USERNAME = "dirtyhobo";
+    private static final String MENTION2_USERNAME = "hobo";
+    private static final String MENTION3_USERNAME = "hendraanggrian";
+    private static final String MENTION2_DISPLAYNAME = "Regular Hobo";
+    private static final String MENTION3_DISPLAYNAME = "Hendra Anggrian";
+
     private Toolbar toolbar;
     private SocialAutoCompleteTextView textView;
 
@@ -36,34 +48,38 @@ public class DemoActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demo);
+        setContentView(R.layout.activity_example);
         toolbar = findViewById(R.id.toolbar);
         textView = findViewById(R.id.textView);
         setSupportActionBar(toolbar);
 
         defaultHashtagAdapter = new HashtagArrayAdapter<>(this);
         defaultHashtagAdapter.addAll(
-            new Hashtag(getString(R.string.hashtag1)),
-            new Hashtag(getString(R.string.hashtag2), getResources().getInteger(R.integer.hashtag2)),
-            new Hashtag(getString(R.string.hashtag3), getResources().getInteger(R.integer.hashtag3)));
+            new Hashtag(HASHTAG1),
+            new Hashtag(HASHTAG2, HASHTAG2_COUNT),
+            new Hashtag(HASHTAG3, HASHTAG3_COUNT));
 
         defaultMentionAdapter = new MentionArrayAdapter<>(this);
         defaultMentionAdapter.addAll(
-            new Mention(getString(R.string.mention1_username)),
-            new Mention(getString(R.string.mention2_username), getString(R.string.mention2_displayname), android.R.drawable.sym_action_email),
-            new Mention(getString(R.string.mention3_username), getString(R.string.mention3_displayname), "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4"));
+            new Mention(MENTION1_USERNAME),
+            new Mention(MENTION2_USERNAME, MENTION2_DISPLAYNAME, android.R.drawable.sym_action_email),
+            new Mention(
+                MENTION3_USERNAME,
+                MENTION3_DISPLAYNAME,
+                "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4"
+            ));
 
         customHashtagAdapter = new PersonAdapter(this);
         customHashtagAdapter.addAll(
-            new Person(getString(R.string.hashtag1)),
-            new Person(getString(R.string.hashtag2)),
-            new Person(getString(R.string.hashtag3)));
+            new Person(HASHTAG1),
+            new Person(HASHTAG2),
+            new Person(HASHTAG3));
 
         customMentionAdapter = new PersonAdapter(this);
         customMentionAdapter.addAll(
-            new Person(getString(R.string.mention1_username)),
-            new Person(getString(R.string.mention2_username)),
-            new Person(getString(R.string.mention3_username)));
+            new Person(MENTION1_USERNAME),
+            new Person(MENTION2_USERNAME),
+            new Person(MENTION3_USERNAME));
 
         textView.setHashtagAdapter(defaultHashtagAdapter);
         textView.setMentionAdapter(defaultMentionAdapter);

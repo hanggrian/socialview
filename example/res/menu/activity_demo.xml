@@ -5,27 +5,27 @@
     <item
         android:id="@+id/customAdapterItem"
         android:checkable="true"
-        android:title="@string/custom_adapter"
+        android:title="Custom adapter"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/enableHashtagItem"
         android:checkable="true"
         android:checked="true"
-        android:title="@string/hashtag"
+        android:title="Hashtag"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/enableMentionItem"
         android:checkable="true"
         android:checked="true"
-        android:title="@string/mention"
+        android:title="Mention"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/enableHyperlinkItem"
         android:checkable="true"
         android:checked="true"
-        android:title="@string/hyperlink"
+        android:title="Hyperlink"
         app:showAsAction="never" />
 </menu>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.socialview.DemoActivity">
+    tools:context=".ExampleActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -13,8 +13,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:title="@string/app_name" />
+            android:layout_height="?actionBarSize" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
@@ -23,7 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:completionThreshold="0"
-        android:hint="@string/whats_on_your_mind"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:ignore="PrivateResource" />
+        android:hint="What's on your mind?"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

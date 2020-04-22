@@ -12,13 +12,27 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.hendraanggrian.appcompat.widget.Hashtag
-import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter
+import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import com.hendraanggrian.appcompat.widget.SocialArrayAdapter
-import kotlinx.android.synthetic.main.activity_demo.*
+import kotlinx.android.synthetic.main.activity_example.*
 
-class DemoActivity : AppCompatActivity() {
+class ExampleActivity : AppCompatActivity() {
+
+    private companion object {
+        const val HASHTAG1 = "follow"
+        const val HASHTAG2 = "followme"
+        const val HASHTAG3 = "followmeorillkillyou"
+        const val HASHTAG2_COUNT = 1000
+        const val HASHTAG3_COUNT = 500
+        const val MENTION1_USERNAME = "dirtyhobo"
+        const val MENTION2_USERNAME = "hobo"
+        const val MENTION3_USERNAME = "hendraanggrian"
+        const val MENTION2_DISPLAYNAME = "Regular Hobo"
+        const val MENTION3_DISPLAYNAME = "Hendra Anggrian"
+    }
+
     private lateinit var defaultHashtagAdapter: ArrayAdapter<Hashtag>
     private lateinit var defaultMentionAdapter: ArrayAdapter<Mention>
     private lateinit var customHashtagAdapter: ArrayAdapter<Person>
@@ -26,49 +40,39 @@ class DemoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_demo)
+        setContentView(R.layout.activity_example)
         setSupportActionBar(toolbar)
 
         defaultHashtagAdapter = HashtagArrayAdapter(this)
         defaultHashtagAdapter.addAll(
-            Hashtag(getString(R.string.hashtag1)),
-            Hashtag(
-                getString(R.string.hashtag2),
-                resources.getInteger(R.integer.hashtag2)
-            ),
-            Hashtag(
-                getString(R.string.hashtag3),
-                resources.getInteger(R.integer.hashtag3)
-            )
+            Hashtag(HASHTAG1),
+            Hashtag(HASHTAG2, HASHTAG2_COUNT),
+            Hashtag(HASHTAG3, HASHTAG3_COUNT)
         )
 
         defaultMentionAdapter = MentionArrayAdapter(this)
         defaultMentionAdapter.addAll(
-            Mention(getString(R.string.mention1_username)),
+            Mention(MENTION1_USERNAME),
+            Mention(MENTION2_USERNAME, MENTION2_DISPLAYNAME, android.R.drawable.sym_action_email),
             Mention(
-                getString(R.string.mention2_username),
-                getString(R.string.mention2_displayname),
-                android.R.drawable.sym_action_email
-            ),
-            Mention(
-                getString(R.string.mention3_username),
-                getString(R.string.mention3_displayname),
+                MENTION3_USERNAME,
+                MENTION3_DISPLAYNAME,
                 "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4"
             )
         )
 
         customHashtagAdapter = PersonAdapter(this)
         customHashtagAdapter.addAll(
-            Person(getString(R.string.hashtag1)),
-            Person(getString(R.string.hashtag2)),
-            Person(getString(R.string.hashtag3))
+            Person(HASHTAG1),
+            Person(HASHTAG2),
+            Person(HASHTAG3)
         )
 
         customMentionAdapter = PersonAdapter(this)
         customMentionAdapter.addAll(
-            Person(getString(R.string.mention1_username)),
-            Person(getString(R.string.mention2_username)),
-            Person(getString(R.string.mention3_username))
+            Person(MENTION1_USERNAME),
+            Person(MENTION2_USERNAME),
+            Person(MENTION3_USERNAME)
         )
 
         textView.hashtagAdapter = defaultHashtagAdapter
