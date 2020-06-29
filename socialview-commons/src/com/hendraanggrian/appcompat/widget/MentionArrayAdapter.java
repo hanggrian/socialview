@@ -72,15 +72,15 @@ public class MentionArrayAdapter<T extends Mentionable> extends SocialArrayAdapt
             final Object avatar = item.getAvatar();
             final RequestCreator request;
             if (avatar == null) {
-                request = Picasso.get().load(defaultAvatar);
+                request = Picasso.with(getContext()).load(defaultAvatar);
             } else if (avatar instanceof Integer) {
-                request = Picasso.get().load((int) avatar);
+                request = Picasso.with(getContext()).load((int) avatar);
             } else if (avatar instanceof String) {
-                request = Picasso.get().load((String) avatar);
+                request = Picasso.with(getContext()).load((String) avatar);
             } else if (avatar instanceof Uri) {
-                request = Picasso.get().load((Uri) avatar);
+                request = Picasso.with(getContext()).load((Uri) avatar);
             } else if (avatar instanceof File) {
-                request = Picasso.get().load((File) avatar);
+                request = Picasso.with(getContext()).load((File) avatar);
             } else {
                 throw new UnsupportedOperationException("Unknown avatar type");
             }
@@ -93,9 +93,10 @@ public class MentionArrayAdapter<T extends Mentionable> extends SocialArrayAdapt
                     }
 
                     @Override
-                    public void onError(Exception e) {
+                    public void onError() {
                         holder.loadingView.setVisibility(View.GONE);
                     }
+
                 });
         }
         return convertView;
