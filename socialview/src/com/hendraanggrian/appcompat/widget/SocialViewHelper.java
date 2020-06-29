@@ -43,6 +43,7 @@ public final class SocialViewHelper implements SocialView {
 
     @Nullable private Pattern hashtagPattern;
     @Nullable private Pattern mentionPattern;
+    @Nullable private List<Pattern> mentionPatterns=new ArrayList<>();
     @Nullable private Pattern hyperlinkPattern;
     private int flags;
     @NonNull private ColorStateList hashtagColors;
@@ -175,6 +176,19 @@ public final class SocialViewHelper implements SocialView {
     @Override
     public Pattern getMentionPattern() {
         return mentionPattern != null ? mentionPattern : Pattern.compile("@(\\w+)");
+    }
+
+    @NonNull
+    @Override
+    public List<Pattern> getMentionPatterns() {
+        return mentionPatterns;
+    }
+
+
+    @Override
+    public void addInMentionPatterns(Pattern pattern) {
+         mentionPatterns.add(pattern);
+        recolorize();
     }
 
     @NonNull
@@ -352,7 +366,7 @@ public final class SocialViewHelper implements SocialView {
     @NonNull
     @Override
     public List<String> getMentions() {
-        return listOf(view.getText(), getMentionPattern(), false);
+        return listOf(view.getText(), getMentionPatterns(), false);
     }
 
     @NonNull
@@ -391,7 +405,7 @@ public final class SocialViewHelper implements SocialView {
             );
         }
         if (isMentionEnabled()) {
-            spanAll(spannable, getMentionPattern(), new Supplier<CharacterStyle>() {
+            spanAll(spannable, getMentionPatterns(), new Supplier<CharacterStyle>() {
                     @Override
                     public CharacterStyle get() {
                         return mentionClickListener != null
@@ -444,6 +458,21 @@ public final class SocialViewHelper implements SocialView {
             }
         }
     }
+    private static void spanAll(Spannable spannable, List<Pattern> patterns, Supplier<CharacterStyle> styleSupplier) {
+        int sizeOfPatterns = patterns.size();
+        for(int indexInPatterns = 0; indexInPatterns< sizeOfPatterns; indexInPatterns++) {
+            final Matcher matcher = patterns.get(indexInPatterns).matcher(spannable);
+            while (matcher.find()) {
+                final int start = matcher.start();
+                final int end = matcher.end();
+                final Object span = styleSupplier.get();
+                spannable.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                if (span instanceof SocialClickableSpan) {
+                    ((SocialClickableSpan) span).text = spannable.subSequence(start, end);
+                }
+            }
+        }
+    }
 
     private static List<String> listOf(CharSequence text, Pattern pattern, boolean isHyperlink) {
         final List<String> list = new ArrayList<>();
@@ -455,6 +484,23 @@ public final class SocialViewHelper implements SocialView {
         }
         return list;
     }
+
+
+    private static List<String> listOf(CharSequence text, List<Pattern> patterns, boolean isHyperlink) {
+        final List<String> list = new ArrayList<>();
+        int sizeOfPatterns = patterns.size();
+        for(int indexInPatterns = 0; indexInPatterns< sizeOfPatterns; indexInPatterns++){
+            final Matcher matcher = patterns.get(indexInPatterns).matcher(text);
+            while (matcher.find()) {
+                list.add(matcher.group(!isHyperlink
+                        ? 1 // remove hashtag and mention symbol
+                        : 0));
+            }
+        }
+        return list;
+    }
+
+
 
     /**
      * {@link CharacterStyle} that will be used for <b>hashtags</b>, <b>mentions</b>, and/or <b>hyperlinks</b>

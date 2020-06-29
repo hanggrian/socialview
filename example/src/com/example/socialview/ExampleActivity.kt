@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import com.hendraanggrian.appcompat.widget.SocialArrayAdapter
 import kotlinx.android.synthetic.main.activity_example.*
+import java.util.regex.Pattern
 
 class ExampleActivity : AppCompatActivity() {
 
@@ -26,9 +28,9 @@ class ExampleActivity : AppCompatActivity() {
         const val HASHTAG3 = "followmeorillkillyou"
         const val HASHTAG2_COUNT = 1000
         const val HASHTAG3_COUNT = 500
-        const val MENTION1_USERNAME = "dirtyhobo"
-        const val MENTION2_USERNAME = "hobo"
-        const val MENTION3_USERNAME = "hendraanggrian"
+        const val MENTION1_USERNAME = "dirtyh obo"
+        const val MENTION2_USERNAME = "ho bo"
+        const val MENTION3_USERNAME = "hendra anggrian"
         const val MENTION2_DISPLAYNAME = "Regular Hobo"
         const val MENTION3_DISPLAYNAME = "Hendra Anggrian"
     }
@@ -53,7 +55,7 @@ class ExampleActivity : AppCompatActivity() {
         defaultMentionAdapter = MentionArrayAdapter(this)
         defaultMentionAdapter.addAll(
             Mention(MENTION1_USERNAME),
-            Mention(MENTION2_USERNAME, MENTION2_DISPLAYNAME, android.R.drawable.sym_action_email),
+            Mention(MENTION2_DISPLAYNAME, MENTION2_DISPLAYNAME, android.R.drawable.sym_action_email),
             Mention(
                 MENTION3_USERNAME,
                 MENTION3_DISPLAYNAME,
@@ -79,6 +81,11 @@ class ExampleActivity : AppCompatActivity() {
         textView.mentionAdapter = defaultMentionAdapter
         textView.setHashtagTextChangedListener { _, text -> Log.d("hashtag", text.toString()) }
         textView.setMentionTextChangedListener { _, text -> Log.d("mention", text.toString()) }
+
+        textView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            var person=textView.adapter.getItem(position) as Mention
+            textView.addInMentionPatterns(Pattern.compile("@"+person.toString()));
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

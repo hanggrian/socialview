@@ -34,6 +34,22 @@ public interface SocialView {
     Pattern getMentionPattern();
 
     /**
+     * Returns list of regex that are responsible for finding <b>mentions</b>.
+     * By default, list is empty.
+     * @return
+     */
+    @NonNull
+    List<Pattern> getMentionPatterns();
+
+    /**
+     * Add in list of regex that are responsible for finding <b>mentions</b>.
+     * By default, list is empty.
+     * @return
+     */
+
+     void addInMentionPatterns(Pattern pattern);
+
+    /**
      * Returns regex that are responsible for finding <b>hyperlinks</b>.
      * By default, the pattern are {@link PatternsCompat#WEB_URL}.
      */

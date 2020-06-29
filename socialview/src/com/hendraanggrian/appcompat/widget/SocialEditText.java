@@ -51,6 +51,17 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
         return helper.getMentionPattern();
     }
 
+    @NonNull
+    @Override
+    public List<Pattern> getMentionPatterns() {
+        return helper.getMentionPatterns();
+    }
+
+    @Override
+    public void addInMentionPatterns(Pattern pattern) {
+        helper.addInMentionPatterns(pattern);
+    }
+
     /**
      * {@inheritDoc}
      */
