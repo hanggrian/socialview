@@ -349,6 +349,12 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
         helper.setMentionTextChangedListener(listener);
     }
 
+    @Override
+    public void dismissDropDown() {
+        super.dismissDropDown();        // fix for dropdown still showing without symbol found
+        setAdapter(null);
+    }
+
     /**
      * {@inheritDoc}
      */
