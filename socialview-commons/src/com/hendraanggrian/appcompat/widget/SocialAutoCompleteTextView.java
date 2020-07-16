@@ -51,13 +51,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
                         }
                         break;
 
-                    case ' ':   // fix for dropdown still showing without symbol found
-                        setAdapter(null);
-                        break;
                 }
-            }
-            if(TextUtils.isEmpty(s)){   // fix for dropdown still showing without symbol found
-                setAdapter(null);
             }
         }
 
@@ -68,6 +62,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
 
     private ArrayAdapter hashtagAdapter;
     private ArrayAdapter mentionAdapter;
+    private int tokenStartingPosition;
 
     public SocialAutoCompleteTextView(Context context) {
         this(context, null);
@@ -384,6 +379,13 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
         return helper.getHyperlinks();
     }
 
+    @Override
+    public void showDropDown() {
+        if(tokenStartingPosition>0){  // fix for dropdown still showing without symbol found
+            super.showDropDown();
+        }
+    }
+
     /**
      * While `CommaTokenizer` tracks only comma symbol,
      * `CharTokenizer` can track multiple characters, in this instance, are hashtag and at symbol.
@@ -417,6 +419,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
             if (i == 0 && isPopupShowing()) {
                 dismissDropDown();
             }
+            tokenStartingPosition=i;
             return i;
         }
 
