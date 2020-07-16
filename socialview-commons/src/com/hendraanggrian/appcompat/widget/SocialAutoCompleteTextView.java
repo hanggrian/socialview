@@ -50,7 +50,14 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
                             setAdapter(mentionAdapter);
                         }
                         break;
+
+                    case ' ':   // fix for dropdown still showing without symbol found
+                        setAdapter(null);
+                        break;
                 }
+            }
+            if(TextUtils.isEmpty(s)){   // fix for dropdown still showing without symbol found
+                setAdapter(null);
             }
         }
 
@@ -349,11 +356,6 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
         helper.setMentionTextChangedListener(listener);
     }
 
-    @Override
-    public void dismissDropDown() {
-        super.dismissDropDown();        // fix for dropdown still showing without symbol found
-        setAdapter(null);
-    }
 
     /**
      * {@inheritDoc}
