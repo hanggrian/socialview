@@ -38,8 +38,27 @@ public final class SocialViewHelper implements SocialView {
     private static final int FLAG_MENTION = 2;
     private static final int FLAG_HYPERLINK = 4;
 
-    @NonNull private final TextView view;
-    @Nullable private final MovementMethod initialMovementMethod;
+    /**
+     * Configuring {@link SocialView} into given view.
+     *
+     * @param view TextView to install SocialView into.
+     */
+    public static SocialView install(@NonNull TextView view) {
+        return new SocialViewHelper(view, null);
+    }
+
+    /**
+     * Configuring {@link SocialView} into given view.
+     *
+     * @param view  TextView to install SocialView into.
+     * @param attrs The attributes from the View's constructor.
+     */
+    public static SocialView install(@NonNull TextView view, @Nullable AttributeSet attrs) {
+        return new SocialViewHelper(view, attrs);
+    }
+
+    private final TextView view;
+    private final MovementMethod initialMovementMethod;
 
     @Nullable private Pattern hashtagPattern;
     @Nullable private Pattern mentionPattern;
@@ -133,22 +152,7 @@ public final class SocialViewHelper implements SocialView {
         }
     };
 
-    /**
-     * Configuring {@link SocialView} into given view.
-     *
-     * @param view TextView to install SocialView into.
-     */
-    public SocialViewHelper(@NonNull TextView view) {
-        this(view, null);
-    }
-
-    /**
-     * Configuring {@link SocialView} into given view.
-     *
-     * @param view  TextView to install SocialView into.
-     * @param attrs The attributes from the View's constructor.
-     */
-    public SocialViewHelper(@NonNull TextView view, @Nullable AttributeSet attrs) {
+    private SocialViewHelper(@NonNull TextView view, @Nullable AttributeSet attrs) {
         this.view = view;
         this.initialMovementMethod = view.getMovementMethod();
 

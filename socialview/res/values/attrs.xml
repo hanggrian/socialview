@@ -5,9 +5,8 @@
     </declare-styleable>
 
     <declare-styleable name="SocialView">
-
         <!-- Determine whether each feature should be turned on/off.
-             Default is all true. -->
+             Default is `hashtag|mention|hyperlink`. -->
         <attr name="socialFlags">
             <flag name="hashtag" value="1" />
             <flag name="mention" value="2" />

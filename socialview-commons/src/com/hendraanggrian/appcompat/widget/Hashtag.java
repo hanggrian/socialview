@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * Simple optional hashtag data class, use when there is no custom mention class.
+ * Simple optional hashtag data class, use when there is no custom hashtag class.
  */
 public class Hashtag implements Hashtagable {
     private final CharSequence id;

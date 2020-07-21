@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * @see SocialView
  */
 public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextView implements SocialView {
-    private final SocialViewHelper helper;
+    private final SocialView helper;
 
     // TODO: should check for symbols closest to cursor, not s[start]
     @SuppressWarnings("FieldCanBeLocal")
@@ -72,7 +72,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
 
     public SocialAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        helper = new SocialViewHelper(this, attrs);
+        helper = SocialViewHelper.install(this, attrs);
         addTextChangedListener(textWatcher);
         setTokenizer(new CharTokenizer());
     }

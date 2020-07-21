@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * @see SocialView
  */
 public class SocialEditText extends AppCompatEditText implements SocialView {
-    private final SocialViewHelper helper;
+    private final SocialView helper;
 
     public SocialEditText(Context context) {
         this(context, null);
@@ -30,7 +30,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
 
     public SocialEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        helper = new SocialViewHelper(this, attrs);
+        helper = SocialViewHelper.install(this, attrs);
     }
 
     /**
