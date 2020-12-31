@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation "com.hendraanggrian.appcompat:socialview-core:$version"
+    implementation "com.hendraanggrian.appcompat:socialview:$version"
 
     // auto-complete hashtag and mention
     implementation "com.hendraanggrian.appcompat:socialview-commons:$version"
