@@ -6,6 +6,10 @@ plugins {
 
 android {
     compileSdkVersion(SDK_TARGET)
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
@@ -14,7 +18,7 @@ android {
         versionName = RELEASE_VERSION
     }
     sourceSets {
-        getByName("main") {
+        named("main") {
             manifest.srcFile("AndroidManifest.xml")
             java.srcDir("src")
             res.srcDir("res")

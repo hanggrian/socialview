@@ -1,9 +1,13 @@
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 plugins {
     `kotlin-dsl`
 }
 
-sourceSets["main"].java.srcDir("src")
+sourceSets {
+    main {
+        java.srcDir("src")
+    }
+}

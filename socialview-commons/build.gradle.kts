@@ -1,7 +1,8 @@
 plugins {
     android("library")
     kotlin("android")
-    `bintray-release`
+    `maven-publish`
+    signing
 }
 
 android {
@@ -13,13 +14,13 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
-        getByName("main") {
+        named("main") {
             manifest.srcFile("AndroidManifest.xml")
             java.srcDir("src")
             res.srcDir("res")
             resources.srcDir("src")
         }
-        getByName("androidTest") {
+        named("androidTest") {
             setRoot("tests")
             manifest.srcFile("tests/AndroidManifest.xml")
             java.srcDir("tests/src")
@@ -28,17 +29,15 @@ android {
         }
     }
     libraryVariants.all {
-        generateBuildConfigProvider?.invoke {
-            enabled = false
-        }
+        generateBuildConfigProvider.orNull?.enabled = false
     }
 }
 
 dependencies {
     api(project(":$RELEASE_ARTIFACT"))
     implementation(androidx("appcompat"))
+    implementation(androidx("annotation", version = "1.2.0"))
     implementation(picasso())
-
     androidTestImplementation(kotlin("stdlib", VERSION_KOTLIN))
     androidTestImplementation(kotlin("test-junit", VERSION_KOTLIN))
     androidTestImplementation(material())
@@ -50,16 +49,16 @@ dependencies {
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
 }
 
-publish {
-    bintrayUser = BINTRAY_USER
-    bintrayKey = BINTRAY_KEY
-    dryRun = false
-    repoName = RELEASE_REPO
-
-    userOrg = RELEASE_USER
-    groupId = RELEASE_GROUP
-    artifactId = "$RELEASE_ARTIFACT-commons"
-    publishVersion = RELEASE_VERSION
-    desc = RELEASE_DESC
-    website = RELEASE_WEBSITE
+tasks {
+    val javadoc by registering(Javadoc::class) {
+        isFailOnError = false
+        source = android.sourceSets["main"].java.getSourceFiles()
+        classpath += project.files(android.bootClasspath.joinToString(File.pathSeparator))
+        classpath += configurations.compile
+    }
 }
+
+mavenPublishAndroid(
+    artifact = "$RELEASE_ARTIFACT-commons",
+    sources = android.sourceSets["main"].java.srcDirs
+)

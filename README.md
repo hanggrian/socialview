@@ -1,9 +1,10 @@
-[![download](https://api.bintray.com/packages/hendraanggrian/appcompat/socialview/images/download.svg)](https://bintray.com/hendraanggrian/appcompat/socialview/_latestVersion)
-[![build](https://travis-ci.com/hendraanggrian/socialview.svg)](https://travis-ci.com/hendraanggrian/socialview)
-[![license](https://img.shields.io/github/license/hendraanggrian/socialview)](http://www.apache.org/licenses/LICENSE-2.0)
+[![version](https://img.shields.io/maven-central/v/com.hendraanggrian/socialview)](https://search.maven.org/artifact/com.hendraanggrian/socialview)
+[![build](https://img.shields.io/travis/com/hendraanggrian/socialview)](https://www.travis-ci.com/github/hendraanggrian/socialview)
+[![license](https://img.shields.io/github/license/hendraanggrian/socialview)](https://github.com/hendraanggrian/socialview/blob/main/LICENSE)
 
 SocialView
 ==========
+
 ![demo][demo]
 
 TextView and EditText with hashtag, mention, and hyperlink support.
@@ -12,22 +13,24 @@ TextView and EditText with hashtag, mention, and hyperlink support.
 
 Download
 --------
+
 ```gradle
 repositories {
+    mavenCentral()
     google()
-    jcenter()
 }
 
 dependencies {
-    implementation "com.hendraanggrian.appcompat:socialview:$version"
-
-    // auto-complete hashtag and mention
-    implementation "com.hendraanggrian.appcompat:socialview-commons:$version"
+    implementation "com.hendraanggrian.appcompat:socialview:$version" // base library
+    implementation "com.hendraanggrian.appcompat:socialview-commons:$version" // auto-complete hashtag and mention
 }
 ```
 
+Snapshots of the development version are available in [Sonatype's snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots/).
+
 Core
 ----
+
 ![demo_core1][demo_core1] ![demo_core2][demo_core2] ![demo_core3][demo_core3]
 
 Write `SocialTextView` or `SocialEditText` in xml.
@@ -61,6 +64,7 @@ Any TextView or subclasses of TextView can be made social, see [SocialTextView.k
 
 Commons
 -------
+
 ![demo_commons1][demo_commons1] ![demo_commons2][demo_commons2] ![demo_commons3][demo_commons3]
 
 > NOTE: Custom adapters are experimental, see demo for example.

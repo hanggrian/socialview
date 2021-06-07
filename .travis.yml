@@ -5,6 +5,7 @@ language: android
 jdk: oraclejdk8
 
 env:
+  - OSSRH_USERNAME=stub OSSRH_PASSWORD=stub
   global:
     - GRADLE_OPTS='-Dorg.gradle.daemon=false -Dorg.gradle.parallel=false -Dkotlin.incremental=false -DdisablePreDex'
     - ANDROID_TARGET=android-28

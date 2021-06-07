@@ -1,22 +1,19 @@
 buildscript {
     repositories {
+        mavenCentral()
+        gradlePluginPortal()
         google()
-        jcenter()
     }
     dependencies {
-        classpath(android())
         classpath(kotlin("gradle-plugin", VERSION_KOTLIN))
-        classpath(bintrayRelease())
+        classpath(android)
+        classpath(`git-publish`)
     }
 }
 
 allprojects {
     repositories {
+        mavenCentral()
         google()
-        jcenter()
     }
-}
-
-tasks.register<Delete>("clean") {
-    delete(buildDir)
 }

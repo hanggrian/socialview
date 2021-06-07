@@ -1,3 +1,3 @@
 include("socialview")
 include("socialview-commons")
-include("example")
+include("sample")
