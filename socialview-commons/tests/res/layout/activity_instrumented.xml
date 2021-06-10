@@ -14,20 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:title="socialview Instrumented Test" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:layout_gravity="center_vertical">
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="100"
-                android:progress="100" />
-        </FrameLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
