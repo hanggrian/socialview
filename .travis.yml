@@ -8,27 +8,21 @@ env:
 
 android:
   components:
-    - build-tools-26.0.2
-    - android-26
-    - android-22
-    - add-on
-    - extra
-    - extra-google-google_play_services
-    - extra-google-m2repository
+    - tools
+    - platform-tools
+    - build-tools-30.0.3
+    - android-30
     - extra-android-m2repository
-    - sys-img-armeabi-v7a-android-22
+    - extra-google-m2repository
+    - extra-google-google_play_services
+    - sys-img-armeabi-v7a-android-30
   licenses:
     - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
-before_install:
-  - touch $HOME/.android/repositories.cfg
-  - yes | sdkmanager "platforms;android-26"
-  - yes | sdkmanager "build-tools;26.0.2"
-
 before_script:
-  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
+  - echo no | android create avd --force -n test -t android-30 --abi armeabi-v7a -c 100M
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
