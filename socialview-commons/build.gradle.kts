@@ -10,7 +10,6 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        multiDexEnabled = true
         versionName = RELEASE_VERSION
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,8 +40,6 @@ dependencies {
     implementation(picasso())
     androidTestImplementation(kotlin("stdlib", VERSION_KOTLIN))
     androidTestImplementation(kotlin("test-junit", VERSION_KOTLIN))
-    androidTestImplementation(material())
-    androidTestImplementation(androidx("multidex", version = VERSION_MULTIDEX))
     androidTestImplementation(androidx("test", "core-ktx", VERSION_ANDROIDX_TEST))
     androidTestImplementation(androidx("test", "runner", VERSION_ANDROIDX_TEST))
     androidTestImplementation(androidx("test", "rules", VERSION_ANDROIDX_TEST))

@@ -11,7 +11,6 @@ class InstrumentedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_instrumented)
-        setSupportActionBar(findViewById(R.id.toolbar))
         textView = findViewById(R.id.textView)
     }
 }

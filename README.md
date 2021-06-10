@@ -5,7 +5,8 @@
 SocialView
 ==========
 
-![sample_commons_mention](art/sample_commons_mention.png)
+![sample_mention](art/sample_mention.png)
+![sample_hashtag](art/sample_hashtag.png)
 
 TextView and EditText with hashtag, mention, and hyperlink support.
 * Pre-loaded with default views, but also installable to any custom view.
@@ -31,9 +32,7 @@ Snapshots of the development version are available in [Sonatype's snapshots repo
 Core
 ----
 
-![sample_core](art/sample_core.png)
-
-Write `SocialTextView` or `SocialEditText` in xml.
+Core library contains `SocialTextView`, `SocialEditText` and helper class applies these behavior into any `TextView`.
 
 ```xml
 <com.hendraanggrian.appcompat.widget.SocialTextView
@@ -53,23 +52,18 @@ Modify its state and set listeners programmatically.
 ```java
 textView.setMentionEnabled(false);
 textView.setHashtagColor(Color.RED);
-textView.setOnHashtagClickListener(new Function2<SocialView, String, Unit>() {
+textView.setOnHashtagClickListener(new SocialView.OnClickListener() {
     @Override
-    public Unit invoke(SocialView socialView, String s) {
+    public void invoke(SocialView socialView, String s) {
         // do something
-        return null;
     }
 });
 ```
 
-Any TextView or subclasses of TextView can be made social, see [SocialTextView.kt](https://github.com/HendraAnggrian/socialview/blob/master/socialview/src/com/hendraanggrian/socialview/widget/SocialTextView.kt) for example.
-
 Commons
 -------
 
-![sample_commons_hashtag](art/sample_commons_hashtag.png)
-
-Write `SocialAutoCompleteTextView` in xml.
+Commons library comes with `SocialAutoCompleteTextView`.
 
 ```xml
 <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
