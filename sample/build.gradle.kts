@@ -13,6 +13,7 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
+        multiDexEnabled = true
         applicationId = "com.example.$RELEASE_ARTIFACT"
         versionCode = 1
         versionName = RELEASE_VERSION
@@ -43,6 +44,7 @@ android {
 dependencies {
     implementation(project(":$RELEASE_ARTIFACT-commons"))
     implementation(kotlin("stdlib", VERSION_KOTLIN))
+    implementation(androidx("multidex", version = VERSION_MULTIDEX))
     implementation(androidx("core", "core-ktx"))
     implementation(material())
 }
