@@ -10,7 +10,7 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-30.0.3
+    - build-tools-30.0.2
     - android-30
     - android-22
     - add-on
@@ -23,6 +23,11 @@ android:
     - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
+
+before_install:
+  - touch $HOME/.android/repositories.cfg
+  - yes | sdkmanager "platforms;android-30"
+  - yes | sdkmanager "build-tools;30.0.2"
 
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
