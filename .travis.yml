@@ -22,6 +22,11 @@ android:
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
+before_install:
+  - touch $HOME/.android/repositories.cfg
+  - yes | sdkmanager "platforms;android-26"
+  - yes | sdkmanager "build-tools;26.0.2"
+
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
   - emulator -avd test -no-audio -no-window &
