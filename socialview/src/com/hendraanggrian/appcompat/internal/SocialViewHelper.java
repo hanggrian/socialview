@@ -1,4 +1,4 @@
-package com.hendraanggrian.appcompat.widget;
+package com.hendraanggrian.appcompat.internal;
 
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -14,6 +14,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import androidx.core.util.PatternsCompat;
 import androidx.core.util.Supplier;
 
 import com.hendraanggrian.appcompat.socialview.R;
+import com.hendraanggrian.appcompat.widget.SocialView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -197,7 +199,7 @@ public final class SocialViewHelper implements SocialView {
 
     @Override
     public void setMentionPattern(@Nullable Pattern pattern) {
-        if (mentionPattern != null) {
+        if (mentionPattern != pattern) {
             mentionPattern = pattern;
             recolorize();
         }
@@ -205,7 +207,7 @@ public final class SocialViewHelper implements SocialView {
 
     @Override
     public void setHyperlinkPattern(@Nullable Pattern pattern) {
-        if (hyperlinkPattern != null) {
+        if (hyperlinkPattern != pattern) {
             hyperlinkPattern = pattern;
             recolorize();
         }
@@ -374,6 +376,7 @@ public final class SocialViewHelper implements SocialView {
     }
 
     private void recolorize() {
+        Log.d("AAA", mentionPattern == null ? "AAAA" : "BBBB");
         final CharSequence text = view.getText();
         if (!(text instanceof Spannable)) {
             throw new IllegalStateException("Attached text is not a Spannable," +

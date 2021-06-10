@@ -4,7 +4,6 @@ import android.view.View
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -21,13 +20,13 @@ import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class GetTest : AbstractTest() {
+class GetTest {
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    @Test fun getHashtags() {
+    @Test
+    fun getHashtags() {
         onView(withId(R.id.editText)).perform(
             typeText("Hi there #eitantest"),
-            closeSoftKeyboard(),
             object : ViewAction {
                 override fun getDescription() = "assertion"
                 override fun getConstraints() = isAssignableFrom(SocialEditText::class.java)
@@ -40,10 +39,10 @@ class GetTest : AbstractTest() {
             })
     }
 
-    @Test fun getMentions() {
+    @Test
+    fun getMentions() {
         onView(withId(R.id.editText)).perform(
             typeText("Hi there @eitantest"),
-            closeSoftKeyboard(),
             object : ViewAction {
                 override fun getDescription() = "assertion"
                 override fun getConstraints() = isAssignableFrom(SocialEditText::class.java)
@@ -56,10 +55,10 @@ class GetTest : AbstractTest() {
             })
     }
 
-    @Test fun getHyperlinks() {
+    @Test
+    fun getHyperlinks() {
         onView(withId(R.id.editText)).perform(
             typeText("Check out https://my.website.com"),
-            closeSoftKeyboard(),
             object : ViewAction {
                 override fun getDescription() = "assertion"
                 override fun getConstraints() = isAssignableFrom(SocialEditText::class.java)

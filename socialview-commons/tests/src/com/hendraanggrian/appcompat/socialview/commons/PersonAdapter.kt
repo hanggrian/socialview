@@ -8,11 +8,7 @@ import android.widget.TextView
 import com.hendraanggrian.appcompat.socialview.commons.test.R
 import com.hendraanggrian.appcompat.widget.SocialArrayAdapter
 
-class PersonAdapter(context: Context) : SocialArrayAdapter<Person>(
-    context,
-    R.layout.item_person,
-    R.id.textViewName
-) {
+class PersonAdapter(context: Context) : SocialArrayAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView

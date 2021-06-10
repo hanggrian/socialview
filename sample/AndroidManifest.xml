@@ -5,12 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".ExampleApp"
         android:allowBackup="true"
         android:label="SocialView Example"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
-        <activity android:name=".ExampleActivity">
+        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        <activity android:name=".ExampleActivity2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

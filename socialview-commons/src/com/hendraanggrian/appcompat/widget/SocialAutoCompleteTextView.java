@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView;
 
+import com.hendraanggrian.appcompat.internal.SocialViewHelper;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

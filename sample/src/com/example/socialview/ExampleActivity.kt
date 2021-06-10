@@ -53,7 +53,7 @@ class ExampleActivity : AppCompatActivity() {
         defaultMentionAdapter = MentionArrayAdapter(this)
         defaultMentionAdapter.addAll(
             Mention(MENTION1_USERNAME),
-            Mention(MENTION2_USERNAME, MENTION2_DISPLAYNAME, android.R.drawable.sym_action_email),
+            Mention(MENTION2_USERNAME, MENTION2_DISPLAYNAME),
             Mention(
                 MENTION3_USERNAME,
                 MENTION3_DISPLAYNAME,
@@ -79,6 +79,7 @@ class ExampleActivity : AppCompatActivity() {
         textView.mentionAdapter = defaultMentionAdapter
         textView.setHashtagTextChangedListener { _, text -> Log.d("hashtag", text.toString()) }
         textView.setMentionTextChangedListener { _, text -> Log.d("mention", text.toString()) }
+        textView.setOnHyperlinkClickListener { _, text -> Log.d("hyperlink", text.toString()) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

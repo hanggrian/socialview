@@ -1,16 +1,11 @@
 package com.hendraanggrian.appcompat.socialview.commons
 
-import android.os.Build.VERSION.SDK_INT
-import android.os.CountDownTimer
 import android.view.View
-import android.view.View.GONE
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -31,7 +26,8 @@ import kotlin.test.Test
 class InstrumentedTest {
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    @Test fun hashtag() {
+    @Test
+    fun hashtag() {
         onView(withId(R.id.textView))
             .perform(
                 object : ViewAction {
@@ -47,13 +43,12 @@ class InstrumentedTest {
                         (view as SocialAutoCompleteTextView).hashtagAdapter = adapter
                     }
                 },
-                typeText("Suggestions can popup with SocialAutoCompleteTextView, like #foll"),
-                closeSoftKeyboard(),
-                delay()
+                typeText("Suggestions can popup with SocialAutoCompleteTextView, like #foll")
             )
     }
 
-    @Test fun mention() {
+    @Test
+    fun mention() {
         onView(withId(R.id.textView))
             .perform(
                 object : ViewAction {
@@ -77,13 +72,12 @@ class InstrumentedTest {
                         view.threshold = 1
                     }
                 },
-                typeText("Mention someone with avatar picture from local file or network, like @h"),
-                closeSoftKeyboard(),
-                delay()
+                typeText("Mention someone with avatar picture from local file or network, like @h")
             )
     }
 
-    @Test fun custom() {
+    @Test
+    fun custom() {
         onView(withId(R.id.textView))
             .perform(
                 object : ViewAction {
@@ -100,35 +94,7 @@ class InstrumentedTest {
                         view.threshold = 1
                     }
                 },
-                typeText("Customize your adapter, like @h"),
-                closeSoftKeyboard(),
-                delay()
+                typeText("Customize your adapter, like @h")
             )
-    }
-
-    private fun delay(): ViewAction = object : ViewAction {
-        override fun getConstraints() = isDisplayed()
-        override fun getDescription() = "delay for $DELAY_COUNTDOWN"
-        override fun perform(uiController: UiController, view: View) {
-            val progressBar = rule.activity.progressBar
-            object : CountDownTimer(DELAY_COUNTDOWN, 100) {
-                override fun onTick(millisUntilFinished: Long) = (progressBar.max *
-                    millisUntilFinished / DELAY_COUNTDOWN).toInt().let { progress ->
-                    when {
-                        SDK_INT >= 24 -> progressBar.setProgress(progress, true)
-                        else -> progressBar.progress = progress
-                    }
-                }
-
-                override fun onFinish() {
-                    progressBar.visibility = GONE
-                }
-            }.start()
-            uiController.loopMainThreadForAtLeast(DELAY_COUNTDOWN)
-        }
-    }
-
-    private companion object {
-        const val DELAY_COUNTDOWN: Long = 5000
     }
 }

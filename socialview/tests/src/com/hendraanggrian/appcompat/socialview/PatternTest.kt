@@ -5,7 +5,6 @@ import android.widget.Toast
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -20,39 +19,38 @@ import kotlin.test.Test
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class PatternTest : AbstractTest() {
+class PatternTest {
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    private val names = StringBuilder()
-        .appendln("@HendraAnggrian")
-        .appendln("@jeffersonlicet")
-        .appendln("@sfucko")
+    private val names = buildString {
+        appendLine("@HendraAnggrian")
+        appendLine("@jeffersonlicet")
+        appendLine("@sfucko")
         // https://github.com/HendraAnggrian/socialview/issues/8
-        .appendln()
-        .appendln("@Mañana")
-        .appendln("@CreaciónDivina")
-        .appendln("@TúVendrás")
-        .appendln("@CuatroArtículos")
-        .appendln("@MásNadaQueda")
-        .appendln("@SeFueÉste")
-        .appendln("@ÉsteNoEra")
-        .appendln("@Ñame")
+        appendLine()
+        appendLine("@Mañana")
+        appendLine("@CreaciónDivina")
+        appendLine("@TúVendrás")
+        appendLine("@CuatroArtículos")
+        appendLine("@MásNadaQueda")
+        appendLine("@SeFueÉste")
+        appendLine("@ÉsteNoEra")
+        appendLine("@Ñame")
         // https://github.com/HendraAnggrian/socialview/issues/13
-        .appendln()
-        .appendln("@Андрей")
-        .appendln("@Владимир")
-        .appendln("@Дмитрий")
-        .appendln("@Вова")
-        .appendln("@Саша")
-        .toString()
+        appendLine()
+        appendLine("@Андрей")
+        appendLine("@Владимир")
+        appendLine("@Дмитрий")
+        appendLine("@Вова")
+        appendLine("@Саша")
+    }
 
-    @Test fun default() {
+    @Test
+    fun default() {
         onView(withId(R.id.editText)).perform(
             replaceText(names),
-            toast("default"),
-            closeSoftKeyboard()
+            toast("default")
         )
-        onView(withId(R.id.progressBar)).perform(delay())
     }
 
     private fun toast(text: CharSequence) = object : ViewAction {

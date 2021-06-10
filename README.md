@@ -5,7 +5,7 @@
 SocialView
 ==========
 
-![demo][demo]
+![sample_commons_mention](art/sample_commons_mention.png)
 
 TextView and EditText with hashtag, mention, and hyperlink support.
 * Pre-loaded with default views, but also installable to any custom view.
@@ -31,9 +31,10 @@ Snapshots of the development version are available in [Sonatype's snapshots repo
 Core
 ----
 
-![demo_core1][demo_core1] ![demo_core2][demo_core2] ![demo_core3][demo_core3]
+![sample_core](art/sample_core.png)
 
 Write `SocialTextView` or `SocialEditText` in xml.
+
 ```xml
 <com.hendraanggrian.appcompat.widget.SocialTextView
     android:id="@+id/textView"
@@ -45,9 +46,10 @@ Write `SocialTextView` or `SocialEditText` in xml.
     app:mentionColor="@color/red"/>
 ```
 
-See [attrs.xml][attrs] for full list of available attributes.
+See [attrs.xml](https://github.com/HendraAnggrian/socialview/blob/master/socialview/res/values/attrs.xml) for full list of available attributes.
 
 Modify its state and set listeners programmatically.
+
 ```java
 textView.setMentionEnabled(false);
 textView.setHashtagColor(Color.RED);
@@ -60,16 +62,15 @@ textView.setOnHashtagClickListener(new Function2<SocialView, String, Unit>() {
 });
 ```
 
-Any TextView or subclasses of TextView can be made social, see [SocialTextView.kt][SocialTextView] for example.
+Any TextView or subclasses of TextView can be made social, see [SocialTextView.kt](https://github.com/HendraAnggrian/socialview/blob/master/socialview/src/com/hendraanggrian/socialview/widget/SocialTextView.kt) for example.
 
 Commons
 -------
 
-![demo_commons1][demo_commons1] ![demo_commons2][demo_commons2] ![demo_commons3][demo_commons3]
-
-> NOTE: Custom adapters are experimental, see demo for example.
+![sample_commons_hashtag](art/sample_commons_hashtag.png)
 
 Write `SocialAutoCompleteTextView` in xml.
+
 ```xml
 <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
     android:id="@+id/textView"
@@ -81,6 +82,7 @@ Write `SocialAutoCompleteTextView` in xml.
 ```
 
 To display suggestions, it is required to `setHashtagAdapter()` and `setMentionAdapter()`.
+
 ```java
 ArrayAdapter<Hashtag> hashtagAdapter = new HashtagAdapter(getContext());
 hashtagAdapter.add(new Hashtag("follow"));
@@ -96,6 +98,9 @@ textView.setMentionAdapter(mentionAdapter);
 ```
 
 To customize hashtag or mention adapter, create a custom adapter using customized `SocialAdapter` or write your own `ArrayAdapter`.
+
+> NOTE: Custom adapters are experimental, see sample for example.
+>
 ```java
 public class Person {
     public final String name;
@@ -131,19 +136,10 @@ public class PersonAdapter extends ArrayAdapter<Person> {
 ```
 
 Then, use the custom adapter.
+
 ```java
 ArrayAdapter<Person> adapter = new PersonAdapter(getContext());
 adapter.add(personA);
 adapter.add(personB);
 textView.setMentionAdapter(adapter);
 ```
-
-[demo]: /art/demo.png
-[demo_core1]: /art/demo_core1.gif
-[demo_core2]: /art/demo_core2.gif
-[demo_core3]: /art/demo_core3.gif
-[demo_commons1]: /art/demo_commons1.gif
-[demo_commons2]: /art/demo_commons2.gif
-[demo_commons3]: /art/demo_commons3.gif
-[attrs]: https://github.com/HendraAnggrian/socialview/blob/master/socialview/res/values/attrs.xml
-[SocialTextView]: https://github.com/HendraAnggrian/socialview/blob/master/socialview/src/com/hendraanggrian/socialview/widget/SocialTextView.kt

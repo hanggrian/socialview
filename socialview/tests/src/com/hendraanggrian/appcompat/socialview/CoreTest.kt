@@ -5,7 +5,6 @@ import android.graphics.Color.GREEN
 import android.graphics.Color.RED
 import android.widget.Toast
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,30 +18,29 @@ import kotlin.test.Test
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class CoreTest : AbstractTest() {
+class CoreTest {
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    @Test fun introduction() {
+    @Test
+    fun introduction() {
         onView(withId(R.id.editText)).perform(
             typeText(
                 "This is a standard TextView with #hashtag, @mention, " +
                     "and http://some.url support."
-            ),
-            closeSoftKeyboard()
+            )
         )
-        onView(withId(R.id.progressBar)).perform(delay())
     }
 
-    @Test fun withoutMention() {
+    @Test
+    fun withoutMention() {
         rule.activity.editText.isMentionEnabled = false
         onView(withId(R.id.editText)).perform(
-            typeText("You can disable @mention to only have #hashtag."),
-            closeSoftKeyboard()
+            typeText("You can disable @mention to only have #hashtag.")
         )
-        onView(withId(R.id.progressBar)).perform(delay())
     }
 
-    @Test fun customColors() {
+    @Test
+    fun customColors() {
         rule.activity.editText.hashtagColor = RED
         rule.activity.editText.mentionColor = GREEN
         rule.activity.editText.hyperlinkColor = BLUE
@@ -51,20 +49,17 @@ class CoreTest : AbstractTest() {
                 "Accent color of current app theme is used by default. " +
                     "But you can also have separate color for #hashtag, @mention, " +
                     "and http://hyperlink.com."
-            ),
-            closeSoftKeyboard()
+            )
         )
-        onView(withId(R.id.progressBar)).perform(delay())
     }
 
-    @Test fun clickable() {
+    @Test
+    fun clickable() {
         rule.activity.editText.setOnHashtagClickListener { _, s ->
             Toast.makeText(rule.activity, s, Toast.LENGTH_SHORT).show()
         }
         onView(withId(R.id.editText)).perform(
-            typeText("Oh, they are also #clickable!"),
-            closeSoftKeyboard()
+            typeText("Oh, they are also #clickable!")
         )
-        onView(withId(R.id.progressBar)).perform(delay())
     }
 }

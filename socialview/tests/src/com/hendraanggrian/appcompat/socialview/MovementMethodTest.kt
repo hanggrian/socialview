@@ -19,7 +19,8 @@ import kotlin.test.assertTrue
 class MovementMethodTest {
     @Rule @JvmField var rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    @Test fun setOnClickListener() {
+    @Test
+    fun setOnClickListener() {
         onView(withId(R.id.editText)).perform(object : ViewAction {
             override fun getConstraints() = ViewMatchers.isAssignableFrom(SocialEditText::class.java)
             override fun getDescription() = "Setting click listener"
