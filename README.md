@@ -1,12 +1,12 @@
-[![version](https://img.shields.io/maven-central/v/com.hendraanggrian/socialview)](https://search.maven.org/artifact/com.hendraanggrian/socialview)
+[![version](https://img.shields.io/maven-central/v/com.hendraanggrian.appcompat/socialview)](https://search.maven.org/artifact/com.hendraanggrian.appcompat/socialview)
 [![build](https://img.shields.io/travis/com/hendraanggrian/socialview)](https://www.travis-ci.com/github/hendraanggrian/socialview)
 [![license](https://img.shields.io/github/license/hendraanggrian/socialview)](https://github.com/hendraanggrian/socialview/blob/main/LICENSE)
 
 SocialView
 ==========
 
-![sample_mention](art/sample_mention.png)
-![sample_hashtag](art/sample_hashtag.png)
+![](art/sample_mention.png)
+![](art/sample_hashtag.png)
 
 TextView and EditText with hashtag, mention, and hyperlink support.
 * Pre-loaded with default views, but also installable to any custom view.
@@ -93,8 +93,8 @@ textView.setMentionAdapter(mentionAdapter);
 
 To customize hashtag or mention adapter, create a custom adapter using customized `SocialAdapter` or write your own `ArrayAdapter`.
 
-> NOTE: Custom adapters are experimental, see sample for example.
->
+> Custom adapters are experimental, see sample for example.
+
 ```java
 public class Person {
     public final String name;

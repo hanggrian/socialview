@@ -61,8 +61,8 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
         }
     };
 
-    private ArrayAdapter hashtagAdapter;
-    private ArrayAdapter mentionAdapter;
+    private ArrayAdapter<?> hashtagAdapter;
+    private ArrayAdapter<?> mentionAdapter;
 
     public SocialAutoCompleteTextView(Context context) {
         this(context, null);
@@ -80,20 +80,20 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
     }
 
     @Nullable
-    public ArrayAdapter getHashtagAdapter() {
+    public ArrayAdapter<?> getHashtagAdapter() {
         return hashtagAdapter;
     }
 
-    public void setHashtagAdapter(@Nullable ArrayAdapter adapter) {
+    public void setHashtagAdapter(@Nullable ArrayAdapter<?> adapter) {
         hashtagAdapter = adapter;
     }
 
     @Nullable
-    public ArrayAdapter getMentionAdapter() {
+    public ArrayAdapter<?> getMentionAdapter() {
         return mentionAdapter;
     }
 
-    public void setMentionAdapter(@Nullable ArrayAdapter adapter) {
+    public void setMentionAdapter(@Nullable ArrayAdapter<?> adapter) {
         mentionAdapter = adapter;
     }
 
