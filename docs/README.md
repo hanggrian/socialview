@@ -1,12 +1,11 @@
 [![version](https://img.shields.io/maven-central/v/com.hendraanggrian.appcompat/socialview)](https://search.maven.org/artifact/com.hendraanggrian.appcompat/socialview)
 [![build](https://img.shields.io/travis/com/hendraanggrian/socialview)](https://www.travis-ci.com/github/hendraanggrian/socialview)
-[![license](https://img.shields.io/github/license/hendraanggrian/socialview)](https://github.com/hendraanggrian/socialview/blob/main/LICENSE)
 
 SocialView
 ==========
 
-![](art/sample_mention.png)
-![](art/sample_hashtag.png)
+![](images/sample_mention.png)
+![](images/sample_hashtag.png)
 
 TextView and EditText with hashtag, mention, and hyperlink support.
 * Pre-loaded with default views, but also installable to any custom view.
