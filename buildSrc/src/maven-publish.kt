@@ -86,7 +86,7 @@ private fun Project.mavenPublish(artifact: String, javadoc: Any, sources: Any, c
             }
             scm {
                 connection.set("scm:git:$RELEASE_GITHUB.git")
-                developerConnection.set("scm:git:$RELEASE_GITHUB.git")
+                developerConnection.set("scm:git:ssh:$RELEASE_GITHUB.git")
                 url.set(RELEASE_GITHUB)
             }
         }

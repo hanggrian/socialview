@@ -6,11 +6,10 @@ plugins {
 }
 
 android {
-    compileSdkVersion(SDK_TARGET)
+    compileSdk = SDK_TARGET
     defaultConfig {
-        minSdkVersion(SDK_MIN)
-        targetSdkVersion(SDK_TARGET)
-        versionName = RELEASE_VERSION
+        minSdk = SDK_MIN
+        targetSdk = SDK_TARGET
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
@@ -53,7 +52,6 @@ tasks {
         isFailOnError = false
         source = android.sourceSets["main"].java.getSourceFiles()
         classpath += project.files(android.bootClasspath.joinToString(File.pathSeparator))
-        classpath += configurations.compile
     }
 }
 

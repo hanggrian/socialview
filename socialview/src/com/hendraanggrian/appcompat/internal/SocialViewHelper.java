@@ -376,7 +376,6 @@ public final class SocialViewHelper implements SocialView {
     }
 
     private void recolorize() {
-        Log.d("AAA", mentionPattern == null ? "AAAA" : "BBBB");
         final CharSequence text = view.getText();
         if (!(text instanceof Spannable)) {
             throw new IllegalStateException("Attached text is not a Spannable," +

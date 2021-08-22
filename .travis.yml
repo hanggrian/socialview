@@ -1,7 +1,7 @@
 language: android
 install: skip
 dist: trusty
-jdk: oraclejdk8
+jdk: oraclejdk11
 
 env:
   - OSSRH_USERNAME=stub OSSRH_PASSWORD=stub
@@ -10,24 +10,21 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-30.0.2
+    - build-tools-31.0.0
     - android-30
     - android-22
-    - add-on
-    - extra
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
     - sys-img-armeabi-v7a-android-22
   licenses:
-    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-preview-license-.+'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
 before_install:
-  - touch $HOME/.android/repositories.cfg
-  - yes | sdkmanager "platforms;android-30"
-  - yes | sdkmanager "build-tools;30.0.2"
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"
 
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
