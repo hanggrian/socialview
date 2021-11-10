@@ -8,8 +8,8 @@ SocialView
 ![](images/sample_hashtag.png)
 
 TextView and EditText with hashtag, mention, and hyperlink support.
-* Pre-loaded with default views, but also installable to any custom view.
-* Display hashtag and mention suggestions as you type.
+- Pre-loaded with default views, but also installable to any custom view.
+- Display hashtag and mention suggestions as you type.
 
 Download
 --------

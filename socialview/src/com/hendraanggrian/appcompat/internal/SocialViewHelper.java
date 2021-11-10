@@ -14,7 +14,6 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -231,7 +230,7 @@ public final class SocialViewHelper implements SocialView {
     @Override
     public void setHashtagEnabled(boolean enabled) {
         if (enabled != isHashtagEnabled()) {
-            flags = enabled ? flags | FLAG_HASHTAG : flags & (~FLAG_HASHTAG);
+            flags = enabled ? flags | FLAG_HASHTAG : flags & ~FLAG_HASHTAG;
             recolorize();
         }
     }
@@ -239,7 +238,7 @@ public final class SocialViewHelper implements SocialView {
     @Override
     public void setMentionEnabled(boolean enabled) {
         if (enabled != isMentionEnabled()) {
-            flags = enabled ? flags | FLAG_MENTION : flags & (~FLAG_MENTION);
+            flags = enabled ? flags | FLAG_MENTION : flags & ~FLAG_MENTION;
             recolorize();
         }
     }
@@ -247,7 +246,7 @@ public final class SocialViewHelper implements SocialView {
     @Override
     public void setHyperlinkEnabled(boolean enabled) {
         if (enabled != isHyperlinkEnabled()) {
-            flags = enabled ? flags | FLAG_HYPERLINK : flags & (~FLAG_HYPERLINK);
+            flags = enabled ? flags | FLAG_HYPERLINK : flags & ~FLAG_HYPERLINK;
             recolorize();
         }
     }

@@ -2,11 +2,6 @@ package com.example.socialview;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.Spanned;
-import android.text.TextPaint;
-import android.text.TextWatcher;
-import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,13 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.util.PatternsCompat;
 
 import com.hendraanggrian.appcompat.widget.Hashtag;
 import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter;
@@ -32,8 +25,6 @@ import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView;
 import com.hendraanggrian.appcompat.widget.SocialView;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.regex.Pattern;
 
 public class ExampleActivity2 extends AppCompatActivity {
 
@@ -66,31 +57,31 @@ public class ExampleActivity2 extends AppCompatActivity {
 
         defaultHashtagAdapter = new HashtagArrayAdapter<>(this);
         defaultHashtagAdapter.addAll(
-                new Hashtag(HASHTAG1),
-                new Hashtag(HASHTAG2, HASHTAG2_COUNT),
-                new Hashtag(HASHTAG3, HASHTAG3_COUNT));
+            new Hashtag(HASHTAG1),
+            new Hashtag(HASHTAG2, HASHTAG2_COUNT),
+            new Hashtag(HASHTAG3, HASHTAG3_COUNT));
 
         defaultMentionAdapter = new MentionArrayAdapter<>(this);
         defaultMentionAdapter.addAll(
-                new Mention(MENTION1_USERNAME),
-                new Mention(MENTION2_USERNAME, MENTION2_DISPLAYNAME),
-                new Mention(
-                        MENTION3_USERNAME,
-                        MENTION3_DISPLAYNAME,
-                        "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4"
-                ));
+            new Mention(MENTION1_USERNAME),
+            new Mention(MENTION2_USERNAME, MENTION2_DISPLAYNAME),
+            new Mention(
+                MENTION3_USERNAME,
+                MENTION3_DISPLAYNAME,
+                "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4"
+            ));
 
         customHashtagAdapter = new PersonAdapter(this);
         customHashtagAdapter.addAll(
-                new Person(HASHTAG1),
-                new Person(HASHTAG2),
-                new Person(HASHTAG3));
+            new Person(HASHTAG1),
+            new Person(HASHTAG2),
+            new Person(HASHTAG3));
 
         customMentionAdapter = new PersonAdapter(this);
         customMentionAdapter.addAll(
-                new Person(MENTION1_USERNAME),
-                new Person(MENTION2_USERNAME),
-                new Person(MENTION3_USERNAME));
+            new Person(MENTION1_USERNAME),
+            new Person(MENTION2_USERNAME),
+            new Person(MENTION3_USERNAME));
 
         textView.setHashtagAdapter(defaultHashtagAdapter);
         textView.setMentionAdapter(defaultMentionAdapter);

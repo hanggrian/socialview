@@ -216,7 +216,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      * {@inheritDoc}
      */
     @Override
-    public void setHashtagColor(int color) {
+    public void setHashtagColor(@ColorInt int color) {
         helper.setHashtagColor(color);
     }
 
@@ -224,7 +224,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      * {@inheritDoc}
      */
     @Override
-    public void setMentionColor(int color) {
+    public void setMentionColor(@ColorInt int color) {
         helper.setMentionColor(color);
     }
 
@@ -232,7 +232,7 @@ public class SocialEditText extends AppCompatEditText implements SocialView {
      * {@inheritDoc}
      */
     @Override
-    public void setHyperlinkColor(int color) {
+    public void setHyperlinkColor(@ColorInt int color) {
         helper.setHyperlinkColor(color);
     }
 
