@@ -5,7 +5,7 @@ const val RELEASE_GROUP = "com.hendraanggrian.appcompat"
 const val RELEASE_ARTIFACT = "socialview"
 const val RELEASE_VERSION = "0.1-SNAPSHOT"
 const val RELEASE_DESCRIPTION = "Android TextView and EditText with hashtag, mention, and hyperlink support"
-const val RELEASE_GITHUB = "https://github.com/hendraanggrian/$RELEASE_ARTIFACT"
+const val RELEASE_URL = "https://github.com/hendraanggrian/$RELEASE_ARTIFACT"
 
 fun getGithubRemoteUrl(artifact: String = RELEASE_ARTIFACT) =
-    `java.net`.URL("$RELEASE_GITHUB/tree/main/$artifact/src")
+    `java.net`.URL("$RELEASE_URL/tree/main/$artifact/src")

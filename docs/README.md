@@ -1,35 +1,34 @@
-[![version](https://img.shields.io/maven-central/v/com.hendraanggrian.appcompat/socialview)](https://search.maven.org/artifact/com.hendraanggrian.appcompat/socialview)
-[![build](https://img.shields.io/travis/com/hendraanggrian/socialview)](https://www.travis-ci.com/github/hendraanggrian/socialview)
+[![Travis CI](https://img.shields.io/travis/com/hendraanggrian/socialview)](https://www.travis-ci.com/github/hendraanggrian/socialview/)
+[![Maven Central](https://img.shields.io/maven-central/v/com.hendraanggrian.appcompat/socialview)](https://search.maven.org/artifact/com.hendraanggrian.appcompat/socialview/)
 
-SocialView
-==========
+# SocialView
 
-![](images/sample_mention.png)
-![](images/sample_hashtag.png)
+![Mention sample](images/sample_mention.png)
+![Hashtag sample](images/sample_hashtag.png)
 
 TextView and EditText with hashtag, mention, and hyperlink support.
+
 - Pre-loaded with default views, but also installable to any custom view.
 - Display hashtag and mention suggestions as you type.
 
-Download
---------
+## Download
 
 ```gradle
 repositories {
     mavenCentral()
     google()
 }
-
 dependencies {
     implementation "com.hendraanggrian.appcompat:socialview:$version" // base library
     implementation "com.hendraanggrian.appcompat:socialview-commons:$version" // auto-complete hashtag and mention
 }
 ```
 
-Snapshots of the development version are available in [Sonatype's snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots).
+Snapshots of the development version are available in [Sonatype's snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots/).
 
-Core
-----
+## Usage
+
+### Core
 
 Core library contains `SocialTextView`, `SocialEditText` and helper class applies these behavior into any `TextView`.
 
@@ -59,8 +58,7 @@ textView.setOnHashtagClickListener(new SocialView.OnClickListener() {
 });
 ```
 
-Commons
--------
+### Commons
 
 Commons library comes with `SocialAutoCompleteTextView`.
 

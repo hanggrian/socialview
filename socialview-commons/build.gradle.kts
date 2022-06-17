@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    api(project(":$RELEASE_ARTIFACT"))
+    implementation(project(":$RELEASE_ARTIFACT"))
     implementation(androidx("appcompat"))
     implementation(androidx("annotation", version = "1.2.0"))
     implementation(picasso())

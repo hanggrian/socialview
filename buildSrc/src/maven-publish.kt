@@ -70,7 +70,7 @@ private fun Project.mavenPublish(artifact: String, javadoc: Any, sources: Any, c
         pom {
             name.set(artifact)
             description.set(RELEASE_DESCRIPTION)
-            url.set(RELEASE_GITHUB)
+            url.set(RELEASE_URL)
             licenses {
                 license {
                     name.set("The Apache License, Version 2.0")
@@ -85,9 +85,9 @@ private fun Project.mavenPublish(artifact: String, javadoc: Any, sources: Any, c
                 }
             }
             scm {
-                connection.set("scm:git:$RELEASE_GITHUB.git")
-                developerConnection.set("scm:git:ssh:$RELEASE_GITHUB.git")
-                url.set(RELEASE_GITHUB)
+                connection.set("scm:git:$RELEASE_URL.git")
+                developerConnection.set("scm:git:ssh:$RELEASE_URL.git")
+                url.set(RELEASE_URL)
             }
         }
     }

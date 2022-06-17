@@ -1,10 +1,6 @@
 language: android
-install: skip
 dist: trusty
 jdk: oraclejdk11
-
-env:
-  - OSSRH_USERNAME=stub OSSRH_PASSWORD=stub
 
 android:
   components:
@@ -33,7 +29,7 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-  - ./gradlew build connectedCheck
+  - ./gradlew check connectedCheck --info
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
