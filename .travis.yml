@@ -2,6 +2,9 @@ language: android
 dist: trusty
 jdk: oraclejdk11
 
+env:
+  - OSSRH_USERNAME=stub OSSRH_PASSWORD=stub
+
 android:
   components:
     - tools
