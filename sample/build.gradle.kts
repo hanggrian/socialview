@@ -1,48 +1,23 @@
 plugins {
-    android("application")
-    kotlin("android")
-    kotlin("android.extensions")
+    id("com.android.application")
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.android.extensions)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
-    compileSdkVersion(SDK_TARGET)
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
     defaultConfig {
-        minSdkVersion(SDK_MIN)
-        targetSdkVersion(SDK_TARGET)
-        applicationId = "com.example.$RELEASE_ARTIFACT"
-        versionCode = 1
-        versionName = RELEASE_VERSION
+        minSdk = 23
+        applicationId = "com.example.socialview"
+        multiDexEnabled = true
     }
-    sourceSets {
-        named("main") {
-            manifest.srcFile("AndroidManifest.xml")
-            java.srcDir("src")
-            res.srcDir("res")
-            resources.srcDir("src")
-        }
-    }
-    buildTypes {
-        getByName("debug") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-        }
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-        }
-    }
-    lintOptions {
-        isAbortOnError = false
-    }
+    lint.abortOnError = false
 }
 
 dependencies {
     implementation(project(":$RELEASE_ARTIFACT-commons"))
-    implementation(kotlin("stdlib", VERSION_KOTLIN))
-    implementation(androidx("core", "core-ktx"))
-    implementation(material())
+    implementation(project(":$RELEASE_ARTIFACT"))
+    implementation(libs.material)
+    implementation(libs.androidx.multidex)
+    implementation(libs.process.phoenix)
 }

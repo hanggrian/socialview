@@ -1,0 +1,41 @@
+[versions]
+jdk = "11"
+jdkAndroid = "8"
+sdkMin = "14"
+sdkTarget = "32"
+kotlin = "1.7.20"
+androidx = "1.5.0"
+androidx-test = "1.4.0"
+
+[plugins]
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-android-extensions = { id = "org.jetbrains.kotlin.android.extensions", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlinx-kover = "org.jetbrains.kotlinx.kover:0.6.1"
+dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin" }
+spotless = "com.diffplug.spotless:6.11.0"
+maven-publish = "com.vanniktech.maven.publish.base:0.21.0"
+git-publish = "org.ajoberstar.git-publish:3.0.1"
+pages = "com.hendraanggrian.pages:0.1"
+
+[libraries]
+# plugin
+android = "com.android.tools.build:gradle:7.3.1"
+# main
+kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+material = { module = "com.google.android.material:material", version.ref = "androidx" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx" }
+androidx-multidex = "androidx.multidex:multidex:2.0.1"
+process-phoenix = "com.jakewharton:process-phoenix:2.1.2"
+picasso = "com.squareup.picasso:picasso:2.71828"
+# test
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }
+androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
+androidx-test-junit = "androidx.test.ext:junit:1.1.3"
+robolectric = "org.robolectric:robolectric:4.9"
+truth = "com.google.truth:truth:1.1.3"
+
+[bundles]
+androidx-test = ["androidx-test-core", "androidx-test-runner", "androidx-test-junit", "robolectric", "truth"]

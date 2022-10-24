@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <public name="socialview_ic_mention_placeholder" type="drawable" />
+
+    <public name="socialview_layout_hashtag" type="layout" />
+    <public name="socialview_layout_mention" type="layout" />
+
+    <public name="posts" type="plural" />
+
+    <public name="mention" type="string" />
+</resources>

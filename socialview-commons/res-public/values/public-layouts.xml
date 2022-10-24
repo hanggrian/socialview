@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <public name="socialview_layout_hashtag" type="layout" />
-    <public name="socialview_layout_mention" type="layout" />
-</resources>

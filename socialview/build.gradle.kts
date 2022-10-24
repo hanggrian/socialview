@@ -1,62 +1,84 @@
+import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
-    android("library")
-    kotlin("android")
-    `maven-publish`
-    signing
+    id("com.android.library")
+    jacoco
+    alias(libs.plugins.spotless)
+    alias(libs.plugins.maven.publish)
 }
 
 android {
-    compileSdkVersion(SDK_TARGET)
-    defaultConfig {
-        minSdkVersion(SDK_MIN)
-        targetSdkVersion(SDK_TARGET)
-        versionName = RELEASE_VERSION
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-    sourceSets {
-        named("main") {
-            manifest.srcFile("AndroidManifest.xml")
-            java.srcDir("src")
-            res.srcDir("res")
-            resources.srcDir("src")
+    buildFeatures.buildConfig = false
+    testOptions.unitTests.isIncludeAndroidResources = true
+}
+
+spotless.java {
+    target("src/main/java/**/*.java")
+    googleJavaFormat()
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.S01)
+    signAllPublications()
+    pom {
+        name.set(project.name)
+        description.set(RELEASE_DESCRIPTION)
+        url.set(RELEASE_URL)
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
         }
-        named("androidTest") {
-            setRoot("tests")
-            manifest.srcFile("tests/AndroidManifest.xml")
-            java.srcDir("tests/src")
-            res.srcDir("tests/res")
-            resources.srcDir("tests/src")
+        scm {
+            connection.set("scm:git:https://github.com/$DEVELOPER_ID/$RELEASE_ARTIFACT.git")
+            developerConnection.set("scm:git:ssh://git@github.com/$DEVELOPER_ID/$RELEASE_ARTIFACT.git")
+            url.set(RELEASE_URL)
+        }
+        developers {
+            developer {
+                id.set(DEVELOPER_ID)
+                name.set(DEVELOPER_NAME)
+                url.set(DEVELOPER_URL)
+            }
         }
     }
-    libraryVariants.all {
-        generateBuildConfigProvider.orNull?.enabled = false
-    }
+    configure(AndroidSingleVariantLibrary())
 }
 
 dependencies {
-    implementation(androidx("appcompat"))
-    implementation(androidx("annotation", version = "1.2.0"))
-    androidTestImplementation(kotlin("stdlib", VERSION_KOTLIN))
-    androidTestImplementation(kotlin("test-junit", VERSION_KOTLIN))
-    androidTestImplementation(material())
-    androidTestImplementation(androidx("test", "core-ktx", VERSION_ANDROIDX_TEST))
-    androidTestImplementation(androidx("test", "runner", VERSION_ANDROIDX_TEST))
-    androidTestImplementation(androidx("test", "rules", VERSION_ANDROIDX_TEST))
-    androidTestImplementation(androidx("test.ext", "junit-ktx", VERSION_ANDROIDX_JUNIT))
-    androidTestImplementation(androidx("test.ext", "truth", VERSION_ANDROIDX_TRUTH))
-    androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
+    implementation(libs.material)
+    testImplementation(libs.bundles.androidx.test)
 }
 
 tasks {
-    val javadoc by registering(Javadoc::class) {
-        isFailOnError = false
-        source = android.sourceSets["main"].java.getSourceFiles()
-        classpath += project.files(android.bootClasspath.joinToString(File.pathSeparator))
-        classpath += configurations.compile
+    withType<Test> {
+        configure<JacocoTaskExtension> {
+            isIncludeNoLocationClasses = true
+            excludes = listOf("jdk.internal.*")
+        }
+    }
+    register<JacocoReport>("jacocoTestReport") {
+        dependsOn("testDebugUnitTest")
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+        }
+        val fileFilter = listOf(
+            "**/R.class", "**/R\$*.class", "**/BuildConfig.*",
+            "**/Manifest*.*", "**/*Test*.*", "android/**/*.*"
+        )
+        val debugTree = fileTree("dir" to "$buildDir/intermediates/javac/debug", "excludes" to fileFilter)
+        val mainSrc = "$projectDir/src/main/java"
+        sourceDirectories.setFrom(mainSrc)
+        classDirectories.setFrom(debugTree)
+        executionData.setFrom(
+            fileTree(
+                "dir" to buildDir,
+                "includes" to listOf("jacoco/testDebugUnitTest.exec")
+            )
+        )
     }
 }
-
-mavenPublishAndroid(
-    artifact = RELEASE_ARTIFACT,
-    sources = android.sourceSets["main"].java.srcDirs
-)

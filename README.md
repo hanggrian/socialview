@@ -1,39 +1,38 @@
-[![version](https://img.shields.io/maven-central/v/com.hendraanggrian/socialview)](https://search.maven.org/artifact/com.hendraanggrian/socialview)
-[![build](https://img.shields.io/travis/com/hendraanggrian/socialview)](https://www.travis-ci.com/github/hendraanggrian/socialview)
-[![license](https://img.shields.io/github/license/hendraanggrian/socialview)](https://github.com/hendraanggrian/socialview/blob/main/LICENSE)
+[![Travis CI](https://img.shields.io/travis/com/hendraanggrian/socialview)](https://travis-ci.com/github/hendraanggrian/socialview/)
+[![Codecov](https://img.shields.io/codecov/c/github/hendraanggrian/socialview)](https://codecov.io/gh/hendraanggrian/socialview/)
+[![Maven Central](https://img.shields.io/maven-central/v/com.hendraanggrian.appcompat/socialview)](https://search.maven.org/artifact/com.hendraanggrian.appcompat/socialview/)
+[![Nexus Snapshot](https://img.shields.io/nexus/s/com.hendraanggrian.appcompat/socialview?server=https%3A%2F%2Fs01.oss.sonatype.org)](https://s01.oss.sonatype.org/content/repositories/snapshots/com/hendraanggrian/appcompat/socialview/)
+[![Android SDK](https://img.shields.io/badge/sdk-14%2B-informational)](https://developer.android.com/studio/releases/platforms/#4.0)
 
-SocialView
-==========
+# SocialView
 
-![demo][demo]
+![Hashtag preview.](https://github.com/hendraanggrian/socialview/raw/assets/preview_hashtag.png)
+![Mention preview.](https://github.com/hendraanggrian/socialview/raw/assets/preview_mention.png)
 
 TextView and EditText with hashtag, mention, and hyperlink support.
-* Pre-loaded with default views, but also installable to any custom view.
-* Display hashtag and mention suggestions as you type.
 
-Download
---------
+- Pre-loaded with default views, but also installable to any custom view.
+- Display hashtag and mention suggestions as you type.
+
+## Download
 
 ```gradle
 repositories {
     mavenCentral()
     google()
 }
-
 dependencies {
     implementation "com.hendraanggrian.appcompat:socialview:$version" // base library
     implementation "com.hendraanggrian.appcompat:socialview-commons:$version" // auto-complete hashtag and mention
 }
 ```
 
-Snapshots of the development version are available in [Sonatype's snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots/).
+## Usage
 
-Core
-----
+### Core
 
-![demo_core1][demo_core1] ![demo_core2][demo_core2] ![demo_core3][demo_core3]
+Core library contains `SocialTextView`, `SocialEditText` and helper class applies these behavior into any `TextView`.
 
-Write `SocialTextView` or `SocialEditText` in xml.
 ```xml
 <com.hendraanggrian.appcompat.widget.SocialTextView
     android:id="@+id/textView"
@@ -42,34 +41,29 @@ Write `SocialTextView` or `SocialEditText` in xml.
     android:text="#hashtag and @mention."
     app:socialFlags="hashtag|mention"
     app:hashtagColor="@color/blue"
-    app:mentionColor="@color/red"/>
+    app:mentionColor="@color/red" />
 ```
 
-See [attrs.xml][attrs] for full list of available attributes.
+See [attrs.xml](https://github.com/HendraAnggrian/socialview/blob/master/socialview/res/values/attrs.xml)
+for full list of available attributes.
 
 Modify its state and set listeners programmatically.
+
 ```java
 textView.setMentionEnabled(false);
 textView.setHashtagColor(Color.RED);
-textView.setOnHashtagClickListener(new Function2<SocialView, String, Unit>() {
+textView.setOnHashtagClickListener(new SocialView.OnClickListener() {
     @Override
-    public Unit invoke(SocialView socialView, String s) {
+    public void invoke(SocialView socialView, String s) {
         // do something
-        return null;
     }
 });
 ```
 
-Any TextView or subclasses of TextView can be made social, see [SocialTextView.kt][SocialTextView] for example.
+### Commons
 
-Commons
--------
+Commons library comes with `SocialAutoCompleteTextView`.
 
-![demo_commons1][demo_commons1] ![demo_commons2][demo_commons2] ![demo_commons3][demo_commons3]
-
-> NOTE: Custom adapters are experimental, see demo for example.
-
-Write `SocialAutoCompleteTextView` in xml.
 ```xml
 <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
     android:id="@+id/textView"
@@ -77,10 +71,11 @@ Write `SocialAutoCompleteTextView` in xml.
     android:layout_height="wrap_content"
     android:hint="What's on your mind?"
     app:socialFlags="hyperlink"
-    app:hyperlinkColor="@color/green"/>
+    app:hyperlinkColor="@color/green" />
 ```
 
 To display suggestions, it is required to `setHashtagAdapter()` and `setMentionAdapter()`.
+
 ```java
 ArrayAdapter<Hashtag> hashtagAdapter = new HashtagAdapter(getContext());
 hashtagAdapter.add(new Hashtag("follow"));
@@ -95,7 +90,11 @@ mentionAdapter.add(new Mention("hendraanggrian", "Hendra Anggrian", "https://ava
 textView.setMentionAdapter(mentionAdapter);
 ```
 
-To customize hashtag or mention adapter, create a custom adapter using customized `SocialAdapter` or write your own `ArrayAdapter`.
+To customize hashtag or mention adapter, create a custom adapter using customized `SocialAdapter` or
+write your own `ArrayAdapter`.
+
+> Custom adapters are experimental, see sample for example.
+
 ```java
 public class Person {
     public final String name;
@@ -107,7 +106,6 @@ public class Person {
 
 // easier
 public class PersonAdapter extends SocialAdapter<Person> {
-
     public PersonAdapter(@NonNull Context context) {
         super(context, R.layout.item_person, R.id.textview_person);
     }
@@ -131,19 +129,10 @@ public class PersonAdapter extends ArrayAdapter<Person> {
 ```
 
 Then, use the custom adapter.
+
 ```java
 ArrayAdapter<Person> adapter = new PersonAdapter(getContext());
 adapter.add(personA);
 adapter.add(personB);
 textView.setMentionAdapter(adapter);
 ```
-
-[demo]: /art/demo.png
-[demo_core1]: /art/demo_core1.gif
-[demo_core2]: /art/demo_core2.gif
-[demo_core3]: /art/demo_core3.gif
-[demo_commons1]: /art/demo_commons1.gif
-[demo_commons2]: /art/demo_commons2.gif
-[demo_commons3]: /art/demo_commons3.gif
-[attrs]: https://github.com/HendraAnggrian/socialview/blob/master/socialview/res/values/attrs.xml
-[SocialTextView]: https://github.com/HendraAnggrian/socialview/blob/master/socialview/src/com/hendraanggrian/socialview/widget/SocialTextView.kt
