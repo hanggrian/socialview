@@ -19,7 +19,6 @@ import com.hendraanggrian.appcompat.widget.SocialArrayAdapter
 import kotlinx.android.synthetic.main.activity_example.*
 
 class ExampleActivity : AppCompatActivity() {
-
     private companion object {
         const val HASHTAG1 = "follow"
         const val HASHTAG2 = "followme"

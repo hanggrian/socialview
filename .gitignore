@@ -1,15 +1,15 @@
 # macOS
 **/.DS_Store
 
-# IDEA
-*.iml
-.idea/
-out/
-
 # Gradle
 .gradle/
 build/
 local.properties
+
+# IDEA
+*.iml
+.idea/
+out/
 
 # Android
 captures/

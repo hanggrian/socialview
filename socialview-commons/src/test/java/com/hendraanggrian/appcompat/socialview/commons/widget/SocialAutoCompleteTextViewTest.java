@@ -30,7 +30,6 @@ import org.robolectric.annotation.internal.DoNotInstrument;
 @Config(sdk = Build.VERSION_CODES.LOLLIPOP)
 @DoNotInstrument
 public class SocialAutoCompleteTextViewTest {
-
     private AppCompatActivity activity;
     private SocialAutoCompleteTextView view;
 

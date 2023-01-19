@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
  */
 public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextView
     implements SocialView {
+      
   private final SocialView helper;
 
   // TODO: should check for symbols closest to cursor, not s[start]

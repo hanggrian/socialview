@@ -1,26 +1,25 @@
 [versions]
-jdk = "11"
-jdkAndroid = "8"
-sdkMin = "14"
-sdkTarget = "32"
+jdk = "11" # minimum for Android
 kotlin = "1.7.20"
-androidx = "1.5.0"
-androidx-test = "1.4.0"
+android-plugin = "7.3.1"
+android-jdk = "8"
+android-min = "14"
+android-target = "33"
+androidx = "1.6.0"
+androidx-test = "1.5.0"
 
 [plugins]
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-android-extensions = { id = "org.jetbrains.kotlin.android.extensions", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-kotlinx-kover = "org.jetbrains.kotlinx.kover:0.6.1"
+android-application = { id = "com.android.application", version.ref = "android-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-plugin" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin" }
-spotless = "com.diffplug.spotless:6.11.0"
-maven-publish = "com.vanniktech.maven.publish.base:0.21.0"
+kotlinx-kover = "org.jetbrains.kotlinx.kover:0.6.1"
+maven-publish = "com.vanniktech.maven.publish.base:0.23.1"
 git-publish = "org.ajoberstar.git-publish:3.0.1"
 pages = "com.hendraanggrian.pages:0.1"
 
 [libraries]
-# plugin
-android = "com.android.tools.build:gradle:7.3.1"
+# lint
+rulebook-checkstyle = "com.hendraanggrian.rulebook:rulebook-checkstyle:0.2-SNAPSHOT"
 # main
 kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
 material = { module = "com.google.android.material:material", version.ref = "androidx" }
@@ -28,13 +27,12 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx" }
 androidx-multidex = "androidx.multidex:multidex:2.0.1"
 process-phoenix = "com.jakewharton:process-phoenix:2.1.2"
-picasso = "com.squareup.picasso:picasso:2.71828"
+picasso = "com.squareup.picasso:picasso:2.8"
 # test
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
 androidx-test-junit = "androidx.test.ext:junit:1.1.3"
-robolectric = "org.robolectric:robolectric:4.9"
+robolectric = "org.robolectric:robolectric:4.9.2"
 truth = "com.google.truth:truth:1.1.3"
 
 [bundles]

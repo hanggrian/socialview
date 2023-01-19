@@ -22,8 +22,8 @@ repositories {
     google()
 }
 dependencies {
-    implementation "com.hendraanggrian.appcompat:socialview:$version" // base library
-    implementation "com.hendraanggrian.appcompat:socialview-commons:$version" // auto-complete hashtag and mention
+    implementation "com.hendraanggrian.appcompat:socialview-core:$version" // base widgets
+    implementation "com.hendraanggrian.appcompat:socialview-commons:$version" // auto-complete EditText
 }
 ```
 
@@ -31,7 +31,8 @@ dependencies {
 
 ### Core
 
-Core library contains `SocialTextView`, `SocialEditText` and helper class applies these behavior into any `TextView`.
+Core library contains `SocialTextView`, `SocialEditText` and helper class applies these behavior
+into any `TextView`.
 
 ```xml
 <com.hendraanggrian.appcompat.widget.SocialTextView
@@ -41,7 +42,7 @@ Core library contains `SocialTextView`, `SocialEditText` and helper class applie
     android:text="#hashtag and @mention."
     app:socialFlags="hashtag|mention"
     app:hashtagColor="@color/blue"
-    app:mentionColor="@color/red" />
+    app:mentionColor="@color/red"/>
 ```
 
 See [attrs.xml](https://github.com/HendraAnggrian/socialview/blob/master/socialview/res/values/attrs.xml)
@@ -71,7 +72,7 @@ Commons library comes with `SocialAutoCompleteTextView`.
     android:layout_height="wrap_content"
     android:hint="What's on your mind?"
     app:socialFlags="hyperlink"
-    app:hyperlinkColor="@color/green" />
+    app:hyperlinkColor="@color/green"/>
 ```
 
 To display suggestions, it is required to `setHashtagAdapter()` and `setMentionAdapter()`.

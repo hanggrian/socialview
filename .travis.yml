@@ -4,7 +4,7 @@ jdk: openjdk11
 
 env:
   global:
-    - TARGET_SDK=32
+    - TARGET_SDK=33
     - BUILD_TOOLS=33.0.0
     - ANDROID_HOME=~/android-sdk
 
@@ -24,7 +24,9 @@ script:
   - ./gradlew jacocoTestReport
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - curl -Os "https://uploader.codecov.io/latest/linux/codecov"
+  - chmod +x codecov
+  - ./codecov
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

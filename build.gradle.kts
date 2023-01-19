@@ -7,56 +7,43 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinAndroidPluginWrapper
 
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-        google()
-    }
-    dependencies.classpath(libs.android)
-}
-
 plugins {
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.kotlin.android.extensions) apply false
-    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    kotlin("android") version libs.versions.kotlin apply false
+    kotlin("android.extensions") version libs.versions.kotlin apply false
+    kotlin("kapt") version libs.versions.kotlin apply false
 }
 
 allprojects {
     group = RELEASE_GROUP
     version = RELEASE_VERSION
-    repositories {
-        mavenCentral()
-        google()
-    }
 }
 
 subprojects {
     plugins.withType<LibraryPlugin>().configureEach {
-        configure<LibraryExtension>(::androidConfig)
+        configure<LibraryExtension>(::configureAndroid)
     }
     plugins.withType<AppPlugin>().configureEach {
-        configure<BaseAppModuleExtension>(::androidConfig)
+        configure<BaseAppModuleExtension>(::configureAndroid)
     }
     plugins.withType<KotlinAndroidPluginWrapper> {
-        kotlinExtension.jvmToolchain {
-            languageVersion.set(JavaLanguageVersion.of(libs.versions.jdk.get()))
-        }
+        kotlinExtension.jvmToolchain(libs.versions.jdk.get().toInt())
         (the<BaseExtension>() as ExtensionAware).extensions.getByType<KotlinJvmOptions>()
-            .jvmTarget = JavaVersion.toVersion(libs.versions.jdkAndroid.get()).toString()
+            .jvmTarget = JavaVersion.toVersion(libs.versions.android.jdk.get()).toString()
     }
 }
 
-fun androidConfig(extension: BaseExtension) {
-    extension.setCompileSdkVersion(libs.versions.sdkTarget.get().toInt())
+fun configureAndroid(extension: BaseExtension) {
+    extension.setCompileSdkVersion(libs.versions.android.target.get().toInt())
     extension.defaultConfig {
-        minSdk = libs.versions.sdkMin.get().toInt()
-        targetSdk = libs.versions.sdkTarget.get().toInt()
+        minSdk = libs.versions.android.min.get().toInt()
+        targetSdk = libs.versions.android.target.get().toInt()
         version = RELEASE_VERSION
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     extension.compileOptions {
-        targetCompatibility = JavaVersion.toVersion(libs.versions.jdkAndroid.get())
-        sourceCompatibility = JavaVersion.toVersion(libs.versions.jdkAndroid.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.android.jdk.get())
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.android.jdk.get())
     }
 }

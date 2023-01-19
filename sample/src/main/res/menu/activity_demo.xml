@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -6,26 +6,26 @@
         android:id="@+id/customAdapterItem"
         android:checkable="true"
         android:title="Custom adapter"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/enableHashtagItem"
         android:checkable="true"
         android:checked="true"
         android:title="Hashtag"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/enableMentionItem"
         android:checkable="true"
         android:checked="true"
         android:title="Mention"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/enableHyperlinkItem"
         android:checkable="true"
         android:checked="true"
         android:title="Hyperlink"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
 </menu>
