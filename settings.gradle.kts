@@ -11,6 +11,5 @@ dependencyResolutionManagement.repositories {
 
 rootProject.name = "socialview"
 
-include("socialview-core")
-include("socialview-commons")
+include("socialview", "socialview-autocomplete")
 include("sample")

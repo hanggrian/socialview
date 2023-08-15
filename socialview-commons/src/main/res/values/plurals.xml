@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<resources>
-    <plurals name="posts">
-        <item quantity="one">%,d post</item>
-        <item quantity="other">%,d posts</item>
-    </plurals>
-</resources>

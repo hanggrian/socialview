@@ -9,6 +9,9 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 max_line_length = 100
 
+[*.md]
+max_line_length = 80
+
 [*.{kt,kts}]
 indent_size = 4
 

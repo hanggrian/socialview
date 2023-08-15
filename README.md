@@ -22,8 +22,11 @@ repositories {
     google()
 }
 dependencies {
-    implementation "com.hendraanggrian.appcompat:socialview-core:$version" // base widgets
-    implementation "com.hendraanggrian.appcompat:socialview-commons:$version" // auto-complete EditText
+    // base widgets
+    implementation "com.hendraanggrian.appcompat:socialview:$version"
+
+    // auto-complete widgets
+    implementation "com.hendraanggrian.appcompat:socialview-autocomplete:$version"
 }
 ```
 
@@ -31,8 +34,8 @@ dependencies {
 
 ### Core
 
-Core library contains `SocialTextView`, `SocialEditText` and helper class applies these behavior
-into any `TextView`.
+Core library contains `SocialTextView`, `SocialEditText` and helper class
+applies these behavior into any `TextView`.
 
 ```xml
 <com.hendraanggrian.appcompat.widget.SocialTextView
@@ -61,9 +64,9 @@ textView.setOnHashtagClickListener(new SocialView.OnClickListener() {
 });
 ```
 
-### Commons
+### Auto-complete
 
-Commons library comes with `SocialAutoCompleteTextView`.
+Extended library comes with `SocialAutoCompleteTextView`.
 
 ```xml
 <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
@@ -75,7 +78,8 @@ Commons library comes with `SocialAutoCompleteTextView`.
     app:hyperlinkColor="@color/green"/>
 ```
 
-To display suggestions, it is required to `setHashtagAdapter()` and `setMentionAdapter()`.
+To display suggestions, it is required to `setHashtagAdapter()`
+and `setMentionAdapter()`.
 
 ```java
 ArrayAdapter<Hashtag> hashtagAdapter = new HashtagAdapter(getContext());
@@ -91,8 +95,8 @@ mentionAdapter.add(new Mention("hendraanggrian", "Hendra Anggrian", "https://ava
 textView.setMentionAdapter(mentionAdapter);
 ```
 
-To customize hashtag or mention adapter, create a custom adapter using customized `SocialAdapter` or
-write your own `ArrayAdapter`.
+To customize hashtag or mention adapter, create a custom adapter using
+customized `SocialAdapter` or write your own `ArrayAdapter`.
 
 > Custom adapters are experimental, see sample for example.
 
