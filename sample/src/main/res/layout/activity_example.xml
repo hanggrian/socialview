@@ -16,7 +16,7 @@
       android:layout_height="?actionBarSize"/>
   </com.google.android.material.appbar.AppBarLayout>
 
-  <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
+  <com.hendraanggrian.appcompat.socialview.widget.SocialAutoCompleteTextView
     android:id="@+id/textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

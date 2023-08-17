@@ -1,16 +1,12 @@
 package com.hendraanggrian.appcompat.socialview;
 
 import static org.junit.Assert.assertEquals;
-
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.hendraanggrian.appcompat.socialview.widget.SocialEditText;
 import com.hendraanggrian.appcompat.socialview.test.R;
-
+import com.hendraanggrian.appcompat.socialview.widget.SocialEditText;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +25,8 @@ public class CustomStyleTest {
   @Before
   public void setup() {
     activity = Robolectric.buildActivity(StyleTestActivity.class).setup().get();
-    view = (SocialEditText) activity.getLayoutInflater().inflate(R.layout.test_socialedittext, null);
+    view = (SocialEditText) activity.getLayoutInflater()
+        .inflate(R.layout.test_socialedittext, null);
   }
 
   @Test
@@ -43,7 +40,7 @@ public class CustomStyleTest {
     @Override
     protected void onCreate(Bundle bundle) {
       super.onCreate(bundle);
-      setTheme(com.hendraanggrian.appcompat.socialview.test.R.style.MyAppTheme);
+      setTheme(R.style.MyAppTheme);
     }
   }
 }

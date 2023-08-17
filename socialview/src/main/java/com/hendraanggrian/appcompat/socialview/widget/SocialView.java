@@ -12,28 +12,28 @@ import java.util.regex.Pattern;
 
 /**
  * Base interface of all social widgets, which usually derived from {@link android.widget.TextView}.
- * Out of the box, there are {@link SocialTextView}, {@link SocialEditText}, and {@code
- * SocialAutoCompleteTextView}. It can also be implemented in any {@link android.view.View} using
- * {@link SocialViewHelper}.
+ * Out of the box, there are {@link SocialTextView}, {@link SocialEditText},
+ * and {@code SocialAutoCompleteTextView}. It can also be implemented in
+ * any {@link android.view.View} using {@link SocialViewHelper}.
  */
 public interface SocialView {
   /**
-   * Returns regex that are responsible for finding <b>hashtags</b>. By default, the pattern are
-   * {@code #(\w+)}.
+   * Returns regex that are responsible for finding <b>hashtags</b>. By default, the pattern
+   * are {@code #(\w+)}.
    */
   @NonNull
   Pattern getHashtagPattern();
 
   /**
-   * Returns regex that are responsible for finding <b>mentions</b>. By default, the pattern are
-   * {@code @(\w+)}.
+   * Returns regex that are responsible for finding <b>mentions</b>. By default, the pattern
+   * are {@code @(\w+)}.
    */
   @NonNull
   Pattern getMentionPattern();
 
   /**
-   * Returns regex that are responsible for finding <b>hyperlinks</b>. By default, the pattern are
-   * {@link PatternsCompat#WEB_URL}.
+   * Returns regex that are responsible for finding <b>hyperlinks</b>. By default, the pattern
+   * are {@link PatternsCompat#WEB_URL}.
    */
   @NonNull
   Pattern getHyperlinkPattern();

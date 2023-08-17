@@ -38,14 +38,14 @@ Core library contains `SocialTextView`, `SocialEditText` and helper class
 applies these behavior into any `TextView`.
 
 ```xml
-<com.hendraanggrian.appcompat.widget.SocialTextView
-    android:id="@+id/textView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="#hashtag and @mention."
-    app:socialFlags="hashtag|mention"
-    app:hashtagColor="@color/blue"
-    app:mentionColor="@color/red"/>
+<com.hendraanggrian.appcompat.socialview.widget.SocialTextView
+  android:id="@+id/textView"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:text="#hashtag and @mention."
+  app:socialFlags="hashtag|mention"
+  app:hashtagColor="@color/blue"
+  app:mentionColor="@color/red"/>
 ```
 
 See [attrs.xml](https://github.com/HendraAnggrian/socialview/blob/master/socialview/res/values/attrs.xml)
@@ -57,10 +57,10 @@ Modify its state and set listeners programmatically.
 textView.setMentionEnabled(false);
 textView.setHashtagColor(Color.RED);
 textView.setOnHashtagClickListener(new SocialView.OnClickListener() {
-    @Override
-    public void invoke(SocialView socialView, String s) {
-        // do something
-    }
+  @Override
+  public void invoke(SocialView socialView, String s) {
+    // do something
+  }
 });
 ```
 
@@ -69,13 +69,13 @@ textView.setOnHashtagClickListener(new SocialView.OnClickListener() {
 Extended library comes with `SocialAutoCompleteTextView`.
 
 ```xml
-<com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
-    android:id="@+id/textView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="What's on your mind?"
-    app:socialFlags="hyperlink"
-    app:hyperlinkColor="@color/green"/>
+<com.hendraanggrian.appcompat.socialview.widget.SocialAutoCompleteTextView
+  android:id="@+id/textView"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:hint="What's on your mind?"
+  app:socialFlags="hyperlink"
+  app:hyperlinkColor="@color/green"/>
 ```
 
 To display suggestions, it is required to `setHashtagAdapter()`
@@ -91,7 +91,8 @@ textView.setHashtagAdapter(hashtagAdapter);
 ArrayAdapter<Mention> mentionAdapter = new MentionAdapter(getContext());
 mentionAdapter.add(new Mention("dirtyhobo"));
 mentionAdapter.add(new Mention("hobo", "Regular Hobo", R.mipmap.ic_launcher));
-mentionAdapter.add(new Mention("hendraanggrian", "Hendra Anggrian", "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"));
+mentionAdapter.add(new Mention("hendraanggrian", "Hendra Anggrian",
+    "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"));
 textView.setMentionAdapter(mentionAdapter);
 ```
 
@@ -102,34 +103,34 @@ customized `SocialAdapter` or write your own `ArrayAdapter`.
 
 ```java
 public class Person {
-    public final String name;
+  public final String name;
 
-    public Person(String name) {
-        this.name = name;
-    }
+  public Person(String name) {
+    this.name = name;
+  }
 }
 
 // easier
 public class PersonAdapter extends SocialAdapter<Person> {
-    public PersonAdapter(@NonNull Context context) {
-        super(context, R.layout.item_person, R.id.textview_person);
-    }
+  public PersonAdapter(@NonNull Context context) {
+    super(context, R.layout.item_person, R.id.textview_person);
+  }
 
-    @Override
-    public String convertToString(Person $receiver) {
-        return $receiver.name;
-    }
+  @Override
+  public String convertToString(Person $receiver) {
+    return $receiver.name;
+  }
 
-    @Override
-    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        ...
-    }
+  @Override
+  public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+    // ...
+  }
 }
 
 // this works too
 public class PersonAdapter extends ArrayAdapter<Person> {
-    // your own adapter layout, view holder, data binding
-    // and of course, filtering logic
+  // your own adapter layout, view holder, data binding
+  // and of course, filtering logic
 }
 ```
 

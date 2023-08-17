@@ -22,9 +22,9 @@ import androidx.core.util.PatternsCompat;
 import androidx.core.util.Supplier;
 import com.hendraanggrian.appcompat.socialview.R;
 import com.hendraanggrian.appcompat.socialview.widget.SocialView;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,7 +49,7 @@ public final class SocialViewHelper implements SocialView {
   /**
    * Configuring {@link SocialView} into given view.
    *
-   * @param view TextView to install SocialView into.
+   * @param view  TextView to install SocialView into.
    * @param attrs The attributes from the View's constructor.
    */
   public static SocialView install(@NonNull TextView view, @Nullable AttributeSet attrs) {
@@ -59,18 +59,29 @@ public final class SocialViewHelper implements SocialView {
   private final TextView view;
   private final MovementMethod initialMovementMethod;
 
-  @Nullable private Pattern hashtagPattern;
-  @Nullable private Pattern mentionPattern;
-  @Nullable private Pattern hyperlinkPattern;
+  @Nullable
+  private Pattern hashtagPattern;
+  @Nullable
+  private Pattern mentionPattern;
+  @Nullable
+  private Pattern hyperlinkPattern;
   private int flags;
-  @NonNull private ColorStateList hashtagColors;
-  @NonNull private ColorStateList mentionColors;
-  @NonNull private ColorStateList hyperlinkColors;
-  @Nullable private OnClickListener hashtagClickListener;
-  @Nullable private OnClickListener mentionClickListener;
-  @Nullable private OnClickListener hyperlinkClickListener;
-  @Nullable private OnChangedListener hashtagChangedListener;
-  @Nullable private OnChangedListener mentionChangedListener;
+  @NonNull
+  private ColorStateList hashtagColors;
+  @NonNull
+  private ColorStateList mentionColors;
+  @NonNull
+  private ColorStateList hyperlinkColors;
+  @Nullable
+  private OnClickListener hashtagClickListener;
+  @Nullable
+  private OnClickListener mentionClickListener;
+  @Nullable
+  private OnClickListener hyperlinkClickListener;
+  @Nullable
+  private OnChangedListener hashtagChangedListener;
+  @Nullable
+  private OnChangedListener mentionChangedListener;
   private boolean hashtagEditing;
   private boolean mentionEditing;
 
@@ -79,38 +90,36 @@ public final class SocialViewHelper implements SocialView {
       new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-          if (count > 0 && start > 0) {
-            final char c = s.charAt(start - 1);
-            switch (c) {
-              case '#':
-                hashtagEditing = true;
-                mentionEditing = false;
-                break;
-              case '@':
+          if (count <= 0 || start <= 0) {
+            return;
+          }
+          final char c = s.charAt(start - 1);
+          switch (c) {
+            case '#':
+              hashtagEditing = true;
+              mentionEditing = false;
+              break;
+            case '@':
+              hashtagEditing = false;
+              mentionEditing = true;
+              break;
+            default:
+              if (!Character.isLetterOrDigit(c)) {
                 hashtagEditing = false;
-                mentionEditing = true;
-                break;
-              default:
-                if (!Character.isLetterOrDigit(c)) {
-                  hashtagEditing = false;
-                  mentionEditing = false;
-                } else if (hashtagChangedListener != null && hashtagEditing) {
-                  hashtagChangedListener.onChanged(
-                      SocialViewHelper.this,
-                      s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start));
-                } else if (mentionChangedListener != null && mentionEditing) {
-                  mentionChangedListener.onChanged(
-                      SocialViewHelper.this,
-                      s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start));
-                }
-                break;
-            }
+                mentionEditing = false;
+              } else if (hashtagChangedListener != null && hashtagEditing) {
+                hashtagChangedListener.onChanged(SocialViewHelper.this,
+                    s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start));
+              } else if (mentionChangedListener != null && mentionEditing) {
+                mentionChangedListener.onChanged(SocialViewHelper.this,
+                    s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start - 1) + 1, start));
+              }
+              break;
           }
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-          // triggered when text is added
           if (s.length() == 0) {
             return;
           }
@@ -134,12 +143,10 @@ public final class SocialViewHelper implements SocialView {
                   hashtagEditing = false;
                   mentionEditing = false;
                 } else if (hashtagChangedListener != null && hashtagEditing) {
-                  hashtagChangedListener.onChanged(
-                      SocialViewHelper.this,
+                  hashtagChangedListener.onChanged(SocialViewHelper.this,
                       s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count));
                 } else if (mentionChangedListener != null && mentionEditing) {
-                  mentionChangedListener.onChanged(
-                      SocialViewHelper.this,
+                  mentionChangedListener.onChanged(SocialViewHelper.this,
                       s.subSequence(indexOfPreviousNonLetterDigit(s, 0, start) + 1, start + count));
                 }
                 break;
@@ -148,7 +155,8 @@ public final class SocialViewHelper implements SocialView {
         }
 
         @Override
-        public void afterTextChanged(Editable s) {}
+        public void afterTextChanged(Editable s) {
+        }
       };
 
   private SocialViewHelper(@NonNull TextView view, @Nullable AttributeSet attrs) {
@@ -157,16 +165,16 @@ public final class SocialViewHelper implements SocialView {
 
     view.addTextChangedListener(textWatcher);
     view.setText(view.getText(), TextView.BufferType.SPANNABLE);
-    final TypedArray a =
-        view.getContext()
-            .obtainStyledAttributes(
-                attrs, R.styleable.SocialView, R.attr.socialViewStyle, R.style.Widget_SocialView);
-    flags =
-        a.getInteger(
-            R.styleable.SocialView_socialFlags, FLAG_HASHTAG | FLAG_MENTION | FLAG_HYPERLINK);
-    hashtagColors = a.getColorStateList(R.styleable.SocialView_hashtagColor);
-    mentionColors = a.getColorStateList(R.styleable.SocialView_mentionColor);
-    hyperlinkColors = a.getColorStateList(R.styleable.SocialView_hyperlinkColor);
+    final TypedArray a = view.getContext().obtainStyledAttributes(attrs, R.styleable.SocialView,
+        R.attr.socialViewStyle, R.style.Widget_SocialView);
+    flags = a.getInteger(R.styleable.SocialView_socialFlags,
+        FLAG_HASHTAG | FLAG_MENTION | FLAG_HYPERLINK);
+    hashtagColors = Objects.requireNonNull(
+        a.getColorStateList(R.styleable.SocialView_hashtagColor));
+    mentionColors = Objects.requireNonNull(
+        a.getColorStateList(R.styleable.SocialView_mentionColor));
+    hyperlinkColors = Objects.requireNonNull(
+        a.getColorStateList(R.styleable.SocialView_hyperlinkColor));
     a.recycle();
     recolorize();
   }
@@ -387,43 +395,34 @@ public final class SocialViewHelper implements SocialView {
       spannable.removeSpan(span);
     }
     if (isHashtagEnabled()) {
-      spanAll(
-          spannable,
-          getHashtagPattern(),
-          new Supplier<CharacterStyle>() {
-            @Override
-            public CharacterStyle get() {
-              return hashtagClickListener != null
-                  ? new SocialClickableSpan(hashtagClickListener, hashtagColors, false)
-                  : new ForegroundColorSpan(hashtagColors.getDefaultColor());
-            }
-          });
+      spanAll(spannable, getHashtagPattern(), new Supplier<>() {
+        @Override
+        public CharacterStyle get() {
+          return hashtagClickListener != null
+              ? new SocialClickableSpan(hashtagClickListener, hashtagColors, false)
+              : new ForegroundColorSpan(hashtagColors.getDefaultColor());
+        }
+      });
     }
     if (isMentionEnabled()) {
-      spanAll(
-          spannable,
-          getMentionPattern(),
-          new Supplier<CharacterStyle>() {
-            @Override
-            public CharacterStyle get() {
-              return mentionClickListener != null
-                  ? new SocialClickableSpan(mentionClickListener, mentionColors, false)
-                  : new ForegroundColorSpan(mentionColors.getDefaultColor());
-            }
-          });
+      spanAll(spannable, getMentionPattern(), new Supplier<>() {
+        @Override
+        public CharacterStyle get() {
+          return mentionClickListener != null
+              ? new SocialClickableSpan(mentionClickListener, mentionColors, false)
+              : new ForegroundColorSpan(mentionColors.getDefaultColor());
+        }
+      });
     }
     if (isHyperlinkEnabled()) {
-      spanAll(
-          spannable,
-          getHyperlinkPattern(),
-          new Supplier<CharacterStyle>() {
-            @Override
-            public CharacterStyle get() {
-              return hyperlinkClickListener != null
-                  ? new SocialClickableSpan(hyperlinkClickListener, hyperlinkColors, true)
-                  : new SocialURLSpan(text, hyperlinkColors);
-            }
-          });
+      spanAll(spannable, getHyperlinkPattern(), new Supplier<>() {
+        @Override
+        public CharacterStyle get() {
+          return hyperlinkClickListener != null
+              ? new SocialClickableSpan(hyperlinkClickListener, hyperlinkColors, true)
+              : new SocialUrlSpan(text, hyperlinkColors);
+        }
+      });
     }
   }
 
@@ -445,8 +444,8 @@ public final class SocialViewHelper implements SocialView {
     return start;
   }
 
-  private static void spanAll(
-      Spannable spannable, Pattern pattern, Supplier<CharacterStyle> styleSupplier) {
+  private static void spanAll(Spannable spannable, Pattern pattern,
+                              Supplier<CharacterStyle> styleSupplier) {
     final Matcher matcher = pattern.matcher(spannable);
     while (matcher.find()) {
       final int start = matcher.start();
@@ -479,8 +478,8 @@ public final class SocialViewHelper implements SocialView {
     private final boolean isHyperlink;
     private CharSequence text;
 
-    private SocialClickableSpan(
-        OnClickListener listener, ColorStateList colors, boolean isHyperlink) {
+    private SocialClickableSpan(OnClickListener listener, ColorStateList colors,
+                                boolean isHyperlink) {
       this.listener = listener;
       this.color = colors.getDefaultColor();
       this.isHyperlink = isHyperlink;
@@ -491,8 +490,8 @@ public final class SocialViewHelper implements SocialView {
       if (!(widget instanceof SocialView)) {
         throw new IllegalStateException("Clicked widget is not an instance of SocialView.");
       }
-      listener.onClick(
-          (SocialView) widget, !isHyperlink ? text.subSequence(1, text.length()) : text);
+      listener.onClick((SocialView) widget,
+          !isHyperlink ? text.subSequence(1, text.length()) : text);
     }
 
     @Override
@@ -502,11 +501,13 @@ public final class SocialViewHelper implements SocialView {
     }
   }
 
-  /** Default {@link CharacterStyle} for <b>hyperlinks</b>. */
-  private static class SocialURLSpan extends URLSpan {
+  /**
+   * Default {@link CharacterStyle} for <b>hyperlinks</b>.
+   */
+  private static class SocialUrlSpan extends URLSpan {
     private final int color;
 
-    private SocialURLSpan(CharSequence url, ColorStateList colors) {
+    private SocialUrlSpan(CharSequence url, ColorStateList colors) {
       super(url.toString());
       this.color = colors.getDefaultColor();
     }

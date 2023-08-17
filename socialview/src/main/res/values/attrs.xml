@@ -5,16 +5,15 @@
   </declare-styleable>
 
   <declare-styleable name="SocialView">
-    <!-- Determine whether each feature should be turned on/off.
-         Default is `hashtag|mention|hyperlink`. -->
+    <!-- Determine whether each feature should be turned on/off. Default
+         is `hashtag|mention|hyperlink`. -->
     <attr name="socialFlags">
       <flag name="hashtag" value="1"/>
       <flag name="mention" value="2"/>
       <flag name="hyperlink" value="4"/>
     </attr>
 
-    <!-- Color of each feature.
-         If particular feature is not enabled, this value will be ignored.
+    <!-- Color of each feature. If particular feature is not enabled, this value will be ignored.
          Default is color accent of current theme. -->
     <attr name="hashtagColor" format="color"/>
     <attr name="mentionColor" format="color"/>

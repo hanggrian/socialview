@@ -29,7 +29,7 @@ mavenPublishing {
 
 dependencies {
     checkstyle(libs.rulebook.checkstyle)
-    implementation(libs.material)
+    implementation(libs.androidx.appcompat)
     testImplementation(libs.bundles.androidx.test)
 }
 

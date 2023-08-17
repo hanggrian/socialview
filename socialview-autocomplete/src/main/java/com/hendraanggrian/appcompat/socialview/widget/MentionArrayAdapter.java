@@ -1,4 +1,4 @@
-package com.hendraanggrian.appcompat.widget;
+package com.hendraanggrian.appcompat.socialview.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -18,8 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.hendraanggrian.appcompat.socialview.Mentionable;
+import com.hendraanggrian.appcompat.socialview.autocomplete.Mentionable;
 import com.hendraanggrian.appcompat.socialview.autocomplete.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;

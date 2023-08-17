@@ -1,12 +1,9 @@
 package com.hendraanggrian.appcompat.socialview.widget;
 
 import android.os.Build;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.hendraanggrian.appcompat.socialview.SocialViewTestHelper;
 import com.hendraanggrian.appcompat.socialview.TestActivity;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

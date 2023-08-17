@@ -11,7 +11,6 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     kotlin("android") version libs.versions.kotlin apply false
-    kotlin("kapt") version libs.versions.kotlin apply false
 }
 
 allprojects {
@@ -25,6 +24,11 @@ subprojects {
     }
     plugins.withType<AppPlugin>().configureEach {
         configure<BaseAppModuleExtension>(::configureAndroid)
+    }
+    plugins.withType<KotlinAndroidPluginWrapper> {
+        kotlinExtension.jvmToolchain(libs.versions.jdk.get().toInt())
+        (the<BaseExtension>() as ExtensionAware).extensions.getByType<KotlinJvmOptions>()
+            .jvmTarget = JavaVersion.toVersion(libs.versions.jdk.get()).toString()
     }
 }
 

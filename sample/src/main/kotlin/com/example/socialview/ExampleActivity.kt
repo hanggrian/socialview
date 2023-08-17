@@ -12,12 +12,12 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.hendraanggrian.appcompat.socialview.Hashtag
-import com.hendraanggrian.appcompat.socialview.Mention
-import com.hendraanggrian.appcompat.widget.HashtagArrayAdapter
-import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
-import com.hendraanggrian.appcompat.widget.SocialArrayAdapter
-import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
+import com.hendraanggrian.appcompat.socialview.autocomplete.Hashtag
+import com.hendraanggrian.appcompat.socialview.autocomplete.Mention
+import com.hendraanggrian.appcompat.socialview.widget.HashtagArrayAdapter
+import com.hendraanggrian.appcompat.socialview.widget.MentionArrayAdapter
+import com.hendraanggrian.appcompat.socialview.widget.SocialArrayAdapter
+import com.hendraanggrian.appcompat.socialview.widget.SocialAutoCompleteTextView
 
 class ExampleActivity : AppCompatActivity() {
     private companion object {
@@ -100,13 +100,11 @@ class ExampleActivity : AppCompatActivity() {
                     textView.hashtagAdapter = customHashtagAdapter
                     textView.mentionAdapter = customMentionAdapter
                 }
-
                 else -> {
                     textView.hashtagAdapter = defaultHashtagAdapter
                     textView.mentionAdapter = defaultMentionAdapter
                 }
             }
-
             R.id.enableHashtagItem -> textView.isHashtagEnabled = item.isChecked
             R.id.enableMentionItem -> textView.isMentionEnabled = item.isChecked
             R.id.enableHyperlinkItem -> textView.isHyperlinkEnabled = item.isChecked
@@ -128,7 +126,6 @@ class ExampleActivity : AppCompatActivity() {
                     holder = ViewHolder(view!!)
                     view.tag = holder
                 }
-
                 else -> holder = view.tag as ViewHolder
             }
             getItem(position)?.let { model -> holder.textView.text = model.name }

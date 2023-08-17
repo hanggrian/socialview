@@ -35,4 +35,7 @@ robolectric = "org.robolectric:robolectric:4.10.3"
 truth = "com.google.truth:truth:1.1.5"
 
 [bundles]
-androidx-test = ["androidx-test-core", "androidx-test-runner", "androidx-test-junit", "robolectric", "truth"]
+androidx-test = [
+  "androidx-test-core", "androidx-test-runner", "androidx-test-junit",
+  "robolectric", "truth"
+]

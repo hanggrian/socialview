@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="?android:attr/dropDownItemStyle"
+  style="?android:attr/dropDownItemStyle"
   android:layout_width="match_parent"
   android:layout_height="?android:attr/listPreferredItemHeight"
   android:gravity="center_vertical"

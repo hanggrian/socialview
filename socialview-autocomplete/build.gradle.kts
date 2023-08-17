@@ -30,7 +30,7 @@ mavenPublishing {
 dependencies {
     checkstyle(libs.rulebook.checkstyle)
     api(project(":$RELEASE_ARTIFACT"))
-    implementation(libs.material)
+    implementation(libs.androidx.appcompat)
     implementation(libs.picasso)
     testImplementation(libs.bundles.androidx.test)
 }

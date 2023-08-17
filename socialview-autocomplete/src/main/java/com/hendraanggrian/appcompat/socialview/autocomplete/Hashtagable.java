@@ -1,9 +1,10 @@
-package com.hendraanggrian.appcompat.socialview;
+package com.hendraanggrian.appcompat.socialview.autocomplete;
 
 import androidx.annotation.NonNull;
+import com.hendraanggrian.appcompat.socialview.widget.HashtagArrayAdapter;
 
 /**
- * Abstract hashtag to be used with {@link com.hendraanggrian.appcompat.widget.HashtagArrayAdapter}.
+ * Abstract hashtag to be used with {@link HashtagArrayAdapter}.
  */
 public interface Hashtagable {
   /** Unique id of this hashtag. */

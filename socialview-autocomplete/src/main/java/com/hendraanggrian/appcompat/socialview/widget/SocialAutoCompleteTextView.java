@@ -1,4 +1,4 @@
-package com.hendraanggrian.appcompat.widget;
+package com.hendraanggrian.appcompat.socialview.widget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -15,8 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView;
 import com.hendraanggrian.appcompat.socialview.internal.SocialViewHelper;
-import com.hendraanggrian.appcompat.socialview.widget.SocialView;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -41,19 +39,20 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-          if (!TextUtils.isEmpty(s) && start < s.length()) {
-            switch (s.charAt(start)) {
-              case '#':
-                if (getAdapter() != hashtagAdapter) {
-                  setAdapter(hashtagAdapter);
-                }
-                break;
-              case '@':
-                if (getAdapter() != mentionAdapter) {
-                  setAdapter(mentionAdapter);
-                }
-                break;
-            }
+          if (TextUtils.isEmpty(s) || start >= s.length()) {
+            return;
+          }
+          switch (s.charAt(start)) {
+            case '#':
+              if (getAdapter() != hashtagAdapter) {
+                setAdapter(hashtagAdapter);
+              }
+              break;
+            case '@':
+              if (getAdapter() != mentionAdapter) {
+                setAdapter(mentionAdapter);
+              }
+              break;
           }
         }
 

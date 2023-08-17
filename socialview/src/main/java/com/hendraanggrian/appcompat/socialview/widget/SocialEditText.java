@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import com.hendraanggrian.appcompat.socialview.internal.SocialViewHelper;
-
 import java.util.List;
 import java.util.regex.Pattern;
 

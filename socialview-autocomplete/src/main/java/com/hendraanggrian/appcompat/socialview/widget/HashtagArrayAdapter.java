@@ -1,4 +1,4 @@
-package com.hendraanggrian.appcompat.widget;
+package com.hendraanggrian.appcompat.socialview.widget;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,8 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.PluralsRes;
-
-import com.hendraanggrian.appcompat.socialview.Hashtagable;
+import com.hendraanggrian.appcompat.socialview.autocomplete.Hashtagable;
 import com.hendraanggrian.appcompat.socialview.autocomplete.R;
 
 /**

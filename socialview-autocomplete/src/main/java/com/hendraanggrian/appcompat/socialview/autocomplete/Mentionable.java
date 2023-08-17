@@ -1,10 +1,11 @@
-package com.hendraanggrian.appcompat.socialview;
+package com.hendraanggrian.appcompat.socialview.autocomplete;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.hendraanggrian.appcompat.socialview.widget.MentionArrayAdapter;
 
 /**
- * Abstract mention to be used with {@link com.hendraanggrian.appcompat.widget.MentionArrayAdapter}.
+ * Abstract mention to be used with {@link MentionArrayAdapter}.
  */
 public interface Mentionable {
   /** Unique id of this mention. */

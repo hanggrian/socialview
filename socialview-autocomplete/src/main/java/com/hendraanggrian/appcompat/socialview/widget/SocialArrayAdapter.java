@@ -1,4 +1,4 @@
-package com.hendraanggrian.appcompat.widget;
+package com.hendraanggrian.appcompat.socialview.widget;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * An {@link ArrayAdapter} customized with filter to display items. It is a direct parent of default
- * {@link HashtagArrayAdapter} and {@link MentionArrayAdapter}, which are optional adapters.
+ * An {@link ArrayAdapter} customized with filter to display items. It is a direct parent of
+ * default {@link HashtagArrayAdapter} and {@link MentionArrayAdapter}, which are optional adapters.
  */
 public abstract class SocialArrayAdapter<T> extends ArrayAdapter<T> {
   private Filter filter;
