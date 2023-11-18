@@ -1,6 +1,7 @@
 package com.hendraanggrian.appcompat.socialview;
 
 import static org.junit.Assert.assertEquals;
+
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;

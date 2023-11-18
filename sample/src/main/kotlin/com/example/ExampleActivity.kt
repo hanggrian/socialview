@@ -1,4 +1,4 @@
-package com.example.socialview
+package com.example
 
 import android.content.Context
 import android.os.Bundle

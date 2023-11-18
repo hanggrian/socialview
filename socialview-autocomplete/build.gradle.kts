@@ -1,6 +1,5 @@
-import com.android.build.gradle.internal.tasks.factory.dependsOn
-import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
-import com.vanniktech.maven.publish.SonatypeHost
+val releaseGroup: String by project
+val releaseArtifact: String by project
 
 plugins {
     alias(libs.plugins.android.library)
@@ -10,28 +9,19 @@ plugins {
 }
 
 android {
-    namespace = "$RELEASE_GROUP.$RELEASE_ARTIFACT.autocomplete"
+    namespace = "$releaseGroup.$releaseArtifact.autocomplete"
     testNamespace = "$namespace.test"
     buildFeatures.buildConfig = false
     testOptions.unitTests.isIncludeAndroidResources = true
 }
 
-checkstyle {
-    configFile = rootDir.resolve("rulebook_checks.xml")
-}
-
-mavenPublishing {
-    publishToMavenCentral(SonatypeHost.S01)
-    signAllPublications()
-    pom(::pom)
-    configure(AndroidSingleVariantLibrary())
-}
-
 dependencies {
     checkstyle(libs.rulebook.checkstyle)
-    api(project(":$RELEASE_ARTIFACT"))
+
+    api(project(":$releaseArtifact"))
     implementation(libs.androidx.appcompat)
     implementation(libs.picasso)
+
     testImplementation(libs.bundles.androidx.test)
 }
 
@@ -64,11 +54,4 @@ tasks {
             )
         )
     }
-
-    val checkstyle by registering(Checkstyle::class) {
-        source("src/main/java", "src/test/java")
-        include("**/*.java")
-        classpath = files()
-    }
-    check.dependsOn(checkstyle)
 }

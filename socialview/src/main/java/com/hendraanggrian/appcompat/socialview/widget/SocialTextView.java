@@ -7,7 +7,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
-import com.hendraanggrian.appcompat.socialview.internal.SocialViewHelper;
+import com.hendraanggrian.appcompat.socialview.internal.SocialViews;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -29,7 +29,7 @@ public class SocialTextView extends AppCompatTextView implements SocialView {
 
   public SocialTextView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    helper = SocialViewHelper.install(this, attrs);
+    helper = SocialViews.install(this, attrs);
   }
 
   /** {@inheritDoc} */

@@ -6,7 +6,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.util.PatternsCompat;
-import com.hendraanggrian.appcompat.socialview.internal.SocialViewHelper;
+import com.hendraanggrian.appcompat.socialview.internal.SocialViews;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * Base interface of all social widgets, which usually derived from {@link android.widget.TextView}.
  * Out of the box, there are {@link SocialTextView}, {@link SocialEditText},
  * and {@code SocialAutoCompleteTextView}. It can also be implemented in
- * any {@link android.view.View} using {@link SocialViewHelper}.
+ * any {@link android.view.View} using {@link SocialViews}.
  */
 public interface SocialView {
   /**

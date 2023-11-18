@@ -2,7 +2,7 @@ package com.hendraanggrian.appcompat.socialview.widget;
 
 import android.os.Build;
 import androidx.appcompat.app.AppCompatActivity;
-import com.hendraanggrian.appcompat.socialview.SocialViewTestHelper;
+import com.hendraanggrian.appcompat.socialview.SocialViewTester;
 import com.hendraanggrian.appcompat.socialview.TestActivity;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,12 +17,12 @@ import org.robolectric.annotation.internal.DoNotInstrument;
 @DoNotInstrument
 public class SocialEditTextTest {
   private AppCompatActivity activity;
-  private SocialViewTestHelper<SocialEditText> helper;
+  private SocialViewTester<SocialEditText> helper;
 
   @Before
   public void setup() {
     activity = Robolectric.buildActivity(TestActivity.class).setup().get();
-    helper = new SocialViewTestHelper<>(new SocialEditText(activity));
+    helper = new SocialViewTester<>(new SocialEditText(activity));
   }
 
   @Test

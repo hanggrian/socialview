@@ -4,6 +4,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -14,10 +15,10 @@ import android.widget.TextView;
 import androidx.core.util.PatternsCompat;
 import com.hendraanggrian.appcompat.socialview.widget.SocialView;
 
-public class SocialViewTestHelper<T extends TextView & SocialView> {
+public class SocialViewTester<T extends TextView & SocialView> {
   private final T view;
 
-  public SocialViewTestHelper(T view) {
+  public SocialViewTester(T view) {
     this.view = view;
   }
 

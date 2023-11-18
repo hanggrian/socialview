@@ -1,6 +1,6 @@
 pluginManagement.repositories {
-    gradlePluginPortal()
     mavenCentral()
+    gradlePluginPortal()
     google()
 }
 dependencyResolutionManagement.repositories {
@@ -13,3 +13,4 @@ rootProject.name = "socialview"
 
 include("socialview", "socialview-autocomplete")
 include("sample")
+include("website")

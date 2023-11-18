@@ -1,9 +1,11 @@
 [versions]
 jdk = "17" # min for android
-kotlin = "1.8.20"
+checkstyle = "8.45.1"
+kotlin = "1.9.10"
+ktlint = "1.0.1"
 sdk-min = "14"
-sdk-target = "33"
-android-plugin = "8.1.0"
+sdk-target = "34"
+android-plugin = "8.1.4"
 androidx = "1.6.0"
 androidx-test = "1.5.0"
 
@@ -11,14 +13,13 @@ androidx-test = "1.5.0"
 android-application = { id = "com.android.application", version.ref = "android-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-plugin" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin" }
-kotlinx-kover = "org.jetbrains.kotlinx.kover:0.6.1"
 maven-publish = "com.vanniktech.maven.publish.base:0.25.3"
 git-publish = "org.ajoberstar.git-publish:4.2.0"
 pages = "com.hendraanggrian.pages:0.1"
 
 [libraries]
 # lint
-rulebook-checkstyle = "com.hendraanggrian.rulebook:rulebook-checkstyle:0.3-SNAPSHOT"
+rulebook-checkstyle = "com.hendraanggrian.rulebook:rulebook-checkstyle:0.4"
 # main
 kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
 material = { module = "com.google.android.material:material", version.ref = "androidx" }

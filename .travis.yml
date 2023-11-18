@@ -4,7 +4,7 @@ jdk: openjdk11
 
 env:
   global:
-    - TARGET_SDK=33
+    - TARGET_SDK=34
     - BUILD_TOOLS=33.0.0
     - ANDROID_HOME=~/android-sdk
 

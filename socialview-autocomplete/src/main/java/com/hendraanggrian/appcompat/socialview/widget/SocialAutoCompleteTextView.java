@@ -14,7 +14,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView;
-import com.hendraanggrian.appcompat.socialview.internal.SocialViewHelper;
+import com.hendraanggrian.appcompat.socialview.internal.SocialViews;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -73,7 +73,7 @@ public class SocialAutoCompleteTextView extends AppCompatMultiAutoCompleteTextVi
 
   public SocialAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    helper = SocialViewHelper.install(this, attrs);
+    helper = SocialViews.install(this, attrs);
     addTextChangedListener(textWatcher);
     setTokenizer(new CharTokenizer());
   }
