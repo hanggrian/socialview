@@ -11,7 +11,7 @@
         <link href="styles/normalize.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-groovy.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-groovy.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
         <!--Primary meta tags-->
         <meta content="socialview" name="title">
         <meta content="Android TextView and EditText with hashtag, mention, and hyperlink support" name="description">
@@ -29,27 +29,27 @@
 <a href="https://s01.oss.sonatype.org/content/repositories/snapshots/com/hendraanggrian/appcompat/socialview/"><img alt="Nexus Snapshot" src="https://img.shields.io/nexus/s/com.hendraanggrian.appcompat/socialview?server=https%3A%2F%2Fs01.oss.sonatype.org"></a>
 <a href="https://developer.android.com/studio/releases/platforms/#4.0"><img alt="Android SDK" src="https://img.shields.io/badge/sdk-14%2B-informational"></a>
             </p>
-            
+
             <h1>SocialView</h1>
-            
+
             <p>
                 <img alt="Hashtag preview." src="https://github.com/hendraanggrian/socialview/raw/assets/preview_hashtag.png">
 <img alt="Mention preview." src="https://github.com/hendraanggrian/socialview/raw/assets/preview_mention.png">
             </p>
-            
+
             <p>TextView and EditText with hashtag, mention, and hyperlink support.</p>
-            
+
             <ul>
-                
+
                 <li>Pre-loaded with default views, but also installable to any custom view.</li>
-                
+
                 <li>Display hashtag and mention suggestions as you type.</li>
-                
+
             </ul>
-            
+
             <h2>Download</h2>
-            
-            <pre><code class="language-gradle">repositories {
+
+            <pre><code class="language-groovy">repositories {
     mavenCentral()
     google()
 }
@@ -61,16 +61,16 @@ dependencies {
     implementation "com.hendraanggrian.appcompat:socialview-autocomplete:$version"
 }
 </code></pre>
-            
+
             <h2>Usage</h2>
-            
+
             <h3>Core</h3>
-            
+
             <p>
                 Core library contains <code>SocialTextView</code>, <code>SocialEditText</code> and helper class
 applies these behavior into any <code>TextView</code>.
             </p>
-            
+
             <pre><code class="language-xml">&lt;com.hendraanggrian.appcompat.socialview.widget.SocialTextView
   android:id="@+id/textView"
   android:layout_width="match_parent"
@@ -80,14 +80,14 @@ applies these behavior into any <code>TextView</code>.
   app:hashtagColor="@color/blue"
   app:mentionColor="@color/red"/&gt;
 </code></pre>
-            
+
             <p>
                 See <a href="https://github.com/HendraAnggrian/socialview/blob/master/socialview/res/values/attrs.xml">attrs.xml</a>
 for full list of available attributes.
             </p>
-            
+
             <p>Modify its state and set listeners programmatically.</p>
-            
+
             <pre><code class="language-java">textView.setMentionEnabled(false);
 textView.setHashtagColor(Color.RED);
 textView.setOnHashtagClickListener(new SocialView.OnClickListener() {
@@ -97,13 +97,13 @@ textView.setOnHashtagClickListener(new SocialView.OnClickListener() {
   }
 });
 </code></pre>
-            
+
             <h3>Auto-complete</h3>
-            
+
             <p>
                 Extended library comes with <code>SocialAutoCompleteTextView</code>.
             </p>
-            
+
             <pre><code class="language-xml">&lt;com.hendraanggrian.appcompat.socialview.widget.SocialAutoCompleteTextView
   android:id="@+id/textView"
   android:layout_width="match_parent"
@@ -112,12 +112,12 @@ textView.setOnHashtagClickListener(new SocialView.OnClickListener() {
   app:socialFlags="hyperlink"
   app:hyperlinkColor="@color/green"/&gt;
 </code></pre>
-            
+
             <p>
                 To display suggestions, it is required to <code>setHashtagAdapter()</code>
 and <code>setMentionAdapter()</code>.
             </p>
-            
+
             <pre><code class="language-java">ArrayAdapter&lt;Hashtag&gt; hashtagAdapter = new HashtagAdapter(getContext());
 hashtagAdapter.add(new Hashtag("follow"));
 hashtagAdapter.add(new Hashtag("followme", 1000));
@@ -131,18 +131,18 @@ mentionAdapter.add(new Mention("hendraanggrian", "Hendra Anggrian",
     "https://avatars0.githubusercontent.com/u/11507430?v=3&amp;s=460"));
 textView.setMentionAdapter(mentionAdapter);
 </code></pre>
-            
+
             <p>
                 To customize hashtag or mention adapter, create a custom adapter using
 customized <code>SocialAdapter</code> or write your own <code>ArrayAdapter</code>.
             </p>
-            
+
             <blockquote>
-                
+
                 <p>Custom adapters are experimental, see sample for example.</p>
-                
+
             </blockquote>
-            
+
             <pre><code class="language-java">public class Person {
   public final String name;
 
@@ -174,15 +174,15 @@ public class PersonAdapter extends ArrayAdapter&lt;Person&gt; {
   // and of course, filtering logic
 }
 </code></pre>
-            
+
             <p>Then, use the custom adapter.</p>
-            
+
             <pre><code class="language-java">ArrayAdapter&lt;Person&gt; adapter = new PersonAdapter(getContext());
 adapter.add(personA);
 adapter.add(personB);
 textView.setMentionAdapter(adapter);
 </code></pre>
-            
+
             <footer class="site-footer">
                 <span class="site-footer-owner"><a href="https://github.com/hendraanggrian/socialview/">socialview</a> is maintained by <a href="https://github.com/hendraanggrian/">Hendra Anggrian</a></span><span class="site-footer-credits">Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/jasonlong/cayman-theme/">jasonlong</a></span>
             </footer>
