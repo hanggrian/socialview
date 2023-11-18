@@ -1,5 +1,0 @@
-$dokka.format:html
-$dokka.linkExtension:html
-
-com.hendraanggrian.appcompat.internal
-com.hendraanggrian.appcompat.widget

@@ -1,0 +1,19 @@
+:root {
+  --background: #212121; /* Grey 900 */
+
+  --button-text: rgba(0, 0, 0, 0.7);
+  --button-text-hover: rgba(0, 0, 0, 0.8);
+  --button-background: rgba(0, 0, 0, 0.08);
+  --button-background-hover: rgba(0, 0, 0, 0.2);
+  --button-border: rgba(0, 0, 0, 0.2);
+  --button-border-hover: rgba(0, 0, 0, 0.3);
+
+  --text-heavy-inverse: #212121; /* Grey 900 */
+  --text-body: #b0bec5; /* Blue Grey 300 */
+  --text-caption: #78909c; /* Blue Grey 400 */
+
+  --code-text: #b0bec5; /* Blue Grey 300 */
+  --code-background: #263238; /* Blue Grey 900 */
+  --code-border: #37474f; /* Blue Grey 800 */
+
+  --border: #37474f; /* Blue Grey 800 */ }
