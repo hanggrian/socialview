@@ -1,42 +1,42 @@
 [versions]
-jdk = "17" # min for android
-checkstyle = "8.45.1"
-kotlin = "1.9.10"
-ktlint = "1.0.1"
-sdk-min = "14"
-sdk-target = "34"
-android-plugin = "8.1.4"
-androidx = "1.6.0"
-androidx-test = "1.5.0"
+jdk = "21"
+jre = "8"
+checkstyle = "10.18.1"
+kotlin = "2.1.0"
+sdk-min = "21"
+sdk-target = "35"
+android-plugin = "8.8.2"
+androidx = "1.7.0"
+androidx-test = "1.6.1"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-plugin" }
-dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin" }
-maven-publish = "com.vanniktech.maven.publish.base:0.25.3"
-git-publish = "org.ajoberstar.git-publish:4.2.0"
-pages = "com.hendraanggrian.pages:0.1"
+maven-publish = "com.vanniktech.maven.publish.base:0.30.0"
+git-publish = "org.ajoberstar.git-publish:5.1.0"
+pages = "com.hanggrian.pages:0.1"
 
 [libraries]
 # lint
-rulebook-checkstyle = "com.hendraanggrian.rulebook:rulebook-checkstyle:0.4"
+rulebook-checkstyle = "com.hanggrian.rulebook:rulebook-checkstyle:0.1"
 # main
-kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
 material = { module = "com.google.android.material:material", version.ref = "androidx" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx" }
-androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx" }
 androidx-multidex = "androidx.multidex:multidex:2.0.1"
 process-phoenix = "com.jakewharton:process-phoenix:2.1.2"
 picasso = "com.squareup.picasso:picasso:2.8"
 # test
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
-androidx-test-junit = "androidx.test.ext:junit:1.1.5"
-robolectric = "org.robolectric:robolectric:4.10.3"
-truth = "com.google.truth:truth:1.1.5"
+androidx-test-junit = "androidx.test.ext:junit:1.2.1"
+robolectric = "org.robolectric:robolectric:4.14.1"
+truth = "com.google.truth:truth:1.4.4"
 
 [bundles]
 androidx-test = [
-  "androidx-test-core", "androidx-test-runner", "androidx-test-junit",
-  "robolectric", "truth"
+  "androidx-test-core",
+  "androidx-test-runner",
+  "androidx-test-junit",
+  "robolectric",
+  "truth",
 ]

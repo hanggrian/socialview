@@ -1,12 +1,13 @@
 # macOS
-**/.DS_Store
+.DS_Store
+._*
 
 # Gradle
 .gradle/
 build/
 local.properties
 
-# IDEA
+# IntelliJ
 *.iml
 .idea/
 out/

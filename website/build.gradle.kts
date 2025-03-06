@@ -11,7 +11,6 @@ plugins {
 }
 
 pages {
-    contents.index(rootDir.resolve("README.md"))
     styles.add("https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css")
     scripts.addAll(
         "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js",
@@ -19,7 +18,7 @@ pages {
         "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js",
     )
     cayman {
-        darkTheme()
+        darkMode = true
         authorName = developerName
         authorUrl = developerUrl
         projectName = releaseArtifact
