@@ -1,23 +1,17 @@
 package com.example
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.hendraanggrian.appcompat.socialview.autocomplete.Hashtag
-import com.hendraanggrian.appcompat.socialview.autocomplete.Mention
-import com.hendraanggrian.appcompat.socialview.widget.HashtagArrayAdapter
-import com.hendraanggrian.appcompat.socialview.widget.MentionArrayAdapter
-import com.hendraanggrian.appcompat.socialview.widget.SocialArrayAdapter
-import com.hendraanggrian.appcompat.socialview.widget.SocialAutoCompleteTextView
+import com.hanggrian.appcompat.socialview.autocomplete.Hashtag
+import com.hanggrian.appcompat.socialview.autocomplete.Mention
+import com.hanggrian.appcompat.socialview.widget.HashtagArrayAdapter
+import com.hanggrian.appcompat.socialview.widget.MentionArrayAdapter
+import com.hanggrian.appcompat.socialview.widget.SocialAutoCompleteTextView
 
 class ExampleActivity : AppCompatActivity() {
     private companion object {
@@ -62,7 +56,7 @@ class ExampleActivity : AppCompatActivity() {
             Mention(
                 MENTION3_USERNAME,
                 MENTION3_DISPLAYNAME,
-                "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4"
+                "https://avatars1.githubusercontent.com/u/11507430?s=460&v=4",
             )
         )
 
@@ -70,14 +64,14 @@ class ExampleActivity : AppCompatActivity() {
         customHashtagAdapter.addAll(
             Person(HASHTAG1),
             Person(HASHTAG2),
-            Person(HASHTAG3)
+            Person(HASHTAG3),
         )
 
         customMentionAdapter = PersonAdapter(this)
         customMentionAdapter.addAll(
             Person(MENTION1_USERNAME),
             Person(MENTION2_USERNAME),
-            Person(MENTION3_USERNAME)
+            Person(MENTION3_USERNAME),
         )
 
         textView.hashtagAdapter = defaultHashtagAdapter
@@ -100,40 +94,17 @@ class ExampleActivity : AppCompatActivity() {
                     textView.hashtagAdapter = customHashtagAdapter
                     textView.mentionAdapter = customMentionAdapter
                 }
+
                 else -> {
                     textView.hashtagAdapter = defaultHashtagAdapter
                     textView.mentionAdapter = defaultMentionAdapter
                 }
             }
+
             R.id.enableHashtagItem -> textView.isHashtagEnabled = item.isChecked
             R.id.enableMentionItem -> textView.isMentionEnabled = item.isChecked
             R.id.enableHyperlinkItem -> textView.isHyperlinkEnabled = item.isChecked
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    data class Person(val name: String)
-
-    class PersonAdapter(context: Context) :
-        SocialArrayAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val holder: ViewHolder
-            var view = convertView
-            when (view) {
-                null -> {
-                    view = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
-                    holder = ViewHolder(view!!)
-                    view.tag = holder
-                }
-                else -> holder = view.tag as ViewHolder
-            }
-            getItem(position)?.let { model -> holder.textView.text = model.name }
-            return view
-        }
-
-        private class ViewHolder(view: View) {
-            val textView: TextView = view.findViewById(R.id.textViewName)
-        }
     }
 }

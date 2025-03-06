@@ -1,3 +1,13 @@
+import com.android.build.gradle.AppPlugin
+import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.LibraryExtension
+import com.android.build.gradle.LibraryPlugin
+import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import com.vanniktech.maven.publish.MavenPublishBasePlugin
+import com.vanniktech.maven.publish.SonatypeHost
+
 val developerId: String by project
 val developerName: String by project
 val developerUrl: String by project
@@ -6,6 +16,9 @@ val releaseArtifact: String by project
 val releaseVersion: String by project
 val releaseDescription: String by project
 val releaseUrl: String by project
+
+val jdkVersion = JavaLanguageVersion.of(libs.versions.jdk.get())
+val jreVersion = JavaLanguageVersion.of(libs.versions.jre.get())
 
 plugins {
     alias(libs.plugins.android.application) apply false
@@ -19,33 +32,70 @@ allprojects {
 }
 
 subprojects {
-    plugins.withType<com.android.build.gradle.LibraryPlugin>().configureEach {
-        modify(the<com.android.build.gradle.LibraryExtension>())
+    plugins.withType<LibraryPlugin>().configureEach {
+        modify(the<LibraryExtension>())
     }
-    plugins.withType<com.android.build.gradle.AppPlugin>().configureEach {
-        modify(the<com.android.build.gradle.internal.dsl.BaseAppModuleExtension>())
+    plugins.withType<AppPlugin>().configureEach {
+        modify(the<BaseAppModuleExtension>())
     }
     plugins.withType<CheckstylePlugin>().configureEach {
-        configure<CheckstyleExtension> {
-            toolVersion = libs.versions.checkstyle.get()
-            configFile = rootDir.resolve("rulebook_checks.xml")
-        }
-        // only in Android, checkstyle task need to be manually defined
-        tasks {
-            val checkstyle = register<Checkstyle>("checkstyle") {
-                group = LifecycleBasePlugin.VERIFICATION_GROUP
-                source("src")
-                include("**/*.java")
-                exclude("**/gen/**", "**/R.java")
-                classpath = files()
-            }
-            named("check").get().dependsOn(checkstyle)
+        the<CheckstyleExtension>().toolVersion = libs.versions.checkstyle.get()
+        tasks.register<Checkstyle>("checkstyle") {
+            group = LifecycleBasePlugin.VERIFICATION_GROUP
+            description = "Generate Android lint report"
+
+            source("src")
+            include("**/*.java")
+            exclude("**/gen/**", "**/R.java")
+            classpath = files()
         }
     }
-    plugins.withType<com.vanniktech.maven.publish.MavenPublishBasePlugin> {
-        configure<com.vanniktech.maven.publish.MavenPublishBaseExtension> {
-            configure(com.vanniktech.maven.publish.AndroidSingleVariantLibrary())
-            publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.Companion.S01)
+    plugins.withType<JacocoPlugin>().configureEach {
+        tasks {
+            withType<Test>().configureEach {
+                configure<JacocoTaskExtension> {
+                    isIncludeNoLocationClasses = true
+                    excludes = listOf("jdk.internal.*")
+                }
+            }
+            register<JacocoReport>("jacocoTestReport") {
+                dependsOn("testDebugUnitTest", "connectedDebugAndroidTest")
+
+                description = "Generate Android test coverage"
+                reports {
+                    xml.required.set(true)
+                    html.required.set(true)
+                }
+                sourceDirectories.setFrom(layout.projectDirectory.dir("src/main/java"))
+                classDirectories.setFrom(
+                    files(
+                        fileTree(layout.buildDirectory.dir("intermediates/javac/")) {
+                            exclude(
+                                "**/R.class",
+                                "**/R\$*.class",
+                                "**/BuildConfig.*",
+                                "**/Manifest*.*",
+                                "**/*Test*.*",
+                                "**/*Args.*",
+                                "**/*Directions.*",
+                            )
+                        },
+                    ),
+                )
+                executionData.setFrom(
+                    files(
+                        fileTree(layout.buildDirectory) {
+                            include("**/*.exec", "**/*.ec")
+                        }
+                    ),
+                )
+            }
+        }
+    }
+    plugins.withType<MavenPublishBasePlugin> {
+        configure<MavenPublishBaseExtension> {
+            configure(AndroidSingleVariantLibrary())
+            publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
             signAllPublications()
             pom {
                 name.set(project.name)
@@ -68,14 +118,15 @@ subprojects {
                 scm {
                     url.set(releaseUrl)
                     connection.set("scm:git:https://github.com/$developerId/$releaseArtifact.git")
-                    developerConnection.set("scm:git:ssh://git@github.com/$developerId/$releaseArtifact.git")
+                    developerConnection
+                        .set("scm:git:ssh://git@github.com/$developerId/$releaseArtifact.git")
                 }
             }
         }
     }
 }
 
-fun modify(extension: com.android.build.gradle.BaseExtension) {
+fun modify(extension: BaseExtension) {
     extension.setCompileSdkVersion(libs.versions.sdk.target.get().toInt())
     extension.defaultConfig {
         minSdk = libs.versions.sdk.min.get().toInt()
@@ -84,7 +135,7 @@ fun modify(extension: com.android.build.gradle.BaseExtension) {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     extension.compileOptions {
-        targetCompatibility = JavaVersion.toVersion(libs.versions.jdk.get())
-        sourceCompatibility = JavaVersion.toVersion(libs.versions.jdk.get())
+        sourceCompatibility = JavaVersion.toVersion(jreVersion)
+        targetCompatibility = JavaVersion.toVersion(jreVersion)
     }
 }

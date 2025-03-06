@@ -1,8 +1,8 @@
-[![Travis CI](https://img.shields.io/travis/com/hendraanggrian/socialview)](https://travis-ci.com/github/hendraanggrian/socialview/)
-[![Codecov](https://img.shields.io/codecov/c/github/hendraanggrian/socialview)](https://codecov.io/gh/hendraanggrian/socialview/)
+[![CircleCI](https://img.shields.io/circleci/build/gh/hanggrian/socialview)](https://app.circleci.com/pipelines/github/hanggrian/socialview/)
+[![Codecov](https://img.shields.io/codecov/c/gh/hanggrian/socialview)](https://app.codecov.io/gh/hanggrian/socialview/)
 [![Maven Central](https://img.shields.io/maven-central/v/com.hendraanggrian.appcompat/socialview)](https://search.maven.org/artifact/com.hendraanggrian.appcompat/socialview/)
 [![Nexus Snapshot](https://img.shields.io/nexus/s/com.hendraanggrian.appcompat/socialview?server=https%3A%2F%2Fs01.oss.sonatype.org)](https://s01.oss.sonatype.org/content/repositories/snapshots/com/hendraanggrian/appcompat/socialview/)
-[![Android SDK](https://img.shields.io/badge/sdk-14%2B-informational)](https://developer.android.com/studio/releases/platforms/#4.0)
+[![Android SDK](https://img.shields.io/badge/android-21%2B-34a853)](https://developer.android.com/tools/releases/platforms#5.0)
 
 # SocialView
 
@@ -56,12 +56,14 @@ Modify its state and set listeners programmatically.
 ```java
 textView.setMentionEnabled(false);
 textView.setHashtagColor(Color.RED);
-textView.setOnHashtagClickListener(new SocialView.OnClickListener() {
-  @Override
-  public void invoke(SocialView socialView, String s) {
-    // do something
-  }
-});
+textView.setOnHashtagClickListener(
+    new SocialView.OnClickListener() {
+        @Override
+        public void invoke(SocialView socialView, String s) {
+          // do something
+        }
+    }
+);
 ```
 
 ### Auto-complete
@@ -83,16 +85,20 @@ and `setMentionAdapter()`.
 
 ```java
 ArrayAdapter<Hashtag> hashtagAdapter = new HashtagAdapter(getContext());
-hashtagAdapter.add(new Hashtag("follow"));
-hashtagAdapter.add(new Hashtag("followme", 1000));
-hashtagAdapter.add(new Hashtag("followmeorillkillyou", 500));
+hashtagAdapter.add(new Hashtag("yolo"));
+hashtagAdapter.add(new Hashtag("swag", 500));
 textView.setHashtagAdapter(hashtagAdapter);
 
 ArrayAdapter<Mention> mentionAdapter = new MentionAdapter(getContext());
-mentionAdapter.add(new Mention("dirtyhobo"));
-mentionAdapter.add(new Mention("hobo", "Regular Hobo", R.mipmap.ic_launcher));
-mentionAdapter.add(new Mention("hendraanggrian", "Hendra Anggrian",
-    "https://avatars0.githubusercontent.com/u/11507430?v=3&s=460"));
+mentionAdapter.add(new Mention("man"));
+mentionAdapter.add(new Mention("woman", "Alice", R.drawable.ic_person));
+mentionAdapter.add(
+    new Mention(
+        "johndoe",
+        "John Doe",
+        "url://to.profile"
+    )
+);
 textView.setMentionAdapter(mentionAdapter);
 ```
 
@@ -103,34 +109,34 @@ customized `SocialAdapter` or write your own `ArrayAdapter`.
 
 ```java
 public class Person {
-  public final String name;
+    public final String name;
 
-  public Person(String name) {
-    this.name = name;
-  }
+    public Person(String name) {
+        this.name = name;
+    }
 }
 
 // easier
 public class PersonAdapter extends SocialAdapter<Person> {
-  public PersonAdapter(@NonNull Context context) {
-    super(context, R.layout.item_person, R.id.textview_person);
-  }
+    public PersonAdapter(@NonNull Context context) {
+        super(context, R.layout.item_person, R.id.textview_person);
+    }
 
-  @Override
-  public String convertToString(Person $receiver) {
-    return $receiver.name;
-  }
+    @Override
+    public String convertToString(Person $receiver) {
+        return $receiver.name;
+    }
 
-  @Override
-  public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-    // ...
-  }
+    @Override
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        // ...
+    }
 }
 
 // this works too
 public class PersonAdapter extends ArrayAdapter<Person> {
-  // your own adapter layout, view holder, data binding
-  // and of course, filtering logic
+    // your own adapter layout, view holder, data binding
+    // and of course, filtering logic
 }
 ```
 
