@@ -6,14 +6,16 @@ orbs:
 executors:
   linux:
     docker:
-      - image: cimg/android:2025.03.1
+      - image: cimg/android:2025.04
 
 jobs:
   upload-coverage:
     executor: linux
     steps:
       - checkout
-      - run: ./gradlew checkstyleAndroid test jacocoAndroid
+      - run: ./gradlew check
+      - run: ./gradlew checkstyleAndroid
+      - run: ./gradlew jacocoAndroid
       - codecov/upload
 
 workflows:

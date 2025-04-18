@@ -9,9 +9,12 @@ val jreVersion = JavaLanguageVersion.of(libs.versions.jre.get())
 plugins {
     kotlin("android") version libs.versions.kotlin.get()
     alias(libs.plugins.android.application)
+    alias(libs.plugins.ktlint)
 }
 
 kotlin.jvmToolchain(jdkVersion.asInt())
+
+ktlint.version.set(libs.versions.ktlint.get())
 
 android {
     namespace = "com.example"
@@ -19,10 +22,11 @@ android {
         applicationId = "com.example"
         multiDexEnabled = true
     }
-    lint.abortOnError = false
 }
 
 dependencies {
+    ktlintRuleset(libs.rulebook.ktlint)
+
     implementation(project(":$releaseArtifact-autocomplete"))
     implementation(libs.material)
     implementation(libs.androidx.multidex)

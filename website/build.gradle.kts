@@ -33,8 +33,6 @@ gitPublish {
     contents.from(pages.outputDirectory)
 }
 
-tasks {
-    register(LifecycleBasePlugin.CLEAN_TASK_NAME) {
-        delete(layout.buildDirectory)
-    }
+tasks.register(LifecycleBasePlugin.CLEAN_TASK_NAME) {
+    delete(layout.buildDirectory)
 }

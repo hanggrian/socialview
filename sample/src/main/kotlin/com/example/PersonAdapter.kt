@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.hanggrian.appcompat.socialview.widget.SocialArrayAdapter
+import com.hanggrian.socialview.autocomplete.SocialArrayAdapter
 
 class PersonAdapter(context: Context) :
     SocialArrayAdapter<Person>(context, R.layout.item_person, R.id.textViewName) {
@@ -18,7 +18,6 @@ class PersonAdapter(context: Context) :
                 holder = ViewHolder(view!!)
                 view.tag = holder
             }
-
             else -> holder = view.tag as ViewHolder
         }
         getItem(position)?.let { model -> holder.textView.text = model.name }
