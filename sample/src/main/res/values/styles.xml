@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+  <style name="Theme.Example" parent="Theme.Material3.DayNight.NoActionBar">
+    <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
+  </style>
+</resources>

@@ -5,29 +5,30 @@ checkstyle = "10.18.1"
 kotlin = "2.1.0"
 sdk-min = "21"
 sdk-target = "35"
-android-plugin = "8.8.2"
-androidx = "1.7.0"
-androidx-test = "1.6.1"
+android-plugin = "8.9.1"
+ktlint = "1.5.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-plugin" }
-maven-publish = "com.vanniktech.maven.publish.base:0.30.0"
-git-publish = "org.ajoberstar.git-publish:5.1.0"
-pages = "com.hanggrian.pages:0.1"
+ktlint = "org.jlleitschuh.gradle.ktlint:12.2.0"
+maven-publish = "com.vanniktech.maven.publish.base:0.31.0"
+git-publish = "org.ajoberstar.git-publish:5.1.1"
+pages = "com.hanggrian.pages:0.2"
 
 [libraries]
 # lint
 rulebook-checkstyle = "com.hanggrian.rulebook:rulebook-checkstyle:0.1"
+rulebook-ktlint = "com.hanggrian.rulebook:rulebook-ktlint:0.1"
 # main
-material = { module = "com.google.android.material:material", version.ref = "androidx" }
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx" }
+material = "com.google.android.material:material:1.12.0"
+androidx-appcompat = "androidx.appcompat:appcompat:1.7.0"
 androidx-multidex = "androidx.multidex:multidex:2.0.1"
 process-phoenix = "com.jakewharton:process-phoenix:2.1.2"
 picasso = "com.squareup.picasso:picasso:2.8"
 # test
-androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }
-androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
+androidx-test-core = "androidx.test:core:1.6.1"
+androidx-test-runner = "androidx.test:runner:1.6.2"
 androidx-test-junit = "androidx.test.ext:junit:1.2.1"
 robolectric = "org.robolectric:robolectric:4.14.1"
 truth = "com.google.truth:truth:1.4.4"

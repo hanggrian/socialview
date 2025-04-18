@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
+
   <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
   <application
     android:name="androidx.multidex.MultiDexApplication"
     android:allowBackup="true"
     android:label="SocialView Example"
     android:supportsRtl="true"
-    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+    android:theme="@style/Theme.Example"
+    tools:ignore="MissingApplicationIcon">
 
     <activity
       android:name=".ExampleActivity"
@@ -15,7 +19,6 @@
 
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
-
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>

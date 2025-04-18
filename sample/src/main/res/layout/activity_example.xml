@@ -4,7 +4,8 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".ExampleActivity">
+  tools:context=".ExampleActivity"
+  tools:ignore="HardcodedText">
 
   <com.google.android.material.appbar.AppBarLayout
     android:layout_width="match_parent"
@@ -16,7 +17,7 @@
       android:layout_height="?actionBarSize"/>
   </com.google.android.material.appbar.AppBarLayout>
 
-  <com.hanggrian.appcompat.socialview.widget.SocialAutoCompleteTextView
+  <com.hanggrian.socialview.autocomplete.SocialAutoCompleteTextView
     android:id="@+id/textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

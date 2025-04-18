@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "$releaseGroup.$releaseArtifact"
+    namespace = releaseGroup
     testNamespace = "$namespace.test"
     buildFeatures.buildConfig = false
     testOptions.unitTests.isIncludeAndroidResources = true
