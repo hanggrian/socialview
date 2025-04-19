@@ -24,6 +24,8 @@ import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
 import java.io.File;
 
+import static androidx.core.graphics.BitmapKt.createBitmap;
+
 /**
  * Default adapter for displaying mention in {@link SocialAutoCompleteTextView}. Note that this
  * adapter is completely optional, any adapter extending {@link android.widget.ArrayAdapter} can be
@@ -57,7 +59,7 @@ public class MentionArrayAdapter<T extends Mentionable> extends SocialArrayAdapt
         }
         final T item = getItem(position);
         if (item != null) {
-            holder.usernameView.setText(item.getUsername());
+            holder.usernameView.setText(String.format("@%s", item.getUsername()));
 
             final CharSequence displayname = item.getDisplayname();
             if (!TextUtils.isEmpty(displayname)) {
@@ -123,7 +125,7 @@ public class MentionArrayAdapter<T extends Mentionable> extends SocialArrayAdapt
             final int size = Math.min(source.getWidth(), source.getHeight());
             final int width = (source.getWidth() - size) / 2;
             final int height = (source.getHeight() - size) / 2;
-            final Bitmap target = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+            final Bitmap target = createBitmap(size, size, Bitmap.Config.ARGB_8888);
             final float r = size / 2f;
 
             final Paint paint = new Paint();

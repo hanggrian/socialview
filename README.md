@@ -5,8 +5,8 @@
 
 # SocialView
 
-![Mention preview](https://github.com/hanggrian/socialview/raw/assets/preview_mention.png)
 ![Hashtag preview](https://github.com/hanggrian/socialview/raw/assets/preview_hashtag.png)
+![Mention preview](https://github.com/hanggrian/socialview/raw/assets/preview_mention.png)
 
 TextView and EditText with hashtag, mention, and hyperlink support.
 

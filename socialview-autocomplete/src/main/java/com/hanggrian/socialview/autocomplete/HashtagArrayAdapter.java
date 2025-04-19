@@ -42,7 +42,7 @@ public class HashtagArrayAdapter<T extends Hashtagable> extends SocialArrayAdapt
         }
         final T item = getItem(position);
         if (item != null) {
-            holder.hashtagView.setText(item.getId());
+            holder.hashtagView.setText(String.format("#%s", item.getId()));
 
             if (item.getCount() > 0) {
                 holder.countView.setVisibility(View.VISIBLE);

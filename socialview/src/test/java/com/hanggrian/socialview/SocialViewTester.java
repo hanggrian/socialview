@@ -3,7 +3,6 @@ package com.hanggrian.socialview;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.os.Build;
 import android.util.Patterns;
 import android.util.TypedValue;
 import android.widget.TextView;
@@ -58,7 +57,7 @@ public class SocialViewTester<T extends TextView & SocialView> {
     }
 
     public void hashtagColor() {
-        assertEquals(getThemeAccentColor(view.getContext()), view.getHashtagColor());
+        assertEquals(getThemePrimaryColor(view.getContext()), view.getHashtagColor());
         view.setHashtagColor(Color.RED);
         assertEquals(Color.RED, view.getHashtagColor());
         view.setHashtagColors(ColorStateList.valueOf(Color.GREEN));
@@ -66,7 +65,7 @@ public class SocialViewTester<T extends TextView & SocialView> {
     }
 
     public void mentionColor() {
-        assertEquals(getThemeAccentColor(view.getContext()), view.getMentionColor());
+        assertEquals(getThemePrimaryColor(view.getContext()), view.getMentionColor());
         view.setMentionColor(Color.RED);
         assertEquals(Color.RED, view.getMentionColor());
         view.setMentionColors(ColorStateList.valueOf(Color.GREEN));
@@ -74,7 +73,7 @@ public class SocialViewTester<T extends TextView & SocialView> {
     }
 
     public void hyperlinkColor() {
-        assertEquals(getThemeAccentColor(view.getContext()), view.getHyperlinkColor());
+        assertEquals(getThemePrimaryColor(view.getContext()), view.getHyperlinkColor());
         view.setHyperlinkColor(Color.RED);
         assertEquals(Color.RED, view.getHyperlinkColor());
         view.setHyperlinkColors(ColorStateList.valueOf(Color.GREEN));
@@ -91,19 +90,8 @@ public class SocialViewTester<T extends TextView & SocialView> {
         assertThat(view.getHashtags()).containsExactly("cool", "hashtag");
     }
 
-    private static int getThemeAccentColor(Context context) {
-        int colorAttr;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            colorAttr = android.R.attr.colorAccent;
-        } else {
-            // get colorAccent defined for AppCompat
-            colorAttr =
-                context.getResources().getIdentifier(
-                    "colorAccent",
-                    "attr",
-                    context.getPackageName()
-                );
-        }
+    private static int getThemePrimaryColor(Context context) {
+        int colorAttr = android.R.attr.colorPrimary;
         TypedValue outValue = new TypedValue();
         context.getTheme().resolveAttribute(colorAttr, outValue, true);
         return outValue.data;
