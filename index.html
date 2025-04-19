@@ -24,52 +24,50 @@
             <p>
                 <a href="https://app.circleci.com/pipelines/github/hanggrian/socialview/"><img alt="CircleCI" src="https://img.shields.io/circleci/build/gh/hanggrian/socialview"></a>
 <a href="https://app.codecov.io/gh/hanggrian/socialview/"><img alt="Codecov" src="https://img.shields.io/codecov/c/gh/hanggrian/socialview"></a>
-<a href="https://search.maven.org/artifact/com.hendraanggrian.socialview/socialview/"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.hendraanggrian.socialview/socialview"></a>
-<a href="https://developer.android.com/tools/releases/platforms#5.0"><img alt="Android SDK" src="https://img.shields.io/badge/android-21%2B-34a853"></a>
+<a href="https://central.sonatype.com/artifact/com.hanggrian.socialview/socialview/"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.hanggrian.socialview/socialview"></a>
+<a href="https://developer.android.com/tools/releases/platforms/#5.0"><img alt="Android SDK" src="https://img.shields.io/badge/android-21%2B-34a853"></a>
             </p>
-            
+
             <h1>SocialView</h1>
-            
+
             <p>
-                <img alt="Hashtag preview" src="https://github.com/hendraanggrian/socialview/raw/assets/preview_hashtag.png">
-<img alt="Mention preview" src="https://github.com/hendraanggrian/socialview/raw/assets/preview_mention.png">
+                <img alt="" src="https://github.com/hanggrian/socialview/raw/assets/preview_hashtag.png" title="Hashtag preview">
+<img alt="" src="https://github.com/hanggrian/socialview/raw/assets/preview_mention.png" title="Mention preview">
             </p>
-            
+
             <p>TextView and EditText with hashtag, mention, and hyperlink support.</p>
-            
+
             <ul>
-                
+
                 <li>Pre-loaded with default views, but also installable to any custom view.</li>
-                
+
                 <li>Display hashtag and mention suggestions as you type.</li>
-                
+
             </ul>
-            
+
             <h2>Download</h2>
-            
-            <pre><code class="language-gradle">repositories {
+
+            <pre><code class="language-groovy">repositories {
     mavenCentral()
     google()
 }
 dependencies {
     // base widgets
-    implementation "com.hendraanggrian.socialview:socialview:$version"
+    implementation "com.hanggrian.socialview:socialview:$version"
 
     // auto-complete widgets
-    implementation "com.hendraanggrian.socialview:socialview-autocomplete:$version"
+    implementation "com.hanggrian.socialview:socialview-autocomplete:$version"
 }
 </code></pre>
-            
+
             <h2>Usage</h2>
-            
-            <h3>Core</h3>
-            
+
             <p>
-                Core library contains <code>SocialTextView</code>, <code>SocialEditText</code> and helper class
-applies these behavior into any <code>TextView</code>.
+                Base library contains <code>SocialTextView</code>, <code>SocialEditText</code> and helper class
+to apply such behavior in any <code>TextView</code>.
             </p>
-            
-            <pre><code class="language-xml">&lt;com.hendraanggrian.socialview.SocialTextView
+
+            <pre><code class="language-xml">&lt;com.hanggrian.socialview.SocialTextView
   android:id="@+id/textView"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
@@ -78,75 +76,68 @@ applies these behavior into any <code>TextView</code>.
   app:hashtagColor="@color/blue"
   app:mentionColor="@color/red"/&gt;
 </code></pre>
-            
+
             <p>
-                See <a href="https://github.com/HendraAnggrian/socialview/blob/master/socialview/res/values/attrs.xml">attrs.xml</a>
+                See <a href="https://github.com/hanggrian/socialview/blob/master/socialview/res/values/attrs.xml">attrs.xml</a>
 for full list of available attributes.
             </p>
-            
+
             <p>Modify its state and set listeners programmatically.</p>
-            
+
             <pre><code class="language-java">textView.setMentionEnabled(false);
 textView.setHashtagColor(Color.RED);
 textView.setOnHashtagClickListener(
     new SocialView.OnClickListener() {
         @Override
         public void invoke(SocialView socialView, String s) {
-          // do something
+            // do something
         }
     }
 );
 </code></pre>
-            
+
             <h3>Auto-complete</h3>
-            
+
             <p>
                 Extended library comes with <code>SocialAutoCompleteTextView</code>.
             </p>
-            
-            <pre><code class="language-xml">&lt;com.hendraanggrian.socialview.autocomplete.SocialAutoCompleteTextView
+
+            <pre><code class="language-xml">&lt;com.hanggrian.socialview.autocomplete.SocialAutoCompleteTextView
   android:id="@+id/textView"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:hint="What's on your mind?"
   app:socialFlags="hyperlink"
-  app:hyperlinkColor="@color/green"/&gt;
+  app:hyperlinkColor="@color/red"/&gt;
 </code></pre>
-            
+
             <p>
                 To display suggestions, it is required to <code>setHashtagAdapter()</code>
 and <code>setMentionAdapter()</code>.
             </p>
-            
+
             <pre><code class="language-java">ArrayAdapter&lt;Hashtag&gt; hashtagAdapter = new HashtagAdapter(getContext());
-hashtagAdapter.add(new Hashtag("yolo"));
-hashtagAdapter.add(new Hashtag("swag", 500));
+hashtagAdapter.add(new Hashtag("isell"));
+hashtagAdapter.add(new Hashtag("isellpropane", 500));
 textView.setHashtagAdapter(hashtagAdapter);
 
 ArrayAdapter&lt;Mention&gt; mentionAdapter = new MentionAdapter(getContext());
-mentionAdapter.add(new Mention("man"));
-mentionAdapter.add(new Mention("woman", "Alice", R.drawable.ic_person));
-mentionAdapter.add(
-    new Mention(
-        "johndoe",
-        "John Doe",
-        "url://to.profile"
-    )
-);
+mentionAdapter.add(new Mention("hank"));
+mentionAdapter.add(new Mention("hankhill", "Hank Hill", R.drawable.ic_person));
 textView.setMentionAdapter(mentionAdapter);
 </code></pre>
-            
+
             <p>
                 To customize hashtag or mention adapter, create a custom adapter using
 customized <code>SocialAdapter</code> or write your own <code>ArrayAdapter</code>.
             </p>
-            
+
             <blockquote>
-                
+
                 <p>Custom adapters are experimental, see sample for example.</p>
-                
+
             </blockquote>
-            
+
             <pre><code class="language-java">public class Person {
     public final String name;
 
@@ -178,15 +169,15 @@ public class PersonAdapter extends ArrayAdapter&lt;Person&gt; {
     // and of course, filtering logic
 }
 </code></pre>
-            
+
             <p>Then, use the custom adapter.</p>
-            
+
             <pre><code class="language-java">ArrayAdapter&lt;Person&gt; adapter = new PersonAdapter(getContext());
 adapter.add(personA);
 adapter.add(personB);
 textView.setMentionAdapter(adapter);
 </code></pre>
-            
+
             <footer class="site-footer">
                 <span class="site-footer-owner"><a href="https://github.com/hanggrian/socialview/">socialview</a> is maintained by <a href="https://github.com/hanggrian/">Hendra Anggrian</a></span><span class="site-footer-credits">Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/jasonlong/cayman-theme/">jasonlong</a></span>
             </footer>
