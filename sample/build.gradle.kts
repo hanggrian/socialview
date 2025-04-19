@@ -30,10 +30,12 @@ dependencies {
     implementation(project(":$releaseArtifact-autocomplete"))
     implementation(libs.material)
     implementation(libs.androidx.multidex)
+    implementation(libs.picasso)
     implementation(libs.process.phoenix)
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions.jvmTarget
+    compilerOptions
+        .jvmTarget
         .set(JvmTarget.fromTarget(JavaVersion.toVersion(jreVersion).toString()))
 }

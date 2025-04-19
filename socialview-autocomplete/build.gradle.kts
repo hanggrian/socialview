@@ -20,6 +20,7 @@ dependencies {
     checkstyle(libs.rulebook.checkstyle)
 
     api(project(":$releaseArtifact"))
+
     implementation(libs.androidx.appcompat)
     implementation(libs.picasso)
 

@@ -1,21 +1,31 @@
 package com.example
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
+import androidx.core.view.WindowCompat
+import com.google.android.material.snackbar.Snackbar
 import com.hanggrian.socialview.autocomplete.Hashtag
 import com.hanggrian.socialview.autocomplete.HashtagArrayAdapter
 import com.hanggrian.socialview.autocomplete.Mention
 import com.hanggrian.socialview.autocomplete.MentionArrayAdapter
 import com.hanggrian.socialview.autocomplete.SocialAutoCompleteTextView
+import com.squareup.picasso.Picasso
 
-class ExampleActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
+    private lateinit var card: CardView
+    private lateinit var image: ImageView
     private lateinit var textView: SocialAutoCompleteTextView
+    private lateinit var button: Button
 
     private lateinit var defaultHashtagAdapter: ArrayAdapter<Hashtag>
     private lateinit var defaultMentionAdapter: ArrayAdapter<Mention>
@@ -24,8 +34,11 @@ class ExampleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_example)
+        setContentView(R.layout.activity_main)
         toolbar = findViewById(R.id.toolbar)
+        card = findViewById(R.id.card)
+        image = findViewById(R.id.image)
+        button = findViewById(R.id.button)
         textView = findViewById(R.id.textView)
         setSupportActionBar(toolbar)
 
@@ -46,10 +59,31 @@ class ExampleActivity : AppCompatActivity() {
         textView.setHashtagTextChangedListener { _, text -> Log.d("hashtag", text.toString()) }
         textView.setMentionTextChangedListener { _, text -> Log.d("mention", text.toString()) }
         textView.setOnHyperlinkClickListener { _, text -> Log.d("hyperlink", text.toString()) }
+
+        Picasso
+            .get()
+            .load(
+                "https://static.wikia.nocookie.net/mrmsco/images/d/d9/Hank_Hill.jpg/" +
+                    "revision/latest/",
+            ).transform(CropCircleTransformation())
+            .into(image)
+
+        button.setOnClickListener {
+            Snackbar
+                .make(card, textView.text, Snackbar.LENGTH_LONG)
+                .setAction(android.R.string.ok) { textView.setText("") }
+                .show()
+        }
+
+        WindowCompat
+            .getInsetsController(window, window.decorView)
+            .isAppearanceLightStatusBars =
+            resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK !=
+            Configuration.UI_MODE_NIGHT_YES
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.activity_example, menu)
+        menuInflater.inflate(R.menu.activity_main, menu)
         return true
     }
 

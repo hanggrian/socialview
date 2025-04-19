@@ -3,17 +3,8 @@ package com.example
 import com.hanggrian.socialview.autocomplete.Mention
 
 object Mentions : List<Mention> by listOf(
-    Mention(
-        "hankhill",
-        null,
-        "https://static.wikia.nocookie.net/mrmsco/images/d/d9/Hank_Hill.jpg/revision/latest/",
-    ),
-    Mention(
-        "peggyhill",
-        "Peggy Hill",
-        "https://static.wikia.nocookie.net/kingofthehill/images/a/a7/Peggy-hill.jpg/" +
-            "revision/latest/",
-    ),
+    Mention("ladybirdhill"),
+    Mention("hankhill", "Hank Hill"),
     Mention(
         "bobbyhill",
         "Bobby Hill",

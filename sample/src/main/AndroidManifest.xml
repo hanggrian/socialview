@@ -8,13 +8,13 @@
   <application
     android:name="androidx.multidex.MultiDexApplication"
     android:allowBackup="true"
-    android:label="SocialView Example"
+    android:label="SocialView Sample"
     android:supportsRtl="true"
-    android:theme="@style/Theme.Example"
+    android:theme="@style/Theme.Sample"
     tools:ignore="MissingApplicationIcon">
 
     <activity
-      android:name=".ExampleActivity"
+      android:name=".MainActivity"
       android:exported="true">
 
       <intent-filter>

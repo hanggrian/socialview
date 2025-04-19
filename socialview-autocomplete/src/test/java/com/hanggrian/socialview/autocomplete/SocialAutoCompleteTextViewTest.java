@@ -78,7 +78,7 @@ public class SocialAutoCompleteTextViewTest {
 
     @Test
     public void hashtagColor() {
-        assertEquals(getThemeAccentColor(view.getContext()), view.getHashtagColor());
+        assertEquals(getThemePrimaryColor(view.getContext()), view.getHashtagColor());
         view.setHashtagColor(Color.RED);
         assertEquals(Color.RED, view.getHashtagColor());
         view.setHashtagColors(ColorStateList.valueOf(Color.GREEN));
@@ -87,7 +87,7 @@ public class SocialAutoCompleteTextViewTest {
 
     @Test
     public void mentionColor() {
-        assertEquals(getThemeAccentColor(view.getContext()), view.getMentionColor());
+        assertEquals(getThemePrimaryColor(view.getContext()), view.getMentionColor());
         view.setMentionColor(Color.RED);
         assertEquals(Color.RED, view.getMentionColor());
         view.setMentionColors(ColorStateList.valueOf(Color.GREEN));
@@ -96,7 +96,7 @@ public class SocialAutoCompleteTextViewTest {
 
     @Test
     public void hyperlinkColor() {
-        assertEquals(getThemeAccentColor(view.getContext()), view.getHyperlinkColor());
+        assertEquals(getThemePrimaryColor(view.getContext()), view.getHyperlinkColor());
         view.setHyperlinkColor(Color.RED);
         assertEquals(Color.RED, view.getHyperlinkColor());
         view.setHyperlinkColors(ColorStateList.valueOf(Color.GREEN));
@@ -115,19 +115,8 @@ public class SocialAutoCompleteTextViewTest {
         assertThat(view.getHashtags()).containsExactly("cool", "hashtag");
     }
 
-    private static int getThemeAccentColor(Context context) {
-        int colorAttr;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            colorAttr = android.R.attr.colorAccent;
-        } else {
-            // get colorAccent defined for AppCompat
-            colorAttr =
-                context.getResources().getIdentifier(
-                    "colorAccent",
-                    "attr",
-                    context.getPackageName()
-                );
-        }
+    private static int getThemePrimaryColor(Context context) {
+        int colorAttr = android.R.attr.colorPrimary;
         TypedValue outValue = new TypedValue();
         context.getTheme().resolveAttribute(colorAttr, outValue, true);
         return outValue.data;

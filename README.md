@@ -5,8 +5,8 @@
 
 # SocialView
 
-![Mention preview](https://github.com/hanggrian/socialview/raw/assets/preview_mention.png)
-![Hashtag preview](https://github.com/hanggrian/socialview/raw/assets/preview_hashtag.png)
+![](https://github.com/hanggrian/socialview/raw/assets/preview_hashtag.png "Hashtag preview")
+![](https://github.com/hanggrian/socialview/raw/assets/preview_mention.png "Mention preview")
 
 TextView and EditText with hashtag, mention, and hyperlink support.
 
@@ -31,10 +31,8 @@ dependencies {
 
 ## Usage
 
-### Core
-
-Core library contains `SocialTextView`, `SocialEditText` and helper class
-applies these behavior into any `TextView`.
+Base library contains `SocialTextView`, `SocialEditText` and helper class
+to apply such behavior in any `TextView`.
 
 ```xml
 <com.hanggrian.socialview.SocialTextView

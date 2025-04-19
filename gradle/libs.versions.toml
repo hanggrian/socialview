@@ -4,7 +4,7 @@ jre = "8"
 checkstyle = "10.18.1"
 kotlin = "2.1.0"
 sdk-min = "21"
-sdk-target = "35"
+sdk-target = "36"
 android-plugin = "8.9.1"
 ktlint = "1.5.0"
 
