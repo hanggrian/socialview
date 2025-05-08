@@ -31,6 +31,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.multidex)
     implementation(libs.picasso)
+    implementation(libs.roundedimageview)
+    implementation(libs.pieprogress)
     implementation(libs.process.phoenix)
 }
 

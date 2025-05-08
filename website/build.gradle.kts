@@ -11,6 +11,10 @@ plugins {
 }
 
 pages {
+    resources.from(
+        "$rootDir/$releaseArtifact/build/docs/",
+        "$rootDir/$releaseArtifact-autocomplete/build/docs/",
+    )
     styles.add("https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css")
     scripts.addAll(
         "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js",
@@ -24,6 +28,8 @@ pages {
         projectName = releaseArtifact
         projectDescription = releaseDescription
         projectUrl = releaseUrl
+        button("$releaseArtifact javadoc", "$releaseArtifact/")
+        button("$releaseArtifact-autocomplete javadoc", "$releaseArtifact-autocomplete/")
     }
 }
 
@@ -33,6 +39,14 @@ gitPublish {
     contents.from(pages.outputDirectory)
 }
 
-tasks.register(LifecycleBasePlugin.CLEAN_TASK_NAME) {
-    delete(layout.buildDirectory)
+tasks {
+    register(LifecycleBasePlugin.CLEAN_TASK_NAME) {
+        delete(layout.buildDirectory)
+    }
+    deployResources {
+        dependsOn(
+            ":$releaseArtifact:javadocAndroid",
+            ":$releaseArtifact-autocomplete:javadocAndroid",
+        )
+    }
 }

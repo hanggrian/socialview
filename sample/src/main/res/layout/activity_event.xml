@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#f6f5f8"
+  android:fitsSystemWindows="true"
+  tools:context=".static.EventActivity"
+  tools:ignore="Overdraw,HardcodedText,ContentDescription,UseCompoundDrawables">
+
+  <com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?actionBarSize"
+      app:navigationIcon="?homeAsUpIndicator"
+      app:title="Event"/>
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:orientation="vertical"
+      android:padding="16dp">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          android:src="@drawable/pic_bill"
+          app:riv_corner_radius="24dp"/>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:layout_marginEnd="16dp"
+          android:text="Bill Dauterive"
+          android:textAppearance="@style/TextAppearance.Material3.TitleLarge"/>
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/fill_verified"
+          app:tint="?colorSecondary"/>
+      </LinearLayout>
+
+      <com.makeramen.roundedimageview.RoundedImageView
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_christmas"
+        app:riv_corner_radius="32dp"/>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="8dp"
+          android:src="@drawable/outline_location"
+          app:tint="@android:color/black"/>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Rainy Street"
+          android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+
+        <com.makeramen.roundedimageview.RoundedImageView
+          android:layout_width="4dp"
+          android:layout_height="4dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginEnd="8dp"
+          android:src="#e0e0e0"
+          app:riv_corner_radius="2dp"/>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="95m"
+          android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+      </LinearLayout>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Christmas &#x2014; Bill's House"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"/>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="8dp"
+          android:src="@drawable/outline_date"
+          app:tint="?colorPrimary"/>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="23 &#x2013; 25 Dec, 2010"
+          android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+          android:textColor="?colorPrimary"/>
+      </LinearLayout>
+
+      <com.hanggrian.socialview.SocialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Please note that our opening hours may change at short notice due to events. You will find our current opening hours on our website at\n\nhttps://www.koth.com/events/bill"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <FrameLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+
+          <com.makeramen.roundedimageview.RoundedImageView style="@style/Widget.Event.ProfileContainer"/>
+
+          <com.makeramen.roundedimageview.RoundedImageView
+            style="@style/Widget.Event.Profile"
+            android:src="@drawable/pic_hank"/>
+        </FrameLayout>
+
+        <FrameLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="-12dp">
+
+          <com.makeramen.roundedimageview.RoundedImageView style="@style/Widget.Event.ProfileContainer"/>
+
+          <com.makeramen.roundedimageview.RoundedImageView
+            style="@style/Widget.Event.Profile"
+            android:src="@drawable/pic_dale"/>
+        </FrameLayout>
+
+        <FrameLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="-12dp">
+
+          <com.makeramen.roundedimageview.RoundedImageView style="@style/Widget.Event.ProfileContainer"/>
+
+          <com.makeramen.roundedimageview.RoundedImageView
+            style="@style/Widget.Event.Profile"
+            android:src="@drawable/pic_jeff"/>
+        </FrameLayout>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:layout_marginEnd="4dp"
+          android:text="3"
+          android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+          android:textStyle="bold"/>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="attending"
+          android:textAppearance="@style/TextAppearance.Material3.LabelLarge"/>
+      </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:padding="16dp">
+
+      <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get Tickets"
+        android:textColor="@android:color/white"
+        app:backgroundTint="?colorPrimary"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="99 tickets available"
+        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"/>
+    </LinearLayout>
+  </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

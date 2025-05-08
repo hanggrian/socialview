@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#f6f5f8"
+  tools:context=".static.MapActivity"
+  tools:ignore="Overdraw,HardcodedText,ContentDescription">
+
+  <com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="?actionBarSize"
+      android:gravity="center"
+      android:orientation="horizontal">
+
+      <com.google.android.material.chip.Chip
+        style="@style/Widget.Map.Chip"
+        android:text="5.6K"
+        app:chipIcon="@drawable/fill_points"/>
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Map View"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"/>
+
+      <com.google.android.material.chip.Chip
+        style="@style/Widget.Map.Chip"
+        android:text="1"
+        app:chipIcon="@drawable/fill_comments"/>
+    </LinearLayout>
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scaleType="centerCrop"
+      android:src="@drawable/ss_map"/>
+
+    <androidx.cardview.widget.CardView
+      android:id="@+id/dialog"
+      android:layout_width="320dp"
+      android:layout_height="wrap_content"
+      android:layout_alignParentTop="true"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="32dp"
+      app:cardCornerRadius="32dp"
+      app:cardElevation="16dp">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+              android:layout_width="48dp"
+              android:layout_height="48dp"
+              android:src="@drawable/bg_hexagon"/>
+
+            <ImageView
+              android:layout_width="32dp"
+              android:layout_height="32dp"
+              android:layout_gravity="center"
+              android:src="@drawable/coin"/>
+          </FrameLayout>
+
+          <com.hanggrian.socialview.SocialTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:text="You are near a #collectible, turn on camera mode to collect."
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+
+          <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_close"
+            app:tint="#9c9ca7"/>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:text="Switch to Camera mode"
+          android:textColor="@android:color/white"
+          app:backgroundTint="?colorPrimary"
+          app:icon="@drawable/fill_camera"
+          app:iconTint="@android:color/white"/>
+      </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+      style="@style/Widget.Map.Pin"
+      android:layout_marginStart="110dp"
+      android:layout_marginTop="10dp"
+      android:rotation="130"
+      android:src="@drawable/pin_me"/>
+
+    <ImageView
+      style="@style/Widget.Map.Pin"
+      android:layout_marginStart="150dp"
+      android:layout_marginTop="20dp"
+      android:src="@drawable/pin_coin"/>
+
+    <ImageView
+      style="@style/Widget.Map.Pin"
+      android:layout_marginStart="30dp"
+      android:layout_marginTop="40dp"
+      android:src="@drawable/pin_business1"/>
+
+    <ImageView
+      style="@style/Widget.Map.Pin"
+      android:layout_marginStart="260dp"
+      android:layout_marginTop="-10dp"
+      android:src="@drawable/pin_business2"/>
+  </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -33,21 +33,39 @@ allprojects {
 
 subprojects {
     plugins.withType<LibraryPlugin>().configureEach {
-        modify(the<LibraryExtension>())
+        configure<LibraryExtension> {
+            modify(this)
+            tasks.register<Javadoc>("javadocAndroid") {
+                source = sourceSets["main"].java.getSourceFiles()
+                classpath += files(bootClasspath)
+                classpath +=
+                    libraryVariants
+                        .find { it.name == "release" }!!
+                        .javaCompileProvider
+                        .get()
+                        .classpath
+                setDestinationDir(layout.buildDirectory.dir("docs/${project.name}").get().asFile)
+            }
+        }
     }
     plugins.withType<AppPlugin>().configureEach {
         modify(the<BaseAppModuleExtension>())
     }
     plugins.withType<CheckstylePlugin>().configureEach {
         the<CheckstyleExtension>().toolVersion = libs.versions.checkstyle.get()
-        tasks.register<Checkstyle>("checkstyleAndroid") {
-            group = LifecycleBasePlugin.VERIFICATION_GROUP
-            description = "Generate Android lint report"
+        tasks {
+            val checkstyleAndroid by registering(Checkstyle::class) {
+                group = LifecycleBasePlugin.VERIFICATION_GROUP
+                description = "Generate Android lint report"
 
-            source("src")
-            include("**/*.java")
-            exclude("**/gen/**", "**/R.java")
-            classpath = files()
+                source("src")
+                include("**/*.java")
+                exclude("**/gen/**", "**/R.java")
+                classpath = files()
+            }
+            named("check") {
+                dependsOn(checkstyleAndroid)
+            }
         }
     }
     plugins.withType<JacocoPlugin>().configureEach {

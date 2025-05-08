@@ -10,17 +10,35 @@
     android:allowBackup="true"
     android:label="SocialView Sample"
     android:supportsRtl="true"
-    android:theme="@style/Theme.Sample"
     tools:ignore="MissingApplicationIcon">
 
     <activity
-      android:name=".MainActivity"
-      android:exported="true">
-
+      android:name=".dynamic.DynamicActivity"
+      android:exported="true"
+      android:theme="@style/Theme.Material3.DynamicColors.DayNight.NoActionBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+
+    <!-- https://dribbble.com/shots/20406523-Social-Mobile-App-iOS-Android-Web3/ -->
+    <!-- https://dribbble.com/shots/23236650-Social-Media-App-Intimate-Space/ -->
+    <activity
+      android:name=".static.HomeActivity"
+      android:exported="true"
+      android:theme="@style/Theme.Static"/>
+    <activity
+      android:name=".static.MapActivity"
+      android:exported="true"
+      android:theme="@style/Theme.Static"/>
+    <activity
+      android:name=".static.EventActivity"
+      android:exported="true"
+      android:theme="@style/Theme.Static"/>
+    <activity
+      android:name=".static.ShopActivity"
+      android:exported="true"
+      android:theme="@style/Theme.Static"/>
   </application>
 </manifest>

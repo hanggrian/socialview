@@ -1,5 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-  <style name="Theme.Sample" parent="Theme.Material3.DynamicColors.DayNight.NoActionBar"/>
+  <style name="Theme.Static" parent="Theme.Material3.Light.NoActionBar">
+    <item name="colorPrimary">#447afe</item>
+    <item name="colorSecondary">#01a1ed</item>
+    <item name="colorTertiary">#eaf4fe</item>
+  </style>
+
+  <style name="Widget.Home.CardContainer" parent="android:Widget">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginStart">16dp</item>
+    <item name="android:layout_marginTop">8dp</item>
+    <item name="android:layout_marginEnd">16dp</item>
+    <item name="android:layout_marginBottom">8dp</item>
+    <item name="cardCornerRadius">32dp</item>
+    <item name="cardElevation">0dp</item>
+  </style>
+
+  <style name="Widget.Home.Card" parent="android:Widget">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:gravity">center</item>
+    <item name="android:padding">16dp</item>
+  </style>
+
+  <style name="Widget.Home.ProfileContainer" parent="android:Widget">
+    <item name="android:layout_width">90dp</item>
+    <item name="android:layout_height">120dp</item>
+    <item name="android:padding">8dp</item>
+  </style>
+
+  <style name="Widget.Home.ProfileProgress" parent="android:Widget">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_alignParentTop">true</item>
+    <item name="android:layout_centerHorizontal">true</item>
+    <item name="android:rotation">180</item>
+    <item name="indicatorSize">72dp</item>
+    <item name="indicatorTrackGapSize">0dp</item>
+    <item name="trackColor">#f0eefc</item>
+    <item name="trackThickness">2dp</item>
+  </style>
+
+  <style name="Widget.Home.ProfileImage" parent="android:Widget">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:padding">8dp</item>
+    <item name="riv_corner_radius">36dp</item>
+  </style>
+
+  <style name="Widget.Home.ProfileText" parent="android:Widget">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_alignParentBottom">true</item>
+    <item name="android:layout_centerHorizontal">true</item>
+    <item name="android:textAppearance">@style/TextAppearance.Material3.TitleSmall</item>
+  </style>
+
+  <style name="Widget.Home.ProfileChip" parent="Widget.Material3.Chip.Suggestion.Elevated">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">36dp</item>
+    <item name="android:layout_marginBottom">-4dp</item>
+    <item name="android:layout_centerHorizontal">true</item>
+    <item name="android:textAppearance">@style/TextAppearance.Material3.LabelSmall</item>
+    <item name="chipBackgroundColor">?colorTertiary</item>
+  </style>
+
+  <style name="Widget.Home.TabContainer" parent="android:Widget">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:gravity">center</item>
+  </style>
+
+  <style name="Widget.Home.Tab" parent="android:Widget">
+    <item name="android:layout_width">30dp</item>
+    <item name="android:layout_height">30dp</item>
+    <item name="tint">?colorTertiary</item>
+  </style>
+
+  <style name="Widget.Map.Chip" parent="Widget.Material3.Chip.Assist.Elevated">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginStart">16dp</item>
+    <item name="android:layout_marginEnd">16dp</item>
+    <item name="chipBackgroundColor">?colorTertiary</item>
+  </style>
+
+  <style name="Widget.Map.Pin" parent="android:Widget">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_below">@id/dialog</item>
+    <item name="android:layout_alignStart">@id/dialog</item>
+  </style>
+
+  <style name="Widget.Event.ProfileContainer" parent="android:Widget">
+    <item name="android:layout_width">36dp</item>
+    <item name="android:layout_height">36dp</item>
+    <item name="android:src">?colorTertiary</item>
+    <item name="riv_corner_radius">18dp</item>
+  </style>
+
+  <style name="Widget.Event.Profile" parent="android:Widget">
+    <item name="android:layout_width">32dp</item>
+    <item name="android:layout_height">32dp</item>
+    <item name="android:layout_gravity">center</item>
+    <item name="riv_corner_radius">16dp</item>
+  </style>
+
+  <style name="Widget.Shop.OfferContainer" parent="android:Widget">
+    <item name="android:layout_width">150dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:orientation">vertical</item>
+  </style>
+
+  <style name="Widget.Shop.OfferImage" parent="android:Widget">
+    <item name="android:layout_width">150dp</item>
+    <item name="android:layout_height">150dp</item>
+    <item name="android:scaleType">centerCrop</item>
+    <item name="riv_corner_radius">32dp</item>
+  </style>
+
+  <style name="Widget.Shop.OfferText" parent="android:Widget">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginTop">16dp</item>
+    <item name="android:textAppearance">@style/TextAppearance.Material3.BodyLarge</item>
+  </style>
+
+  <style name="Widget.Shop.OfferPrice" parent="android:Widget">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginTop">8dp</item>
+    <item name="android:textAppearance">@style/TextAppearance.Material3.TitleMedium</item>
+  </style>
 </resources>

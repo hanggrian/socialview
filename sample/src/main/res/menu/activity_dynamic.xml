@@ -5,27 +5,27 @@
   tools:ignore="HardcodedText">
 
   <item
-    android:id="@+id/customAdapterItem"
+    android:id="@+id/item_customAdapter"
     android:checkable="true"
     android:title="Custom adapter"
     app:showAsAction="never"/>
 
   <item
-    android:id="@+id/enableHashtagItem"
+    android:id="@+id/item_enableHashtag"
     android:checkable="true"
     android:checked="true"
     android:title="Hashtag"
     app:showAsAction="never"/>
 
   <item
-    android:id="@+id/enableMentionItem"
+    android:id="@+id/item_enableMention"
     android:checkable="true"
     android:checked="true"
     android:title="Mention"
     app:showAsAction="never"/>
 
   <item
-    android:id="@+id/enableHyperlinkItem"
+    android:id="@+id/item_enableHyperlink"
     android:checkable="true"
     android:checked="true"
     android:title="Hyperlink"

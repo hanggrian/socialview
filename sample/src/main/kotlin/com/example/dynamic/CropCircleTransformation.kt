@@ -1,4 +1,4 @@
-package com.example
+package com.example.dynamic
 
 import android.graphics.Bitmap
 import android.graphics.BitmapShader

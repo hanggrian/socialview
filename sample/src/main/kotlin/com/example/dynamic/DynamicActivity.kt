@@ -1,4 +1,4 @@
-package com.example
+package com.example.dynamic
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import androidx.core.view.WindowCompat
+import com.example.R
 import com.google.android.material.snackbar.Snackbar
 import com.hanggrian.socialview.autocomplete.Hashtag
 import com.hanggrian.socialview.autocomplete.HashtagArrayAdapter
@@ -20,7 +21,7 @@ import com.hanggrian.socialview.autocomplete.MentionArrayAdapter
 import com.hanggrian.socialview.autocomplete.SocialAutoCompleteTextView
 import com.squareup.picasso.Picasso
 
-class MainActivity : AppCompatActivity() {
+class DynamicActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var card: CardView
     private lateinit var image: ImageView
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_dynamic)
         toolbar = findViewById(R.id.toolbar)
         card = findViewById(R.id.card)
         image = findViewById(R.id.image)
@@ -83,13 +84,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.activity_main, menu)
+        menuInflater.inflate(R.menu.activity_dynamic, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.customAdapterItem -> {
+            R.id.item_customAdapter -> {
                 when {
                     !item.isChecked -> {
                         textView.hashtagAdapter = customHashtagAdapter
@@ -101,9 +102,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            R.id.enableHashtagItem -> textView.isHashtagEnabled = !item.isChecked
-            R.id.enableMentionItem -> textView.isMentionEnabled = !item.isChecked
-            R.id.enableHyperlinkItem -> textView.isHyperlinkEnabled = !item.isChecked
+            R.id.item_enableHashtag -> textView.isHashtagEnabled = !item.isChecked
+            R.id.item_enableMention -> textView.isMentionEnabled = !item.isChecked
+            R.id.item_enableHyperlink -> textView.isHyperlinkEnabled = !item.isChecked
             else -> return super.onOptionsItemSelected(item)
         }
         item.isChecked = !item.isChecked

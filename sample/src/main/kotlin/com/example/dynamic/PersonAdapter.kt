@@ -1,10 +1,11 @@
-package com.example
+package com.example.dynamic
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.R
 import com.hanggrian.socialview.autocomplete.SocialArrayAdapter
 
 class PersonAdapter(context: Context) :

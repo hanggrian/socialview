@@ -14,8 +14,7 @@ jobs:
     steps:
       - checkout
       - run: ./gradlew check
-      - run: ./gradlew checkstyleAndroid
-      - run: ./gradlew jacocoAndroid
+      - run: ./gradlew jacocoAndroid # do not join this task
       - codecov/upload
 
 workflows:

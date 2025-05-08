@@ -1,7 +1,10 @@
 [![CircleCI](https://img.shields.io/circleci/build/gh/hanggrian/socialview)](https://app.circleci.com/pipelines/github/hanggrian/socialview/)
 [![Codecov](https://img.shields.io/codecov/c/gh/hanggrian/socialview)](https://app.codecov.io/gh/hanggrian/socialview/)
 [![Maven Central](https://img.shields.io/maven-central/v/com.hanggrian.socialview/socialview)](https://central.sonatype.com/artifact/com.hanggrian.socialview/socialview/)
-[![Android SDK](https://img.shields.io/badge/android-21%2B-34a853)](https://developer.android.com/tools/releases/platforms/#5.0)
+[![Android SDK](https://img.shields.io/badge/android-21%2B-34a853)](https://developer.android.com/tools/releases/platforms/#5.0) \
+[![Figma](https://img.shields.io/badge/design-figma-f24e1e)](https://www.figma.com/community/file/1502318475869385725/)
+[![Layers](https://img.shields.io/badge/showcase-layers-000)](https://layers.to/layers/cmahkfidf0019lb0d8aok3ahl/)
+[![Pinterest](https://img.shields.io/badge/pin-pinterest-bd081c)](https://www.pinterest.com/pin/1107322627133689218/)
 
 # SocialView
 
@@ -53,14 +56,9 @@ Modify its state and set listeners programmatically.
 ```java
 textView.setMentionEnabled(false);
 textView.setHashtagColor(Color.RED);
-textView.setOnHashtagClickListener(
-    new SocialView.OnClickListener() {
-        @Override
-        public void invoke(SocialView socialView, String s) {
-            // do something
-        }
-    }
-);
+textView.setOnHashtagClickListener((view, s) -> {
+    // ...
+});
 ```
 
 ### Auto-complete

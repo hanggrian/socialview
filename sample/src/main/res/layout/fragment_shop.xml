@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="#f6f5f8"
+  android:orientation="vertical"
+  tools:ignore="Overdraw,HardcodedText,ContentDescription,RtlSymmetry">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="16dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:src="@drawable/pic_frozencow"
+      app:riv_corner_radius="24dp"/>
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+      android:text="Frozen Cow Creamery"
+      android:textAppearance="@style/TextAppearance.Material3.TitleLarge"/>
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/fill_verified"
+      app:tint="?colorSecondary"/>
+
+    <Space
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"/>
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/outline_share"/>
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:src="@drawable/outline_location"
+      app:tint="@android:color/black"/>
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Arlen, Texas"
+      android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+
+    <Space
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"/>
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="200m"
+      android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+      android:layout_width="4dp"
+      android:layout_height="4dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginEnd="8dp"
+      android:src="#e0e0e0"
+      app:riv_corner_radius="2dp"/>
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/outline_walk"
+      app:tint="?colorPrimary"/>
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="4dp"
+      android:text="8 min"
+      android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:layout_marginBottom="16dp"
+    android:orientation="horizontal"
+    android:paddingStart="16dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+      android:layout_width="300dp"
+      android:layout_height="150dp"
+      android:scaleType="centerCrop"
+      android:src="@drawable/img_banner1"
+      app:riv_corner_radius="32dp"/>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+      android:layout_width="150dp"
+      android:layout_height="150dp"
+      android:layout_marginStart="16dp"
+      android:scaleType="centerCrop"
+      android:src="@drawable/img_banner2"
+      app:riv_corner_radius="32dp"/>
+  </LinearLayout>
+
+  <com.hanggrian.socialview.SocialTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:text="More than 50 flavors, 100% natural and 100% real! Visit us at Frozen Cow Creamery. #icecream #allyouwant"
+    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
+
+  <com.google.android.material.tabs.TabLayout
+    android:id="@+id/tabLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:background="@android:color/transparent"/>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="24dp">
+
+    <LinearLayout style="@style/Widget.Shop.OfferContainer">
+
+      <com.makeramen.roundedimageview.RoundedImageView
+        style="@style/Widget.Shop.OfferImage"
+        android:src="@drawable/img_milkshake"/>
+
+      <TextView
+        style="@style/Widget.Shop.OfferText"
+        android:text="Strawberry milkshake"/>
+
+      <TextView
+        style="@style/Widget.Shop.OfferPrice"
+        android:text="$10"/>
+    </LinearLayout>
+
+    <LinearLayout
+      style="@style/Widget.Shop.OfferContainer"
+      android:layout_marginStart="16dp">
+
+      <com.makeramen.roundedimageview.RoundedImageView
+        style="@style/Widget.Shop.OfferImage"
+        android:src="@drawable/img_threescoop"/>
+
+      <TextView
+        style="@style/Widget.Shop.OfferText"
+        android:text="Three-scoop ice cream"/>
+
+      <TextView
+        style="@style/Widget.Shop.OfferPrice"
+        android:text="$15"/>
+    </LinearLayout>
+
+    <LinearLayout
+      style="@style/Widget.Shop.OfferContainer"
+      android:layout_marginStart="16dp">
+
+      <com.makeramen.roundedimageview.RoundedImageView
+        style="@style/Widget.Shop.OfferImage"
+        android:src="@drawable/img_donut"/>
+
+      <TextView
+        style="@style/Widget.Shop.OfferText"
+        android:text="Glazed donut"/>
+
+      <TextView
+        style="@style/Widget.Shop.OfferPrice"
+        android:text="$5"/>
+    </LinearLayout>
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="48dp"
+      android:layout_marginEnd="24dp"
+      android:src="@drawable/outline_comments"/>
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="24dp"
+      android:layout_marginEnd="24dp"
+      android:src="@drawable/outline_website"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="24dp"
+      android:layout_marginTop="16dp"
+      android:layout_marginEnd="24dp"
+      android:layout_marginBottom="16dp"
+      android:layout_weight="1"
+      android:text="Route"
+      android:textColor="@android:color/white"
+      app:backgroundTint="?colorPrimary"
+      app:icon="@drawable/fill_route"
+      app:iconTint="@android:color/white"/>
+  </LinearLayout>
+</LinearLayout>

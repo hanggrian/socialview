@@ -5,7 +5,7 @@ checkstyle = "10.18.1"
 kotlin = "2.1.0"
 sdk-min = "21"
 sdk-target = "36"
-android-plugin = "8.9.1"
+android-plugin = "8.10.0"
 ktlint = "1.5.0"
 
 [plugins]
@@ -26,6 +26,8 @@ androidx-appcompat = "androidx.appcompat:appcompat:1.7.0"
 androidx-multidex = "androidx.multidex:multidex:2.0.1"
 process-phoenix = "com.jakewharton:process-phoenix:2.1.2"
 picasso = "com.squareup.picasso:picasso:2.8"
+roundedimageview = "com.makeramen:roundedimageview:2.3.0"
+pieprogress = "com.github.tizisdeepan:pieprogress:1.0.1"
 # test
 androidx-test-core = "androidx.test:core:1.6.1"
 androidx-test-runner = "androidx.test:runner:1.6.2"
